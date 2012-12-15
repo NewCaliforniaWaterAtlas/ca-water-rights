@@ -1,0 +1,135 @@
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+.sidebar-nav {
+  padding: 9px 0;
+}
+
+ /* Landscape phones and down */
+@media (max-width: 480px) { 
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
+}
+
+/* Large desktop */
+@media (min-width: 1200px) { 
+}
+
+#map-outer-container {
+	height: 100%;
+}
+
+#map-outer-container .ts-map .zoomer {
+  width: 28px;
+  height: 28px;
+  top: 60px;
+}
+
+.ui-tooltip-content h2 {
+  font-size: 2em;
+  margin: 5px;
+  padding: 0;
+  line-height: 1em;
+}
+.ui-tooltip-content h3 {
+  font-size: 1.5em;
+  margin: 5px;
+  padding: 0;
+}
+.ui-tooltip-content p {
+  font-size: 1.25em;
+  width: 100%;
+  padding: 0;
+  margin: 5px;
+}
+
+.ui-tooltip-content a {
+  color: #ffffff;
+}
+
+.hero-unit h1 {
+  margin-bottom: 0.2em; 
+}
+
+.tagline {
+/*   color: #F5F3DC; */
+  font-size: 1.2em;
+  padding: 20px 0 14px 0px;
+  text-shadow: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1em;
+  margin-bottom: 1em;
+}
+
+.nav-collapse.collapse {
+    height: auto !important;
+    overflow: visible !important;
+     height: 0; overflow: visible; 
+}
+
+#page-content {
+  margin: 20px 0;
+}
+
+#facebook-depiction {
+  height: 30px;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+h2 {
+  font-size: 38px;  
+}
+
+.label, .label:hover {
+  background-color: rgba(256, 256, 256, 0.2);
+  text-shadow: none;
+  color: #333;
+}
+
+.ts-map .wax-attribution {
+  background: rgba(256,256,256, 0.3);
+  color: rgba(0,0,0,0.7);
+}
+
+.ts-map .wax-attribution a {
+  color: rgba(0,0,0,0.5);
+}
+
+.ts-map .wax-attribution a:hover {
+  color: rgba(0,0,0,1);  
+}
+
+input, textarea {
+  width: 400px;
+}
+
+.form-label,
+.form-detail {
+  padding: 0 10px 0 5px;
+}
+
+.form-image {
+  padding: 0 10px 0 5px;
+}
+
+a {
+  color: #013435;
+  font-weight: bold;
+}
+
+hr {
+border-top: none;
+border-bottom: 2px solid rgba(256,256,256,0.1);
+}
