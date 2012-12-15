@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Oakland Trees</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Public and shared trees (including fruit trees) in Oakland.">
+    <meta name="author" content="http://oaklant-trees.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/libraries/bootstrap/docs/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/libraries/bootstrap/docs/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/libraries/bootstrap/docs/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/libraries/bootstrap/docs/assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="/libraries/bootstrap/docs/assets/ico/favicon.ico">
+    <link href="/libraries/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/libraries/bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/bootstrap_themes/bootstrap.min.oakland-trees.css" rel="stylesheet">    
+    <link href='/css/wax-controls.css' rel='stylesheet' type='text/css' />   
+    <link href="/css/mapbox-embed.css" rel="stylesheet">
+    <link href='/css/jquery.qtip.min.css' rel='stylesheet' type='text/css' /> 
+    <link rel="stylesheet" href="/css/style.css" />
+    <script type="text/javascript" src="/javascripts/libraries/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script>
+  </head>
+  <body>
+
+    <!-- Set up Facebook -->
+    <div id="fb-root"></div>
+    
+    <!-- Page content -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#home" data-toggle="tab">Oakland Trees</a>
+
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+        	    <li><a href="#map" data-toggle="tab">Map</a></li>
+              <li><a href="#data" data-toggle="tab">Data</a></li>
+              <li><a href="#about" data-toggle="tab">About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+
+         <div class="tagline span4">Public and shared trees in Oakland</div>          
+        </div>
+      </div>
+    </div>
+  <!-- Main page content -->
+
+  <div class="container-fluid">
+  <div id="page-content" class="tab-content">
+    <!-- home-->
+    <div class="tab-pane active fade in row" id="home">
+
+        <div class="left span8">      
+          <div class="hero-unit">
+            <h1>Oakland Trees</h1>
+            <img src="images/oakland-logo-21.png" height="300px" />
+          </div>
+
+          <div class="span6">            
+            <div class="fb-like" data-href="http://www.facebook.com/oakland-trees" data-send="true" data-width="450" data-show-faces="true">
+            </div>
+          </div>
+        </div> 
+
+        <div class="span4">          
+          <div class="sidebar-nav">
+            <h2>Trees in Oakland</h2>
+            <p>This is a map and data source of known public trees in Oakland.</p>
+            <h3>Public Data</h3>
+            <p>These are trees in the public right-of-way in Oakland, as recorded circa 2005-2006. In total there are 40,000 public trees in Oakland, this map currently features the trees that produce something you can eat. You can filter by season. Data from the Oakland <a href="http://www2.oaklandnet.com/Government/o/PWA/index.htm">Department of Public Works</a></p>
+          </div>
+
+      </div>
+    </div><!--/end home-->
+
+   <div class="tab-pane fade in span8" id="about">
+      <h1>About</h1>
+
+      <p><strong>Oakland Trees</strong> visualizes public trees in Oakland. We documented and improved the public tree data from the City of Oakland, and adding useful data to make the map visualization useful and meaningful, especially concerning edible fruit trees in Oakland.</p>
+      
+      <p>This project began as an initiative for <a href="">Code for Oakland.</a> Our Edible Fruit Tree Data project (involving cleaning up this Trees dataset from the City of Oakland) won for Best Use of Public Data.</p>
+      
+      <h3>Things you can do</h3>
+      <ul>
+        <li>Interact with the map.</li>
+        <li>Download tree data.</li>
+        <li>Help improve the data.</li>
+        <li>Help keep tree data current. Sign on to github to edit the tree CSV file. Map will be periodically updated.</li>
+        <li>Help with tree care: The City of Oakland allows for tree plantings and for public tree prunings (due to lack of funding.)</li>
+        <li>Contribute more open datasets of public, shared and edible trees in Oakland to fill in the map.</li>
+      </ul>
+      
+      <h3>Future Improvements</h3>
+      <ul>
+        <li>Adoption of Oakland Trees by tree lovers of Oakland.</li>
+        <li>Occasional meetups in Oakland to develop the projects and keep the map viable. </li>
+        <li>Put tree data in mongo database.</li>
+        <li>Add geolocated tree lookup. (Can't show 40,000 trees on the map at once, requires filter.)</li>
+        <li>Allow people to add shared trees.</li>
+        <li>Get more tree datasets for Oakland planted since 2005. Develop workflow to add these to the map.</li>
+        <li>Make map and add tree form embeddable so that more shared trees can go into a public registry.</li>
+      </ul>
+      <hr />
+      
+      <h3>Team</h3>
+      <ul>
+        <li>Chacha Sikes <a href="http://twitter.com/chachasikes">@chachasikes</a></li>
+        <li>Phillip Minnick</li>
+      </ul>
+      
+      <h3>Thanks</h3>
+      <ul>
+        <li>Code for Oakland</li>
+        <li>Anselm Hook <a href="http://twitter.com/anselm">@anselm</a> (Some of his code borrowed from <a href="http://lemonopoly.org">Lemonopoly</a></li>        
+        <li>Gay Luster, City of Oakland, Department of Public Works</li>
+      </ul>
+      <hr />
+      <h3>History</h3>
+      
+      <h4>Code for Oakland hackathon event</h4>
+      <ul>
+        <li>We added common names for 11,000+ tree species from USDA Plant Checklist (using Google refine)</li>
+        <li>Geocoded some tree data (but not all) based on address data.</li>
+        <li>We are asking the City of Oakland for information about when tree data was collected and by whom. (Oakland website does not supply this information.)</li>
+        <li>Considering creating a database of edible, medicinal and graftable fruit trees.</li>
+        <li>Researched seasonality data</li>
+        <li>Reached out to CUESA about making their local seasonal data machine readable. (http://cuesa.org/page/seasonality-chart-fruit-and-nuts)</li>
+      </ul>
+      
+      <h4>Map & Data Development August-September 2012</h4>
+      <ul>
+        <li>We spoke with the City of Oakland and learned that the tree data was current as of 2005-2006.</li>
+        <li>We gave common names to nearly all trees.</li>
+        <li>We geolocated all of the trees (using the Yahoo Geocoder)</li>
+        <li>We made a machine-readable seasonality database of fruiting trees in the Bay Area</li>
+        <li>We added a seasonality filter to the map.</li>
+      </ul>
+    </div><!--/end about-->
+
+
+   <div class="tab-pane fade in span8" id="data">
+      <h1>Data</h1>
+
+      <p><a href="https://raw.github.com/chachasikes/Oakland-Trees/master/_docs/Oakland-Trees.csv"><i class="icon-plus"></i>Download Improved Tree Data CSV</a></p>
+
+      <p><a href="https://github.com/chachasikes/Oakland-Trees/blob/master/_docs/Oakland-Trees-fields.txt"><i class="icon-plus"></i>Tree Data Fields</a></p>
+
+      <p><a href="https://raw.github.com/chachasikes/Oakland-Trees/master/_docs/seasonal%20data/Bay-Area-Seasonality-Data-Fruit-Seasonality-Data.csv"><i class="icon-plus"></i>Download Tree Seasonality Data for the Bay Area</a></p>
+
+      <p><a href="https://raw.github.com/chachasikes/Oakland-Trees/master/_docs/List%20of%20Trees.txt"><i class="icon-plus"></i>List of Trees</a></p>      
+      
+
+      <p><a href="https://raw.github.com/chachasikes/Oakland-Trees/master/_docs/List%20of%20Edible%20Trees.txt"><i class="icon-plus"></i>List of Edible Trees & Shrubs</a></p>      
+      
+     
+      
+      <h3>Documenting and improving the Oakland Tree Data</h3>
+      
+      <p>Please help improve this dataset to make it more useful as a machine readable resource for food system, environmental and public recreation projects.</p>
+      
+      <p><a href="http://github.com/chachasikes/Oakland-Trees">Code on Github</a></p>
+            
+      <p><a href="http://www2.oaklandnet.com/Government/o/CityAdministration/OAK029272">Original Tree data</a> from the City of Oakland website</p>
+
+      <p><a href="http://codeforoakland.org/data-sets/">Code for Oakland Datasets</a></p>
+
+    </div><!--/end data-->
+
+
+    <!--map-->
+    <div class="tab-pane fade in" id="map">
+    <div class="container-fluid"> 
+      <div class="row-fluid">
+        <div id="map-outer-container">
+          <h1>Map</h1>
+          <div class="ts-map mm zoompan zoomwheel streetlevel zoombox attribution watermark" id="map-container">
+  <!--                 <a href="http://mapbox.com" target="_blank" class="mapbox-watermark">MapBox</a> -->
+            <a href="#" class="zoomer zoomin">+</a><a href="#" class="zoomer zoomout">-</a>
+  <!--                 <div id="map-zoombox-box" class="zoombox-box"></div> -->
+       
+<p class="attribution wax-attribution wax-mm">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.</p>
+  
+            <select id="map-options" class="nav nav-pills">
+              <option value="all">All</option>
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
+
+          </div>
+          <div class="count"></div>
+        </div>
+        
+      </div>
+    </div>
+    <script src="/javascripts/libraries/modestmaps.min.js"></script>
+    <script src="/javascripts/libraries/modestmaps.markers.js"></script>
+    <script src="/javascripts/libraries/wax.mm.min.js"></script>
+    <script src="http://maps.stamen.com/js/tile.stamen.js"></script>
+
+
+</div><!--/end container-fluid-->
+
+      <hr>
+
+      <footer>
+          <div class="container-fluid">      
+          <div class="row-fluid">
+            <div class="span8">
+              <strong>@OaklandTrees</strong>
+              <a href="http://twitter.com/oakland-trees"><img src="images/twitter_icon.png" width="40" title="Twitter" /></a><br />
+                    
+              <strong>Connect on Facebook</strong>
+              <a href="https://www.facebook.com/pages/Oakland-Trees/351660544927316"><img src="images/facebook_icon.png" width="40"  title="Facebook" /></a><br />
+              <br />
+              <p>&copy; Oakland Trees 2012</p>
+            </div>
+          </div>
+        </div><!--/end container-fluid-->
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <script type="text/javascript" src="/javascripts/libraries/json2.js"></script>
+    <script type="text/javascript" src="/javascripts/libraries/underscore-min.js"></script>
+    <!-- End page content -->
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-transition.js"></script>
+  <!--   <script src="/libraries/bootstrap/docs/assets/js/bootstrap-alert.js"></script> -->
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-modal.js"></script>
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-dropdown.js"></script>
+   <!--  <script src="/libraries/bootstrap/docs/assets/js/bootstrap-scrollspy.js"></script> -->
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-tab.js"></script>
+<!--
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-tooltip.js"></script>
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-popover.js"></script>
+-->
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-button.js"></script>
+<!--
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-collapse.js"></script>
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-carousel.js"></script>
+    <script src="/libraries/bootstrap/docs/assets/js/bootstrap-typeahead.js"></script>
+-->
+    <script src="/javascripts/custom/core.js"></script>
+    <script src="/javascripts/custom/trees.js"></script>
+    <script src="/javascripts/custom/trees.map.js"></script>
+    <script src="/javascripts/custom/trees.views.js"></script>
+  </body>
+</html>
