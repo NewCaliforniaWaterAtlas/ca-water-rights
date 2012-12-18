@@ -10,8 +10,6 @@ var engine         = new EngineProvider();
 
 var _ = require('underscore')._;
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////
 // configuration
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +72,7 @@ app.post("/agent/query", function(req,res) {
 });
 */
 
-app.post('/water-rights', function(req, res){
+app.post('/data', function(req, res){
   var blob = req.body;
 
   engine.find_many_by(blob,function(error, results) {
