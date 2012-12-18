@@ -1,6 +1,5 @@
 [{
   "id" :  "S015466",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.3551829, 39.65850816],
   "geometry": {
@@ -9,7 +8,6 @@
     },
   "properties": {
       "id" : "S015466",
-      "kind": "right",
       "name" : "OKIZU FOUNDATION",
       "application_id" : "S015466",
       "source" : "UNST",
@@ -69,7 +67,6 @@
 },
 {
   "id" :  "S013622",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4375, 39.866],
   "geometry": {
@@ -78,7 +75,6 @@
     },
   "properties": {
       "id" : "S013622",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013622",
       "source" : "UNST",
@@ -138,7 +134,6 @@
 },
 {
   "id" :  "S002841",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.8918604, 39.32088335],
   "geometry": {
@@ -147,7 +142,6 @@
     },
   "properties": {
       "id" : "S002841",
-      "kind": "right",
       "name" : "EDMOND F BROVELLI",
       "application_id" : "S002841",
       "source" : "CHEROKEE CANAL",
@@ -207,7 +201,6 @@
 },
 {
   "id" :  "S003112",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.696111, 39.38451099],
   "geometry": {
@@ -216,7 +209,6 @@
     },
   "properties": {
       "id" : "S003112",
-      "kind": "right",
       "name" : "RYAN & HEIDI  COKER REVOCABLE TRUST",
       "application_id" : "S003112",
       "source" : "RECLAMATION DISTRICT #833 LATERAL EAST",
@@ -276,7 +268,6 @@
 },
 {
   "id" :  "S009677",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5463831, 39.39487093],
   "geometry": {
@@ -285,7 +276,6 @@
     },
   "properties": {
       "id" : "S009677",
-      "kind": "right",
       "name" : "DAVID  DALEY",
       "application_id" : "S009677",
       "source" : "WYANDOTTE CREEK",
@@ -345,7 +335,6 @@
 },
 {
   "id" :  "S000925",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5809322, 39.47613178],
   "geometry": {
@@ -354,7 +343,6 @@
     },
   "properties": {
       "id" : "S000925",
-      "kind": "right",
       "name" : "WESTERN CANAL WATER DISTRICT",
       "application_id" : "S000925",
       "source" : "FEATHER RIVER",
@@ -414,7 +402,6 @@
 },
 {
   "id" :  "S009897",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.9356932, 39.70583418],
   "geometry": {
@@ -423,7 +410,6 @@
     },
   "properties": {
       "id" : "S009897",
-      "kind": "right",
       "name" : "PARROTT INVESTMENT COMPANY",
       "application_id" : "S009897",
       "source" : "SACRAMENTO RIVER",
@@ -483,7 +469,6 @@
 },
 {
   "id" :  "F007999S",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.3344037, 39.71467368],
   "geometry": {
@@ -492,7 +477,6 @@
     },
   "properties": {
       "id" : "F007999S",
-      "kind": "right",
       "name" : "U S PLUMAS NATL FOREST",
       "application_id" : "F007999S",
       "source" : "LITTLE RAM CREEK",
@@ -552,7 +536,6 @@
 },
 {
   "id" :  "S014988",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.422737, 39.39130611],
   "geometry": {
@@ -561,7 +544,6 @@
     },
   "properties": {
       "id" : "S014988",
-      "kind": "right",
       "name" : "RALPH PHIL SUMMERS",
       "application_id" : "S014988",
       "source" : "WILSON CREEK",
@@ -621,7 +603,6 @@
 },
 {
   "id" :  "S010248",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6346802, 39.70006709],
   "geometry": {
@@ -630,7 +611,6 @@
     },
   "properties": {
       "id" : "S010248",
-      "kind": "right",
       "name" : "RON  KUENTZ",
       "application_id" : "S010248",
       "source" : "DEAD MAN SPRING",
@@ -690,7 +670,6 @@
 },
 {
   "id" :  "S010992",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.2738773, 39.70662857],
   "geometry": {
@@ -699,7 +678,6 @@
     },
   "properties": {
       "id" : "S010992",
-      "kind": "right",
       "name" : "U S PLUMAS NATL FOREST",
       "application_id" : "S010992",
       "source" : "UNSP",
@@ -759,7 +737,6 @@
 },
 {
   "id" :  "S009898",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.9904464, 39.56624786],
   "geometry": {
@@ -768,7 +745,6 @@
     },
   "properties": {
       "id" : "S009898",
-      "kind": "right",
       "name" : "PARROTT INVESTMENT COMPANY",
       "application_id" : "S009898",
       "source" : "SACRAMENTO RIVER",
@@ -828,7 +804,6 @@
 },
 {
   "id" :  "S014939",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.497943, 39.50420488],
   "geometry": {
@@ -837,7 +812,6 @@
     },
   "properties": {
       "id" : "S014939",
-      "kind": "right",
       "name" : "RIVER RANCH L P",
       "application_id" : "S014939",
       "source" : "FALL RIVER",
@@ -897,7 +871,6 @@
 },
 {
   "id" :  "S012234",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.2831982, 39.52507015],
   "geometry": {
@@ -906,7 +879,6 @@
     },
   "properties": {
       "id" : "S012234",
-      "kind": "right",
       "name" : "LUCILLE D NAYLOR",
       "application_id" : "S012234",
       "source" : "UNSP",
@@ -966,7 +938,6 @@
 },
 {
   "id" :  "S000049",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6045097, 39.59880084],
   "geometry": {
@@ -975,7 +946,6 @@
     },
   "properties": {
       "id" : "S000049",
-      "kind": "right",
       "name" : "GEORGE R CHAFFIN",
       "application_id" : "S000049",
       "source" : "COAL CANYON CREEK",
@@ -1035,7 +1005,6 @@
 },
 {
   "id" :  "S000048",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6037977, 39.59921025],
   "geometry": {
@@ -1044,7 +1013,6 @@
     },
   "properties": {
       "id" : "S000048",
-      "kind": "right",
       "name" : "GEORGE R CHAFFIN",
       "application_id" : "S000048",
       "source" : "COAL CANYON CREEK",
@@ -1104,7 +1072,6 @@
 },
 {
   "id" :  "S000645",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4590905, 39.3342329],
   "geometry": {
@@ -1113,7 +1080,6 @@
     },
   "properties": {
       "id" : "S000645",
-      "kind": "right",
       "name" : "BIG LAND DEVELOPMENT CORP",
       "application_id" : "S000645",
       "source" : "SOUTH HONCUT CREEK",
@@ -1173,7 +1139,6 @@
 },
 {
   "id" :  "S014308",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5166124, 39.46997478],
   "geometry": {
@@ -1182,7 +1147,6 @@
     },
   "properties": {
       "id" : "S014308",
-      "kind": "right",
       "name" : "WARH RANCH COMPANY",
       "application_id" : "S014308",
       "source" : "UNSP",
@@ -1242,7 +1206,6 @@
 },
 {
   "id" :  "S007371",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.706798, 39.53705371],
   "geometry": {
@@ -1251,7 +1214,6 @@
     },
   "properties": {
       "id" : "S007371",
-      "kind": "right",
       "name" : "DEEN BROTHERS",
       "application_id" : "S007371",
       "source" : "CHEROKEE CANAL, COTTONWOOD CREEK",
@@ -1311,7 +1273,6 @@
 },
 {
   "id" :  "S000550",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.8921916, 39.33543549],
   "geometry": {
@@ -1320,7 +1281,6 @@
     },
   "properties": {
       "id" : "S000550",
-      "kind": "right",
       "name" : "BUTTE SINK WATERFOWL ASSOCIATION",
       "application_id" : "S000550",
       "source" : "BUTTE CREEK",
@@ -1380,7 +1340,6 @@
 },
 {
   "id" :  "S000050",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5918915, 39.60218941],
   "geometry": {
@@ -1389,7 +1348,6 @@
     },
   "properties": {
       "id" : "S000050",
-      "kind": "right",
       "name" : "GEORGE R CHAFFIN",
       "application_id" : "S000050",
       "source" : "COAL CANYON CREEK",
@@ -1449,7 +1407,6 @@
 },
 {
   "id" :  "S000051",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5918915, 39.60218941],
   "geometry": {
@@ -1458,7 +1415,6 @@
     },
   "properties": {
       "id" : "S000051",
-      "kind": "right",
       "name" : "GEORGE R CHAFFIN",
       "application_id" : "S000051",
       "source" : "COAL CANYON CREEK",
@@ -1518,7 +1474,6 @@
 },
 {
   "id" :  "S010594",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4115572, 39.64946936],
   "geometry": {
@@ -1527,7 +1482,6 @@
     },
   "properties": {
       "id" : "S010594",
-      "kind": "right",
       "name" : "BERRY CREEK WATER USERS INCORPORATED",
       "application_id" : "S010594",
       "source" : "BERRY CREEK",
@@ -1587,7 +1541,6 @@
 },
 {
   "id" :  "S015465",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.3671433, 39.65170953],
   "geometry": {
@@ -1596,7 +1549,6 @@
     },
   "properties": {
       "id" : "S015465",
-      "kind": "right",
       "name" : "OKIZU FOUNDATION",
       "application_id" : "S015465",
       "source" : "BERRY CREEK",
@@ -1656,7 +1608,6 @@
 },
 {
   "id" :  "S014098",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5861908, 39.66613792],
   "geometry": {
@@ -1665,7 +1616,6 @@
     },
   "properties": {
       "id" : "S014098",
-      "kind": "right",
       "name" : "Craig  Baxter",
       "application_id" : "S014098",
       "source" : "DRY CREEK",
@@ -1725,7 +1675,6 @@
 },
 {
   "id" :  "S009417",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.77764, 39.61572996],
   "geometry": {
@@ -1734,7 +1683,6 @@
     },
   "properties": {
       "id" : "S009417",
-      "kind": "right",
       "name" : "Center for Natural Lands Management",
       "application_id" : "S009417",
       "source" : "BUTTE CREEK",
@@ -1794,7 +1742,6 @@
 },
 {
   "id" :  "S006285",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6467045, 39.64135263],
   "geometry": {
@@ -1803,7 +1750,6 @@
     },
   "properties": {
       "id" : "S006285",
-      "kind": "right",
       "name" : "MURPHY FAMILY TRUST B DATED 11-21-89",
       "application_id" : "S006285",
       "source" : "CLEAR CREEK",
@@ -1863,7 +1809,6 @@
 },
 {
   "id" :  "S015003",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.8928736, 39.35190984],
   "geometry": {
@@ -1872,7 +1817,6 @@
     },
   "properties": {
       "id" : "S015003",
-      "kind": "right",
       "name" : "JOHN M SIMMONS",
       "application_id" : "S015003",
       "source" : "SANBORN SLOUGH",
@@ -1932,7 +1876,6 @@
 },
 {
   "id" :  "S002647",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.8581124, 39.40403911],
   "geometry": {
@@ -1941,7 +1884,6 @@
     },
   "properties": {
       "id" : "S002647",
-      "kind": "right",
       "name" : "Larry   Gury",
       "application_id" : "S002647",
       "source" : "DITCH 100",
@@ -2001,7 +1943,6 @@
 },
 {
   "id" :  "S008551",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6163769, 39.40788862],
   "geometry": {
@@ -2010,7 +1951,6 @@
     },
   "properties": {
       "id" : "S008551",
-      "kind": "right",
       "name" : "HAROLD H GALLIETT JR",
       "application_id" : "S008551",
       "source" : "FEATHER RIVER",
@@ -2070,7 +2010,6 @@
 },
 {
   "id" :  "S012437",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4067675, 39.6488962],
   "geometry": {
@@ -2079,7 +2018,6 @@
     },
   "properties": {
       "id" : "S012437",
-      "kind": "right",
       "name" : "LAKE MADRONE WATER DISTRICT",
       "application_id" : "S012437",
       "source" : "BERRY CREEK",
@@ -2139,7 +2077,6 @@
 },
 {
   "id" :  "S013620",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5151181, 39.87560706],
   "geometry": {
@@ -2148,7 +2085,6 @@
     },
   "properties": {
       "id" : "S013620",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013620",
       "source" : "UNST",
@@ -2208,7 +2144,6 @@
 },
 {
   "id" :  "S011543",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.2831982, 39.52507015],
   "geometry": {
@@ -2217,7 +2152,6 @@
     },
   "properties": {
       "id" : "S011543",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S011543",
       "source" : "UNSP",
@@ -2277,7 +2211,6 @@
 },
 {
   "id" :  "S013218",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7830566, 39.41380804],
   "geometry": {
@@ -2286,7 +2219,6 @@
     },
   "properties": {
       "id" : "S013218",
-      "kind": "right",
       "name" : "PAUL  MINASIAN, ESQ",
       "application_id" : "S013218",
       "source" : "LATERAL A, RD 833",
@@ -2346,7 +2278,6 @@
 },
 {
   "id" :  "S000480",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6473713, 39.36735121],
   "geometry": {
@@ -2355,7 +2286,6 @@
     },
   "properties": {
       "id" : "S000480",
-      "kind": "right",
       "name" : "JOINT WATER DISTRICTS BOARD",
       "application_id" : "S000480",
       "source" : "FEATHER RIVER",
@@ -2415,7 +2345,6 @@
 },
 {
   "id" :  "S015734",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.461555, 39.36987193],
   "geometry": {
@@ -2424,7 +2353,6 @@
     },
   "properties": {
       "id" : "S015734",
-      "kind": "right",
       "name" : "LOIS  DUNKIN-POTTS",
       "application_id" : "S015734",
       "source" : "UNST",
@@ -2484,7 +2412,6 @@
 },
 {
   "id" :  "S011483",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5864416, 39.68384657],
   "geometry": {
@@ -2493,7 +2420,6 @@
     },
   "properties": {
       "id" : "S011483",
-      "kind": "right",
       "name" : "RON C COOKE",
       "application_id" : "S011483",
       "source" : "DRY CREEK",
@@ -2553,7 +2479,6 @@
 },
 {
   "id" :  "S000378",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7531985, 39.44999035],
   "geometry": {
@@ -2562,7 +2487,6 @@
     },
   "properties": {
       "id" : "S000378",
-      "kind": "right",
       "name" : "RICHVALE IRRIGATION DISTRICT",
       "application_id" : "S000378",
       "source" : "CHEROKEE CANAL",
@@ -2622,7 +2546,6 @@
 },
 {
   "id" :  "S013782",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.2831982, 39.52507015],
   "geometry": {
@@ -2631,7 +2554,6 @@
     },
   "properties": {
       "id" : "S013782",
-      "kind": "right",
       "name" : "DOUGLAS L MATTHIESSEN",
       "application_id" : "S013782",
       "source" : "UNSP",
@@ -2691,7 +2613,6 @@
 },
 {
   "id" :  "S003113",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7056146, 39.52332319],
   "geometry": {
@@ -2700,7 +2621,6 @@
     },
   "properties": {
       "id" : "S003113",
-      "kind": "right",
       "name" : "BAR-X GOOSE RANCH",
       "application_id" : "S003113",
       "source" : "COTTONWOOD CREEK",
@@ -2760,7 +2680,6 @@
 },
 {
   "id" :  "S007371",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7029547, 39.52359102],
   "geometry": {
@@ -2769,7 +2688,6 @@
     },
   "properties": {
       "id" : "S007371",
-      "kind": "right",
       "name" : "DEEN BROTHERS",
       "application_id" : "S007371",
       "source" : "CHEROKEE CANAL, COTTONWOOD CREEK",
@@ -2829,7 +2747,6 @@
 },
 {
   "id" :  "S009896",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.973937, 39.60783884],
   "geometry": {
@@ -2838,7 +2755,6 @@
     },
   "properties": {
       "id" : "S009896",
-      "kind": "right",
       "name" : "PARROTT INVESTMENT COMPANY",
       "application_id" : "S009896",
       "source" : "SACRAMENTO RIVER",
@@ -2898,7 +2814,6 @@
 },
 {
   "id" :  "S003174",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.1519383, 39.54684707],
   "geometry": {
@@ -2907,7 +2822,6 @@
     },
   "properties": {
       "id" : "S003174",
-      "kind": "right",
       "name" : "BEAN ESTATES, INC",
       "application_id" : "S003174",
       "source" : "POWELL SPRING",
@@ -2967,7 +2881,6 @@
 },
 {
   "id" :  "S000379",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7973991, 39.53408818],
   "geometry": {
@@ -2976,7 +2889,6 @@
     },
   "properties": {
       "id" : "S000379",
-      "kind": "right",
       "name" : "RICHVALE IRRIGATION DISTRICT",
       "application_id" : "S000379",
       "source" : "LITTLE DRY CREEK",
@@ -3036,7 +2948,6 @@
 },
 {
   "id" :  "S013669",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5528879, 39.98665967],
   "geometry": {
@@ -3045,7 +2956,6 @@
     },
   "properties": {
       "id" : "S013669",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013669",
       "source" : "UNST",
@@ -3105,7 +3015,6 @@
 },
 {
   "id" :  "S001294",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5978449, 39.98791977],
   "geometry": {
@@ -3114,7 +3023,6 @@
     },
   "properties": {
       "id" : "S001294",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001294",
       "source" : "HAW CREEK",
@@ -3174,7 +3082,6 @@
 },
 {
   "id" :  "S001287",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.57026, 39.94719518],
   "geometry": {
@@ -3183,7 +3090,6 @@
     },
   "properties": {
       "id" : "S001287",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001287",
       "source" : "FISH CREEK",
@@ -3243,7 +3149,6 @@
 },
 {
   "id" :  "S013657",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5686534, 39.94746382],
   "geometry": {
@@ -3252,7 +3157,6 @@
     },
   "properties": {
       "id" : "S013657",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013657",
       "source" : "CLEAR CREEK",
@@ -3312,7 +3216,6 @@
 },
 {
   "id" :  "S013652",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4311458, 39.94935168],
   "geometry": {
@@ -3321,7 +3224,6 @@
     },
   "properties": {
       "id" : "S013652",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013652",
       "source" : "UNST",
@@ -3381,7 +3283,6 @@
 },
 {
   "id" :  "S004316",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5864214, 39.68727822],
   "geometry": {
@@ -3390,7 +3291,6 @@
     },
   "properties": {
       "id" : "S004316",
-      "kind": "right",
       "name" : "PAUL F MENEFEE",
       "application_id" : "S004316",
       "source" : "DRY CREEK",
@@ -3450,7 +3350,6 @@
 },
 {
   "id" :  "S010249",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6293943, 39.69153988],
   "geometry": {
@@ -3459,7 +3358,6 @@
     },
   "properties": {
       "id" : "S010249",
-      "kind": "right",
       "name" : "RON  KUENTZ",
       "application_id" : "S010249",
       "source" : "WEST BRANCH CLEAR CREEK",
@@ -3519,7 +3417,6 @@
 },
 {
   "id" :  "S013676",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.541662, 40.00824901],
   "geometry": {
@@ -3528,7 +3425,6 @@
     },
   "properties": {
       "id" : "S013676",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013676",
       "source" : "SECRET CREEK",
@@ -3588,7 +3484,6 @@
 },
 {
   "id" :  "S008304",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5829349, 39.85527804],
   "geometry": {
@@ -3597,7 +3492,6 @@
     },
   "properties": {
       "id" : "S008304",
-      "kind": "right",
       "name" : "CALIF DEPT OF FORESTRY & FIRE PROTECTION",
       "application_id" : "S008304",
       "source" : "UNSP",
@@ -3657,7 +3551,6 @@
 },
 {
   "id" :  "S001260",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4918208, 39.84558603],
   "geometry": {
@@ -3666,7 +3559,6 @@
     },
   "properties": {
       "id" : "S001260",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001260",
       "source" : "FALL CREEK",
@@ -3726,7 +3618,6 @@
 },
 {
   "id" :  "S013641",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5048429, 39.91783991],
   "geometry": {
@@ -3735,7 +3626,6 @@
     },
   "properties": {
       "id" : "S013641",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013641",
       "source" : "COLD CREEK",
@@ -3795,7 +3685,6 @@
 },
 {
   "id" :  "S009460",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6956437, 39.81993608],
   "geometry": {
@@ -3804,7 +3693,6 @@
     },
   "properties": {
       "id" : "S009460",
-      "kind": "right",
       "name" : "MICHAEL D SMITH",
       "application_id" : "S009460",
       "source" : "UNST",
@@ -3864,7 +3752,6 @@
 },
 {
   "id" :  "S001256",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4991046, 39.82310619],
   "geometry": {
@@ -3873,7 +3760,6 @@
     },
   "properties": {
       "id" : "S001256",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001256",
       "source" : "CONCOW CREEK",
@@ -3933,7 +3819,6 @@
 },
 {
   "id" :  "S013619",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4955365, 39.82418908],
   "geometry": {
@@ -3942,7 +3827,6 @@
     },
   "properties": {
       "id" : "S013619",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013619",
       "source" : "CONCOW CREEK",
@@ -4002,7 +3886,6 @@
 },
 {
   "id" :  "S001255",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4962426, 39.82501567],
   "geometry": {
@@ -4011,7 +3894,6 @@
     },
   "properties": {
       "id" : "S001255",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001255",
       "source" : "CONCOW CREEK",
@@ -4071,7 +3953,6 @@
 },
 {
   "id" :  "S013682",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5636346, 40.03304205],
   "geometry": {
@@ -4080,7 +3961,6 @@
     },
   "properties": {
       "id" : "S013682",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013682",
       "source" : "RATTLE SNAKE CREEK",
@@ -4140,7 +4020,6 @@
 },
 {
   "id" :  "S001276",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5743052, 39.92717054],
   "geometry": {
@@ -4149,7 +4028,6 @@
     },
   "properties": {
       "id" : "S001276",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001276",
       "source" : "KANAKA CREEK",
@@ -4209,7 +4087,6 @@
 },
 {
   "id" :  "S013638",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4537771, 39.92873266],
   "geometry": {
@@ -4218,7 +4095,6 @@
     },
   "properties": {
       "id" : "S013638",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013638",
       "source" : "KEYSER CREEK",
@@ -4278,7 +4154,6 @@
 },
 {
   "id" :  "S013639",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4714275, 39.92867568],
   "geometry": {
@@ -4287,7 +4162,6 @@
     },
   "properties": {
       "id" : "S013639",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013639",
       "source" : "UNST",
@@ -4347,7 +4221,6 @@
 },
 {
   "id" :  "S013686",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5390101, 40.05669064],
   "geometry": {
@@ -4356,7 +4229,6 @@
     },
   "properties": {
       "id" : "S013686",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013686",
       "source" : "BULL CREEK",
@@ -4416,7 +4288,6 @@
 },
 {
   "id" :  "F005181S",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5072015, 40.03418401],
   "geometry": {
@@ -4425,7 +4296,6 @@
     },
   "properties": {
       "id" : "F005181S",
-      "kind": "right",
       "name" : "U S LASSEN NATL FOREST",
       "application_id" : "F005181S",
       "source" : "UNSP",
@@ -4485,7 +4355,6 @@
 },
 {
   "id" :  "S012331",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4232089, 39.87382095],
   "geometry": {
@@ -4494,7 +4363,6 @@
     },
   "properties": {
       "id" : "S012331",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012331",
       "source" : "LOCKERMAN CREEK",
@@ -4554,7 +4422,6 @@
 },
 {
   "id" :  "S001264",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4404285, 39.85907965],
   "geometry": {
@@ -4563,7 +4430,6 @@
     },
   "properties": {
       "id" : "S001264",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001264",
       "source" : "CAMP CREEK",
@@ -4623,7 +4489,6 @@
 },
 {
   "id" :  "S012370",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5723984, 40.05887997],
   "geometry": {
@@ -4632,7 +4497,6 @@
     },
   "properties": {
       "id" : "S012370",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012370",
       "source" : "UNST",
@@ -4692,7 +4556,6 @@
 },
 {
   "id" :  "S013649",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5145036, 39.93846864],
   "geometry": {
@@ -4701,7 +4564,6 @@
     },
   "properties": {
       "id" : "S013649",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013649",
       "source" : "UNST",
@@ -4761,7 +4623,6 @@
 },
 {
   "id" :  "S001278",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5029004, 39.94034182],
   "geometry": {
@@ -4770,7 +4631,6 @@
     },
   "properties": {
       "id" : "S001278",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001278",
       "source" : "COLD CREEK",
@@ -4830,7 +4690,6 @@
 },
 {
   "id" :  "S013688",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.569529, 40.06065351],
   "geometry": {
@@ -4839,7 +4698,6 @@
     },
   "properties": {
       "id" : "S013688",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013688",
       "source" : "GRIZZLY_(AKA UNST)",
@@ -4899,7 +4757,6 @@
 },
 {
   "id" :  "S013637",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4296055, 39.91955944],
   "geometry": {
@@ -4908,7 +4765,6 @@
     },
   "properties": {
       "id" : "S013637",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013637",
       "source" : "LITTLE KIMSHEW CREEK",
@@ -4968,7 +4824,6 @@
 },
 {
   "id" :  "S013643",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.54013, 39.91894384],
   "geometry": {
@@ -4977,7 +4832,6 @@
     },
   "properties": {
       "id" : "S013643",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013643",
       "source" : "LONG RAVINE",
@@ -5037,7 +4891,6 @@
 },
 {
   "id" :  "S000911",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5401291, 39.91908109],
   "geometry": {
@@ -5046,7 +4899,6 @@
     },
   "properties": {
       "id" : "S000911",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000911",
       "source" : "LONG RAVINE",
@@ -5106,7 +4958,6 @@
 },
 {
   "id" :  "S012342",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4827218, 39.92021571],
   "geometry": {
@@ -5115,7 +4966,6 @@
     },
   "properties": {
       "id" : "S012342",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012342",
       "source" : "BREAKNECK CANYON",
@@ -5175,7 +5025,6 @@
 },
 {
   "id" :  "S001274",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4270909, 39.92188066],
   "geometry": {
@@ -5184,7 +5033,6 @@
     },
   "properties": {
       "id" : "S001274",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001274",
       "source" : "LITTLE KIMSHEW CREEK",
@@ -5244,7 +5092,6 @@
 },
 {
   "id" :  "S013617",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5034816, 39.85853826],
   "geometry": {
@@ -5253,7 +5100,6 @@
     },
   "properties": {
       "id" : "S013617",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013617",
       "source" : "UNST",
@@ -5313,7 +5159,6 @@
 },
 {
   "id" :  "S015057",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.3245896, 39.70020435],
   "geometry": {
@@ -5322,7 +5167,6 @@
     },
   "properties": {
       "id" : "S015057",
-      "kind": "right",
       "name" : "Michael  Rowe",
       "application_id" : "S015057",
       "source" : "MOUNTAIN HOUSE CREEK",
@@ -5382,7 +5226,6 @@
 },
 {
   "id" :  "S001265",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4571571, 39.86080492],
   "geometry": {
@@ -5391,7 +5234,6 @@
     },
   "properties": {
       "id" : "S001265",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001265",
       "source" : "DOGWOOD CREEK",
@@ -5451,7 +5293,6 @@
 },
 {
   "id" :  "S001297",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5471018, 39.99844128],
   "geometry": {
@@ -5460,7 +5301,6 @@
     },
   "properties": {
       "id" : "S001297",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001297",
       "source" : "INSKIP CREEK",
@@ -5520,7 +5360,6 @@
 },
 {
   "id" :  "S012354",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6157452, 40.03803423],
   "geometry": {
@@ -5529,7 +5368,6 @@
     },
   "properties": {
       "id" : "S012354",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012354",
       "source" : "WEST BRANCH BUTTE CREEK",
@@ -5589,7 +5427,6 @@
 },
 {
   "id" :  "S001277",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.502618, 39.92990915],
   "geometry": {
@@ -5598,7 +5435,6 @@
     },
   "properties": {
       "id" : "S001277",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001277",
       "source" : "COLD CREEK",
@@ -5658,7 +5494,6 @@
 },
 {
   "id" :  "S013683",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5676629, 40.04527345],
   "geometry": {
@@ -5667,7 +5502,6 @@
     },
   "properties": {
       "id" : "S013683",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013683",
       "source" : "ALDER CREEK",
@@ -5727,7 +5561,6 @@
 },
 {
   "id" :  "S013672",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5507088, 39.99255325],
   "geometry": {
@@ -5736,7 +5569,6 @@
     },
   "properties": {
       "id" : "S013672",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013672",
       "source" : "INSKIP CREEK",
@@ -5796,7 +5628,6 @@
 },
 {
   "id" :  "S013673",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5139292, 39.99542682],
   "geometry": {
@@ -5805,7 +5636,6 @@
     },
   "properties": {
       "id" : "S013673",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013673",
       "source" : "FISH CREEK_WEST BRANCH",
@@ -5865,7 +5695,6 @@
 },
 {
   "id" :  "S001259",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5131886, 39.84567629],
   "geometry": {
@@ -5874,7 +5703,6 @@
     },
   "properties": {
       "id" : "S001259",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001259",
       "source" : "FALL CREEK",
@@ -5934,7 +5762,6 @@
 },
 {
   "id" :  "S013684",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6148461, 40.03912925],
   "geometry": {
@@ -5943,7 +5770,6 @@
     },
   "properties": {
       "id" : "S013684",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013684",
       "source" : "WEST BRANCH BUTTE CREEK",
@@ -6003,7 +5829,6 @@
 },
 {
   "id" :  "S010848",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.8311319, 39.73400721],
   "geometry": {
@@ -6012,7 +5837,6 @@
     },
   "properties": {
       "id" : "S010848",
-      "kind": "right",
       "name" : "CITY OF CHICO",
       "application_id" : "S010848",
       "source" : "BIG CHICO CREEK",
@@ -6072,7 +5896,6 @@
 },
 {
   "id" :  "S001282",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4308427, 39.94276191],
   "geometry": {
@@ -6081,7 +5904,6 @@
     },
   "properties": {
       "id" : "S001282",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001282",
       "source" : "LITTLE KIMSHEW CREEK",
@@ -6141,7 +5963,6 @@
 },
 {
   "id" :  "S009901",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5741937, 39.76986922],
   "geometry": {
@@ -6150,7 +5971,6 @@
     },
   "properties": {
       "id" : "S009901",
-      "kind": "right",
       "name" : "DEAN H BAILEY",
       "application_id" : "S009901",
       "source" : "OGDEN CREEK",
@@ -6210,7 +6030,6 @@
 },
 {
   "id" :  "S010991",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4991178, 39.77149491],
   "geometry": {
@@ -6219,7 +6038,6 @@
     },
   "properties": {
       "id" : "S010991",
-      "kind": "right",
       "name" : "Denise M Carey",
       "application_id" : "S010991",
       "source" : "UNST",
@@ -6279,7 +6097,6 @@
 },
 {
   "id" :  "S000154",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4240359, 39.77334801],
   "geometry": {
@@ -6288,7 +6105,6 @@
     },
   "properties": {
       "id" : "S000154",
-      "kind": "right",
       "name" : "U S PLUMAS NATL FOREST",
       "application_id" : "S000154",
       "source" : "UNSP",
@@ -6348,7 +6164,6 @@
 },
 {
   "id" :  "F007072S",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4464511, 39.77318093],
   "geometry": {
@@ -6357,7 +6172,6 @@
     },
   "properties": {
       "id" : "F007072S",
-      "kind": "right",
       "name" : "U S PLUMAS NATL FOREST",
       "application_id" : "F007072S",
       "source" : "MILL CREEK",
@@ -6417,7 +6231,6 @@
 },
 {
   "id" :  "S013687",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4601913, 40.06779949],
   "geometry": {
@@ -6426,7 +6239,6 @@
     },
   "properties": {
       "id" : "S013687",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013687",
       "source" : "WEST BRANCH FEATHER RIVER",
@@ -6486,7 +6298,6 @@
 },
 {
   "id" :  "S012371",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4587122, 40.06869093],
   "geometry": {
@@ -6495,7 +6306,6 @@
     },
   "properties": {
       "id" : "S012371",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012371",
       "source" : "WEST BRANCH FEATHER RIVER",
@@ -6555,7 +6365,6 @@
 },
 {
   "id" :  "S012344",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5427126, 39.90563993],
   "geometry": {
@@ -6564,7 +6373,6 @@
     },
   "properties": {
       "id" : "S012344",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012344",
       "source" : "LONG RAVINE",
@@ -6624,7 +6432,6 @@
 },
 {
   "id" :  "S012328",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5570901, 39.83047651],
   "geometry": {
@@ -6633,7 +6440,6 @@
     },
   "properties": {
       "id" : "S012328",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012328",
       "source" : "GRIFFIN GULCH",
@@ -6693,7 +6499,6 @@
 },
 {
   "id" :  "S012329",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5570901, 39.83047651],
   "geometry": {
@@ -6702,7 +6507,6 @@
     },
   "properties": {
       "id" : "S012329",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012329",
       "source" : "RATTLESNAKE CREEK",
@@ -6762,7 +6566,6 @@
 },
 {
   "id" :  "S001254",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5268218, 39.83090765],
   "geometry": {
@@ -6771,7 +6574,6 @@
     },
   "properties": {
       "id" : "S001254",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001254",
       "source" : "EMPIRE CREEK",
@@ -6831,7 +6633,6 @@
 },
 {
   "id" :  "S000913",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5762094, 39.9071379],
   "geometry": {
@@ -6840,7 +6641,6 @@
     },
   "properties": {
       "id" : "S000913",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000913",
       "source" : "CUNNINGHAM RAVINE",
@@ -6900,7 +6700,6 @@
 },
 {
   "id" :  "S000912",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5676429, 39.90902834],
   "geometry": {
@@ -6909,7 +6708,6 @@
     },
   "properties": {
       "id" : "S000912",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000912",
       "source" : "LITTLE WEST BRANCH",
@@ -6969,7 +6767,6 @@
 },
 {
   "id" :  "S001304",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5260696, 40.04263702],
   "geometry": {
@@ -6978,7 +6775,6 @@
     },
   "properties": {
       "id" : "S001304",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001304",
       "source" : "COON CREEK",
@@ -7038,7 +6834,6 @@
 },
 {
   "id" :  "S001252",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5861086, 39.92089884],
   "geometry": {
@@ -7047,7 +6842,6 @@
     },
   "properties": {
       "id" : "S001252",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001252",
       "source" : "LITTLE BUTTE CREEK",
@@ -7107,7 +6901,6 @@
 },
 {
   "id" :  "S013640",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.482349, 39.92241019],
   "geometry": {
@@ -7116,7 +6909,6 @@
     },
   "properties": {
       "id" : "S013640",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013640",
       "source" : "UNST",
@@ -7176,7 +6968,6 @@
 },
 {
   "id" :  "S001298",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5260366, 39.99945645],
   "geometry": {
@@ -7185,7 +6976,6 @@
     },
   "properties": {
       "id" : "S001298",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001298",
       "source" : "WEST BRANCH FEATHER RIVER",
@@ -7245,7 +7035,6 @@
 },
 {
   "id" :  "S013674",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4264255, 40.00299548],
   "geometry": {
@@ -7254,7 +7043,6 @@
     },
   "properties": {
       "id" : "S013674",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013674",
       "source" : "BIG KIMSHEW CREEK",
@@ -7314,7 +7102,6 @@
 },
 {
   "id" :  "S013671",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6130956, 40.00192638],
   "geometry": {
@@ -7323,7 +7110,6 @@
     },
   "properties": {
       "id" : "S013671",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013671",
       "source" : "WEST BRANCH BUTTE CREEK",
@@ -7383,7 +7169,6 @@
 },
 {
   "id" :  "S013471",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.831929, 39.84656392],
   "geometry": {
@@ -7392,7 +7177,6 @@
     },
   "properties": {
       "id" : "S013471",
-      "kind": "right",
       "name" : "JOHN G FELL",
       "application_id" : "S013471",
       "source" : "ROCK CREEK",
@@ -7452,7 +7236,6 @@
 },
 {
   "id" :  "S009563",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.814522, 39.83006654],
   "geometry": {
@@ -7461,7 +7244,6 @@
     },
   "properties": {
       "id" : "S009563",
-      "kind": "right",
       "name" : "DALE W RITTER",
       "application_id" : "S009563",
       "source" : "MUD CREEK",
@@ -7521,7 +7303,6 @@
 },
 {
   "id" :  "S001257",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4651845, 39.83585993],
   "geometry": {
@@ -7530,7 +7311,6 @@
     },
   "properties": {
       "id" : "S001257",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001257",
       "source" : "DOGWOOD CREEK",
@@ -7590,7 +7370,6 @@
 },
 {
   "id" :  "S001302",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.546373, 40.02432717],
   "geometry": {
@@ -7599,7 +7378,6 @@
     },
   "properties": {
       "id" : "S001302",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001302",
       "source" : "BOTTLE CREEK",
@@ -7659,7 +7437,6 @@
 },
 {
   "id" :  "S013680",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5479596, 40.02735318],
   "geometry": {
@@ -7668,7 +7445,6 @@
     },
   "properties": {
       "id" : "S013680",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013680",
       "source" : "UNST",
@@ -7728,7 +7504,6 @@
 },
 {
   "id" :  "S013681",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5174255, 40.02777669],
   "geometry": {
@@ -7737,7 +7512,6 @@
     },
   "properties": {
       "id" : "S013681",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013681",
       "source" : "UNST",
@@ -7797,7 +7571,6 @@
 },
 {
   "id" :  "S013646",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6199277, 39.9302091],
   "geometry": {
@@ -7806,7 +7579,6 @@
     },
   "properties": {
       "id" : "S013646",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013646",
       "source" : "WEST BRANCH BUTTE CREEK",
@@ -7866,7 +7638,6 @@
 },
 {
   "id" :  "S013642",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5176475, 39.92214804],
   "geometry": {
@@ -7875,7 +7646,6 @@
     },
   "properties": {
       "id" : "S013642",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013642",
       "source" : "RESTON GULCH",
@@ -7935,7 +7705,6 @@
 },
 {
   "id" :  "S000888",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.455461, 40.07306778],
   "geometry": {
@@ -7944,7 +7713,6 @@
     },
   "properties": {
       "id" : "S000888",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000888",
       "source" : "WEST BRANCH FEATHER RIVER",
@@ -8004,7 +7772,6 @@
 },
 {
   "id" :  "S001280",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4551573, 39.93464109],
   "geometry": {
@@ -8013,7 +7780,6 @@
     },
   "properties": {
       "id" : "S001280",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001280",
       "source" : "KEYSER CREEK",
@@ -8073,7 +7839,6 @@
 },
 {
   "id" :  "S013650",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4366106, 39.93510316],
   "geometry": {
@@ -8082,7 +7847,6 @@
     },
   "properties": {
       "id" : "S013650",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013650",
       "source" : "UNST",
@@ -8142,7 +7906,6 @@
 },
 {
   "id" :  "S001267",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5286439, 39.87758365],
   "geometry": {
@@ -8151,7 +7914,6 @@
     },
   "properties": {
       "id" : "S001267",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001267",
       "source" : "SHAKE RAVINE",
@@ -8211,7 +7973,6 @@
 },
 {
   "id" :  "S013618",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5358463, 39.86608246],
   "geometry": {
@@ -8220,7 +7981,6 @@
     },
   "properties": {
       "id" : "S013618",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013618",
       "source" : "SNAKE RAVINE",
@@ -8280,7 +8040,6 @@
 },
 {
   "id" :  "S000916",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.568239, 39.75474827],
   "geometry": {
@@ -8289,7 +8048,6 @@
     },
   "properties": {
       "id" : "S000916",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000916",
       "source" : "UNST",
@@ -8349,7 +8107,6 @@
 },
 {
   "id" :  "S012343",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5063077, 39.91235576],
   "geometry": {
@@ -8358,7 +8115,6 @@
     },
   "properties": {
       "id" : "S012343",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012343",
       "source" : "COLD CREEK",
@@ -8418,7 +8174,6 @@
 },
 {
   "id" :  "S013634",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5394441, 39.91482344],
   "geometry": {
@@ -8427,7 +8182,6 @@
     },
   "properties": {
       "id" : "S013634",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013634",
       "source" : "LONG RAVINE",
@@ -8487,7 +8241,6 @@
 },
 {
   "id" :  "S013645",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5561928, 39.91584859],
   "geometry": {
@@ -8496,7 +8249,6 @@
     },
   "properties": {
       "id" : "S013645",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013645",
       "source" : "CUNNINGHAM RAVINE",
@@ -8556,7 +8308,6 @@
 },
 {
   "id" :  "S001270",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4748108, 39.88174839],
   "geometry": {
@@ -8565,7 +8316,6 @@
     },
   "properties": {
       "id" : "S001270",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001270",
       "source" : "LITTLE ROCK CREEK",
@@ -8625,7 +8375,6 @@
 },
 {
   "id" :  "S013653",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4686198, 39.94623193],
   "geometry": {
@@ -8634,7 +8383,6 @@
     },
   "properties": {
       "id" : "S013653",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013653",
       "source" : "KEYSER CREEK",
@@ -8694,7 +8442,6 @@
 },
 {
   "id" :  "S000901",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5848957, 39.94505162],
   "geometry": {
@@ -8703,7 +8450,6 @@
     },
   "properties": {
       "id" : "S000901",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000901",
       "source" : "CLEAR CREEK",
@@ -8763,7 +8509,6 @@
 },
 {
   "id" :  "S013656",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5110583, 39.94668974],
   "geometry": {
@@ -8772,7 +8517,6 @@
     },
   "properties": {
       "id" : "S013656",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013656",
       "source" : "UNST",
@@ -8832,7 +8576,6 @@
 },
 {
   "id" :  "S009976",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.826935, 39.56200219],
   "geometry": {
@@ -8841,7 +8584,6 @@
     },
   "properties": {
       "id" : "S009976",
-      "kind": "right",
       "name" : "WESTERN CANAL WATER DISTRICT",
       "application_id" : "S009976",
       "source" : "BUTTE CREEK",
@@ -8901,7 +8643,6 @@
 },
 {
   "id" :  "S000784",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.8072385, 39.56608967],
   "geometry": {
@@ -8910,7 +8651,6 @@
     },
   "properties": {
       "id" : "S000784",
-      "kind": "right",
       "name" : "DEEN BROTHERS",
       "application_id" : "S000784",
       "source" : "WHITES DRAIN",
@@ -8970,7 +8710,6 @@
 },
 {
   "id" :  "S000890",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5893142, 39.98212571],
   "geometry": {
@@ -8979,7 +8718,6 @@
     },
   "properties": {
       "id" : "S000890",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000890",
       "source" : "BUTTE CREEK",
@@ -9039,7 +8777,6 @@
 },
 {
   "id" :  "S013670",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5703914, 39.9838425],
   "geometry": {
@@ -9048,7 +8785,6 @@
     },
   "properties": {
       "id" : "S013670",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013670",
       "source" : "INSKIP CREEK",
@@ -9108,7 +8844,6 @@
 },
 {
   "id" :  "S015033",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5136529, 39.72763069],
   "geometry": {
@@ -9117,7 +8852,6 @@
     },
   "properties": {
       "id" : "S015033",
-      "kind": "right",
       "name" : "EDMUND  TRUJILLO",
       "application_id" : "S015033",
       "source" : "UNSP",
@@ -9177,7 +8911,6 @@
 },
 {
   "id" :  "S001258",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4939973, 39.84010492],
   "geometry": {
@@ -9186,7 +8919,6 @@
     },
   "properties": {
       "id" : "S001258",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001258",
       "source" : "FALL CREEK",
@@ -9246,7 +8978,6 @@
 },
 {
   "id" :  "S013244",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.844059, 39.83697239],
   "geometry": {
@@ -9255,7 +8986,6 @@
     },
   "properties": {
       "id" : "S013244",
-      "kind": "right",
       "name" : "CHARLES C ADAMS",
       "application_id" : "S013244",
       "source" : "ROCK CREEK",
@@ -9315,7 +9045,6 @@
 },
 {
   "id" :  "F003379S",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4768822, 40.02951941],
   "geometry": {
@@ -9324,7 +9053,6 @@
     },
   "properties": {
       "id" : "F003379S",
-      "kind": "right",
       "name" : "U S LASSEN NATL FOREST",
       "application_id" : "F003379S",
       "source" : "UNSP",
@@ -9384,7 +9112,6 @@
 },
 {
   "id" :  "S013677",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5646693, 40.01108466],
   "geometry": {
@@ -9393,7 +9120,6 @@
     },
   "properties": {
       "id" : "S013677",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013677",
       "source" : "UNST",
@@ -9453,7 +9179,6 @@
 },
 {
   "id" :  "S001299",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5476947, 40.01362627],
   "geometry": {
@@ -9462,7 +9187,6 @@
     },
   "properties": {
       "id" : "S001299",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001299",
       "source" : "SECRET CREEK",
@@ -9522,7 +9246,6 @@
 },
 {
   "id" :  "S012355",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.61202, 40.00274626],
   "geometry": {
@@ -9531,7 +9254,6 @@
     },
   "properties": {
       "id" : "S012355",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012355",
       "source" : "CEDAR CREEK",
@@ -9591,7 +9313,6 @@
 },
 {
   "id" :  "S001300",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4270911, 40.00567166],
   "geometry": {
@@ -9600,7 +9321,6 @@
     },
   "properties": {
       "id" : "S001300",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001300",
       "source" : "BIG KIMSHEW CREEK",
@@ -9660,7 +9380,6 @@
 },
 {
   "id" :  "S013675",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4492268, 40.00845667],
   "geometry": {
@@ -9669,7 +9388,6 @@
     },
   "properties": {
       "id" : "S013675",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013675",
       "source" : "BROWN RAVINE",
@@ -9729,7 +9447,6 @@
 },
 {
   "id" :  "S009580",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7391858, 39.74276139],
   "geometry": {
@@ -9738,7 +9455,6 @@
     },
   "properties": {
       "id" : "S009580",
-      "kind": "right",
       "name" : "Stephen  Meline IV",
       "application_id" : "S009580",
       "source" : "LITTLE CHICO CREEK",
@@ -9798,7 +9514,6 @@
 },
 {
   "id" :  "S013679",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5475813, 40.03050863],
   "geometry": {
@@ -9807,7 +9522,6 @@
     },
   "properties": {
       "id" : "S013679",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013679",
       "source" : "UNST",
@@ -9867,7 +9581,6 @@
 },
 {
   "id" :  "S001303",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5466848, 40.03105409],
   "geometry": {
@@ -9876,7 +9589,6 @@
     },
   "properties": {
       "id" : "S001303",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001303",
       "source" : "BULL CREEK",
@@ -9936,7 +9648,6 @@
 },
 {
   "id" :  "S013647",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6274002, 39.93311537],
   "geometry": {
@@ -9945,7 +9656,6 @@
     },
   "properties": {
       "id" : "S013647",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013647",
       "source" : "PLATT RAVINE",
@@ -10005,7 +9715,6 @@
 },
 {
   "id" :  "S013644",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5420557, 39.92430437],
   "geometry": {
@@ -10014,7 +9723,6 @@
     },
   "properties": {
       "id" : "S013644",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013644",
       "source" : "LONG RAVINE",
@@ -10074,7 +9782,6 @@
 },
 {
   "id" :  "S001263",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4301301, 39.85518704],
   "geometry": {
@@ -10083,7 +9790,6 @@
     },
   "properties": {
       "id" : "S001263",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001263",
       "source" : "LOCKERMAN CREEK",
@@ -10143,7 +9849,6 @@
 },
 {
   "id" :  "S001261",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4981603, 39.85549598],
   "geometry": {
@@ -10152,7 +9857,6 @@
     },
   "properties": {
       "id" : "S001261",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001261",
       "source" : "FALL CREEK",
@@ -10212,7 +9916,6 @@
 },
 {
   "id" :  "S001262",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4796349, 39.85596478],
   "geometry": {
@@ -10221,7 +9924,6 @@
     },
   "properties": {
       "id" : "S001262",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001262",
       "source" : "FALL CREEK",
@@ -10281,7 +9983,6 @@
 },
 {
   "id" :  "S001305",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5723103, 40.07274278],
   "geometry": {
@@ -10290,7 +9991,6 @@
     },
   "properties": {
       "id" : "S001305",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001305",
       "source" : "BUTTE CREEK",
@@ -10350,7 +10050,6 @@
 },
 {
   "id" :  "S001306",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5304954, 40.0738132],
   "geometry": {
@@ -10359,7 +10058,6 @@
     },
   "properties": {
       "id" : "S001306",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001306",
       "source" : "BOLT CREEK",
@@ -10419,7 +10117,6 @@
 },
 {
   "id" :  "S013689",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.507975, 40.07495337],
   "geometry": {
@@ -10428,7 +10125,6 @@
     },
   "properties": {
       "id" : "S013689",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013689",
       "source" : "BOLT CREEK",
@@ -10488,7 +10184,6 @@
 },
 {
   "id" :  "S013636",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4278398, 39.91749203],
   "geometry": {
@@ -10497,7 +10192,6 @@
     },
   "properties": {
       "id" : "S013636",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013636",
       "source" : "UNST",
@@ -10557,7 +10251,6 @@
 },
 {
   "id" :  "S013685",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5479464, 40.05590296],
   "geometry": {
@@ -10566,7 +10259,6 @@
     },
   "properties": {
       "id" : "S013685",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013685",
       "source" : "UNST",
@@ -10626,7 +10318,6 @@
 },
 {
   "id" :  "S001269",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4826497, 39.881783],
   "geometry": {
@@ -10635,7 +10326,6 @@
     },
   "properties": {
       "id" : "S001269",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001269",
       "source" : "LITTLE ROCK CREEK",
@@ -10695,7 +10385,6 @@
 },
 {
   "id" :  "S001266",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4927221, 39.86864975],
   "geometry": {
@@ -10704,7 +10393,6 @@
     },
   "properties": {
       "id" : "S001266",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001266",
       "source" : "FALL CREEK",
@@ -10764,7 +10452,6 @@
 },
 {
   "id" :  "S001279",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4833212, 39.93559111],
   "geometry": {
@@ -10773,7 +10460,6 @@
     },
   "properties": {
       "id" : "S001279",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001279",
       "source" : "BREAKNECK CANYON",
@@ -10833,7 +10519,6 @@
 },
 {
   "id" :  "S013648",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5393066, 39.93568592],
   "geometry": {
@@ -10842,7 +10527,6 @@
     },
   "properties": {
       "id" : "S013648",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013648",
       "source" : "LONG RAVINE",
@@ -10902,7 +10586,6 @@
 },
 {
   "id" :  "S000889",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5300288, 39.93661004],
   "geometry": {
@@ -10911,7 +10594,6 @@
     },
   "properties": {
       "id" : "S000889",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000889",
       "source" : "WEST BRANCH FEATHER RIVER",
@@ -10971,7 +10653,6 @@
 },
 {
   "id" :  "S000891",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6313119, 39.86751856],
   "geometry": {
@@ -10980,7 +10661,6 @@
     },
   "properties": {
       "id" : "S000891",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000891",
       "source" : "BUTTE CREEK",
@@ -11040,7 +10720,6 @@
 },
 {
   "id" :  "S013625",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4312381, 39.89417442],
   "geometry": {
@@ -11049,7 +10728,6 @@
     },
   "properties": {
       "id" : "S013625",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013625",
       "source" : "CAMP CREEK",
@@ -11109,7 +10787,6 @@
 },
 {
   "id" :  "S013630",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5638195, 39.89336683],
   "geometry": {
@@ -11118,7 +10795,6 @@
     },
   "properties": {
       "id" : "S013630",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013630",
       "source" : "LITTLE WEST FORK FEATHER RIVER",
@@ -11178,7 +10854,6 @@
 },
 {
   "id" :  "S012349",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.430875, 39.89499623],
   "geometry": {
@@ -11187,7 +10862,6 @@
     },
   "properties": {
       "id" : "S012349",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012349",
       "source" : "CAMP CREEK",
@@ -11247,7 +10921,6 @@
 },
 {
   "id" :  "S013662",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6273853, 39.96935055],
   "geometry": {
@@ -11256,7 +10929,6 @@
     },
   "properties": {
       "id" : "S013662",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013662",
       "source" : "WEST BRANCH BUTTE CREEK",
@@ -11316,7 +10988,6 @@
 },
 {
   "id" :  "S001253",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.644142, 39.79645668],
   "geometry": {
@@ -11325,7 +10996,6 @@
     },
   "properties": {
       "id" : "S001253",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S001253",
       "source" : "GRIFFIN GULCH",
@@ -11385,7 +11055,6 @@
 },
 {
   "id" :  "S001291",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4810064, 39.95918897],
   "geometry": {
@@ -11394,7 +11063,6 @@
     },
   "properties": {
       "id" : "S001291",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001291",
       "source" : "UNST",
@@ -11454,7 +11122,6 @@
 },
 {
   "id" :  "F003378S",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.3873008, 40.1023706],
   "geometry": {
@@ -11463,7 +11130,6 @@
     },
   "properties": {
       "id" : "F003378S",
-      "kind": "right",
       "name" : "U S LASSEN NATL FOREST",
       "application_id" : "F003378S",
       "source" : "COLD SPRING",
@@ -11523,7 +11189,6 @@
 },
 {
   "id" :  "F005180S",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4972287, 40.10235838],
   "geometry": {
@@ -11532,7 +11197,6 @@
     },
   "properties": {
       "id" : "F005180S",
-      "kind": "right",
       "name" : "U S LASSEN NATL FOREST",
       "application_id" : "F005180S",
       "source" : "UNSP",
@@ -11592,7 +11256,6 @@
 },
 {
   "id" :  "S013664",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5165899, 39.97196745],
   "geometry": {
@@ -11601,7 +11264,6 @@
     },
   "properties": {
       "id" : "S013664",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013664",
       "source" : "FISH CREEK",
@@ -11661,7 +11323,6 @@
 },
 {
   "id" :  "S012366",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4747686, 40.1173559],
   "geometry": {
@@ -11670,7 +11331,6 @@
     },
   "properties": {
       "id" : "S012366",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012366",
       "source" : "WILLOW CREEK",
@@ -11730,7 +11390,6 @@
 },
 {
   "id" :  "S013666",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.460702, 39.97858829],
   "geometry": {
@@ -11739,7 +11398,6 @@
     },
   "properties": {
       "id" : "S013666",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013666",
       "source" : "UNST",
@@ -11799,7 +11457,6 @@
 },
 {
   "id" :  "S013661",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6753357, 39.97690427],
   "geometry": {
@@ -11808,7 +11465,6 @@
     },
   "properties": {
       "id" : "S013661",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013661",
       "source" : "WEB HOLLOW",
@@ -11868,7 +11524,6 @@
 },
 {
   "id" :  "S012332",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6755141, 39.97690476],
   "geometry": {
@@ -11877,7 +11532,6 @@
     },
   "properties": {
       "id" : "S012332",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012332",
       "source" : "ROCK CREEK",
@@ -11937,7 +11591,6 @@
 },
 {
   "id" :  "S012356",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6755141, 39.97690476],
   "geometry": {
@@ -11946,7 +11599,6 @@
     },
   "properties": {
       "id" : "S012356",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012356",
       "source" : "WEB HOLLOW CREEK",
@@ -12006,7 +11658,6 @@
 },
 {
   "id" :  "S012335",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4979824, 39.9795759],
   "geometry": {
@@ -12015,7 +11666,6 @@
     },
   "properties": {
       "id" : "S012335",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012335",
       "source" : "DISCOVERY CREEK",
@@ -12075,7 +11725,6 @@
 },
 {
   "id" :  "S012357",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4979824, 39.9795759],
   "geometry": {
@@ -12084,7 +11733,6 @@
     },
   "properties": {
       "id" : "S012357",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012357",
       "source" : "LAST CHANCE CREEK",
@@ -12144,7 +11792,6 @@
 },
 {
   "id" :  "S001293",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6203792, 39.97838688],
   "geometry": {
@@ -12153,7 +11800,6 @@
     },
   "properties": {
       "id" : "S001293",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001293",
       "source" : "WEST BRANCH BUTTE CREEK",
@@ -12213,7 +11859,6 @@
 },
 {
   "id" :  "S012330",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5323021, 39.81006565],
   "geometry": {
@@ -12222,7 +11867,6 @@
     },
   "properties": {
       "id" : "S012330",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012330",
       "source" : "UNST",
@@ -12282,7 +11926,6 @@
 },
 {
   "id" :  "S013615",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5312287, 39.81088495],
   "geometry": {
@@ -12291,7 +11934,6 @@
     },
   "properties": {
       "id" : "S013615",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013615",
       "source" : "UNST",
@@ -12351,7 +11993,6 @@
 },
 {
   "id" :  "S001295",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5557829, 39.98035698],
   "geometry": {
@@ -12360,7 +12001,6 @@
     },
   "properties": {
       "id" : "S001295",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001295",
       "source" : "UNST",
@@ -12420,7 +12060,6 @@
 },
 {
   "id" :  "S000893",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5814722, 39.98072558],
   "geometry": {
@@ -12429,7 +12068,6 @@
     },
   "properties": {
       "id" : "S000893",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000893",
       "source" : "INSKIP CREEK",
@@ -12489,7 +12127,6 @@
 },
 {
   "id" :  "S013694",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5789654, 40.09417999],
   "geometry": {
@@ -12498,7 +12135,6 @@
     },
   "properties": {
       "id" : "S013694",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013694",
       "source" : "CASCADE CREEK",
@@ -12558,7 +12194,6 @@
 },
 {
   "id" :  "S010395",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4319291, 39.80907531],
   "geometry": {
@@ -12567,7 +12202,6 @@
     },
   "properties": {
       "id" : "S010395",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S010395",
       "source" : "NORTH FORK FEATHER RIVER",
@@ -12627,7 +12261,6 @@
 },
 {
   "id" :  "S000917",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6394633, 39.80659988],
   "geometry": {
@@ -12636,7 +12269,6 @@
     },
   "properties": {
       "id" : "S000917",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000917",
       "source" : "HELLTOWN RAVINE",
@@ -12696,7 +12328,6 @@
 },
 {
   "id" :  "S013663",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.551198, 39.97196714],
   "geometry": {
@@ -12705,7 +12336,6 @@
     },
   "properties": {
       "id" : "S013663",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013663",
       "source" : "CLEAR CREEK",
@@ -12765,7 +12395,6 @@
 },
 {
   "id" :  "S013667",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4634023, 39.97544372],
   "geometry": {
@@ -12774,7 +12403,6 @@
     },
   "properties": {
       "id" : "S013667",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013667",
       "source" : "UNST",
@@ -12834,7 +12462,6 @@
 },
 {
   "id" :  "S013628",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4822528, 39.88727164],
   "geometry": {
@@ -12843,7 +12470,6 @@
     },
   "properties": {
       "id" : "S013628",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013628",
       "source" : "LITTLE ROCK CREEK",
@@ -12903,7 +12529,6 @@
 },
 {
   "id" :  "F000155S",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.3813381, 39.814174],
   "geometry": {
@@ -12912,7 +12537,6 @@
     },
   "properties": {
       "id" : "F000155S",
-      "kind": "right",
       "name" : "U S PLUMAS NATL FOREST",
       "application_id" : "F000155S",
       "source" : "PARADE GROUND SPRING",
@@ -12972,7 +12596,6 @@
 },
 {
   "id" :  "S008006",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.642631, 39.81360995],
   "geometry": {
@@ -12981,7 +12604,6 @@
     },
   "properties": {
       "id" : "S008006",
-      "kind": "right",
       "name" : "WOLFE-SCHAFER & COFFEE",
       "application_id" : "S008006",
       "source" : "NESBET RAVINE",
@@ -13041,7 +12663,6 @@
 },
 {
   "id" :  "S000892",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5696465, 39.81514976],
   "geometry": {
@@ -13050,7 +12671,6 @@
     },
   "properties": {
       "id" : "S000892",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000892",
       "source" : "WEST BRANCH FEATHER RIVER",
@@ -13110,7 +12730,6 @@
 },
 {
   "id" :  "S008459",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5821024, 39.81574376],
   "geometry": {
@@ -13119,7 +12738,6 @@
     },
   "properties": {
       "id" : "S008459",
-      "kind": "right",
       "name" : "Paradise Irrigation District",
       "application_id" : "S008459",
       "source" : "LITTLE BUTTE CREEK",
@@ -13179,7 +12797,6 @@
 },
 {
   "id" :  "S001268",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5065208, 39.88215978],
   "geometry": {
@@ -13188,7 +12805,6 @@
     },
   "properties": {
       "id" : "S001268",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001268",
       "source" : "WEST BRANCH FEATHER RIVER",
@@ -13248,7 +12864,6 @@
 },
 {
   "id" :  "S012336",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5980993, 39.88168469],
   "geometry": {
@@ -13257,7 +12872,6 @@
     },
   "properties": {
       "id" : "S012336",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012336",
       "source" : "FISH CREEK",
@@ -13317,7 +12931,6 @@
 },
 {
   "id" :  "S013427",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5980993, 39.88168469],
   "geometry": {
@@ -13326,7 +12939,6 @@
     },
   "properties": {
       "id" : "S013427",
-      "kind": "right",
       "name" : "LUCIAN B VANDEGRIFT",
       "application_id" : "S013427",
       "source" : "LITTLE BUTTE CREEK",
@@ -13386,7 +12998,6 @@
 },
 {
   "id" :  "S012338",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5980993, 39.88168469],
   "geometry": {
@@ -13395,7 +13006,6 @@
     },
   "properties": {
       "id" : "S012338",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012338",
       "source" : "CLEAR CREEK",
@@ -13455,7 +13065,6 @@
 },
 {
   "id" :  "S012333",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5980993, 39.88168469],
   "geometry": {
@@ -13464,7 +13073,6 @@
     },
   "properties": {
       "id" : "S012333",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012333",
       "source" : "WEST BRANCH BUTTE CREEK",
@@ -13524,7 +13132,6 @@
 },
 {
   "id" :  "S012337",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5980993, 39.88168469],
   "geometry": {
@@ -13533,7 +13140,6 @@
     },
   "properties": {
       "id" : "S012337",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012337",
       "source" : "CLEAR CREEK",
@@ -13593,7 +13199,6 @@
 },
 {
   "id" :  "S013632",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5958909, 39.89389314],
   "geometry": {
@@ -13602,7 +13207,6 @@
     },
   "properties": {
       "id" : "S013632",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013632",
       "source" : "LITTLE BUTTE CREEK",
@@ -13662,7 +13266,6 @@
 },
 {
   "id" :  "S000897",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5848076, 39.95987482],
   "geometry": {
@@ -13671,7 +13274,6 @@
     },
   "properties": {
       "id" : "S000897",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S000897",
       "source" : "KELSEY CREEK",
@@ -13731,7 +13333,6 @@
 },
 {
   "id" :  "S012345",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5662954, 39.89639567],
   "geometry": {
@@ -13740,7 +13341,6 @@
     },
   "properties": {
       "id" : "S012345",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012345",
       "source" : "LITTLE WEST FORK FEATHER RIVER",
@@ -13800,7 +13400,6 @@
 },
 {
   "id" :  "S012347",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4836741, 39.8878269],
   "geometry": {
@@ -13809,7 +13408,6 @@
     },
   "properties": {
       "id" : "S012347",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012347",
       "source" : "LITTLE ROCK CREEK",
@@ -13869,7 +13467,6 @@
 },
 {
   "id" :  "S013658",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.634258, 39.95139182],
   "geometry": {
@@ -13878,7 +13475,6 @@
     },
   "properties": {
       "id" : "S013658",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013658",
       "source" : "UNST",
@@ -13938,7 +13534,6 @@
 },
 {
   "id" :  "S013616",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5500369, 39.81988053],
   "geometry": {
@@ -13947,7 +13542,6 @@
     },
   "properties": {
       "id" : "S013616",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013616",
       "source" : "RATTLESNAKE CREEK",
@@ -14007,7 +13601,6 @@
 },
 {
   "id" :  "S012346",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5456016, 39.89988629],
   "geometry": {
@@ -14016,7 +13609,6 @@
     },
   "properties": {
       "id" : "S012346",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012346",
       "source" : "LONG RAVINE",
@@ -14076,7 +13668,6 @@
 },
 {
   "id" :  "S013631",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6405882, 39.89952853],
   "geometry": {
@@ -14085,7 +13676,6 @@
     },
   "properties": {
       "id" : "S013631",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013631",
       "source" : "LITTLE CHICO CREEK",
@@ -14145,7 +13735,6 @@
 },
 {
   "id" :  "S013691",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4840346, 40.08053261],
   "geometry": {
@@ -14154,7 +13743,6 @@
     },
   "properties": {
       "id" : "S013691",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013691",
       "source" : "BOLT CREEK",
@@ -14214,7 +13802,6 @@
 },
 {
   "id" :  "S012368",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4786272, 40.08086246],
   "geometry": {
@@ -14223,7 +13810,6 @@
     },
   "properties": {
       "id" : "S012368",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012368",
       "source" : "BOLT CREEK",
@@ -14283,7 +13869,6 @@
 },
 {
   "id" :  "S012369",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5109544, 40.08292726],
   "geometry": {
@@ -14292,7 +13877,6 @@
     },
   "properties": {
       "id" : "S012369",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012369",
       "source" : "UNST",
@@ -14352,7 +13936,6 @@
 },
 {
   "id" :  "S013690",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5097026, 40.08305913],
   "geometry": {
@@ -14361,7 +13944,6 @@
     },
   "properties": {
       "id" : "S013690",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013690",
       "source" : "MALLOY CREEK_(AKA UNST)",
@@ -14421,7 +14003,6 @@
 },
 {
   "id" :  "S012362",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5910062, 40.08324321],
   "geometry": {
@@ -14430,7 +14011,6 @@
     },
   "properties": {
       "id" : "S012362",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012362",
       "source" : "BIG CHICO CREEK",
@@ -14490,7 +14070,6 @@
 },
 {
   "id" :  "S012339",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.472491, 39.95311205],
   "geometry": {
@@ -14499,7 +14078,6 @@
     },
   "properties": {
       "id" : "S012339",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012339",
       "source" : "KEYSER CREEK",
@@ -14559,7 +14137,6 @@
 },
 {
   "id" :  "S001290",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4927538, 39.96253407],
   "geometry": {
@@ -14568,7 +14145,6 @@
     },
   "properties": {
       "id" : "S001290",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001290",
       "source" : "DISCOVERY CREEK",
@@ -14628,7 +14204,6 @@
 },
 {
   "id" :  "S013665",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4954025, 39.96625128],
   "geometry": {
@@ -14637,7 +14212,6 @@
     },
   "properties": {
       "id" : "S013665",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013665",
       "source" : "UNST",
@@ -14697,7 +14271,6 @@
 },
 {
   "id" :  "S013660",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7058979, 39.96380834],
   "geometry": {
@@ -14706,7 +14279,6 @@
     },
   "properties": {
       "id" : "S013660",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013660",
       "source" : "UNSP",
@@ -14766,7 +14338,6 @@
 },
 {
   "id" :  "S001271",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4137366, 39.89875565],
   "geometry": {
@@ -14775,7 +14346,6 @@
     },
   "properties": {
       "id" : "S001271",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001271",
       "source" : "SWAMP CREEK",
@@ -14835,7 +14405,6 @@
 },
 {
   "id" :  "S013626",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4358909, 39.89172607],
   "geometry": {
@@ -14844,7 +14413,6 @@
     },
   "properties": {
       "id" : "S013626",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013626",
       "source" : "CAMP CREEK",
@@ -14904,7 +14472,6 @@
 },
 {
   "id" :  "S013627",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4458603, 39.89287135],
   "geometry": {
@@ -14913,7 +14480,6 @@
     },
   "properties": {
       "id" : "S013627",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013627",
       "source" : "UNST",
@@ -14973,7 +14539,6 @@
 },
 {
   "id" :  "S009461",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6568195, 39.89655735],
   "geometry": {
@@ -14982,7 +14547,6 @@
     },
   "properties": {
       "id" : "S009461",
-      "kind": "right",
       "name" : "KEN  GROSSMAN",
       "application_id" : "S009461",
       "source" : "UNST",
@@ -15042,7 +14606,6 @@
 },
 {
   "id" :  "S013659",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7129061, 39.95119831],
   "geometry": {
@@ -15051,7 +14614,6 @@
     },
   "properties": {
       "id" : "S013659",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013659",
       "source" : "UNST (AKA WEST BRANCH MUD CREEK)",
@@ -15111,7 +14673,6 @@
 },
 {
   "id" :  "S013654",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.473194, 39.95448774],
   "geometry": {
@@ -15120,7 +14681,6 @@
     },
   "properties": {
       "id" : "S013654",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013654",
       "source" : "KEYSER CREEK",
@@ -15180,7 +14740,6 @@
 },
 {
   "id" :  "S013655",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4981481, 39.95651787],
   "geometry": {
@@ -15189,7 +14748,6 @@
     },
   "properties": {
       "id" : "S013655",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013655",
       "source" : "UNST",
@@ -15249,7 +14807,6 @@
 },
 {
   "id" :  "S001288",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5027832, 39.95681199],
   "geometry": {
@@ -15258,7 +14815,6 @@
     },
   "properties": {
       "id" : "S001288",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001288",
       "source" : "HIGH ROCK RAVINE",
@@ -15318,7 +14874,6 @@
 },
 {
   "id" :  "S012334",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6402198, 39.90186078],
   "geometry": {
@@ -15327,7 +14882,6 @@
     },
   "properties": {
       "id" : "S012334",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012334",
       "source" : "LITTLE CHICO CREEK",
@@ -15387,7 +14941,6 @@
 },
 {
   "id" :  "F003377S",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.583292, 40.08815653],
   "geometry": {
@@ -15396,7 +14949,6 @@
     },
   "properties": {
       "id" : "F003377S",
-      "kind": "right",
       "name" : "U S LASSEN NATL FOREST",
       "application_id" : "F003377S",
       "source" : "UNXX",
@@ -15456,7 +15008,6 @@
 },
 {
   "id" :  "S013693",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5532612, 40.08941516],
   "geometry": {
@@ -15465,7 +15016,6 @@
     },
   "properties": {
       "id" : "S013693",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013693",
       "source" : "BIG CHICO CREEK",
@@ -15525,7 +15075,6 @@
 },
 {
   "id" :  "S013668",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4979982, 39.97737991],
   "geometry": {
@@ -15534,7 +15083,6 @@
     },
   "properties": {
       "id" : "S013668",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013668",
       "source" : "LAST CHANCE CREEK",
@@ -15594,7 +15142,6 @@
 },
 {
   "id" :  "S001292",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6393015, 39.97625033],
   "geometry": {
@@ -15603,7 +15150,6 @@
     },
   "properties": {
       "id" : "S001292",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001292",
       "source" : "NELSON RAVINE",
@@ -15663,7 +15209,6 @@
 },
 {
   "id" :  "S008353",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4897482, 39.78792653],
   "geometry": {
@@ -15672,7 +15217,6 @@
     },
   "properties": {
       "id" : "S008353",
-      "kind": "right",
       "name" : "GERALD W HARDY",
       "application_id" : "S008353",
       "source" : "UNST",
@@ -15732,7 +15276,6 @@
 },
 {
   "id" :  "S013614",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5473939, 39.78816252],
   "geometry": {
@@ -15741,7 +15284,6 @@
     },
   "properties": {
       "id" : "S013614",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013614",
       "source" : "GRIFFIN GULCH",
@@ -15801,7 +15343,6 @@
 },
 {
   "id" :  "S015464",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.3642884, 39.65320412],
   "geometry": {
@@ -15810,7 +15351,6 @@
     },
   "properties": {
       "id" : "S015464",
-      "kind": "right",
       "name" : "OKIZU FOUNDATION",
       "application_id" : "S015464",
       "source" : "UNST",
@@ -15870,7 +15410,6 @@
 },
 {
   "id" :  "S000047",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5839259, 39.62879223],
   "geometry": {
@@ -15879,7 +15418,6 @@
     },
   "properties": {
       "id" : "S000047",
-      "kind": "right",
       "name" : "GEORGE R CHAFFIN",
       "application_id" : "S000047",
       "source" : "FLAG CANYON CREEK",
@@ -15939,7 +15477,6 @@
 },
 {
   "id" :  "S012348",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4451389, 39.89396604],
   "geometry": {
@@ -15948,7 +15485,6 @@
     },
   "properties": {
       "id" : "S012348",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012348",
       "source" : "UNST",
@@ -16008,7 +15544,6 @@
 },
 {
   "id" :  "S013651",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4279651, 39.94576766],
   "geometry": {
@@ -16017,7 +15552,6 @@
     },
   "properties": {
       "id" : "S013651",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013651",
       "source" : "LITTLE KIMSHEW CREEK",
@@ -16077,7 +15611,6 @@
 },
 {
   "id" :  "S013692",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5007879, 40.0863688],
   "geometry": {
@@ -16086,7 +15619,6 @@
     },
   "properties": {
       "id" : "S013692",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013692",
       "source" : "MALLOY CREEK (AKA UNST)",
@@ -16146,7 +15678,6 @@
 },
 {
   "id" :  "S009640",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5507246, 40.09462102],
   "geometry": {
@@ -16155,7 +15686,6 @@
     },
   "properties": {
       "id" : "S009640",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S009640",
       "source" : "UNST",
@@ -16215,7 +15745,6 @@
 },
 {
   "id" :  "S009677",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5185907, 39.3969563],
   "geometry": {
@@ -16224,7 +15753,6 @@
     },
   "properties": {
       "id" : "S009677",
-      "kind": "right",
       "name" : "DAVID  DALEY",
       "application_id" : "S009677",
       "source" : "WYANDOTTE CREEK",
@@ -16284,7 +15812,6 @@
 },
 {
   "id" :  "S011484",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5810964, 39.68643572],
   "geometry": {
@@ -16293,7 +15820,6 @@
     },
   "properties": {
       "id" : "S011484",
-      "kind": "right",
       "name" : "RON C COOKE",
       "application_id" : "S011484",
       "source" : "UNSP",
@@ -16353,7 +15879,6 @@
 },
 {
   "id" :  "S013678",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5534952, 40.02723781],
   "geometry": {
@@ -16362,7 +15887,6 @@
     },
   "properties": {
       "id" : "S013678",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013678",
       "source" : "UNST",
@@ -16422,7 +15946,6 @@
 },
 {
   "id" :  "S016123",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.587, 39.6786],
   "geometry": {
@@ -16431,7 +15954,6 @@
     },
   "properties": {
       "id" : "S016123",
-      "kind": "right",
       "name" : "Richard A Meyers",
       "application_id" : "S016123",
       "source" : "DRY CREEK",
@@ -16491,7 +16013,6 @@
 },
 {
   "id" :  "S013633",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5427099, 39.90605169],
   "geometry": {
@@ -16500,7 +16021,6 @@
     },
   "properties": {
       "id" : "S013633",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013633",
       "source" : "LONG RAVINE",
@@ -16560,7 +16080,6 @@
 },
 {
   "id" :  "S012340",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5980993, 39.88168469],
   "geometry": {
@@ -16569,7 +16088,6 @@
     },
   "properties": {
       "id" : "S012340",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012340",
       "source" : "LONG RAVINE",
@@ -16629,7 +16147,6 @@
 },
 {
   "id" :  "S013629",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5473907, 39.89879512],
   "geometry": {
@@ -16638,7 +16155,6 @@
     },
   "properties": {
       "id" : "S013629",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013629",
       "source" : "LONG RAVINE",
@@ -16698,7 +16214,6 @@
 },
 {
   "id" :  "S001281",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4476062, 39.94256693],
   "geometry": {
@@ -16707,7 +16222,6 @@
     },
   "properties": {
       "id" : "S001281",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S001281",
       "source" : "BIG KIMSHEW CREEK",
@@ -16767,7 +16281,6 @@
 },
 {
   "id" :  "S001251",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5244446, 39.9711759],
   "geometry": {
@@ -16776,7 +16289,6 @@
     },
   "properties": {
       "id" : "S001251",
-      "kind": "right",
       "name" : "PACIFIC GAS AND ELECTRIC COMPANY",
       "application_id" : "S001251",
       "source" : "WEST BRANCH FEATHER RIVER",
@@ -16836,7 +16348,6 @@
 },
 {
   "id" :  "S009610",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.7674942, 39.83876779],
   "geometry": {
@@ -16845,7 +16356,6 @@
     },
   "properties": {
       "id" : "S009610",
-      "kind": "right",
       "name" : "YOUTH WITH A MISSION SPRINGS OF LIVING WATER",
       "application_id" : "S009610",
       "source" : "MUD CREEK",
@@ -16905,7 +16415,6 @@
 },
 {
   "id" :  "S013635",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.4831666, 39.90827623],
   "geometry": {
@@ -16914,7 +16423,6 @@
     },
   "properties": {
       "id" : "S013635",
-      "kind": "right",
       "name" : "DIAMOND LANDS CORPORATION",
       "application_id" : "S013635",
       "source" : "BIG KIMSHEW CREEK",
@@ -16974,7 +16482,6 @@
 },
 {
   "id" :  "S012341",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5169202, 39.92420391],
   "geometry": {
@@ -16983,7 +16490,6 @@
     },
   "properties": {
       "id" : "S012341",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S012341",
       "source" : "UNST",
@@ -17043,7 +16549,6 @@
 },
 {
   "id" :  "S017080",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.3732, 39.6442],
   "geometry": {
@@ -17052,7 +16557,6 @@
     },
   "properties": {
       "id" : "S017080",
-      "kind": "right",
       "name" : "John  Chapa",
       "application_id" : "S017080",
       "source" : "SOUTH FORK BERRY CREEK",
@@ -17112,7 +16616,6 @@
 },
 {
   "id" :  "S016907",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5558, 39.3157],
   "geometry": {
@@ -17121,7 +16624,6 @@
     },
   "properties": {
       "id" : "S016907",
-      "kind": "right",
       "name" : "Bacon Ranch LLC",
       "application_id" : "S016907",
       "source" : "NORTH HONCUT CREEK",
@@ -17181,7 +16683,6 @@
 },
 {
   "id" :  "S018613",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-122.0212, 39.7974],
   "geometry": {
@@ -17190,7 +16691,6 @@
     },
   "properties": {
       "id" : "S018613",
-      "kind": "right",
       "name" : "Farmland Reserve, Inc.",
       "application_id" : "S018613",
       "source" : "SACRAMENTO RIVER",
@@ -17250,7 +16750,6 @@
 },
 {
   "id" :  "S018616",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.6371, 39.3565],
   "geometry": {
@@ -17259,7 +16758,6 @@
     },
   "properties": {
       "id" : "S018616",
-      "kind": "right",
       "name" : "Farmland Reserve, Inc.",
       "application_id" : "S018616",
       "source" : "FEATHER RIVER",
@@ -17319,7 +16817,6 @@
 },
 {
   "id" :  "S019705",
-  "kind": "right",
   "type":"Feature",
   "coordinates": [-121.5314, 39.9404],
   "geometry": {
@@ -17328,7 +16825,6 @@
     },
   "properties": {
       "id" : "S019705",
-      "kind": "right",
       "name" : "SIERRA PACIFIC INDUSTRIES",
       "application_id" : "S019705",
       "source" : "WEST BRANCH FEATHER RIVER",
