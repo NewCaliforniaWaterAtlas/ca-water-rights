@@ -180,20 +180,20 @@ water.repaint_agent = function(agent) {
 
   // ignore elements that do not have an id
   var id = agent._id;
-  if(!id) continue;
+  // if(!id) continue;
 
   // ignore agents that are on map already
   // later we want to carefully prune them off if off screen @TODO
-  if(map_features[id]) continue;
+  // if(map_features[id]) continue;
 
   // ignore features with no location
   // @TODO later carefully remove features without location if had location before 
   var lat = agent.lat;
   var lon = agent.lon;
-  if(!lat || !lon) continue;
+  // if(!lat || !lon) continue;
  
   var title = agent.title;
-  if(!title) title = "Lemon Tree";
+  if(!title) title = "Water Right";
 
   var art = agent.art;
   if(!art) art = "/images/icons/water_rights_icon.png";
