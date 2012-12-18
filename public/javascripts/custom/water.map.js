@@ -79,11 +79,13 @@ water.setupMap = function() {
 
 //  Core.query({ "properties": {"$or" : [ { "zipcode": "94607" } , { "zipcode": "94606" }, { "zipcode": "94609" }, { "zipcode": "94612" }, { "zipcode": "94610" } ] }}, water.paintTreeMarkers);  
 
-  // Core.query({}, water.paintTreeMarkers);  
+ 
 
   map.setCenterZoom(new MM.Location(lat,lon), 9);
 
-  Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
+  Core.query({'kind': 'right'}, water.paintRightsMarkers); 
+  
+  //Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
 
 };
 
