@@ -3,15 +3,13 @@
 var fs      = require('fs');
 var express = require('express');
 
-
 var EngineProvider = require('./engine').EngineProvider;
 var engine         = new EngineProvider();
-
 
 var _ = require('underscore')._;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// oakland trees configuration
+// configuration
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 var zcache = { 'index.html': '' };
@@ -20,8 +18,6 @@ zcache['index.html'] = fs.readFileSync('./public/index.html');
 var app = module.exports = express.createServer();
 
 app.configure(function(){
-//  app.set('views', __dirname + '/views');
-//  app.set('view engine', 'ejs');
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
@@ -50,7 +46,7 @@ app.dynamicHelpers({
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// oakland trees routes
+// routes
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/', function(req, res){
@@ -74,7 +70,7 @@ app.post("/agent/query", function(req,res) {
 });
 */
 
-app.post('/trees', function(req, res){
+app.post('/water-rights', function(req, res){
   var blob = req.body;
 
   engine.find_many_by(blob,function(error, results) {
