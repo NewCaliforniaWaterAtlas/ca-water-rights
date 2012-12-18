@@ -8,8 +8,9 @@ function enginecallback() {
 EngineProvider = function() {
   //this.db = new MongoDB('127.0.0.1',27017); //localhost
   //this.db = new MongoDB('127.4.131.129',27017); //localhost
-  
-  this.db = new MongoDB(process.env.OPENSHIFT_DB_HOST,process.env.OPENSHIFT_DB_PORT); //openshift
+  var host = process.env.OPENSHIFT_MONGODB_DB_HOST;
+  var port = process.env.OPENSHIFT_MONGODB_DB_PORT;
+  this.db = new MongoDB(host,port); //openshift
 
   console.log("server::engine database is " + this.db );
 };
