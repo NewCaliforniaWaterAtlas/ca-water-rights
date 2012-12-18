@@ -14,7 +14,7 @@ Core.query = function(filter,callback) {
   console.log(jsonblob);
 
   var mycallback = callback;
-  var myurl = "/trees";
+  var myurl = "/water-rights";
 
   $.post(myurl, filter , function(results) { Core.query_callback(results,mycallback); } );
 
