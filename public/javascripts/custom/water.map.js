@@ -19,7 +19,7 @@ water.setMapCenterZoom = function(lat,lon,zoom, map) {
 };
 
 water.setupMap = function() {
-  var layer = new MM.StamenTileLayer("watercolor");
+  var layer = new MM.StamenTileLayer("terrain");
   
   // @TODO need new maps.
   
