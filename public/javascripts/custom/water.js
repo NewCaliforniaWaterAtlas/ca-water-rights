@@ -1,9 +1,9 @@
-var trees = {};
+var water = {};
 
 window.onload = function() {
 
-  trees.setupMap();
-  trees.setupAddress();
+  water.setupMap();
+  water.setupAddress();
 
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
@@ -19,7 +19,7 @@ window.onload = function() {
 //
 // Address handling (a back button) for twitter bootstrap
 //
-trees.setupAddress = function () {
+water.setupAddress = function () {
   // Add a hash to the URL when the user clicks on a tab.
   // Not IE7 compatible but oh well. If we need that we can switch to jquery address.
   $('a[data-toggle="tab"]').bind('click', function(e) {

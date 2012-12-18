@@ -3,12 +3,12 @@ var map = map || {};
 var markers = 0;
 var map_features = {};
 
-trees.setCenterZoom = function(lat,lon,zoom) {
+water.setCenterZoom = function(lat,lon,zoom) {
   if(!map) return;
   if(map.setCenterZoom === undefined) {} else map.setCenterZoom(new MM.Location(lat,lon),zoom);
 };
 
-trees.setMapCenterZoom = function(lat,lon,zoom, map) {
+water.setMapCenterZoom = function(lat,lon,zoom, map) {
 
   var map = map;
   var zoom = zoom;
@@ -18,7 +18,7 @@ trees.setMapCenterZoom = function(lat,lon,zoom, map) {
   if(map.setCenterZoom === undefined) {} else map.setCenterZoom(new MM.Location(lat,lon),zoom);
 };
 
-trees.setupMap = function() {
+water.setupMap = function() {
   // var layer = new MM.StamenTileLayer("watercolor");
   
   // If we cannot load the map for some reason then just use a default image
@@ -30,18 +30,18 @@ trees.setupMap = function() {
     }));
   }
 
-  trees.map = map = new MM.Map("map-container", layer);
+  water.map = map = new MM.Map("map-container", layer);
 
 /*
   if (navigator.geolocation){
     // listen to updates if any
     navigator.geolocation.watchPosition( function(position) {
 
-      trees.gps = position;
+      water.gps = position;
 
-        trees.gps_lat = trees.gps.coords.latitude;
-        trees.gps_lon = trees.gps.coords.longitude;
-        trees.setMapCenterZoom(trees.gps.coords.latitude, trees.gps.coords.longitude, 14, map);
+        water.gps_lat = water.gps.coords.latitude;
+        water.gps_lon = water.gps.coords.longitude;
+        water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, 14, map);
 
     });
   } else {
@@ -58,7 +58,7 @@ trees.setupMap = function() {
   map.addCallback('drawn', function(m) {
     console.log("map moved");
     var center = m.getCenter();
-    Kernel.query({},center.latitude,center.longitude,trees.repaint);
+    Kernel.query({},center.latitude,center.longitude,water.repaint);
   });
 */
 
@@ -72,87 +72,87 @@ trees.setupMap = function() {
   //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
   var lat = 37.8053;
   var lon = -122.2725;
-  //Core.query({"coordinates" : { "$near" : [lon,lat]}}, trees.paintTreeMarkers);
+  //Core.query({"coordinates" : { "$near" : [lon,lat]}}, water.paintTreeMarkers);
 
 
-//  Core.query({ "properties": {"$or" : [ { "zipcode": "94607" } , { "zipcode": "94606" }, { "zipcode": "94609" }, { "zipcode": "94612" }, { "zipcode": "94610" } ] }}, trees.paintTreeMarkers);  
+//  Core.query({ "properties": {"$or" : [ { "zipcode": "94607" } , { "zipcode": "94606" }, { "zipcode": "94609" }, { "zipcode": "94612" }, { "zipcode": "94610" } ] }}, water.paintTreeMarkers);  
 
-  Core.query({}, trees.paintTreeMarkers);  
+  Core.query({}, water.paintTreeMarkers);  
 
   map.setCenterZoom(new MM.Location(lat,lon), 15);
 
-  //Core.query2("/public/data/farmers_markets_nocal.json",trees.paintMarketMarkers);
-  //Core.query2("/public/data/berk_oak_sfo_population-csv.json",trees.paintZipcodeMarkers);
+  //Core.query2("/public/data/farmers_markets_nocal.json",water.paintMarketMarkers);
+  //Core.query2("/public/data/berk_oak_sfo_population-csv.json",water.paintZipcodeMarkers);
 };
 
 
-trees.makeTreeMarker = function(feature) {
+water.makeTreeMarker = function(feature) {
 
   var id = feature.properties.id;
   var marker = document.createElement("div");
  
-  var treeString = '';
-  treeString += "<h2>" + feature.properties.title + "</h2>";
+  var watertring = '';
+  watertring += "<h2>" + feature.properties.title + "</h2>";
 /*
   if(feature.properties.address_street !== undefined) {
-    treeString += "<h3><strong>" + feature.properties.address_street + "</strong></h3>";
+    watertring += "<h3><strong>" + feature.properties.address_street + "</strong></h3>";
   }
   
 */
-  treeString += "<hr>";
+  watertring += "<hr>";
 
 
   if(feature.properties.species_root !== undefined) {
-    treeString += "<p><em>" + feature.properties.species_root + "</em></p>";
+    watertring += "<p><em>" + feature.properties.species_root + "</em></p>";
   }  
 
   if(feature.properties.edible_fruit_tree !== null && feature.properties.edible_fruit_tree !== undefined) {
-    treeString += "<p>Edible? <strong>" + feature.properties.edible_fruit_tree + "</strong></p>";
+    watertring += "<p>Edible? <strong>" + feature.properties.edible_fruit_tree + "</strong></p>";
   }  
   if(feature.properties.graftable !== null && feature.properties.graftable !== "undefined") {
-    treeString += "<p>Graftable? <strong>" + feature.properties.graftable + "</strong></p>";
+    watertring += "<p>Graftable? <strong>" + feature.properties.graftable + "</strong></p>";
   }
   if(feature.properties.address !== undefined) {
-    treeString += "<p>Address <strong>" + feature.properties.address + " Oakland, CA</strong></p>";
+    watertring += "<p>Address <strong>" + feature.properties.address + " Oakland, CA</strong></p>";
   }
   
   if(feature.properties.Seasonality !== undefined && feature.properties.Seasonality !== null) {
-    var seasons = trees.readSeason(feature);
-    treeString += "<p>In season <strong>" + seasons.list.toString() + "</strong></p>";
+    var seasons = water.readSeason(feature);
+    watertring += "<p>In season <strong>" + seasons.list.toString() + "</strong></p>";
   }
 
  /*
  if(feature.stewardship !== undefined) {
-    treeString += "<p>Stewardship <strong>" + feature.stewardship + "</strong></p>";
+    watertring += "<p>Stewardship <strong>" + feature.stewardship + "</strong></p>";
   }  
 
   if(feature.variety !== undefined) {
-    treeString += "<p>Variety <strong>" + feature.variety + "</strong></p>";
+    watertring += "<p>Variety <strong>" + feature.variety + "</strong></p>";
   }   
 
   if(feature.quantity !== undefined) {
-    treeString += "<p>Quantity <strong>" + feature.quantity + "</strong></p>";
+    watertring += "<p>Quantity <strong>" + feature.quantity + "</strong></p>";
   } 
 
   if(feature.description !== undefined) {
-    treeString += "<p>Description <strong>" + feature.description + "</strong></p>";
+    watertring += "<p>Description <strong>" + feature.description + "</strong></p>";
   } 
 
   if(feature.properties.steward_name !== undefined || feature.contact_name !== undefined) {
-    treeString += "<p>Steward Name <strong>" + feature.contact_name + "</strong></p>";
+    watertring += "<p>Steward Name <strong>" + feature.contact_name + "</strong></p>";
   }
 */
 
   if(feature.properties.tree_owner !== undefined) {
-    treeString += "<p>Tree Owner <strong>" + feature.properties.tree_owner + "</strong></p>";
+    watertring += "<p>Tree Owner <strong>" + feature.properties.tree_owner + "</strong></p>";
   }
   
   if(feature.properties.datasource !== undefined) {
-    treeString += "<p>Data Source <strong>" + feature.properties.datasource + "</strong></p>";
+    watertring += "<p>Data Source <strong>" + feature.properties.datasource + "</strong></p>";
   }
 
   if(feature.properties.last_updated !== undefined) {
-    treeString += "<p>Last Updated <strong>" + feature.properties.last_updated + "</strong></p>";
+    watertring += "<p>Last Updated <strong>" + feature.properties.last_updated + "</strong></p>";
   }
   
   marker.feature = feature;
@@ -182,7 +182,7 @@ trees.makeTreeMarker = function(feature) {
   // Tooltips
   $("#marker-" + id + " img").qtip({
   	content: {
-      text: treeString,
+      text: watertring,
   	},
   	show: {
   		solo: true,
@@ -210,12 +210,12 @@ trees.makeTreeMarker = function(feature) {
   $('a[title]').qtip();
 
   // Listen for mouseover & mouseout events.
-  MM.addEvent(marker, "mouseover", trees.onMarkerOver);
-  MM.addEvent(marker, "mouseout", trees.onMarkerOut);
-  MM.addEvent(marker, "click", trees.onMarkerClick);
+  MM.addEvent(marker, "mouseover", water.onMarkerOver);
+  MM.addEvent(marker, "mouseout", water.onMarkerOut);
+  MM.addEvent(marker, "click", water.onMarkerClick);
 }
 
-trees.readSeason = function(feature) {
+water.readSeason = function(feature) {
   var feature = feature;
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var seasonality = feature.properties.Seasonality.split(",");
@@ -230,7 +230,7 @@ trees.readSeason = function(feature) {
   return inSeason;
 }
 
-trees.makeMarketMarker = function(feature) {
+water.makeMarketMarker = function(feature) {
 
   var id = feature.properties.id;
   var marker = document.createElement("div");
@@ -295,13 +295,13 @@ trees.makeMarketMarker = function(feature) {
   $('a[title]').qtip();
 
   // Listen for mouseover & mouseout events.
-  MM.addEvent(marker, "mouseover", trees.onMarkerOver);
-  MM.addEvent(marker, "mouseout", trees.onMarkerOut);
-  MM.addEvent(marker, "click", trees.onMarkerClick);
+  MM.addEvent(marker, "mouseover", water.onMarkerOver);
+  MM.addEvent(marker, "mouseout", water.onMarkerOut);
+  MM.addEvent(marker, "click", water.onMarkerClick);
 }
 
 
-trees.makeZipcodeMarker = function(feature) {
+water.makeZipcodeMarker = function(feature) {
 
   var id = feature.properties.id;
   var marker = document.createElement("div");
@@ -367,22 +367,22 @@ trees.makeZipcodeMarker = function(feature) {
   $('a[title]').qtip();
 
   // Listen for mouseover & mouseout events.
-  MM.addEvent(marker, "mouseover", trees.onMarkerOver);
-  MM.addEvent(marker, "mouseout", trees.onMarkerOut);
-  MM.addEvent(marker, "click", trees.onMarkerClick);
+  MM.addEvent(marker, "mouseover", water.onMarkerOver);
+  MM.addEvent(marker, "mouseout", water.onMarkerOut);
+  MM.addEvent(marker, "click", water.onMarkerClick);
 }
 
 
-trees.paintTreeMarkers = function(features) {
+water.paintTreeMarkers = function(features) {
 
-/* {"name": "trees","type":"FeatureCollection","features":[ */
+/* {"name": "water","type":"FeatureCollection","features":[ */
 
   features = features;
   var len = features.length; 
-  console.log("trees::paintTreeMarkers showing markers " + len );
+  console.log("water::paintTreeMarkers showing markers " + len );
   for (var i = 0; i < len; i++) {
     var feature = features[i];
-    trees.makeTreeMarker(feature);
+    water.makeTreeMarker(feature);
   }
   
     var locations = map.getExtent(); // returns an array of Locations
@@ -391,27 +391,27 @@ var zoomLevel = map.getZoom();
   
 };
 
-trees.paintMarketMarkers = function(features) {
+water.paintMarketMarkers = function(features) {
   features = features.features;
   var len = features.length; 
-  console.log("trees::paintMarketMarkers showing markers " + len );
+  console.log("water::paintMarketMarkers showing markers " + len );
   for (var i = 0; i < len; i++) {
     var feature = features[i];
-    trees.makeMarketMarker(feature);
+    water.makeMarketMarker(feature);
   }
 };
 
-trees.paintZipcodeMarkers = function(features) {
+water.paintZipcodeMarkers = function(features) {
   features = features.features;
   var len = features.length; 
-  console.log("trees::paintZipcodeMarkers showing markers " + len );
+  console.log("water::paintZipcodeMarkers showing markers " + len );
   for (var i = 0; i < len; i++) {
     var feature = features[i];
-    trees.makeZipcodeMarker(feature);
+    water.makeZipcodeMarker(feature);
   }
 };
 
-trees.repaint_agent = function(agent) {
+water.repaint_agent = function(agent) {
 
   // ignore elements that do not have an id
   var id = agent._id;
@@ -449,26 +449,26 @@ trees.repaint_agent = function(agent) {
   };
 
   map_features[id] = feature;
-  trees.makeTreeMarker(feature);
+  water.makeTreeMarker(feature);
 }
 
-trees.repaint = function(agents) {
+water.repaint = function(agents) {
   if(!map) return;
-  console.log("trees:: repainting anything on map and pruning non visible items from map");
+  console.log("water:: repainting anything on map and pruning non visible items from map");
   for(var key in agents) {
-    trees.repaint_agent(agents[key]);
+    water.repaint_agent(agents[key]);
   }
 }
 
-trees.getMarker = function(marker) {
+water.getMarker = function(marker) {
   while (marker && marker.className != "marker") {
     marker = marker.parentNode;
   }
   return marker;
 };
 
-trees.onMarkerOver = function(e) {
-  var marker = trees.getMarker(e.target);
+water.onMarkerOver = function(e) {
+  var marker = water.getMarker(e.target);
   if (marker) {
     var marker_id = $(this).attr('marker_id');
     var layer = $(marker).attr("parent");
@@ -477,8 +477,8 @@ trees.onMarkerOver = function(e) {
   }
 };
 
-trees.onMarkerOut = function(e) {
-  var marker = trees.getMarker(e.target);
+water.onMarkerOut = function(e) {
+  var marker = water.getMarker(e.target);
   var layer = $(marker).attr("parent");
   if (marker) {
     // var type = marker.type; 
@@ -487,10 +487,10 @@ trees.onMarkerOut = function(e) {
   return false;
 };
 
-trees.onMarkerClick = function(e) {
+water.onMarkerClick = function(e) {
   var marker = e.target.offsetParent;
-  // trees.popupMarker(marker);
-  var marker = trees.getMarker(e.target);
+  // water.popupMarker(marker);
+  var marker = water.getMarker(e.target);
   if (marker) {
     $('div#panel-container div#panel .content').show();
     console.log(marker);
