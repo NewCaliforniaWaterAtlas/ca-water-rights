@@ -7,6 +7,8 @@ var express = require('express');
 var EngineProvider = require('./engine').EngineProvider;
 var engine         = new EngineProvider();
 
+var credentials = require('./credentials');
+
 
 var _ = require('underscore')._;
 

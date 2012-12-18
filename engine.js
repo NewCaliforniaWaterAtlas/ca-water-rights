@@ -7,9 +7,9 @@ function enginecallback() {
 
 EngineProvider = function() {
   //this.db = new MongoDB('127.0.0.1',27017); //localhost
-  this.db = new MongoDB('127.12.178.129',27017); //localhost
-  console.log("server::engine database is " + this.db );
+  this.db = new MongoDB($OPENSHIFT_MONGODB_DB_HOST,$OPENSHIFT_MONGODB_DB_PORT); //openshift
 
+  console.log("server::engine database is " + this.db );
 };
 
 EngineProvider.prototype.count_all_by = function(hash,callback) {
