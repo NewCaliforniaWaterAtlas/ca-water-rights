@@ -93,15 +93,8 @@ water.makeRightsMarker = function(feature) {
   var id = feature.properties.id;
   var marker = document.createElement("div");
  
-  var watertring = '';
-  watertring += "<h2>" + feature.properties.Water Right Type + "</h2>";
-/*
-  if(feature.properties.address_street !== undefined) {
-    watertring += "<h3><strong>" + feature.properties.address_street + "</strong></h3>";
-  }
-  
-*/
-
+  var waterstring = '';
+  waterstring += "<h2>" + feature.properties.name + "</h2>";
   
   marker.feature = feature;
   markers.addMarker(marker, feature);
@@ -130,7 +123,7 @@ water.makeRightsMarker = function(feature) {
   // Tooltips
   $("#marker-" + id + " img").qtip({
   	content: {
-      text: watertring,
+      text: waterstring,
   	},
   	show: {
   		solo: true,
@@ -173,7 +166,7 @@ water.paintRightsMarkers = function(features) {
   console.log("water::paintTreeMarkers showing markers " + len );
   for (var i = 0; i < len; i++) {
     var feature = features[i];
-    water.makeTreeMarker(feature);
+    water.makeRightsMarker(feature);
   }
   
     var locations = map.getExtent(); // returns an array of Locations
@@ -203,7 +196,7 @@ water.repaint_agent = function(agent) {
   if(!title) title = "Lemon Tree";
 
   var art = agent.art;
-  if(!art) art = "/images/icons/lemon_tree_icon.png";
+  if(!art) art = "/images/icons/water_rights_icon.png";
 
   // console.log("repainting agent " + id + " " + lat + " " + lon + " " + title );
 
