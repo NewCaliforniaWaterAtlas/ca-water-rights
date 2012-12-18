@@ -6,12 +6,12 @@ function enginecallback() {
 }
 
 EngineProvider = function() {
-  var process = process;
+
   //this.db = new MongoDB('127.0.0.1',27017); //localhost
-  //this.db = new MongoDB('127.4.131.129',27017); //localhost
-  var host = process.env.OPENSHIFT_MONGODB_DB_HOST;
-  var port = process.env.OPENSHIFT_MONGODB_DB_PORT;
-  this.db = new MongoDB(host,port); //openshift
+  this.db = new MongoDB('127.4.131.129',27017); //localhost
+  
+  // @TODO this is not really working. The process.env variables cannot be read… not sure why. - Chach 12/18/2012
+  //this.db = new MongoDB(credentials.host, credentials.port); //openshift
 
   console.log("server::engine database is " + this.db );
 };
