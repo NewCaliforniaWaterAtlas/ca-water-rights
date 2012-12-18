@@ -4,6 +4,8 @@ var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
+var credentials = require('./credentials.js');
+
 MongoDB = function(host, port) {
   this.db= new Db('transfer', new Server(host, port, {auto_reconnect: true}, {}));
   this.db.open(function(err,db){
