@@ -7,7 +7,7 @@ var ObjectID = require('mongodb').ObjectID;
 var credentials = require('./credentials.js');
 
 MongoDB = function(host, port) {
-  this.db= new Db('transfer', new Server(host, port, {auto_reconnect: true}, {}));
+  this.db= new Db('watertransfer', new Server(host, port, {auto_reconnect: true}, {}));
   this.db.open(function(err,db){
       console.log("mongodb:: got db " + err + " " + db );
       db.authenticate("admin",credentials.mongo_password, function(err2,db2) {
@@ -17,7 +17,7 @@ MongoDB = function(host, port) {
 };
 
 MongoDB.prototype.getCollection = function(callback) {
-  this.db.collection('transfer', function(error, c) {
+  this.db.collection('rights', function(error, c) {
     if( error ) callback(error);
     else callback(null, c);
   });
