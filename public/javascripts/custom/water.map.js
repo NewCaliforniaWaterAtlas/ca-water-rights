@@ -20,11 +20,7 @@ water.setMapCenterZoom = function(lat,lon,zoom, map) {
 
 water.setupMap = function() {
   var layer = new MM.StamenTileLayer("terrain");
-<<<<<<< HEAD
-    
-=======
-  
->>>>>>> 70bf8d48118a4b33c4e43b22344303b836243e6d
+
   // @TODO need new maps.
   
   // If we cannot load the map for some reason then just use a default image
