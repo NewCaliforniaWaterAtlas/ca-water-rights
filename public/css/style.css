@@ -133,3 +133,12 @@ hr {
 border-top: none;
 border-bottom: 2px solid rgba(256,256,256,0.1);
 }
+
+.alert {
+  z-index: 2000;
+  position: fixed;
+  top: 70px;
+  right: 30px;
+  background: #fff;
+  color: #888;
+}
