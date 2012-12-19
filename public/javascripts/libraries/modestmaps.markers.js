@@ -152,6 +152,7 @@ if (!com.modestmaps) {
             // position: absolute
             marker.style.position = "absolute";
             // update the marker's position
+            console.log(marker);
             this.repositionMarker(marker);
             // append it to the DOM
             this.parent.appendChild(marker);
