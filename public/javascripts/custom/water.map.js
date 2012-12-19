@@ -9,8 +9,8 @@ var dragtime = date_start.getTime();
 var dragtime_diff = null;
 var wait = null;
 
-water.default_lat = 39.65850816;
-water.default_lon = -121.3551829;
+water.default_lat = 38.52;
+water.default_lon = -121.50;
 water.default_boxsize = 0.4;
 water.default_zoom = 11;
 
@@ -37,20 +37,17 @@ water.setupMap = function() {
     new wax.mm.connector(tilejson));
 
   var zoom = water.default_zoom;
-  map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
-
-  var zoomer = wax.mm.zoomer(map)
-  zoomer.appendTo('map-container');
-
-
-
-  markers = new MM.MarkerLayer();
-  map.addLayer(markers);
-  markers.parent.setAttribute("id", "markers");
 
   var lat = water.default_lat;
   var lon = water.default_lon;
-  var boxsize = water.default_boxsize;
+  // Nearby
+  if (navigator.geolocation){
+    // listen to updates if any
+    navigator.geolocation.watchPosition( function(position) {
+        water.gps = position;
+        lat = water.gps_lat = water.gps.coords.latitude;
+        lon = water.gps_lon = water.gps.coords.longitude;
+        water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, zoom, map);
 
   //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
   // Load data via mongo bounding box search. Run paintMarkers callback.
@@ -59,6 +56,27 @@ water.setupMap = function() {
 ] 
   }, water.paintRightsMarkers); 
 
+    });
+  } else {
+    // try get away with only setting map once
+    // @TODO set to state capital, sacramento
+    map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
+  //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
+  // Load data via mongo bounding box search. Run paintMarkers callback.
+  Core.query({ 
+   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize)},{$where: "this.properties.latitude > " + (lat - boxsize)},{$where: "this.properties.longitude < " + (lon + boxsize)},{$where: "this.properties.longitude > " + (lon - boxsize)}
+] 
+  }, water.paintRightsMarkers); 
+  }
+
+  var zoomer = wax.mm.zoomer(map)
+  zoomer.appendTo('map-container');
+
+  markers = new MM.MarkerLayer();
+  map.addLayer(markers);
+  markers.parent.setAttribute("id", "markers");
+  
+  var boxsize = water.default_boxsize;
 
   
   // Load data via static json file.
@@ -85,34 +103,12 @@ water.setupMap = function() {
     }
   });
 
-/*     wax.mm.zoomer(m).appendTo(map.parent); */
   wax.mm.interaction()
     .map(map)
     .tilejson(tilejson)
     .on(wax.tooltip().animate(true).parent(map.parent).events());
-});
+  });
 
-
-
-
-
-/*
-  // nearby water rights
-  if (navigator.geolocation){
-    // listen to updates if any
-    navigator.geolocation.watchPosition( function(position) {
-        water.gps = position;
-        water.gps_lat = water.gps.coords.latitude;
-        water.gps_lon = water.gps.coords.longitude;
-        water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, 8, map);
-
-    });
-  } else {
-    // try get away with only setting map once
-    // @TODO set to state capital, sacramento
-    map.setMapCenterZoom(new MM.Location(39.65850816,-121.3551829), 8);
-  }
-*/
 };
 
 
