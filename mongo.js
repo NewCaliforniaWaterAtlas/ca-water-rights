@@ -13,7 +13,7 @@ MongoDB = function(host, port) {
   this.db= new Db('watertransfer', new Server(host, port, {auto_reconnect: true}, {}));
   this.db.open(function(err,db){
       console.log("mongodb:: got db " + err + " " + db );
-      db.authenticate("admin", credentials.mongo_password, function(err2,db2) {
+      db.authenticate(credentials.mongo_user, credentials.mongo_password, function(err2,db2) {
       console.log("mongodb::auth got db " + err2 + " " + db2 );
     });
   });

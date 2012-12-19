@@ -4,13 +4,16 @@ var MongoDB = require('./mongo').MongoDB;
 function enginecallback() {
   console.log("engine::authed");
 }
-
+var credentials = require('./credentials.js'); 
+console.log(credentials);
 EngineProvider = function() {
   //this.db = new MongoDB('127.0.0.1',27017); //localhost
-  this.db = new MongoDB('127.4.131.129',27017); //localhost
+  //this.db = new MongoDB('127.4.131.129',27017); //localhost
   
   // @TODO this is not really working. The process.env variables cannot be read… not sure why. - Chach 12/18/2012
-  //this.db = new MongoDB(credentials.host, credentials.port); //openshift
+
+ 
+  this.db = new MongoDB(credentials.db_host, credentials.db_port); //openshift
 
   console.log("server::engine database is " + this.db );
 };
