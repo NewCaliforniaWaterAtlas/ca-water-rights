@@ -11,7 +11,7 @@ var wait = null;
 
 water.default_lat = 38.52;
 water.default_lon = -121.50;
-water.default_boxsize = 0.4;
+water.default_boxsize = 0.35;
 water.default_zoom = 11;
 
 water.setCenterZoom = function(lat,lon,zoom) {
