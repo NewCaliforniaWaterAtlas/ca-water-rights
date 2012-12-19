@@ -11,8 +11,8 @@ var wait = null;
 
 water.default_lat = 39.65850816;
 water.default_lon = -121.3551829;
-water.default_boxsize = 0.1;
-water.default_zoom = 9;
+water.default_boxsize = 0.4;
+water.default_zoom = 11;
 
 water.setCenterZoom = function(lat,lon,zoom) {
   if(!map) return;
@@ -30,44 +30,40 @@ water.setMapCenterZoom = function(lat,lon,zoom, map) {
 };
 
 water.setupMap = function() {
-  //var layer = new MM.StamenTileLayer("terrain");
+  var url = 'http://a.tiles.mapbox.com/v3/chachasikes.map-7vfx6hvk.jsonp';
 
-  // @TODO need new maps.
+  wax.tilejson(url, function(tilejson) {
+  water.map = map = new MM.Map("map-container",
+    new wax.mm.connector(tilejson));
+
+  var zoom = water.default_zoom;
+  map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
+
+  var zoomer = wax.mm.zoomer(map)
+  zoomer.appendTo('map-container');
+
+
+
+  markers = new MM.MarkerLayer();
+  map.addLayer(markers);
+  markers.parent.setAttribute("id", "markers");
+
+  var lat = water.default_lat;
+  var lon = water.default_lon;
+  var boxsize = water.default_boxsize;
+
+  //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
+  // Load data via mongo bounding box search. Run paintMarkers callback.
+  Core.query({ 
+   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize)},{$where: "this.properties.latitude > " + (lat - boxsize)},{$where: "this.properties.longitude < " + (lon + boxsize)},{$where: "this.properties.longitude > " + (lon - boxsize)}
+] 
+  }, water.paintRightsMarkers); 
+
+
   
-  // If we cannot load the map for some reason then just use a default image
+  // Load data via static json file.
+  //Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
 
-/*
-  if (layer === undefined) {
-      var layer = new MM.Layer(new MM.MapProvider(function(coord) {
-      var img = parseInt(coord.zoom) +'-r'+ parseInt(coord.row) +'-c'+ parseInt(coord.column) + '.jpg';
-      return 'http://osm-bayarea.s3.amazonaws.com/' + img;
-    }));
-  }
-*/
-
-  var template = 'http://tile.openstreetmap.org/{Z}/{X}/{Y}.png';
-  var layer = new MM.TemplatedLayer(template);
-
-  water.map = map = new MM.Map("map-container", layer);
-
-/*
-  // nearby water rights
-  if (navigator.geolocation){
-    // listen to updates if any
-    navigator.geolocation.watchPosition( function(position) {
-        water.gps = position;
-        water.gps_lat = water.gps.coords.latitude;
-        water.gps_lon = water.gps.coords.longitude;
-        water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, 8, map);
-
-    });
-  } else {
-    // try get away with only setting map once
-    // @TODO set to state capital, sacramento
-    map.setMapCenterZoom(new MM.Location(39.65850816,-121.3551829), 8);
-  }
-*/
-  
 
   // On map move events we want to requery the database to fetch features that the map is now over
   map.addCallback('panned', function(m) {
@@ -88,30 +84,35 @@ water.setupMap = function() {
       wait = null;
     }
   });
-  
 
-  var zoomer = wax.mm.zoomer(map)
-  zoomer.appendTo('map-container');
+/*     wax.mm.zoomer(m).appendTo(map.parent); */
+  wax.mm.interaction()
+    .map(map)
+    .tilejson(tilejson)
+    .on(wax.tooltip().animate(true).parent(map.parent).events());
+});
 
-  markers = new MM.MarkerLayer();
-  map.addLayer(markers);
-  markers.parent.setAttribute("id", "markers");
 
-  //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
-  var lat = water.default_lat;
-  var lon = water.default_lon;
-  var boxsize = water.default_boxsize;
-  var zoom = water.default_zoom;
-  map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
 
-  // Load data via mongo bounding box search. Run paintMarkers callback.
-  Core.query({ 
-   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize)},{$where: "this.properties.latitude > " + (lat - boxsize)},{$where: "this.properties.longitude < " + (lon + boxsize)},{$where: "this.properties.longitude > " + (lon - boxsize)}
-] 
-  }, water.paintRightsMarkers); 
-  
-  // Load data via static json file.
-  //Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
+
+
+/*
+  // nearby water rights
+  if (navigator.geolocation){
+    // listen to updates if any
+    navigator.geolocation.watchPosition( function(position) {
+        water.gps = position;
+        water.gps_lat = water.gps.coords.latitude;
+        water.gps_lon = water.gps.coords.longitude;
+        water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, 8, map);
+
+    });
+  } else {
+    // try get away with only setting map once
+    // @TODO set to state capital, sacramento
+    map.setMapCenterZoom(new MM.Location(39.65850816,-121.3551829), 8);
+  }
+*/
 };
 
 
@@ -135,10 +136,9 @@ water.loadPannedMarkers = function() {
 };
 
 water.makeRightsMarker = function(feature) {
-
   var id = feature.properties.id;
   var marker = document.createElement("div");
- console.log(feature);
+
   var water_string = '';
   water_string += "<h4>" 
     + "Owner: " + feature.properties.holder_name + "<br />"
@@ -220,8 +220,6 @@ water.paintRightsMarkers = function(features) {
     map.addLayer(markers);
     markers.parent.setAttribute("id", "markers");
   }
-  
-  console.log(features);
   
   features = features;
   var len = features.length; 
