@@ -102,7 +102,7 @@ water.makeRightsMarker = function(feature) {
     + "Source: " + feature.properties.source_name + "<br>"
     + "Watershed: " + feature.properties.watershed + "<br>"
     + "Right Type: " + feature.properties.water_right_type + "<br>"
-    + "Right Status: " + feature.properties.water_right_status + "<br>"
+    + "Right Status: " + feature.properties.status + "<br>"
     + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "<br>"
     + "Storage: " + feature.properties.diversion_storage_amount + "<br>"
     + "</h4>";
