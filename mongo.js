@@ -4,13 +4,16 @@ var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
-var credentials = require('./credentials.js');
+
 
 MongoDB = function(host, port) {
+
+  var credentials = require('./credentials.js');
+  
   this.db= new Db('watertransfer', new Server(host, port, {auto_reconnect: true}, {}));
   this.db.open(function(err,db){
       console.log("mongodb:: got db " + err + " " + db );
-      db.authenticate("admin",credentials.mongo_password, function(err2,db2) {
+      db.authenticate("admin", credentials.mongo_password, function(err2,db2) {
       console.log("mongodb::auth got db " + err2 + " " + db2 );
     });
   });
