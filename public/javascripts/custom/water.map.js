@@ -11,7 +11,8 @@ var wait = null;
 
 water.default_lat = 38.52;
 water.default_lon = -121.50;
-water.default_boxsize = 0.35;
+water.default_boxsize_lat = 0.15;
+water.default_boxsize_lon = 0.3;
 water.default_zoom = 11;
 
 water.setCenterZoom = function(lat,lon,zoom) {
@@ -40,7 +41,10 @@ water.setupMap = function() {
 
   var lat = water.default_lat;
   var lon = water.default_lon;
+  var boxsize_lat = water.default_boxsize_lat;
+  var boxsize_lon = water.default_boxsize_lon;
   // Nearby
+/*
   if (navigator.geolocation){
     // listen to updates if any
     navigator.geolocation.watchPosition( function(position) {
@@ -52,22 +56,24 @@ water.setupMap = function() {
   //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
   // Load data via mongo bounding box search. Run paintMarkers callback.
   Core.query({ 
-   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize)},{$where: "this.properties.latitude > " + (lat - boxsize)},{$where: "this.properties.longitude < " + (lon + boxsize)},{$where: "this.properties.longitude > " + (lon - boxsize)}
+   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
 ] 
   }, water.paintRightsMarkers); 
 
     });
   } else {
+*/
     // try get away with only setting map once
     // @TODO set to state capital, sacramento
     map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
+
   //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
   // Load data via mongo bounding box search. Run paintMarkers callback.
   Core.query({ 
-   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize)},{$where: "this.properties.latitude > " + (lat - boxsize)},{$where: "this.properties.longitude < " + (lon + boxsize)},{$where: "this.properties.longitude > " + (lon - boxsize)}
+   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
 ] 
   }, water.paintRightsMarkers); 
-  }
+/*   } */
 
   var zoomer = wax.mm.zoomer(map)
   zoomer.appendTo('map-container');
@@ -76,8 +82,8 @@ water.setupMap = function() {
   map.addLayer(markers);
   markers.parent.setAttribute("id", "markers");
   
-  var boxsize = water.default_boxsize;
-
+  var boxsize_lat = water.default_boxsize_lat;
+  var boxsize_lon = water.default_boxsize_lon;
   
   // Load data via static json file.
   //Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
@@ -124,9 +130,10 @@ water.loadPannedMarkers = function() {
   var lat = center.lat;
   var lon = center.lon;
  
-  var boxsize = water.default_boxsize;
-
-  Core.query({ $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize)},{$where: "this.properties.latitude > " + (lat - boxsize)},{$where: "this.properties.longitude < " + (lon + boxsize)},{$where: "this.properties.longitude > " + (lon - boxsize)}] 
+  var boxsize_lat = water.default_boxsize_lat;
+  var boxsize_lon = water.default_boxsize_lon;
+  
+  Core.query({ $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}] 
 }, water.paintRightsMarkers); 
 
 };
@@ -230,6 +237,10 @@ water.paintRightsMarkers = function(features) {
   var locations = map.getExtent(); // returns an array of Locations
   var loc = map.getCenter() // returns a single Location
   var zoomLevel = map.getZoom();
+  
+  
+/*   $(".alert").alert('close'); */
+  $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
 };
 
 water.repaint_agent = function(agent) {
