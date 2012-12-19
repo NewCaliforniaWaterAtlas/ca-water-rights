@@ -3,6 +3,17 @@ var map = map || {};
 var markers = 0;
 var map_features = {};
 
+var counter = 0;
+var date_start = new Date();
+var dragtime = date_start.getTime();
+var dragtime_diff = null;
+var wait = null;
+
+water.default_lat = 39.65850816;
+water.default_lon = -121.3551829;
+water.default_boxsize = 0.1;
+water.default_zoom = 9;
+
 water.setCenterZoom = function(lat,lon,zoom) {
   if(!map) return;
   if(map.setCenterZoom === undefined) {} else map.setCenterZoom(new MM.Location(lat,lon),zoom);
@@ -19,50 +30,65 @@ water.setMapCenterZoom = function(lat,lon,zoom, map) {
 };
 
 water.setupMap = function() {
-  var layer = new MM.StamenTileLayer("terrain");
+  //var layer = new MM.StamenTileLayer("terrain");
 
   // @TODO need new maps.
   
   // If we cannot load the map for some reason then just use a default image
 
+/*
   if (layer === undefined) {
       var layer = new MM.Layer(new MM.MapProvider(function(coord) {
       var img = parseInt(coord.zoom) +'-r'+ parseInt(coord.row) +'-c'+ parseInt(coord.column) + '.jpg';
       return 'http://osm-bayarea.s3.amazonaws.com/' + img;
     }));
   }
+*/
+
+  var template = 'http://tile.openstreetmap.org/{Z}/{X}/{Y}.png';
+  var layer = new MM.TemplatedLayer(template);
 
   water.map = map = new MM.Map("map-container", layer);
 
 /*
+  // nearby water rights
   if (navigator.geolocation){
     // listen to updates if any
     navigator.geolocation.watchPosition( function(position) {
-
-      water.gps = position;
-
+        water.gps = position;
         water.gps_lat = water.gps.coords.latitude;
         water.gps_lon = water.gps.coords.longitude;
-        water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, 14, map);
+        water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, 8, map);
 
     });
   } else {
     // try get away with only setting map once
-    map.setMapCenterZoom(new MM.Location(37.7900,-122.1697), 12);
+    // @TODO set to state capital, sacramento
+    map.setMapCenterZoom(new MM.Location(39.65850816,-121.3551829), 8);
   }
 */
   
 
   // On map move events we want to requery the database to fetch features that the map is now over
-
-/*
-
-  map.addCallback('drawn', function(m) {
-    console.log("map moved");
-    var center = m.getCenter();
-    Kernel.query({},center.latitude,center.longitude,water.repaint);
+  map.addCallback('panned', function(m) {
+    var dragtime_old = dragtime;
+    var d = new Date();
+    dragtime = d.getTime();
+    var dragtime_diff = dragtime - dragtime_old;
+    
+    if(dragtime_diff < 500) {
+      counter++;
+      console.log("moving " + counter + " " + dragtime_diff);
+      if (wait === null) {
+        wait = water.triggerMapMoveTimeout();
+      }
+    }
+    else {
+      clearTimeout(wait);
+      wait = null;
+    }
   });
-*/
+  
 
   var zoomer = wax.mm.zoomer(map)
   zoomer.appendTo('map-container');
@@ -72,39 +98,57 @@ water.setupMap = function() {
   markers.parent.setAttribute("id", "markers");
 
   //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
-  var lat = 39.65850816;
-  var lon = -121.3551829;
-  //Core.query({"coordinates" : { "$near" : [lon,lat]}}, water.paintTreeMarkers);
+  var lat = water.default_lat;
+  var lon = water.default_lon;
+  var boxsize = water.default_boxsize;
+  var zoom = water.default_zoom;
+  map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
 
-
-//  Core.query({ "properties": {"$or" : [ { "zipcode": "94607" } , { "zipcode": "94606" }, { "zipcode": "94609" }, { "zipcode": "94612" }, { "zipcode": "94610" } ] }}, water.paintTreeMarkers);  
-
- 
-
-  map.setCenterZoom(new MM.Location(lat,lon), 9);
-
-  Core.query({'kind': 'right'}, water.paintRightsMarkers); 
+  // Load data via mongo bounding box search. Run paintMarkers callback.
+  Core.query({ 
+   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize)},{$where: "this.properties.latitude > " + (lat - boxsize)},{$where: "this.properties.longitude < " + (lon + boxsize)},{$where: "this.properties.longitude > " + (lon - boxsize)}
+] 
+  }, water.paintRightsMarkers); 
   
+  // Load data via static json file.
   //Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
-
 };
 
+
+water.triggerMapMoveTimeout = function() {
+  return setTimeout(water.loadPannedMarkers, 1000);
+}
+
+water.loadPannedMarkers = function() {
+  var center = map.getCenter();
+  console.log(center.lat);
+
+
+  var lat = center.lat;
+  var lon = center.lon;
+ 
+  var boxsize = water.default_boxsize;
+
+  Core.query({ $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize)},{$where: "this.properties.latitude > " + (lat - boxsize)},{$where: "this.properties.longitude < " + (lon + boxsize)},{$where: "this.properties.longitude > " + (lon - boxsize)}] 
+}, water.paintRightsMarkers); 
+
+};
 
 water.makeRightsMarker = function(feature) {
 
   var id = feature.properties.id;
   var marker = document.createElement("div");
- 
-  var waterstring = '';
-  waterstring += "<h4>" 
-    + "Owner: " + feature.properties.holder_name + "<br>"
-    + "Type: " + feature.properties.organization_type + "<br>"
-    + "Source: " + feature.properties.source_name + "<br>"
-    + "Watershed: " + feature.properties.watershed + "<br>"
-    + "Right Type: " + feature.properties.water_right_type + "<br>"
-    + "Right Status: " + feature.properties.status + "<br>"
-    + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "<br>"
-    + "Storage: " + feature.properties.diversion_storage_amount + "<br>"
+ console.log(feature);
+  var water_string = '';
+  water_string += "<h4>" 
+    + "Owner: " + feature.properties.holder_name + "<br />"
+    + "Type: " + feature.properties.organization_type + "<br />"
+    + "Source: " + feature.properties.source_name + "<br />"
+    + "Watershed: " + feature.properties.watershed + "<br />"
+    + "Right Type: " + feature.properties.water_right_type + "<br />"
+    + "Right Status: " + feature.properties.status + "<br />"
+    + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "<br />"
+    + "Storage: " + feature.properties.diversion_storage_amount + "<br />"
     + "</h4>";
   
   marker.feature = feature;
@@ -134,7 +178,7 @@ water.makeRightsMarker = function(feature) {
   // Tooltips
   $("#marker-" + id + " img").qtip({
   	content: {
-      text: waterstring,
+      text: water_string,
   	},
   	show: {
   		solo: true,
@@ -169,23 +213,30 @@ water.makeRightsMarker = function(feature) {
 
 
 water.paintRightsMarkers = function(features) {
-
-/* {"name": "water","type":"FeatureCollection","features":[ */
-
+  // Redraw marker layer if there are features.
+  if(features.length > 0) {
+    $('.marker').remove();
+    markers = new MM.MarkerLayer();
+    map.addLayer(markers);
+    markers.parent.setAttribute("id", "markers");
+  }
+  
+  console.log(features);
+  
   features = features;
   var len = features.length; 
   console.log("water::paintTreeMarkers showing markers " + len );
+  
+  
   for (var i = 0; i < len; i++) {
     var feature = features[i];
     water.makeRightsMarker(feature);
   }
   
-    var locations = map.getExtent(); // returns an array of Locations
-var loc = map.getCenter() // returns a single Location
-var zoomLevel = map.getZoom();
-  
+  var locations = map.getExtent(); // returns an array of Locations
+  var loc = map.getCenter() // returns a single Location
+  var zoomLevel = map.getZoom();
 };
-
 
 water.repaint_agent = function(agent) {
 
@@ -225,7 +276,7 @@ water.repaint_agent = function(agent) {
   };
 
   map_features[id] = feature;
-  water.makeTreeMarker(feature);
+  water.makeRightsMarker(feature);
 }
 
 water.repaint = function(agents) {

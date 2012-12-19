@@ -20,13 +20,15 @@ Core.query = function(filter,callback) {
 
   return;
 
+/*
   $.ajax(myurl, {
     type: 'POST',
     data: jsonblob,
     contentType: 'text/json',
-    success: function(results) { Kernel.query_callback(results,mycallback); },
-    error  : function() { Kernel.query_callback([],mycallback); }
+    success: function(results) { Corel.query_callback(results,mycallback); },
+    error  : function() { Core.query_callback([],mycallback); }
   });
+*/
 };
 
 
@@ -43,7 +45,7 @@ Core.query2 = function(path,callback) {
 Core.query_callback = function(results,mycallback) {
 
   // any data?
-  //console.log("kernel::query:: json call done " + results.length );
+  console.log("kernel::query:: json call done " + results.length );
 
   if(!results) {
     //console.log("kernel::query BADNESS got nothing!");
