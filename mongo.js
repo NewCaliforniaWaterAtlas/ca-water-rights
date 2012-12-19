@@ -6,11 +6,11 @@ var ObjectID = require('mongodb').ObjectID;
 
 
 
-MongoDB = function(host, port) {
+MongoDB = function(credentials) {
 
-  var credentials = require('./credentials.js');
+  var credentials = credentials;
   
-  this.db= new Db('watertransfer', new Server(host, port, {auto_reconnect: true}, {}));
+  this.db= new Db(credentials.mongo_db, new Server(credentials.mongo_host, credentials.mongo_port, {auto_reconnect: true}, {}));
   this.db.open(function(err,db){
       console.log("mongodb:: got db " + err + " " + db );
       db.authenticate(credentials.mongo_user, credentials.mongo_password, function(err2,db2) {
@@ -20,7 +20,10 @@ MongoDB = function(host, port) {
 };
 
 MongoDB.prototype.getCollection = function(callback) {
-  this.db.collection('rights', function(error, c) {
+  
+  var credentials = require('./credentials.js'); 
+
+  this.db.collection(credentials.mongo_collection, function(error, c) {
     if( error ) callback(error);
     else callback(null, c);
   });

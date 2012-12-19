@@ -3,8 +3,6 @@
 var fs      = require('fs');
 var express = require('express');
 
-var credentials = require('./credentials.js');
-
 var EngineProvider = require('./engine').EngineProvider;
 var engine         = new EngineProvider();
 

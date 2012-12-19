@@ -4,10 +4,10 @@ var port = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
 var credentials = {
   mongo_user: 'www',
   mongo_password: 'changeme',
-  db_host: host,
-  db_port: port
+  mongo_host: host,
+  mongo_port: port,
+  mongo_db: 'watertransfer',
+  mongo_collection: 'rights',
 };
 
 module.exports = credentials;
-
-//console.log(module.exports);
