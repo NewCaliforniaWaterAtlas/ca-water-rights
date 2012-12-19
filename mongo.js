@@ -20,7 +20,7 @@ MongoDB = function(credentials) {
 };
 
 MongoDB.prototype.getCollection = function(callback) {
-  
+  // Redundant just in case… @TODO test if this require really needed
   var credentials = require('./credentials.js'); 
 
   this.db.collection(credentials.mongo_collection, function(error, c) {
