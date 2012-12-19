@@ -20,7 +20,7 @@ water.setMapCenterZoom = function(lat,lon,zoom, map) {
 
 water.setupMap = function() {
   var layer = new MM.StamenTileLayer("terrain");
-  
+
   // @TODO need new maps.
   
   // If we cannot load the map for some reason then just use a default image
@@ -96,7 +96,16 @@ water.makeRightsMarker = function(feature) {
   var marker = document.createElement("div");
  
   var waterstring = '';
-  waterstring += "<h2>" + feature.properties.name + "</h2>";
+  waterstring += "<h4>" 
+    + "Owner: " + feature.properties.holder_name + "<br>"
+    + "Type: " + feature.properties.organization_type + "<br>"
+    + "Source: " + feature.properties.source_name + "<br>"
+    + "Watershed: " + feature.properties.watershed + "<br>"
+    + "Right Type: " + feature.properties.water_right_type + "<br>"
+    + "Right Status: " + feature.properties.water_right_status + "<br>"
+    + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "<br>"
+    + "Storage: " + feature.properties.diversion_storage_amount + "<br>"
+    + "</h4>";
   
   marker.feature = feature;
   markers.addMarker(marker, feature);
