@@ -81,24 +81,6 @@ app.post('/data', function(req, res){
     }
     res.send(results);
   });
-    
-    //filter by location
-/*
-    var lat = 37.7900;
-    var lon = -122.1697;
-    var limit = 300;
-console.log(trees.length);
-    // limit by reduced length lat/lon
-    for (var i = 0; i < trees.length; i++) {
-      var feature = trees[i];
-      var lat_round = Math.round(parseFloat(feature.latitude)*Math.pow(10,4))/Math.pow(10,4);
-console.log(lat_round);
-    }
-*/
-            
- //   res.send(trees);
-    
-    // change to load api version of the trees.
 });
 
 
