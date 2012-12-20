@@ -32,6 +32,10 @@ body {
   top: 60px;
 }
 
+.ui-tooltip-content {
+  width: 300px;
+}
+
 .ui-tooltip-content h2 {
   font-size: 2em;
   margin: 5px;
@@ -46,7 +50,7 @@ body {
 .ui-tooltip-content p {
   font-size: 1.25em;
   width: 100%;
-  padding: 0;
+  padding: 0 0 2px 0;
   margin: 5px;
 }
 
