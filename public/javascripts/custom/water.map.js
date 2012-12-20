@@ -31,7 +31,7 @@ water.setMapCenterZoom = function(lat,lon,zoom, map) {
 };
 
 water.setupMap = function() {
-  var url = 'http://a.tiles.mapbox.com/v3/chachasikes.map-7vfx6hvk.jsonp';
+  var url = 'http://a.tiles.mapbox.com/v3/chachasikes.map-tv2igp9l.jsonp';
 
   wax.tilejson(url, function(tilejson) {
   water.map = map = new MM.Map("map-container",
@@ -143,16 +143,16 @@ water.makeRightsMarker = function(feature) {
   var marker = document.createElement("div");
 
   var water_string = '';
-  water_string += "<h4>" 
-    + "Owner: " + feature.properties.holder_name + "<br />"
-    + "Type: " + feature.properties.organization_type + "<br />"
-    + "Source: " + feature.properties.source_name + "<br />"
-    + "Watershed: " + feature.properties.watershed + "<br />"
-    + "Right Type: " + feature.properties.water_right_type + "<br />"
-    + "Right Status: " + feature.properties.status + "<br />"
-    + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "<br />"
-    + "Storage: " + feature.properties.diversion_storage_amount + "<br />"
-    + "</h4>";
+  water_string +=  
+    "<p>" + "Owner: " + feature.properties.holder_name + "</p>"
+    + "<p>" + "Type: " + feature.properties.organization_type + "</p>"
+    + "<p>" + "Source: " + feature.properties.source_name + "</p>"
+    + "<p>" + "Watershed: " + feature.properties.watershed + "</p>"
+    + "<p>" + "County: " + feature.properties.county + "</p>"
+    + "<p>" + "Right Type: " + feature.properties.water_right_type + "</p>"
+    + "<p>" + "Right Status: " + feature.properties.status + "</p>"
+    + "<p>" + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "</p>"
+    + "<p>" + "Storage: " + feature.properties.diversion_storage_amount + "</p>";
   
   marker.feature = feature;
   markers.addMarker(marker, feature);
