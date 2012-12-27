@@ -1,6 +1,6 @@
 var mm = com.modestmaps;
 var map = map || {};
-var markers = 0;
+
 var map_features = {};
 
 var counter = 0;
@@ -8,6 +8,10 @@ var date_start = new Date();
 var dragtime = date_start.getTime();
 var dragtime_diff = null;
 var wait = null;
+
+water.markers = 0;
+water.markers_station = 0;
+water.markers_rights = 0;
 
 water.default_lat = 38.52;
 water.default_lon = -121.50;
@@ -84,9 +88,14 @@ water.setupMap = function() {
   var zoomer = wax.mm.zoomer(map)
   zoomer.appendTo('map-container');
 
-  markers = new MM.MarkerLayer();
-  map.addLayer(markers);
-  markers.parent.setAttribute("id", "markers");
+/*
+  // Put all markers on the same layer.
+  if($('div#markers').length === 0) {
+    markers = new MM.MarkerLayer();
+    map.addLayer(markers);
+    markers.parent.setAttribute("id", "markers");
+  }
+*/
   
   var boxsize_lat = water.default_boxsize_lat;
   var boxsize_lon = water.default_boxsize_lon;
@@ -135,13 +144,22 @@ water.loadPannedMarkers = function() {
  
   var boxsize_lat = water.default_boxsize_lat;
   var boxsize_lon = water.default_boxsize_lon;
-  
     
+  water.markers = 0;
+
+  // Redraw this type of marker in layer if there are features.
+
+
+    $('.marker').remove();
+
+  
   Core.query({ $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}] 
 }, water.paintRightsMarkers); 
 
-  Core.query({ $and: [{'kind': 's'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}] 
-}, water.paintStationMarkers); 
+  Core.query({ 
+   $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+] 
+  }, water.paintStationMarkers); 
 
 };
 
@@ -154,6 +172,7 @@ water.paintRightsMarkers = function(features) {
   var featureDetails = {
     name: "rights",
     icon: "/images/icons/water_right_icon.png",
+    layer: "markers_rights"
   };
   
   water.paintMarkers(features, featureDetails);
@@ -167,6 +186,7 @@ water.paintStationMarkers = function(features) {
   var featureDetails = {
     name: "station",
     icon: "/images/icons/station_icon.png",
+    layer: "markers_station"
   };
   
   water.paintMarkers(features, featureDetails);
@@ -174,22 +194,17 @@ water.paintStationMarkers = function(features) {
 
 water.paintMarkers = function(features, featureDetails) {
 
-
-  // Redraw this type of marker in layer if there are features.
-  if(features.length > 0) {
-    $('.marker.' + featureDetails.name).remove();
-    
-    // Put all markers on the same layer.
-    if($('div#markers').length === 0) {
-      markers = new MM.MarkerLayer();
-      map.addLayer(markers);
-      markers.parent.setAttribute("id", "markers");
-    }
+  // Put all markers on the same layer.
+  if(water.markers === 0) {
+  water.markers /* = water[featureDetails.layer] */ = new MM.MarkerLayer();
+  map.addLayer(water.markers);
+  water.markers.parent.setAttribute("id", "markers");
+/*   water.markers.parent.setAttribute("class", featureDetails.layer); */
   }
   
   features = features;
   var len = features.length; 
-  console.log("water::paintMarkers " + featureDetails.name + " showing markers " + len );
+  console.log("water::paintMarkers " + featureDetails.name + " showing markers " + len + " layer:" + featureDetails.layer);
   
   
   for (var i = 0; i < len; i++) {
@@ -213,17 +228,16 @@ water.makeMarker = function(feature, featureDetails) {
   var id = feature.properties.id;
   var marker = document.createElement("div");
   var featureDetails = featureDetails;
-/*   var string = featureDetails.string; */
 
   marker.feature = feature;
-  markers.addMarker(marker, feature);
+  water.markers.addMarker(marker, feature);
 
   // Unique hash marker id for link
   marker.setAttribute("id", "marker-" + id);
   marker.setAttribute("dataName", feature.properties.name);
   marker.setAttribute("class", "marker " + featureDetails.name);
+  
 
-        
   //@TODO this is probably wrong
   // marker.setAttribute("href", vars.callbackPath + id);
 
@@ -264,6 +278,7 @@ water.makeMarker = function(feature, featureDetails) {
     + "<p>" + "River Basin: " + feature.properties.river_basin + "</p>"
     + "<p>" + "Sensors: " + feature.properties.sensors + "</p>"
     + "<p>" + "Flow Data: " + feature.properties.flow_data + "</p>"
+    + "<p>" + "Real Time Data: <a href=\"http://cdec.water.ca.gov/" + feature.properties.query + "\" target=\"_blank\"> data</a></p>"
   }
   
   
@@ -277,7 +292,7 @@ water.makeMarker = function(feature, featureDetails) {
   		when: { event: 'unfocus' }
   	},
   	hide: {
-  		delay: 100,
+  		delay: 2000,
   		when: { event: 'unfocus' }
   	},
   	position: {
