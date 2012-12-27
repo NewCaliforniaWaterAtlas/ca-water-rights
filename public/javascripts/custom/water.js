@@ -12,8 +12,8 @@ window.onload = function() {
       map.zoom(zoom);
     }
   });
-
 };
+
 
 
 //
