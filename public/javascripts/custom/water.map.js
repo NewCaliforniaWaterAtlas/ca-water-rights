@@ -67,6 +67,7 @@ water.setupMap = function() {
     // @TODO set to state capital, sacramento
     map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
 
+
   //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
   // Load data via mongo bounding box search. Run paintMarkers callback.
   Core.query({ 
@@ -74,6 +75,11 @@ water.setupMap = function() {
 ] 
   }, water.paintRightsMarkers); 
 /*   } */
+
+  Core.query({ 
+   $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+] 
+  }, water.paintStationMarkers); 
 
   var zoomer = wax.mm.zoomer(map)
   zoomer.appendTo('map-container');
@@ -124,44 +130,100 @@ water.triggerMapMoveTimeout = function() {
 
 water.loadPannedMarkers = function() {
   var center = map.getCenter();
-  console.log(center.lat);
-
-
   var lat = center.lat;
   var lon = center.lon;
  
   var boxsize_lat = water.default_boxsize_lat;
   var boxsize_lon = water.default_boxsize_lon;
   
+    
   Core.query({ $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}] 
 }, water.paintRightsMarkers); 
 
+  Core.query({ $and: [{'kind': 's'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}] 
+}, water.paintStationMarkers); 
+
 };
 
-water.makeRightsMarker = function(feature) {
+
+
+
+
+water.paintRightsMarkers = function(features) {
+
+  var featureDetails = {
+    name: "rights",
+    icon: "/images/icons/water_right_icon.png",
+  };
+  
+  water.paintMarkers(features, featureDetails);
+  
+  $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
+};
+
+
+water.paintStationMarkers = function(features) {
+
+  var featureDetails = {
+    name: "station",
+    icon: "/images/icons/station_icon.png",
+  };
+  
+  water.paintMarkers(features, featureDetails);
+};
+
+water.paintMarkers = function(features, featureDetails) {
+
+
+  // Redraw this type of marker in layer if there are features.
+  if(features.length > 0) {
+    $('.marker.' + featureDetails.name).remove();
+    
+    // Put all markers on the same layer.
+    if($('div#markers').length === 0) {
+      markers = new MM.MarkerLayer();
+      map.addLayer(markers);
+      markers.parent.setAttribute("id", "markers");
+    }
+  }
+  
+  features = features;
+  var len = features.length; 
+  console.log("water::paintMarkers " + featureDetails.name + " showing markers " + len );
+  
+  
+  for (var i = 0; i < len; i++) {
+    var feature = features[i];
+    water.makeMarker(feature, featureDetails);
+  }
+  
+  var locations = map.getExtent(); // returns an array of Locations
+  var loc = map.getCenter() // returns a single Location
+  var zoomLevel = map.getZoom();
+  
+  
+/*   $(".alert").alert('close'); */
+
+
+};
+
+
+water.makeMarker = function(feature, featureDetails) {
+
   var id = feature.properties.id;
   var marker = document.createElement("div");
+  var featureDetails = featureDetails;
+/*   var string = featureDetails.string; */
 
-  var water_string = '';
-  water_string +=  
-    "<p>" + "Owner: " + feature.properties.holder_name + "</p>"
-    + "<p>" + "Type: " + feature.properties.organization_type + "</p>"
-    + "<p>" + "Source: " + feature.properties.source_name + "</p>"
-    + "<p>" + "Watershed: " + feature.properties.watershed + "</p>"
-    + "<p>" + "County: " + feature.properties.county + "</p>"
-    + "<p>" + "Right Type: " + feature.properties.water_right_type + "</p>"
-    + "<p>" + "Right Status: " + feature.properties.status + "</p>"
-    + "<p>" + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "</p>"
-    + "<p>" + "Storage: " + feature.properties.diversion_storage_amount + "</p>";
-  
   marker.feature = feature;
   markers.addMarker(marker, feature);
 
   // Unique hash marker id for link
   marker.setAttribute("id", "marker-" + id);
   marker.setAttribute("dataName", feature.properties.name);
-  marker.setAttribute("class", "marker");
-      
+  marker.setAttribute("class", "marker " + featureDetails.name);
+
+        
   //@TODO this is probably wrong
   // marker.setAttribute("href", vars.callbackPath + id);
 
@@ -174,14 +236,41 @@ water.makeRightsMarker = function(feature) {
   if(feature.art) {
     img.setAttribute("src", feature.art );
   } else {
-    img.setAttribute("src", "/images/icons/water_right_icon.png");
+    img.setAttribute("src", featureDetails.icon);
   }
 
+  
+  var string = '';
+  if (feature.properties.holder_name !== undefined) {
+    string +=  
+      "<p>" + "Owner: " + feature.properties.holder_name + "</p>"
+    + "<p>" + "Type: " + feature.properties.organization_type + "</p>"
+    + "<p>" + "Source: " + feature.properties.source_name + "</p>"
+    + "<p>" + "Watershed: " + feature.properties.watershed + "</p>"
+    + "<p>" + "County: " + feature.properties.county + "</p>"
+    + "<p>" + "Right Type: " + feature.properties.water_right_type + "</p>"
+    + "<p>" + "Right Status: " + feature.properties.status + "</p>"
+    + "<p>" + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "</p>"
+    + "<p>" + "Storage: " + feature.properties.diversion_storage_amount + "</p>";
+  }
+
+  if (feature.properties.station_code !== undefined) {
+    string +=  
+      "<p>" + "Station Code: " + feature.properties.station_code + "</p>"
+    + "<p>" + "Station Name: " + feature.properties.station_name + "</p>"
+    + "<p>" + "Station Data Type: " + feature.properties.station_type + "</p>"
+    + "<p>" + "Altitude: " + feature.properties.altitude + "</p>"
+    + "<p>" + "County: " + feature.properties.county + "</p>"
+    + "<p>" + "River Basin: " + feature.properties.river_basin + "</p>"
+    + "<p>" + "Sensors: " + feature.properties.sensors + "</p>"
+    + "<p>" + "Flow Data: " + feature.properties.flow_data + "</p>"
+  }
+  
   
   // Tooltips
   $("#marker-" + id + " img").qtip({
   	content: {
-      text: water_string,
+      text: string,
   	},
   	show: {
   		solo: true,
@@ -215,34 +304,8 @@ water.makeRightsMarker = function(feature) {
 };
 
 
-water.paintRightsMarkers = function(features) {
-  // Redraw marker layer if there are features.
-  if(features.length > 0) {
-    $('.marker').remove();
-    markers = new MM.MarkerLayer();
-    map.addLayer(markers);
-    markers.parent.setAttribute("id", "markers");
-  }
-  
-  features = features;
-  var len = features.length; 
-  console.log("water::paintTreeMarkers showing markers " + len );
-  
-  
-  for (var i = 0; i < len; i++) {
-    var feature = features[i];
-    water.makeRightsMarker(feature);
-  }
-  
-  var locations = map.getExtent(); // returns an array of Locations
-  var loc = map.getCenter() // returns a single Location
-  var zoomLevel = map.getZoom();
-  
-  
-/*   $(".alert").alert('close'); */
-  $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
-};
 
+/*
 water.repaint_agent = function(agent) {
 
   // ignore elements that do not have an id
@@ -283,7 +346,9 @@ water.repaint_agent = function(agent) {
   map_features[id] = feature;
   water.makeRightsMarker(feature);
 }
+*/
 
+/*
 water.repaint = function(agents) {
   if(!map) return;
   console.log("water:: repainting anything on map and pruning non visible items from map");
@@ -291,6 +356,7 @@ water.repaint = function(agents) {
     water.repaint_agent(agents[key]);
   }
 }
+*/
 
 water.getMarker = function(marker) {
   while (marker && marker.className != "marker") {
