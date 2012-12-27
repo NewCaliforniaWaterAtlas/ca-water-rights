@@ -56,19 +56,11 @@ water.setupMap = function() {
         lat = water.gps_lat = water.gps.coords.latitude;
         lon = water.gps_lon = water.gps.coords.longitude;
         water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, zoom, map);
-
-  //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
-  // Load data via mongo bounding box search. Run paintMarkers callback.
-  Core.query({ 
-   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
-] 
-  }, water.paintRightsMarkers); 
-
     });
-  } else {
 */
     // try get away with only setting map once
     // @TODO set to state capital, sacramento
+    
     map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
 
 
@@ -78,7 +70,6 @@ water.setupMap = function() {
    $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
 ] 
   }, water.paintRightsMarkers); 
-/*   } */
 
   Core.query({ 
    $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
@@ -134,9 +125,7 @@ water.setupMap = function() {
     .tilejson(tilejson)
     .on(wax.tooltip().animate(true).parent(map.parent).events());
   });
-
 };
-
 
 water.triggerMapMoveTimeout = function() {
   return setTimeout(water.loadPannedMarkers, 1000);
@@ -153,9 +142,12 @@ water.loadPannedMarkers = function() {
   water.markers = 0;
 
   // Redraw this type of marker in layer if there are features.
+  $('.marker').remove();
 
 
-    $('.marker').remove();
+  // Search for database objects and add markers to map.
+  
+  
 
   
   Core.query({ $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}] 
@@ -172,9 +164,6 @@ water.loadPannedMarkers = function() {
   }, water.paintStationUSGSMarkers); 
 
 };
-
-
-
 
 
 water.paintRightsMarkers = function(features) {
@@ -237,10 +226,7 @@ water.paintMarkers = function(features, featureDetails) {
   var loc = map.getCenter() // returns a single Location
   var zoomLevel = map.getZoom();
   
-  
-/*   $(".alert").alert('close'); */
-
-
+  /*   $(".alert").alert('close'); */
 };
 
 
@@ -257,10 +243,6 @@ water.makeMarker = function(feature, featureDetails) {
   marker.setAttribute("id", "marker-" + id);
   marker.setAttribute("dataName", feature.properties.name);
   marker.setAttribute("class", "marker " + featureDetails.name);
-  
-
-  //@TODO this is probably wrong
-  // marker.setAttribute("href", vars.callbackPath + id);
 
   // Specially set value for loading data.
   marker.setAttribute("marker_id", id);
@@ -273,7 +255,6 @@ water.makeMarker = function(feature, featureDetails) {
   } else {
     img.setAttribute("src", featureDetails.icon);
   }
-
   
   var string = '';
   if (feature.properties.holder_name !== undefined) {
@@ -311,7 +292,7 @@ water.makeMarker = function(feature, featureDetails) {
     + "<p>" + "Station ID: " + feature.properties.map_nm + "</p>"
     + "<p>" + "Basin Code: " + feature.properties.basin_cd + "</p>"
     + "<p>" + "Instruments Code: " + feature.properties.instruments_cd + "</p>"
-    + "<p>" + "RealTime JSON Data: <a href=\"http://waterservices.usgs.gov/nwis/iv/?format=json&sites=" + feature.properties.site_no + "\" target=\"_blank\">data</a></p>"
+    + "<p>" + "RealTime JSON Data: <div url=\"http://waterservices.usgs.gov/nwis/iv/?format=json&sites=" + feature.properties.site_no + "\"  class=\"load-data\">data</div></p>"
 /*     http://waterservices.usgs.gov/nwis/iv/?format=json&parameterCd=00060,00065&sites=01646500 */
   }  
   
@@ -325,7 +306,7 @@ water.makeMarker = function(feature, featureDetails) {
   		when: { event: 'unfocus' }
   	},
   	hide: {
-  		delay: 2000,
+  		delay: 5000,
   		when: { event: 'unfocus' }
   	},
   	position: {
@@ -344,67 +325,12 @@ water.makeMarker = function(feature, featureDetails) {
   });
 
   $('a[title]').qtip();
-
+  
   // Listen for mouseover & mouseout events.
   MM.addEvent(marker, "mouseover", water.onMarkerOver);
   MM.addEvent(marker, "mouseout", water.onMarkerOut);
   MM.addEvent(marker, "click", water.onMarkerClick);
 };
-
-
-
-/*
-water.repaint_agent = function(agent) {
-
-  // ignore elements that do not have an id
-  var id = agent._id;
-  // if(!id) continue;
-
-  // ignore agents that are on map already
-  // later we want to carefully prune them off if off screen @TODO
-  // if(map_features[id]) continue;
-
-  // ignore features with no location
-  // @TODO later carefully remove features without location if had location before 
-  var lat = agent.lat;
-  var lon = agent.lon;
-  // if(!lat || !lon) continue;
- 
-  var title = agent.title;
-  if(!title) title = "Water Right";
-
-  var art = agent.art;
-  if(!art) art = "/images/icons/water_rights_icon.png";
-
-  // console.log("repainting agent " + id + " " + lat + " " + lon + " " + title );
-
-  var feature = {
-    "id":id,
-    "type":"Feature",
-    "art":art,
-    "geometry": { "type":"Point", "coordinates": [lon,lat] },
-    "properties": {
-      "longitude" : lat,
-      "latitude" : lon,
-      "title" : title,
-      "id" :  "102"
-    }
-  };
-
-  map_features[id] = feature;
-  water.makeRightsMarker(feature);
-}
-*/
-
-/*
-water.repaint = function(agents) {
-  if(!map) return;
-  console.log("water:: repainting anything on map and pruning non visible items from map");
-  for(var key in agents) {
-    water.repaint_agent(agents[key]);
-  }
-}
-*/
 
 water.getMarker = function(marker) {
   while (marker && marker.className != "marker") {
@@ -420,6 +346,15 @@ water.onMarkerOver = function(e) {
     var layer = $(marker).attr("parent");
     // $('div.marker').css({ 'opacity' : 0.4 }); 
     // make something pretty now!
+
+
+    // Load data via ajax button
+    $(this).find('.load-data').bind('click', function(){
+  /*     var url = $(this).attr('url'); */
+  /*     console.log(url); */
+      console.log($(this));
+      console.log("test");
+    });
   }
 };
 
@@ -444,4 +379,3 @@ water.onMarkerClick = function(e) {
   }
   return false;
 };
-
