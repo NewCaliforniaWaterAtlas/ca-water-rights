@@ -85,6 +85,11 @@ water.setupMap = function() {
 ] 
   }, water.paintStationMarkers); 
 
+  Core.query({ 
+   $and: [{'kind': 'station_usgs'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
+] 
+  }, water.paintStationUSGSMarkers); 
+
   var zoomer = wax.mm.zoomer(map)
   zoomer.appendTo('map-container');
 
@@ -161,6 +166,11 @@ water.loadPannedMarkers = function() {
 ] 
   }, water.paintStationMarkers); 
 
+  Core.query({ 
+   $and: [{'kind': 'station_usgs'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
+] 
+  }, water.paintStationUSGSMarkers); 
+
 };
 
 
@@ -187,6 +197,17 @@ water.paintStationMarkers = function(features) {
     name: "station",
     icon: "/images/icons/station_icon.png",
     layer: "markers_station"
+  };
+  
+  water.paintMarkers(features, featureDetails);
+};
+
+water.paintStationUSGSMarkers = function(features) {
+
+  var featureDetails = {
+    name: "station_usgs",
+    icon: "/images/icons/usgs_icon.png",
+    layer: "markers_station_usgs"
   };
   
   water.paintMarkers(features, featureDetails);
@@ -278,9 +299,21 @@ water.makeMarker = function(feature, featureDetails) {
     + "<p>" + "River Basin: " + feature.properties.river_basin + "</p>"
     + "<p>" + "Sensors: " + feature.properties.sensors + "</p>"
     + "<p>" + "Flow Data: " + feature.properties.flow_data + "</p>"
+    + "<p>" + "Data Source: " + feature.properties.data_source + "</p>"
     + "<p>" + "Real Time Data: <a href=\"http://cdec.water.ca.gov/" + feature.properties.query + "\" target=\"_blank\"> data</a></p>"
   }
-  
+
+  if (feature.properties.agency_cd !== undefined) {
+    string +=  
+      "<p>" + "Station Name: " + feature.properties.station_nm + "</p>"
+    + "<p>" + "Station ID: " + feature.properties.site_no + "</p>"
+    + "<p>" + "Site Type: " + feature.properties.site_tp_cd + "</p>"
+    + "<p>" + "Station ID: " + feature.properties.map_nm + "</p>"
+    + "<p>" + "Basin Code: " + feature.properties.basin_cd + "</p>"
+    + "<p>" + "Instruments Code: " + feature.properties.instruments_cd + "</p>"
+    + "<p>" + "RealTime JSON Data: <a href=\"http://waterservices.usgs.gov/nwis/iv/?format=json&sites=" + feature.properties.site_no + "\" target=\"_blank\">data</a></p>"
+/*     http://waterservices.usgs.gov/nwis/iv/?format=json&parameterCd=00060,00065&sites=01646500 */
+  }  
   
   // Tooltips
   $("#marker-" + id + " img").qtip({
