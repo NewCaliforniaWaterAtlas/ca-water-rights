@@ -80,7 +80,7 @@ app.post('/data', function(req, res){
       return;
     }
     res.send(results);
-  });
+  },{}, {'limit': 100});
 });
 
 
