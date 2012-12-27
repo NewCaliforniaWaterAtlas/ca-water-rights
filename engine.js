@@ -28,8 +28,9 @@ EngineProvider.prototype.findAll = function(handler) {
 // query
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-EngineProvider.prototype.find_many_by = function(blob,handler) {
-  this.db.find_many_by(blob,handler);
+EngineProvider.prototype.find_many_by = function(blob,handler,arg1,options) {
+console.log(options);
+  this.db.find_many_by(blob,handler,arg1, options);
 };
 
 exports.EngineProvider = EngineProvider;

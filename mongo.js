@@ -29,14 +29,14 @@ MongoDB.prototype.getCollection = function(callback) {
   });
 };
 
-MongoDB.prototype.find_many_by = function(arguments,callback) {
+MongoDB.prototype.find_many_by = function(arguments,callback, args1, options) {
   var myarguments = arguments;
   var mycallback = callback;
   this.getCollection(function(error, c) {
     if( error ) mycallback(error)
     else {
       if(arguments._id) arguments._id = c.db.bson_serializer.ObjectID.createFromHexString(arguments._id);
-      c.find(myarguments).toArray(function(error, results) {
+      c.find(myarguments, args1, options).toArray(function(error, results) {
         if( error ) {
           console.log("mongo:: find many by error " + error);
           mycallback(error);
@@ -98,30 +98,6 @@ MongoDB.prototype.find_one_by = function(blob, callback) {
         console.log(result);
         if( error ) mycallback(error)
         else mycallback(null, result);
-      });
-    }
-  });
-};
-
-MongoDB.prototype.find_by_facebook_id = function(facebook_id, callback) {
-  this.getCollection(function(error, c) {
-    if( error ) callback(error)
-    else {
-      c.findOne({facebook_id: facebook_id }, function(error, result) {
-        if( error ) callback(error)
-        else callback(null, result);
-      });
-    }
-  });
-};
-
-MongoDB.prototype.find_by_sponsor_id = function(sponsor_id, callback) {
-  this.getCollection(function(error, c) {
-    if( error ) callback(error)
-    else {
-      c.find({sponsor_id: sponsor_id }).toArray(function(error, result) {
-        if( error ) callback(error)
-        else callback(null, result);
       });
     }
   });
