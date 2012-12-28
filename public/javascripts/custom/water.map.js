@@ -102,8 +102,8 @@ water.setupMap = function() {
   
     // On map move events we want to requery the database to fetch features that the map is now over
     map.addCallback('panned', function(m) {
-      var zoomLevel = map.getZoom();
-      if(zoomLevel > 10) {
+/*       var zoomLevel = map.getZoom(); */
+/*       if(zoomLevel > 10) { */
         var dragtime_old = dragtime;
         var d = new Date();
         dragtime = d.getTime();
@@ -120,13 +120,16 @@ water.setupMap = function() {
           clearTimeout(wait);
           wait = null;
         }
-      }
+/*      }
+
       else {
         // Hide markers -- load canvas layers
         $('.marker').remove();
         
       }
-    });
+*/
+    }
+);
   
   });
 };
