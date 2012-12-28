@@ -70,7 +70,7 @@ app.post("/agent/query", function(req,res) {
 });
 */
 
-app.post('/data', function(req, res){
+app.post('/data', function(req, res, options){
   var blob = req.body;
 
   engine.find_many_by(blob,function(error, results) {

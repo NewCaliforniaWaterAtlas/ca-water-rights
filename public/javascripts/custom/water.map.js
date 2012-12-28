@@ -40,90 +40,94 @@ water.setupMap = function() {
   wax.tilejson(url, function(tilejson) {
   water.map = map = new MM.Map("map-container",
     new wax.mm.connector(tilejson));
-
-  var zoom = water.default_zoom;
-
-  var lat = water.default_lat;
-  var lon = water.default_lon;
-  var boxsize_lat = water.default_boxsize_lat;
-  var boxsize_lon = water.default_boxsize_lon;
-  // Nearby
-/*
-  if (navigator.geolocation){
-    // listen to updates if any
-    navigator.geolocation.watchPosition( function(position) {
-        water.gps = position;
-        lat = water.gps_lat = water.gps.coords.latitude;
-        lon = water.gps_lon = water.gps.coords.longitude;
-        water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, zoom, map);
-    });
-*/
-    // try get away with only setting map once
-    // @TODO set to state capital, sacramento
-    
-    map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
-
-
-  //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
-  // Load data via mongo bounding box search. Run paintMarkers callback.
-  Core.query({ 
-   $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
-] 
-  }, water.paintRightsMarkers); 
-
-  Core.query({ 
-   $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
-] 
-  }, water.paintStationMarkers); 
-
-  Core.query({ 
-   $and: [{'kind': 'station_usgs'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
-] 
-  }, water.paintStationUSGSMarkers); 
-
-  var zoomer = wax.mm.zoomer(map)
-  zoomer.appendTo('map-container');
-
-/*
-  // Put all markers on the same layer.
-  if($('div#markers').length === 0) {
-    markers = new MM.MarkerLayer();
-    map.addLayer(markers);
-    markers.parent.setAttribute("id", "markers");
-  }
-*/
   
-  var boxsize_lat = water.default_boxsize_lat;
-  var boxsize_lon = water.default_boxsize_lon;
+    var zoom = water.default_zoom;
   
-  // Load data via static json file.
-  //Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
-
-
-  // On map move events we want to requery the database to fetch features that the map is now over
-  map.addCallback('panned', function(m) {
-    var dragtime_old = dragtime;
-    var d = new Date();
-    dragtime = d.getTime();
-    var dragtime_diff = dragtime - dragtime_old;
+    var lat = water.default_lat;
+    var lon = water.default_lon;
+    var boxsize_lat = water.default_boxsize_lat;
+    var boxsize_lon = water.default_boxsize_lon;
+    // Nearby
+  /*
+    if (navigator.geolocation){
+      // listen to updates if any
+      navigator.geolocation.watchPosition( function(position) {
+          water.gps = position;
+          lat = water.gps_lat = water.gps.coords.latitude;
+          lon = water.gps_lon = water.gps.coords.longitude;
+          water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, zoom, map);
+      });
+  */
+      // try get away with only setting map once
+      // @TODO set to state capital, sacramento
+      
+      map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
+  
+  
+    //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
+    // Load data via mongo bounding box search. Run paintMarkers callback.
+    Core.query({ 
+     $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+  ] 
+    }, water.paintRightsMarkers, {'limit': 300}); 
+  
+    Core.query({ 
+     $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+  ] 
+    }, water.paintStationMarkers); 
+  
+    Core.query({ 
+     $and: [{'kind': 'station_usgs'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
+  ] 
+    }, water.paintStationUSGSMarkers); 
+  
+    var zoomer = wax.mm.zoomer(map)
+    zoomer.appendTo('map-container');
+  
+  /*
+    // Put all markers on the same layer.
+    if($('div#markers').length === 0) {
+      markers = new MM.MarkerLayer();
+      map.addLayer(markers);
+      markers.parent.setAttribute("id", "markers");
+    }
+  */
     
-    if(dragtime_diff < 500) {
-      counter++;
-      console.log("moving " + counter + " " + dragtime_diff);
-      if (wait === null) {
-        wait = water.triggerMapMoveTimeout();
+    var boxsize_lat = water.default_boxsize_lat;
+    var boxsize_lon = water.default_boxsize_lon;
+    
+    // Load data via static json file.
+    //Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
+  
+  
+    // On map move events we want to requery the database to fetch features that the map is now over
+    map.addCallback('panned', function(m) {
+      var zoomLevel = map.getZoom();
+      if(zoomLevel > 10) {
+        var dragtime_old = dragtime;
+        var d = new Date();
+        dragtime = d.getTime();
+        var dragtime_diff = dragtime - dragtime_old;
+        
+        if(dragtime_diff < 500) {
+          counter++;
+          console.log("moving " + counter + " " + dragtime_diff);
+          if (wait === null) {
+            wait = water.triggerMapMoveTimeout();
+          }
+        }
+        else {
+          clearTimeout(wait);
+          wait = null;
+        }
       }
-    }
-    else {
-      clearTimeout(wait);
-      wait = null;
-    }
-  });
-
-  wax.mm.interaction()
-    .map(map)
-    .tilejson(tilejson)
-    .on(wax.tooltip().animate(true).parent(map.parent).events());
+      else {
+        // Hide markers -- load canvas layers
+        $('.marker').remove();
+        
+      }
+    });
+  
   });
 };
 
