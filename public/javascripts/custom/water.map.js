@@ -35,7 +35,10 @@ water.setMapCenterZoom = function(lat,lon,zoom, map) {
 };
 
 water.setupMap = function() {
-  var url = 'http://a.tiles.mapbox.com/v3/chachasikes.map-tv2igp9l.jsonp';
+/*   var url = 'http://a.tiles.mapbox.com/v3/chachasikes.map-tv2igp9l.jsonp'; */
+  var url = 'http://a.tiles.mapbox.com/v3/chachasikes.map-oguxg9bo.jsonp';
+
+
 
   wax.tilejson(url, function(tilejson) {
   water.map = map = new MM.Map("map-container",
