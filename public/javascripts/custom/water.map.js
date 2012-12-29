@@ -83,7 +83,6 @@ water.loadMarkers = function() {
 
 water.markersPanned = function() {
   console.log('zoomed in and panned');
-/*   water.markersQuery(true); */
 
   var dragtime_old = water.map_interaction.dragtime;
   var d = new Date();
@@ -105,15 +104,14 @@ water.markersPanned = function() {
 
 // Search Mongo Database for data. Build interactive markers.
 water.markersQuery = function(reloaded) {
-  if(reloaded === true) {
+  if(reloaded === true || reloaded === undefined) {
     var center = water.map.center();
     var lat = center.lat;
     var lon = center.lon;    
 
-    // Clear out old data.
-    //  water.markers = 0;
-    // Redraw this type of marker in layer if there are features.
-    // $('.marker').remove();
+    // Clear out old layer data.
+    water.map.removeLayer(water.markerLayer);
+    water.markerLayer = 0;
   }
   else {
     var lat = water.map_defaults.lat;
@@ -148,9 +146,10 @@ water.paintMarkers = function(features, featureDetails) {
   
   // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
   if(water.markerLayer === 0) {
-    water.markerLayer = mapbox.markers.layer();
+    water.markerLayer = mapbox.markers.layer().id('markers');
     mapbox.markers.interaction(water.markerLayer);
     water.map.addLayer(water.markerLayer);
+    water.map.interaction.refresh();
   }
 
   // Generate marker layers.
