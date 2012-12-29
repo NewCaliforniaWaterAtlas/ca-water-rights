@@ -11,6 +11,7 @@ water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.WaterTransfer-Markers';
 water.map_defaults.div_container = 'map-container';
+water.map_defaults.close_up_zoom_level = 7;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -46,27 +47,81 @@ water.setupMap = function() {
   water.centerMap();
   
   // Load special data layers for more zoomed in levels.
-  water.loadZoomedInMarkers();
+  water.loadMarkers();
 };
 
-
+// Utility function to recenter (and maybe also to reset / reload the map)
 water.centerMap = function() {
   // default values will not load here.
   water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 6);
 };
 
-// @TODO is modestmaps move to mapbox.js
-water.loadZoomedInMarkers = function() {
-  water.markersQuery();
+
+water.loadMarkers = function() {
+  
+  var zoom = water.map.zoom();
+  console.log(zoom);
+  
+  if(zoom > water.map_defaults.close_up_zoom_level) {
+    water.markersQuery(false);
+  }
+  
+  water.map.addCallback('zoomed', function(m) {
+    var zoom = water.map.zoom();
+    
+    // @TODO see about using closeup lens.
+    if(zoom > water.map_defaults.close_up_zoom_level) {
+      console.log('zoomed in');
+      water.map.addCallback('panned', water.markersPanned);  
+    }
+    else {
+      water.map.removeCallback('panned', water.markersPanned);
+    }
+  });
+
 };
 
-water.markersQuery = function() {
+water.markersPanned = function() {
+  console.log('zoomed in and panned');
+/*   water.markersQuery(true); */
 
-  var zoom = water.map_defaults.zoom;
-  var lat = water.map_defaults.lat;
-  var lon = water.map_defaults.lon;
+  var dragtime_old = water.map_interaction.dragtime;
+  var d = new Date();
+  water.map_interaction.dragtime = d.getTime();
+  var dragtime_diff = water.map_interaction.dragtime - dragtime_old;
+  
+  if(dragtime_diff < 500) {
+    water.map_interaction.counter++;
+    console.log("moving " + water.map_interaction.counter + " " + dragtime_diff);
+    if (water.map_interaction.wait === null) {
+      water.map_interaction.wait = water.triggerMapMoveTimeout();
+    }
+  }
+  else {
+    clearTimeout(water.map_interaction.wait);
+    water.map_interaction.wait = null;
+  }
+};
+
+// Search Mongo Database for data. Build interactive markers.
+water.markersQuery = function(reloaded) {
+  if(reloaded === true) {
+    var center = water.map.center();
+    var lat = center.lat;
+    var lon = center.lon;    
+
+    // Clear out old data.
+    //  water.markers = 0;
+    // Redraw this type of marker in layer if there are features.
+    // $('.marker').remove();
+  }
+  else {
+    var lat = water.map_defaults.lat;
+    var lon = water.map_defaults.lon;
+  }
   var boxsize_lat = water.map_defaults.boxsize_lat;
   var boxsize_lon = water.map_defaults.boxsize_lon;
+  var zoom = water.map_defaults.zoom;
 
  // This is where real-time water rights data would go.
  Core.query({ 
@@ -87,106 +142,27 @@ water.markersQuery = function() {
     }, water.paintStationUSGSMarkers); 
 };
 
-
+// Draw interactive markers.
 water.paintMarkers = function(features, featureDetails) {
-
-  // Put all markers on the same layer -- modestmaps, click issue for markers on different layers.
-  // @TODO see if this was fixed with mapbox.js
-console.log(water.markerLayer);
+  var features = features;
+  
+  // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
   if(water.markerLayer === 0) {
     water.markerLayer = mapbox.markers.layer();
     mapbox.markers.interaction(water.markerLayer);
     water.map.addLayer(water.markerLayer);
   }
-  
-  features = features;
-/*   var len = features.length;  */
-    
+
+  // Generate marker layers.
   water.markerLayer.features(features).factory(function(f) { 
     var marker = water.makeMarker(f, featureDetails);
     return marker;
   });
 };
 
-
-
-
-
-
-
-
-
-// @TODO is modestmaps move to mapbox.js
-water.loadPannedMarkers = function (){
-    map.addCallback('panned', function(m) {
-//      var zoomLevel = map.getZoom();
-//      if(zoomLevel > 10) {
-        var dragtime_old = dragtime;
-        var d = new Date();
-        dragtime = d.getTime();
-        var dragtime_diff = dragtime - dragtime_old;
-        
-        if(dragtime_diff < 500) {
-          counter++;
-          console.log("moving " + counter + " " + dragtime_diff);
-          if (wait === null) {
-            wait = water.triggerMapMoveTimeout();
-          }
-        }
-        else {
-          clearTimeout(wait);
-          wait = null;
-        }
-//      }
-
-      //else {
-      //  // Hide markers -- load canvas layers
-      //  $('.marker').remove();
-      //}
-
-    }
-  );
-};
-
-
 water.triggerMapMoveTimeout = function() {
-  return setTimeout(water.loadPannedMarkers, 1000);
+  return setTimeout(water.markersQuery, 1000);
 }
-
-water.loadPannedMarkers = function() {
-  var center = map.center();
-  var lat = center.lat;
-  var lon = center.lon;
-
-  var boxsize_lat = water.map_defaults.boxsize_lat;
-  var boxsize_lon = water.map_defaults.boxsize_lon;
-    
-  water.markers = 0;
-
-  // Redraw this type of marker in layer if there are features.
-  $('.marker').remove();
-
-
-  // Search for database objects and add markers to map.
-  
-  
-
- Core.query({ 
-     $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
-  ] 
-    }, water.paintRightsMarkers, {'limit': 300});
-
-  Core.query({ 
-   $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
-] 
-  }, water.paintStationMarkers); 
-
-  Core.query({ 
-   $and: [{'kind': 'station_usgs'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
-] 
-  }, water.paintStationUSGSMarkers); 
-
-};
 
 water.paintRightsMarkers = function(features) {
 
@@ -398,3 +374,45 @@ water.onMarkerClick = function(e) {
   }
   return false;
 };
+
+
+
+
+
+
+/*
+water.loadPannedMarkers = function() {
+  var center = map.center();
+  var lat = center.lat;
+  var lon = center.lon;
+
+  var boxsize_lat = water.map_defaults.boxsize_lat;
+  var boxsize_lon = water.map_defaults.boxsize_lon;
+    
+  water.markers = 0;
+
+  // Redraw this type of marker in layer if there are features.
+  $('.marker').remove();
+
+
+  // Search for database objects and add markers to map.
+  
+  
+
+ Core.query({ 
+     $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+  ] 
+    }, water.paintRightsMarkers, {'limit': 300});
+
+  Core.query({ 
+   $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+] 
+  }, water.paintStationMarkers); 
+
+  Core.query({ 
+   $and: [{'kind': 'station_usgs'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
+] 
+  }, water.paintStationUSGSMarkers); 
+
+};
+*/
