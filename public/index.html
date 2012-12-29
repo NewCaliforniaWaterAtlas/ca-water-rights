@@ -14,13 +14,13 @@
     <link rel="shortcut icon" href="/libraries/bootstrap/docs/assets/ico/favicon.ico">
     <link href="/libraries/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
     <link href="/libraries/bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/css/bootstrap_themes/bootstrap.min.water-transfer.css" rel="stylesheet">    
-    <link href='/css/wax-controls.css' rel='stylesheet' type='text/css' />   
-    <link href="/css/mapbox-embed.css" rel="stylesheet">
+    <link href="/css/bootstrap_themes/bootstrap.min.water-transfer.css" rel="stylesheet">
+    <link href='/css/mapbox.css' rel='stylesheet' />
     <link href='/css/jquery.qtip.min.css' rel='stylesheet' type='text/css' /> 
     <link rel="stylesheet" href="/css/style.css" />
     <script type="text/javascript" src="/javascripts/libraries/jquery.js"></script>
     <script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script>
+    <script src='/javascripts/libraries/mapbox.js'></script>    
   </head>
   <body>
 
@@ -50,7 +50,7 @@
   <div class="container-fluid">
   <div id="page-content" class="tab-content">
     <!-- home-->
-    <div class="tab-pane active fade in row" id="home">
+    <div class="tab-pane fade in row" id="home">
 
         <div class="left span8">      
           <div class="hero-unit">
@@ -84,35 +84,23 @@
 
 
     <!--map-->
-    <div class="tab-pane fade in" id="map">
+    <div class="tab-pane fade active in" id="map">
     <div class="container-fluid"> 
       <div class="row-fluid">
         <div id="map-outer-container">
           <h1>Map</h1>
-          <div class="ts-map mm zoompan zoomwheel streetlevel zoombox attribution watermark" id="map-container">
-  <!--                 <a href="http://mapbox.com" target="_blank" class="mapbox-watermark">MapBox</a> -->
-            <a href="#" class="zoomer zoomin">+</a><a href="#" class="zoomer zoomout">-</a>
-  <!--                 <div id="map-zoombox-box" class="zoombox-box"></div> -->
-       
-<p class="attribution wax-attribution wax-mm">Map tiles by Mapbox</p>
-  
+            <div id="map-container">  
+            </div>
           </div>
-
-          </div>
+<!--
           <div class="alert"> 
-<!--               <a class="close" data-dismiss="alert" href="#">&times;</a>  -->
               <div class="content">Loading the map</div>
           </div>
+-->
         </div>
         
       </div>
     </div>
-    <script src="/javascripts/libraries/modestmaps.min.js"></script>
-    <script src="/javascripts/libraries/modestmaps.markers.js"></script>
-    <script src="/javascripts/libraries/wax.mm.min.js"></script>
-    <script src="http://maps.stamen.com/js/tile.stamen.js"></script>
-
-
 </div><!--/end container-fluid-->
 
       <hr>

@@ -22,11 +22,32 @@ body {
 @media (min-width: 1200px) { 
 }
 
+.marker-image {
+    width:20px;
+    height:20px;
+
+    margin-left:-10px;
+    margin-top:-10px;
+    pointer-events:all;
+    position:absolute;
+}
+
+#map-container {
+  position:absolute; top:0; bottom:0; width:100%;
+}
+
+.map-tooltip {
+  padding: 10px 40px 10px 10px;
+  max-height: 100%;
+}
+
+/*
 #map-outer-container {
 	height: 100%;
 }
+*/
 
-#map-outer-container .ts-map .zoomer {
+#map-outer-container .zoomer {
   width: 28px;
   height: 28px;
   top: 60px;
@@ -101,6 +122,7 @@ h2 {
   text-shadow: none;
   color: #333;
 }
+/*
 
 .ts-map .wax-attribution {
   background: rgba(256,256,256, 0.3);
@@ -114,6 +136,7 @@ h2 {
 .ts-map .wax-attribution a:hover {
   color: rgba(0,0,0,1);  
 }
+*/
 
 input, textarea {
   width: 400px;
@@ -134,8 +157,8 @@ a {
 }
 
 hr {
-border-top: none;
-border-bottom: 2px solid rgba(256,256,256,0.1);
+  border-top: none;
+  border-bottom: 2px solid rgba(256,256,256,0.1);
 }
 
 .alert {

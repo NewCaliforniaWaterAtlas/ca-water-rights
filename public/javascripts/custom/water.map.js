@@ -1,112 +1,126 @@
-var mm = com.modestmaps;
-var map = map || {};
+// Set up water map.
+water.map = water.map || {};
 
-var map_features = {};
+// Set up map defaults.
+water.map_defaults = {};
+water.map_defaults.lat = 38.52;
+water.map_defaults.lon = -121.50;
+water.map_defaults.boxsize_lat = 0.3;
+water.map_defaults.boxsize_lon = 0.15;
+water.map_defaults.zoom = 6;
+water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
+water.map_defaults.zoomed_out_marker_layer = 'chachasikes.WaterTransfer-Markers';
+water.map_defaults.div_container = 'map-container';
 
-var counter = 0;
-var date_start = new Date();
-var dragtime = date_start.getTime();
-var dragtime_diff = null;
-var wait = null;
+// Establish empty container for loaded marker features data.
+water.markerLayer = 0;
 
-water.markers = 0;
-water.markers_station = 0;
-water.markers_rights = 0;
-
-water.default_lat = 38.52;
-water.default_lon = -121.50;
-water.default_boxsize_lat = 0.15;
-water.default_boxsize_lon = 0.3;
-water.default_zoom = 11;
-
-water.setCenterZoom = function(lat,lon,zoom) {
-  if(!map) return;
-  if(map.setCenterZoom === undefined) {} else map.setCenterZoom(new MM.Location(lat,lon),zoom);
-};
-
-water.setMapCenterZoom = function(lat,lon,zoom, map) {
-
-  var map = map;
-  var zoom = zoom;
-  var lat = lat;
-  var lon = lon;
-  if(!map) return;
-  if(map.setCenterZoom === undefined) {} else map.setCenterZoom(new MM.Location(lat,lon),zoom);
-};
+// Set up map interaction variables.
+water.map_interaction = {};
+water.map_interaction.map_features = {};
+water.map_interaction.counter = 0;
+water.map_interaction.date_start = new Date();
+water.map_interaction.dragtime = water.map_interaction.date_start.getTime();
+water.map_interaction.dragtime_diff = null;
+water.map_interaction.wait = null;
 
 water.setupMap = function() {
-/*   var url = 'http://a.tiles.mapbox.com/v3/chachasikes.map-tv2igp9l.jsonp'; */
-  var url = 'http://a.tiles.mapbox.com/v3/chachasikes.map-oguxg9bo.jsonp';
+  // Create map.
+  water.map = mapbox.map(water.map_defaults.div_container);
+  // Add satellite layer.
+  water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
+  // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
+  mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
+      water.map.addLayer(interactive.layer);
+      water.map.interaction.auto(); 
+  });
+
+  // Add map interface elements.
+  water.map.ui.zoomer.add();
+
+  // Attribute map.
+  water.map.ui.attribution.add()
+    .content('<a href="http://mapbox.com/about/maps">Terms &amp; Feedback</a>');
+
+  // Load default centered map.
+  water.centerMap();
+  
+  // Load special data layers for more zoomed in levels.
+  water.loadZoomedInMarkers();
+};
 
 
+water.centerMap = function() {
+  // default values will not load here.
+  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 6);
+};
 
-  wax.tilejson(url, function(tilejson) {
-  water.map = map = new MM.Map("map-container",
-    new wax.mm.connector(tilejson));
-  
-    var zoom = water.default_zoom;
-  
-    var lat = water.default_lat;
-    var lon = water.default_lon;
-    var boxsize_lat = water.default_boxsize_lat;
-    var boxsize_lon = water.default_boxsize_lon;
-    // Nearby
-  /*
-    if (navigator.geolocation){
-      // listen to updates if any
-      navigator.geolocation.watchPosition( function(position) {
-          water.gps = position;
-          lat = water.gps_lat = water.gps.coords.latitude;
-          lon = water.gps_lon = water.gps.coords.longitude;
-          water.setMapCenterZoom(water.gps.coords.latitude, water.gps.coords.longitude, zoom, map);
-      });
-  */
-      // try get away with only setting map once
-      // @TODO set to state capital, sacramento
-      
-      map.setCenterZoom(new MM.Location(water.default_lat,water.default_lon), zoom);
-  
-  
-    //http://www.mongodb.org/display/DOCS/Geospatial+Indexing
-    // Load data via mongo bounding box search. Run paintMarkers callback.
-    Core.query({ 
+// @TODO is modestmaps move to mapbox.js
+water.loadZoomedInMarkers = function() {
+  water.markersQuery();
+};
+
+water.markersQuery = function() {
+
+  var zoom = water.map_defaults.zoom;
+  var lat = water.map_defaults.lat;
+  var lon = water.map_defaults.lon;
+  var boxsize_lat = water.map_defaults.boxsize_lat;
+  var boxsize_lon = water.map_defaults.boxsize_lon;
+
+ // This is where real-time water rights data would go.
+ Core.query({ 
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
     }, water.paintRightsMarkers, {'limit': 300}); 
   
-    Core.query({ 
+  // Load CDEC stations.
+  Core.query({ 
      $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
     }, water.paintStationMarkers); 
   
-    Core.query({ 
-     $and: [{'kind': 'station_usgs'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
+  // Load USGS stations
+  Core.query({ 
+     $and: [{'kind': 'station_usgs'}, {'data_type': 'discharge'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
   ] 
     }, water.paintStationUSGSMarkers); 
+};
+
+
+water.paintMarkers = function(features, featureDetails) {
+
+  // Put all markers on the same layer -- modestmaps, click issue for markers on different layers.
+  // @TODO see if this was fixed with mapbox.js
+console.log(water.markerLayer);
+  if(water.markerLayer === 0) {
+    water.markerLayer = mapbox.markers.layer();
+    mapbox.markers.interaction(water.markerLayer);
+    water.map.addLayer(water.markerLayer);
+  }
   
-    var zoomer = wax.mm.zoomer(map)
-    zoomer.appendTo('map-container');
-  
-  /*
-    // Put all markers on the same layer.
-    if($('div#markers').length === 0) {
-      markers = new MM.MarkerLayer();
-      map.addLayer(markers);
-      markers.parent.setAttribute("id", "markers");
-    }
-  */
+  features = features;
+/*   var len = features.length;  */
     
-    var boxsize_lat = water.default_boxsize_lat;
-    var boxsize_lon = water.default_boxsize_lon;
-    
-    // Load data via static json file.
-    //Core.query2("/data/water_rights_merged_butte_geojson.json",water.paintRightsMarkers);
-  
-  
-    // On map move events we want to requery the database to fetch features that the map is now over
+  water.markerLayer.features(features).factory(function(f) { 
+    var marker = water.makeMarker(f, featureDetails);
+    return marker;
+  });
+};
+
+
+
+
+
+
+
+
+
+// @TODO is modestmaps move to mapbox.js
+water.loadPannedMarkers = function (){
     map.addCallback('panned', function(m) {
-/*       var zoomLevel = map.getZoom(); */
-/*       if(zoomLevel > 10) { */
+//      var zoomLevel = map.getZoom();
+//      if(zoomLevel > 10) {
         var dragtime_old = dragtime;
         var d = new Date();
         dragtime = d.getTime();
@@ -123,31 +137,29 @@ water.setupMap = function() {
           clearTimeout(wait);
           wait = null;
         }
-/*      }
+//      }
 
-      else {
-        // Hide markers -- load canvas layers
-        $('.marker').remove();
-        
-      }
-*/
+      //else {
+      //  // Hide markers -- load canvas layers
+      //  $('.marker').remove();
+      //}
+
     }
-);
-  
-  });
+  );
 };
+
 
 water.triggerMapMoveTimeout = function() {
   return setTimeout(water.loadPannedMarkers, 1000);
 }
 
 water.loadPannedMarkers = function() {
-  var center = map.getCenter();
+  var center = map.center();
   var lat = center.lat;
   var lon = center.lon;
- 
-  var boxsize_lat = water.default_boxsize_lat;
-  var boxsize_lon = water.default_boxsize_lon;
+
+  var boxsize_lat = water.map_defaults.boxsize_lat;
+  var boxsize_lon = water.map_defaults.boxsize_lon;
     
   water.markers = 0;
 
@@ -159,9 +171,10 @@ water.loadPannedMarkers = function() {
   
   
 
-  
-  Core.query({ $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}] 
-}, water.paintRightsMarkers); 
+ Core.query({ 
+     $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+  ] 
+    }, water.paintRightsMarkers, {'limit': 300});
 
   Core.query({ 
    $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
@@ -175,7 +188,6 @@ water.loadPannedMarkers = function() {
 
 };
 
-
 water.paintRightsMarkers = function(features) {
 
   var featureDetails = {
@@ -188,7 +200,6 @@ water.paintRightsMarkers = function(features) {
   
   $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
 };
-
 
 water.paintStationMarkers = function(features) {
 
@@ -212,42 +223,23 @@ water.paintStationUSGSMarkers = function(features) {
   water.paintMarkers(features, featureDetails);
 };
 
-water.paintMarkers = function(features, featureDetails) {
 
-  // Put all markers on the same layer.
-  if(water.markers === 0) {
-  water.markers /* = water[featureDetails.layer] */ = new MM.MarkerLayer();
-  map.addLayer(water.markers);
-  water.markers.parent.setAttribute("id", "markers");
-/*   water.markers.parent.setAttribute("class", featureDetails.layer); */
-  }
-  
-  features = features;
-  var len = features.length; 
-  console.log("water::paintMarkers " + featureDetails.name + " showing markers " + len + " layer:" + featureDetails.layer);
-  
-  
-  for (var i = 0; i < len; i++) {
-    var feature = features[i];
-    water.makeMarker(feature, featureDetails);
-  }
-  
-  var locations = map.getExtent(); // returns an array of Locations
-  var loc = map.getCenter() // returns a single Location
-  var zoomLevel = map.getZoom();
-  
-  /*   $(".alert").alert('close'); */
-};
 
 
 water.makeMarker = function(feature, featureDetails) {
 
+  var img = document.createElement('img');
+  img.className = 'marker-image';
+  img.setAttribute('src', featureDetails.icon);
+  img.feature = feature;
+  return img;
+
+
+
+/*
   var id = feature.properties.id;
   var marker = document.createElement("div");
   var featureDetails = featureDetails;
-
-  marker.feature = feature;
-  water.markers.addMarker(marker, feature);
 
   // Unique hash marker id for link
   marker.setAttribute("id", "marker-" + id);
@@ -265,6 +257,19 @@ water.makeMarker = function(feature, featureDetails) {
   } else {
     img.setAttribute("src", featureDetails.icon);
   }
+*/
+
+
+  
+  
+ // return marker;
+//  water.markers.addMarker(marker, feature);
+};
+
+water.makeInteractiveMarker = function(feature, featureDetails) {
+
+
+
   
   var string = '';
   if (feature.properties.holder_name !== undefined) {
@@ -340,7 +345,11 @@ water.makeMarker = function(feature, featureDetails) {
   MM.addEvent(marker, "mouseover", water.onMarkerOver);
   MM.addEvent(marker, "mouseout", water.onMarkerOut);
   MM.addEvent(marker, "click", water.onMarkerClick);
+
+
+
 };
+
 
 water.getMarker = function(marker) {
   while (marker && marker.className != "marker") {
