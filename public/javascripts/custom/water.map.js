@@ -54,7 +54,7 @@ water.setupMap = function() {
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
-  water.map.setZoomRange(6, 17);
+  water.map.setZoomRange(6, 17);  // 17 is the lowest level of satellite layer.
 /*// @TODO see if we can change the increment of the zoomer.
   // This doesn't seem to work though. Maybe make new zoomer? Maybe override easey?
   // Needs more research.
@@ -96,19 +96,18 @@ water.loadMarkers = function() {
   
   var zoom = water.map.zoom();
   
-  if(zoom > water.map_defaults.close_up_zoom_level) {
+  if(zoom >= water.map_defaults.close_up_zoom_level) {
     water.markersQuery(false);
   }
   
   water.map.addCallback('zoomed', function(m) {
     var zoom = water.map.zoom();
-    if(zoom > water.map_defaults.close_up_zoom_level) {
+    if(zoom >= water.map_defaults.close_up_zoom_level) {
       console.log('zoomed in');
       water.map.addCallback('panned', water.markersPanned);  
     }
     else {
       water.map.removeCallback('panned', water.markersPanned);
-/*       water.map.removeLayer(water.markerLayer); */
     }
   });
 
@@ -143,7 +142,7 @@ water.markersPanned = function() {
   
   if(dragtime_diff < 500) {
     water.map_interaction.counter++;
-    console.log("moving " + water.map_interaction.counter + " " + dragtime_diff);
+    // console.log("moving " + water.map_interaction.counter + " " + dragtime_diff);
     if (water.map_interaction.wait === null) {
       water.map_interaction.wait = water.triggerMapMoveTimeout();
     }
@@ -212,6 +211,9 @@ water.drawMarkers = function(features, featureDetails) {
   
     water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
 
+
+    water.map.addLayer(water[featureDetails.layer]);
+    
     // Generate marker layers.
     water[featureDetails.layer].features(features).factory(function(f) { 
       var marker = water.makeMarker(f, featureDetails);
@@ -224,12 +226,13 @@ water.drawMarkers = function(features, featureDetails) {
     });
 
 
-    water.map.addLayer(water[featureDetails.layer]);
-    water[featureDetails.layer + "_interaction"].auto();
+/*
+    water.map.interaction.auto();
     water.map.interaction.refresh();
+*/
   }
   
-  $('.marker-image').parent().css('pointer-events', 'all');
+/*   $('.marker-image').parent().css('pointer-events', 'all'); */
 };
 
 water.drawRightsMarkers = function(features) {
