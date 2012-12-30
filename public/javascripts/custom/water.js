@@ -8,12 +8,10 @@ window.onload = function() {
 
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
-      // force redraw by rezooming to the current zoom level - since map does not load when page loads if the tab is hidden. most of the map is set up, it just needs to be redrawn. can't find a redraw function in modest maps.
+        // force redraw by rezooming to the current zoom level - since map does not load when page loads if the tab is hidden. most of the map is set up, it just needs to be redrawn. can't find a redraw function in modest maps.
       
         water.centerMap();
     }
-    
-    
   });
 };
 
@@ -45,11 +43,9 @@ water.setupFilters = function () {
   $(".search-holders").typeahead({
     minLength: 3,
     source: function (query, process) {
-        console.log(query);
-        console.log(process);
-        return $.get('/search/holders?value=' + query, function (data) {
-          water.drawRightsMarkers(data);
-        });
+      return $.get('/search/holders?value=' + query, function (data) {
+        water.drawSearchRightsMarkers(data);
+      });
     }
   });
 };

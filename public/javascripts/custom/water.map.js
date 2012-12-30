@@ -107,52 +107,50 @@ water.loadMarkers = function() {
       water.map.addCallback('panned', water.markersPanned);  
     }
     else {
+      console.log('zoomed out - removing pan');
       water.map.removeCallback('panned', water.markersPanned);
     }
     
     $('.zoom-level').html(water.map.zoom());
   });
-
-  water.map.addCallback('drawn', function() {
-    // .markers() gives a list of markers, along with their elements attached.
-    var markers = water.markerLayer.markers(),
-        // construct an empty list to fill with onscreen markers
-        inextent = [],
-        // get the map extent - the top-left and bottom-right locations
-        extent = water.map.extent()
-
-    // for each marker, consider whether it is currently visible by comparing
-    // with the current map extent
-    for (var i = 0; i < markers.length; i++) {
-      if (extent.containsLocation(markers[i].location)) {
-          inextent.push(markers[i].data.properties.name);
-      }
-    }
-
-    // display a list of markers.
-    onscreen.innerHTML = inextent.join('\n');
-  });
 };
 
 water.markersPanned = function() {
   console.log('zoomed in and panned');
-
-  var dragtime_old = water.map_interaction.dragtime;
-  var d = new Date();
-  water.map_interaction.dragtime = d.getTime();
-  var dragtime_diff = water.map_interaction.dragtime - dragtime_old;
   
-  if(dragtime_diff < 500) {
-    water.map_interaction.counter++;
-    // console.log("moving " + water.map_interaction.counter + " " + dragtime_diff);
-    if (water.map_interaction.wait === null) {
-      water.map_interaction.wait = water.triggerMapMoveTimeout();
+  var zoom = water.map.zoom();
+  if(zoom >= water.map_defaults.close_up_zoom_level) {
+    
+    var dragtime_old = water.map_interaction.dragtime;
+    var d = new Date();
+    water.map_interaction.dragtime = d.getTime();
+    var dragtime_diff = water.map_interaction.dragtime - dragtime_old;
+    
+    if(dragtime_diff < 500) {
+      water.map_interaction.counter++;
+      // console.log("moving " + water.map_interaction.counter + " " + dragtime_diff);
+      if (water.map_interaction.wait === null) {
+        water.map_interaction.wait = water.triggerMapMoveTimeout();
+      }
+    }
+    else {
+      clearTimeout(water.map_interaction.wait);
+      water.map_interaction.wait = null;
     }
   }
-  else {
-    clearTimeout(water.map_interaction.wait);
-    water.map_interaction.wait = null;
-  }
+};
+
+water.clearMarkerLayers = function() {
+  water.map.removeLayer(water.markerLayer);
+  water.map.removeLayer(water.markers_station_usgs);
+  water.map.removeLayer(water.markers_station_cdec);
+  water.map.removeLayer(water.markers_rights);
+  water.map.removeLayer(water.markers_search);
+  water.markerLayer = 0;
+  water.markers_station_usgs = 0;
+  water.markers_station_cdec = 0;
+  water.markers_rights = 0;
+  water.markers_search = 0;
 };
 
 // Search Mongo Database for data. Build interactive markers.
@@ -163,16 +161,7 @@ water.markersQuery = function(reloaded) {
     var lon = center.lon;    
 
     // Clear out old layer data.
-    water.map.removeLayer(water.markerLayer);
-    water.map.removeLayer(water.markers_station_usgs);
-    water.map.removeLayer(water.markers_station_cdec);
-    water.map.removeLayer(water.markers_rights);
-    water.map.removeLayer(water.markers_search);
-    water.markerLayer = 0;
-    water.markers_station_usgs = 0;
-    water.markers_station_cdec = 0;
-    water.markers_rights = 0;
-    water.markers_search = 0;
+    water.clearMarkerLayers();
   }
   else {
     var lat = water.map_defaults.lat;
@@ -208,11 +197,10 @@ water.drawMarkers = function(features, featureDetails) {
   // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
   if(water[featureDetails.layer] === 0) {
     water[featureDetails.layer] = mapbox.markers.layer();
-    // @TODO This doesn't work on the div, just the object, but it would be nice to name the layers.   
+    // @TODO This doesn't work on the div, just the object, but it would be nice to name the layers.
     water[featureDetails.layer].named(featureDetails.layer);
   
     water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
-
 
     water.map.addLayer(water[featureDetails.layer]);
     
@@ -226,15 +214,28 @@ water.drawMarkers = function(features, featureDetails) {
       var o = water.formatTooltipStrings(feature);
       return o;
     });
-
-
-/*
-    water.map.interaction.auto();
-    water.map.interaction.refresh();
-*/
   }
   
-/*   $('.marker-image').parent().css('pointer-events', 'all'); */
+  water.map.addCallback('drawn', function() {
+    // .markers() gives a list of markers, along with their elements attached.
+    var markers = water[featureDetails.layer].markers(),
+        // construct an empty list to fill with onscreen markers
+        inextent = [],
+        // get the map extent - the top-left and bottom-right locations
+        extent = water.map.extent()
+
+    // for each marker, consider whether it is currently visible by comparing
+    // with the current map extent
+    for (var i = 0; i < markers.length; i++) {
+      if (extent.containsLocation(markers[i].location)) {
+          inextent.push(markers[i].data.properties.name);
+      }
+    }
+
+    // display a list of markers.
+    onscreen.innerHTML = inextent.join('\n');
+  });
+  
 };
 
 water.drawRightsMarkers = function(features) {
@@ -248,6 +249,21 @@ water.drawRightsMarkers = function(features) {
   water.drawMarkers(features, featureDetails);
   
   $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
+};
+
+water.drawSearchRightsMarkers = function(features) {
+  water.clearMarkerLayers();
+
+  // right now we aren't using layer, but maybe we would.
+  var featureDetails = {
+    name: "rights",
+    icon: "/images/icons/search_icon.png",
+    layer: "markers_rights"
+  };
+  
+  water.drawMarkers(features, featureDetails);
+  
+  $(".alert .content").html("Found " + features.length + " of 43,000+ water rights.");  
 };
 
 water.drawStationMarkers = function(features) {
