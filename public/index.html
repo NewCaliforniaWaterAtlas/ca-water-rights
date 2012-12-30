@@ -31,7 +31,7 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="#home" data-toggle="tab">Water Transfer</a>
+          <a class="brand span4" href="#home" data-toggle="tab">Water Transfer</a>
 
           <div class="nav-collapse">
             <ul class="nav">
@@ -41,7 +41,15 @@
               <li><a href="#about" data-toggle="tab">About</a></li>
             </ul>
           </div><!--/.nav-collapse -->
-         <div class="tagline span4">Real-time water brokerage</div>          
+         <div class="tagline span4"><!-- Real-time water brokerage -->
+
+            <div class="filters"> 
+              <div class="inputs">
+                <input class="search-holders" type="text" data-provide="typeahead">
+              </div>
+
+          </div>
+         </div>         
         </div>
       </div>
     </div>
@@ -96,40 +104,36 @@
               <div class="content">Loading the map</div>
           </div>
 
-          <div class="filters"> 
-              <div class="inputs">
-                <input class="search-holders" type="text" data-provide="typeahead">
-              </div>
-          </div>
+
+
+          <div id='onscreen'></div>
 
         </div>
         
       </div>
     </div>
-</div><!--/end container-fluid-->
+    </div><!--/end container-fluid-->
 
-      <hr>
+    <hr>
 
-      <footer>
-          <div class="container-fluid">      
-          <div class="row-fluid">
-            <div class="span8">
-                           <br />
-              Footer
-            </div>
+    <footer>
+        <div class="container-fluid">      
+        <div class="row-fluid">
+          <div class="span8">
+          <br />
+            Footer
           </div>
-        </div><!--/end container-fluid-->
-      </footer>
+        </div>
+      </div><!--/end container-fluid-->
+    </footer>
 
     </div><!--/.fluid-container-->
-
+    <!-- End page content -->
     <script type="text/javascript" src="/javascripts/libraries/json2.js"></script>
     <script type="text/javascript" src="/javascripts/libraries/underscore-min.js"></script>
-    <!-- End page content -->
     <script src="/libraries/bootstrap/js/bootstrap.min.js"></script>
     <script src="/javascripts/custom/core.js"></script>
     <script src="/javascripts/custom/water.js"></script>
     <script src="/javascripts/custom/water.map.js"></script>
-    <script src="/javascripts/custom/water.views.js"></script>
   </body>
 </html>
