@@ -48,7 +48,6 @@ water.setupFilters = function () {
         console.log(query);
         console.log(process);
         return $.get('/search/holders?value=' + query, function (data) {
-          console.log(data);
           water.drawRightsMarkers(data);
         });
     }
