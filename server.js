@@ -80,7 +80,25 @@ app.post('/data', function(req, res, options){
       return;
     }
     res.send(results);
-  },{}, {'limit': 100});
+  },{}, {'limit': 200});
+});
+
+app.get('/search/holders', function(req, res, options){
+  console.log(req.query);
+  var regex = new RegExp('^' + req.query.value, "i");
+  var query = { $and: [ {'kind': 'right'}, {'properties.holder_name': regex}]};
+
+/*   var blob = req.body; */
+
+
+  engine.find_many_by(query,function(error, results) {
+    if(!results || error) {
+      console.log("agent query error");
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+  },{}, {'limit': 200});
 });
 
 
