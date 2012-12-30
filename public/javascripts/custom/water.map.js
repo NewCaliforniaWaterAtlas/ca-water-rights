@@ -5,13 +5,13 @@ water.map = water.map || {};
 water.map_defaults = {};
 water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
-water.map_defaults.boxsize_lat = 0.1; //pretty small box
-water.map_defaults.boxsize_lon = 0.6;
+water.map_defaults.boxsize_lat = 0.25; //pretty small box
+water.map_defaults.boxsize_lon = 0.5;
 water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.WaterTransfer-Markers';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 8;
+water.map_defaults.close_up_zoom_level = 11;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -109,6 +109,8 @@ water.loadMarkers = function() {
     else {
       water.map.removeCallback('panned', water.markersPanned);
     }
+    
+    $('.zoom-level').html(water.map.zoom());
   });
 
   water.map.addCallback('drawn', function() {
