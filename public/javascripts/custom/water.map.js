@@ -18,7 +18,7 @@ water.markerLayer = 0;
 water.markers_station_usgs = 0;
 water.markers_station_cdec = 0;
 water.markers_rights = 0;
-
+water.markers_search = 0;
 
 // Set up map interaction variables.
 water.map_interaction = {};
@@ -39,7 +39,6 @@ water.setupMap = function() {
       water.map.addLayer(interactive.layer);
       water.map.interaction.auto(); 
 
-
 /*    //@TODO seeing if we have any control at all over the interactions
 
       water.mapboxMarkerInteraction = mapbox.markers.interaction(water.interactiveLayer);
@@ -51,11 +50,6 @@ water.setupMap = function() {
 
       water.map.interaction.refresh(); 
 */
-
-
-
-
-
   });
 
   // Add map interface elements.
@@ -108,8 +102,6 @@ water.loadMarkers = function() {
   
   water.map.addCallback('zoomed', function(m) {
     var zoom = water.map.zoom();
-    console.log(zoom);
-    // @TODO see about using closeup lens.
     if(zoom > water.map_defaults.close_up_zoom_level) {
       console.log('zoomed in');
       water.map.addCallback('panned', water.markersPanned);  
@@ -138,8 +130,7 @@ water.loadMarkers = function() {
 
     // display a list of markers.
     onscreen.innerHTML = inextent.join('\n');
-});
-
+  });
 };
 
 water.markersPanned = function() {
@@ -172,7 +163,15 @@ water.markersQuery = function(reloaded) {
 
     // Clear out old layer data.
     water.map.removeLayer(water.markerLayer);
+    water.map.removeLayer(water.markers_station_usgs);
+    water.map.removeLayer(water.markers_station_cdec);
+    water.map.removeLayer(water.markers_rights);
+    water.map.removeLayer(water.markers_search);
     water.markerLayer = 0;
+    water.markers_station_usgs = 0;
+    water.markers_station_cdec = 0;
+    water.markers_rights = 0;
+    water.markers_search = 0;
   }
   else {
     var lat = water.map_defaults.lat;
@@ -207,43 +206,78 @@ water.drawMarkers = function(features, featureDetails) {
   
   // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
   if(water[featureDetails.layer] === 0) {
-    water[featureDetails.layer] = mapbox.markers.layer().id(featureDetails.layer);
+    water[featureDetails.layer] = mapbox.markers.layer();
+    // @TODO This doesn't work on the div, just the object, but it would be nice to name the layers.   
+    water[featureDetails.layer].named(featureDetails.layer);
+  
     water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
-/*     mapbox.markers.interaction(water.markerLayer); */
-    water.map.addLayer(water[featureDetails.layer]);
-/*     water.map.interaction.refresh(); */
-  }
 
-
-console.log(featureDetails.layer + "_interaction");
-    water[featureDetails.layer + "_interaction"].formatter(function(feature) {
-    var string = water.formatTooltipStrings;
-    return string;
-  });
-
-  // Generate marker layers.
-  
-  // Problem -- the factory function is really slow.
-  
-/*
-  for (var i = 0; i < features.length; i++) {
-    water.markerLayer.add_feature(features[i]).factory(function(f) { 
+    // Generate marker layers.
+    water[featureDetails.layer].features(features).factory(function(f) { 
       var marker = water.makeMarker(f, featureDetails);
       return marker;
     });
+
+    water[featureDetails.layer + "_interaction"].formatter(function(feature) {
+      var o = water.formatTooltipStrings(feature);
+      return o;
+    });
+
+
+    water.map.addLayer(water[featureDetails.layer]);
+    water[featureDetails.layer + "_interaction"].auto();
+    water.map.interaction.refresh();
   }
-*/
-
-
-  water[featureDetails.layer].features(features).factory(function(f) { 
-    var marker = water.makeMarker(f, featureDetails);
-    return marker;
-  });
-
+  
+  $('.marker-image').parent().css('pointer-events', 'all');
 };
 
+water.drawRightsMarkers = function(features) {
+  // right now we aren't using layer, but maybe we would.
+  var featureDetails = {
+    name: "rights",
+    icon: "/images/icons/water_right_icon.png",
+    layer: "markers_rights"
+  };
+  
+  water.drawMarkers(features, featureDetails);
+  
+  $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
+};
 
-water.formatTooltipStrings = function() {
+water.drawStationMarkers = function(features) {
+
+  var featureDetails = {
+    name: "station",
+    icon: "/images/icons/station_icon.png",
+    layer: "markers_station_cdec"
+  };
+  
+  water.drawMarkers(features, featureDetails);
+};
+
+water.drawStationUSGSMarkers = function(features) {
+
+  var featureDetails = {
+    name: "station_usgs",
+    icon: "/images/icons/usgs_icon.png",
+    layer: "markers_station_usgs"
+  };
+  
+  water.drawMarkers(features, featureDetails);
+};
+
+water.makeMarker = function(feature, featureDetails) {
+
+  var img = document.createElement('img');
+  img.className = 'marker-image';
+  img.setAttribute('src', featureDetails.icon);
+  img.feature = feature;
+  return img;
+};
+
+water.formatTooltipStrings = function(feature) {
+console.log(feature);
     var string = '';
     if (feature.properties.holder_name !== undefined) {
       string +=  
@@ -288,48 +322,4 @@ water.formatTooltipStrings = function() {
 
 water.triggerMapMoveTimeout = function() {
   return setTimeout(water.markersQuery, 1000);
-}
-
-water.drawRightsMarkers = function(features) {
-  // right now we aren't using layer, but maybe we would.
-  var featureDetails = {
-    name: "rights",
-    icon: "/images/icons/water_right_icon.png",
-    layer: "markers_rights"
-  };
-  
-  water.drawMarkers(features, featureDetails);
-  
-  $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
-};
-
-water.drawStationMarkers = function(features) {
-
-  var featureDetails = {
-    name: "station",
-    icon: "/images/icons/station_icon.png",
-    layer: "markers_station_cdec"
-  };
-  
-  water.drawMarkers(features, featureDetails);
-};
-
-water.drawStationUSGSMarkers = function(features) {
-
-  var featureDetails = {
-    name: "station_usgs",
-    icon: "/images/icons/usgs_icon.png",
-    layer: "markers_station_usgs"
-  };
-  
-  water.drawMarkers(features, featureDetails);
-};
-
-water.makeMarker = function(feature, featureDetails) {
-
-  var img = document.createElement('img');
-  img.className = 'marker-image';
-  img.setAttribute('src', featureDetails.icon);
-  img.feature = feature;
-  return img;
 };
