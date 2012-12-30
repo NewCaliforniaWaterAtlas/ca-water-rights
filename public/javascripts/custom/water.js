@@ -4,6 +4,7 @@ window.onload = function() {
 
   water.setupMap();
   water.setupAddress();
+  water.setupFilters();
 
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
@@ -39,3 +40,17 @@ water.setupAddress = function () {
   });
 };
 
+water.setupFilters = function () {
+
+  $(".search-holders").typeahead({
+    minLength: 3,
+    source: function (query, process) {
+        console.log(query);
+        console.log(process);
+        return $.get('/search/holders?value=' + query, function (data) {
+          console.log(data);
+          water.drawRightsMarkers(data);
+        });
+    }
+  });
+};

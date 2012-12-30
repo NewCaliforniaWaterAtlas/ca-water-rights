@@ -28,12 +28,22 @@ body {
 
     margin-left:-10px;
     margin-top:-10px;
-    pointer-events:all;
+    pointer-events: all;
     position:absolute;
+/*     opacity: 0.5; */
 }
 
 #map-container {
   position:absolute; top:0; bottom:0; width:100%;
+}
+
+.search-holders {
+  z-index: 2000;
+  position: fixed;
+  bottom: 200px;
+  left: 30px;
+  background: #fff;
+  color: #888;
 }
 
 .map-tooltip {
@@ -164,8 +174,8 @@ hr {
 .alert {
   z-index: 2000;
   position: fixed;
-  top: 70px;
-  right: 30px;
+  bottom: 70px;
+  left: 30px;
   background: #fff;
   color: #888;
 }

@@ -5,13 +5,13 @@ water.map = water.map || {};
 water.map_defaults = {};
 water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
-water.map_defaults.boxsize_lat = 0.3;
-water.map_defaults.boxsize_lon = 0.15;
+water.map_defaults.boxsize_lat = 0.7; //pretty small box
+water.map_defaults.boxsize_lon = 0.14;
 water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.WaterTransfer-Markers';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 7;
+water.map_defaults.close_up_zoom_level = 8;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -38,6 +38,23 @@ water.setupMap = function() {
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
+  water.map.setZoomRange(5, 17);
+/*// @TODO see if we can change the increment of the zoomer.
+  // This doesn't seem to work though. Maybe make new zoomer? Maybe override easey?
+  // Needs more research.
+  $('.zoomin').click(function(){ water.map.zoomBy(4)});
+  $('.zoomout').click(function(){ water.map.zoomBy(4)});
+
+  http://mapbox.com/mapbox.js/example/easing/
+      document.getElementById('zoom').onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // The second argument, if true, tells the map to
+            // animate the transition to zoom level 12. The
+            // same can be done with map.center and map.centerzoom
+            map.zoom(12, true);
+        };
+*/
 
   // Attribute map.
   water.map.ui.attribution.add()
@@ -48,6 +65,8 @@ water.setupMap = function() {
   
   // Load special data layers for more zoomed in levels.
   water.loadMarkers();
+  
+  $(".alert .content").html("Showing all 45K+ water rights.");
 };
 
 // Utility function to recenter (and maybe also to reset / reload the map)
@@ -68,7 +87,7 @@ water.loadMarkers = function() {
   
   water.map.addCallback('zoomed', function(m) {
     var zoom = water.map.zoom();
-    
+    console.log(zoom);
     // @TODO see about using closeup lens.
     if(zoom > water.map_defaults.close_up_zoom_level) {
       console.log('zoomed in');
@@ -125,58 +144,72 @@ water.markersQuery = function(reloaded) {
  Core.query({ 
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
-    }, water.paintRightsMarkers, {'limit': 300}); 
+    }, water.drawRightsMarkers, {'limit': 300}); 
   
   // Load CDEC stations.
   Core.query({ 
      $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
-    }, water.paintStationMarkers); 
+    }, water.drawStationMarkers); 
   
   // Load USGS stations
   Core.query({ 
      $and: [{'kind': 'station_usgs'}, {'data_type': 'discharge'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
   ] 
-    }, water.paintStationUSGSMarkers); 
+    }, water.drawStationUSGSMarkers); 
 };
 
 // Draw interactive markers.
-water.paintMarkers = function(features, featureDetails) {
+water.drawMarkers = function(features, featureDetails) {
   var features = features;
   
   // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
   if(water.markerLayer === 0) {
     water.markerLayer = mapbox.markers.layer().id('markers');
-    mapbox.markers.interaction(water.markerLayer);
+/*     mapbox.markers.interaction(water.markerLayer); */
     water.map.addLayer(water.markerLayer);
-    water.map.interaction.refresh();
+/*     water.map.interaction.refresh(); */
   }
 
   // Generate marker layers.
+  
+  // Problem -- the factory function is really slow.
+  
+/*
+  for (var i = 0; i < features.length; i++) {
+    water.markerLayer.add_feature(features[i]).factory(function(f) { 
+      var marker = water.makeMarker(f, featureDetails);
+      return marker;
+    });
+  }
+*/
+
+
   water.markerLayer.features(features).factory(function(f) { 
     var marker = water.makeMarker(f, featureDetails);
     return marker;
   });
+ 
 };
 
 water.triggerMapMoveTimeout = function() {
   return setTimeout(water.markersQuery, 1000);
 }
 
-water.paintRightsMarkers = function(features) {
-
+water.drawRightsMarkers = function(features) {
+  // right now we aren't using layer, but maybe we would.
   var featureDetails = {
     name: "rights",
     icon: "/images/icons/water_right_icon.png",
     layer: "markers_rights"
   };
   
-  water.paintMarkers(features, featureDetails);
+  water.drawMarkers(features, featureDetails);
   
   $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
 };
 
-water.paintStationMarkers = function(features) {
+water.drawStationMarkers = function(features) {
 
   var featureDetails = {
     name: "station",
@@ -184,10 +217,10 @@ water.paintStationMarkers = function(features) {
     layer: "markers_station"
   };
   
-  water.paintMarkers(features, featureDetails);
+  water.drawMarkers(features, featureDetails);
 };
 
-water.paintStationUSGSMarkers = function(features) {
+water.drawStationUSGSMarkers = function(features) {
 
   var featureDetails = {
     name: "station_usgs",
@@ -195,7 +228,7 @@ water.paintStationUSGSMarkers = function(features) {
     layer: "markers_station_usgs"
   };
   
-  water.paintMarkers(features, featureDetails);
+  water.drawMarkers(features, featureDetails);
 };
 
 
@@ -244,8 +277,6 @@ water.makeMarker = function(feature, featureDetails) {
 water.makeInteractiveMarker = function(feature, featureDetails) {
 
 
-
-  
   var string = '';
   if (feature.properties.holder_name !== undefined) {
     string +=  
@@ -317,10 +348,12 @@ water.makeInteractiveMarker = function(feature, featureDetails) {
   $('a[title]').qtip();
   
   // Listen for mouseover & mouseout events.
+/*
   MM.addEvent(marker, "mouseover", water.onMarkerOver);
   MM.addEvent(marker, "mouseout", water.onMarkerOut);
   MM.addEvent(marker, "click", water.onMarkerClick);
 
+*/
 
 
 };
@@ -401,17 +434,17 @@ water.loadPannedMarkers = function() {
  Core.query({ 
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
-    }, water.paintRightsMarkers, {'limit': 300});
+    }, water.drawRightsMarkers, {'limit': 300});
 
   Core.query({ 
    $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
 ] 
-  }, water.paintStationMarkers); 
+  }, water.drawStationMarkers); 
 
   Core.query({ 
    $and: [{'kind': 'station_usgs'}, {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
 ] 
-  }, water.paintStationUSGSMarkers); 
+  }, water.drawStationUSGSMarkers); 
 
 };
 */
