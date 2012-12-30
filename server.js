@@ -80,7 +80,7 @@ app.post('/data', function(req, res, options){
       return;
     }
     res.send(results);
-  },{}, {'limit': 200});
+  },{}, {'limit': 0});
 });
 
 app.get('/search/holders', function(req, res, options){
@@ -98,7 +98,7 @@ app.get('/search/holders', function(req, res, options){
       return;
     }
     res.send(results);
-  },{}, {'limit': 200});
+  },{}, {'limit': 0});
 });
 
 
