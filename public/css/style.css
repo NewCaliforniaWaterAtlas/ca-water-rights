@@ -34,6 +34,19 @@ body {
     font-size: 0.8em;
 }
 
+.marker-tooltip {
+
+}
+
+.marker-popup {
+
+}
+
+.marker-popup p {
+  line-height: 1em;
+  margin: 0;
+}
+
 .marker-image {
     width:20px;
     height:20px;
