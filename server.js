@@ -89,32 +89,39 @@ app.post('/data', function(req, res, options){
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 var http = require("http");
-
 var options = {
  host: 'waterservices.usgs.gov',
  port: 80,
- path: '/nwis/iv/?format=json&countyCd=06007,06021,06103,06115&parameterCd=00060'
+ path: "/nwis/dv/?format=json&sites=" + 11390000
+
 };
 
 http.get(options, function(res) {
   var body = '';
-  res.setEncoding('utf8');
+  // res.setEncoding('utf8');
   res.on('data', function(chunk) {
     body += chunk;
   });
-  
+
+
   res.on('end', function() {
      
     var d = JSON.parse(body);
+    // console.log(d);
+    // d.value.timeSeries.forEach(function (data) {
+    //   console.log('  \033[90m' + data.sourceInfo.siteName + '\033[39m');
+    //   console.log('  \033[90m' + data.values[0].value[0].value + " " + data.variable.unit.unitAbbreviation + '\033[39m');
+    //   console.log('  \033[90m' + data.sourceInfo.geoLocation.geogLocation.latitude + '\033[39m');
+    //   console.log('  \033[90m' + data.sourceInfo.geoLocation.geogLocation.longitude + '\033[39m');
+    //   console.log('--');
+    // });
 
-    d.value.timeSeries.forEach(function (data) {
-      console.log('  \033[90m' + data.sourceInfo.siteName + '\033[39m');
-      console.log('  \033[90m' + data.values[0].value[0].value + " " + data.variable.unit.unitAbbreviation + '\033[39m');
-      console.log('  \033[90m' + data.sourceInfo.geoLocation.geogLocation.latitude + '\033[39m');
-      console.log('  \033[90m' + data.sourceInfo.geoLocation.geogLocation.longitude + '\033[39m');
-      console.log('--');
+    app.get('/usgs', function(req, res){
+      
+      res.header('Content-type','application/json');
+      res.header('Charset','utf8');
+      res.send(d);
     });
-
 
   });
 
