@@ -303,7 +303,7 @@ water.makeMarker = function(feature, featureDetails) {
     + "<p>" + "Basin Code: " + feature.properties.basin_cd + "</p>"
     + "<p>" + "Instruments Code: " + feature.properties.instruments_cd + "</p>"
     + "<p>" + "RealTime JSON Data: <div url=\"http://waterservices.usgs.gov/nwis/iv/?format=json&sites=" + feature.properties.site_no + "\"  class=\"load-data\">data</div></p>"
-/*     http://waterservices.usgs.gov/nwis/iv/?format=json&parameterCd=00060,00065&sites=01646500 */
+    /*http://waterservices.usgs.gov/nwis/iv/?format=json&parameterCd=00060,00065&sites=01646500*/
   }  
   
   // Tooltips
@@ -342,6 +342,8 @@ water.makeMarker = function(feature, featureDetails) {
   MM.addEvent(marker, "click", water.onMarkerClick);
 };
 
+
+
 water.getMarker = function(marker) {
   while (marker && marker.className != "marker") {
     marker = marker.parentNode;
@@ -368,6 +370,24 @@ water.onMarkerOver = function(e) {
   }
 };
 
+water.onMarkerOver = function(e) {
+
+  $('.station_usgs').not('.registered').addClass('registered').hover(function() {
+    
+    station_id = $(this).attr('marker_id');
+    // console.log('hovering on', station_id);
+  
+    $.getJSON("/usgs", function(json) {
+      console.log(json);
+    });
+  
+    },function() {
+        console.log("out");
+      }
+  );
+};
+
+
 water.onMarkerOut = function(e) {
   var marker = water.getMarker(e.target);
   var layer = $(marker).attr("parent");
@@ -377,6 +397,7 @@ water.onMarkerOut = function(e) {
   }
   return false;
 };
+
 
 water.onMarkerClick = function(e) {
   var marker = e.target.offsetParent;
