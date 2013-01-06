@@ -140,6 +140,12 @@ water.zoomWayInButton = function () {
   $('.zoom-way-in').click(function(){
     water.map.zoom(water.map_defaults.close_up_zoom_level);
   });
+
+  $('.zoom-way-in').bind("touchstart", function(){
+    water.map.zoom(water.map_defaults.close_up_zoom_level);
+  });
+  
+  
 }
 
 water.triggerMarkers = function () {
@@ -196,6 +202,8 @@ water.markersQuery = function(reloaded) {
     var center = water.map.center();
     var lat = center.lat;
     var lon = center.lon;    
+
+    $('.iphone-debug').html("lat: " + lat + " lon: " + lon + "<br />");
 
     // Clear out old layer data.
     water.clearMarkerLayers();
@@ -283,6 +291,7 @@ water.drawMarkers = function(features, featureDetails) {
 };
 
 water.drawRightsMarkers = function(features) {
+  $('.iphone-debug').html($('.iphone-debug').html() + "<br />drawRightsMarkers<br />");
   // right now we aren't using layer, but maybe we would.
   var featureDetails = {
     name: "rights",
