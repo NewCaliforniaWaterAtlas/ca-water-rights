@@ -10,7 +10,9 @@ Core.query = function(filter,callback) {
   //console.log("Kernel::query called with this filter: ");
   //console.log(filter);
   var jsonblob = JSON.stringify(filter);
-
+  
+  $('.iphone-debug').html($('.iphone-debug').html() + jsonblob);
+  
   console.log(jsonblob);
 
   var mycallback = callback;
