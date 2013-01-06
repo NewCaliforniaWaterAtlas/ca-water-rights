@@ -12,6 +12,40 @@ EngineProvider = function() {
   console.log("server::engine database is " + this.db );
 };
 
+EngineProvider.prototype.save = function(blob,res) {
+  console.log("saving");
+  console.log(blob);
+/*   var _id = blob.param('_id'); */
+ 
+/*   var mydatabase = this.db; */
+
+/*   console.log(_id); */
+/*
+
+  this.db.find_one_by_id(_id,function(error,results) {
+    if(!results || error) {
+      var created_at = new Date();
+      var updated_at = new Date();
+      var record = {};
+      console.log(results);
+    }
+  });
+*/
+};
+
+
+/*
+        mydatabase.save( record, function( error, results) {
+          if(!results || error) {
+            res.redirect('/error#trouble_saving_a_new_record');
+          } else {
+            res.send(results);
+          }
+        });
+      } else {
+        res.send(results);
+*/
+
 EngineProvider.prototype.count_all_by = function(hash,callback) {
   return this.db.count_all_by(hash,callback);
 }
