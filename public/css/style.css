@@ -1,35 +1,181 @@
 body {
   padding-top: 60px;
   padding-bottom: 40px;
-}
-.sidebar-nav {
-  padding: 9px 0;
-}
-
- /* Landscape phones and down */
-@media (max-width: 480px) { 
+  background: #2B929B;
+  color: #514E48;
 }
 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) { 
+.container-fluid {
+  padding-right: 0px;
+  padding-left: 0px;
+  background: #2B929B;
 }
 
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) { 
+#page-content {
+  margin: 20px 0;
 }
 
-/* Large desktop */
-@media (min-width: 1200px) { 
+
+/* MARKUP */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1em;
+  margin-bottom: 10px;
+  color: #1E5E60;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+.navbar-inner {
+  background: #2B929B;
+}
+
+.navbar .brand {
+  font-size: 26px;
+  display: block;
+  color: #E6D9B5;
+  padding: 18px 0 10px 30px;
+}
+
+.navbar a.tagline {
+  font-size: 26px;
+  font-size: 1.2em;
+  padding: 20px 0 14px 0px;
+  text-shadow: none;
+  text-decoration: none;
+  display: block;
+  float: left;
+  padding: 20px 0 0px 30px;
+  color: #514E48;
+}
+.navbar a.tagline:hover {
+  color: #514E48;
+}
+
+h2 {
+  font-size: 38px;  
+}
+
+.label, .label:hover {
+  background-color: inherit;
+  text-shadow: none;
+  color: #1E5E60;
+}
+
+input, textarea {
+  width: 400px;
+}
+
+.form-label,
+.form-detail {
+  padding: 0 10px 0 5px;
+}
+
+.form-image {
+  padding: 0 10px 0 5px;
+}
+
+a {
+  color: #A3936C;
+  font-weight: bold;
+}
+
+hr {
+  border-top: none;
+  border-bottom: 2px solid rgba(256,256,256,0.1);
+}
+
+/** MAP **/
+
+#map-container {
+  position:absolute; top:0; bottom:0; width:100%;
+}
+
+.marker-popup p {
+  line-height: 1em;
+  margin: 0;
+}
+
+.marker-image {
+  width:20px;
+  height:20px;
+  
+  margin-left:-10px;
+  margin-top:-10px;
+  pointer-events: all;
+  position:absolute;
+}
+
+.map-attribution {
+  background:#F9F0DC;
+}
+
+#map-panel {
+  position:fixed;
+  top:50px;
+  right:0px;
+  height: 100%;
+  width: 25%;
+  background:#F9F0DC;
+  z-index:100;
+  padding: 10px;
+  font-size: 0.8em;
+}
+
+#map-panel .alert {
+  height: 20px;
+  background: #F9F0DC;
+  color: #514E48;
+}
+
+#map-panel .inputs {
+  height: 40px;
+  padding-left: 10px;
+}
+
+#map-panel .search-holders {
+  background: #FFF;
+  color: #514E48;
+  width: 180px;
+}
+
+#map-panel h3 {
+  margin: 20px 0 0 0;
+}
+
+#map-panel .list-content {
+  color: #514E48;
+  width: 160px;
+  padding: 0px 10px 10px 10px;
+  position: fixed;
+  top: 160px;
+  z-index: 1000;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.map-tooltip {
+  padding: 0px 10px 10px 0px;
+  top: 160px;
+  left: 75%;
+  height: 100%;
+  z-index: 900;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: #F9F0DC;
 }
 
 #map-outer-container {
 	height: 100%;
 }
 
-#map-outer-container .ts-map .zoomer {
+#map-outer-container .zoomer {
   width: 28px;
   height: 28px;
-  top: 60px;
+  top: 65px;
 }
 
 .ui-tooltip-content {
@@ -58,91 +204,20 @@ body {
   color: #ffffff;
 }
 
-.hero-unit h1 {
-  margin-bottom: 0.2em; 
+/* RESPONSIVE */
+
+ /* Landscape phones and down */
+@media (max-width: 480px) { 
 }
 
-.tagline {
-/*   color: #F5F3DC; */
-  font-size: 1.2em;
-  padding: 20px 0 14px 0px;
-  text-shadow: none;
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
 }
 
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1em;
-  margin-bottom: 1em;
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
 }
 
-.nav-collapse.collapse {
-    height: auto !important;
-    overflow: visible !important;
-     height: 0; overflow: visible; 
-}
-
-#page-content {
-  margin: 20px 0;
-}
-
-#facebook-depiction {
-  height: 30px;
-}
-
-h1 {
-  font-size: 60px;
-}
-
-h2 {
-  font-size: 38px;  
-}
-
-.label, .label:hover {
-  background-color: rgba(256, 256, 256, 0.2);
-  text-shadow: none;
-  color: #333;
-}
-
-.ts-map .wax-attribution {
-  background: rgba(256,256,256, 0.3);
-  color: rgba(0,0,0,0.7);
-}
-
-.ts-map .wax-attribution a {
-  color: rgba(0,0,0,0.5);
-}
-
-.ts-map .wax-attribution a:hover {
-  color: rgba(0,0,0,1);  
-}
-
-input, textarea {
-  width: 400px;
-}
-
-.form-label,
-.form-detail {
-  padding: 0 10px 0 5px;
-}
-
-.form-image {
-  padding: 0 10px 0 5px;
-}
-
-a {
-  color: #013435;
-  font-weight: bold;
-}
-
-hr {
-border-top: none;
-border-bottom: 2px solid rgba(256,256,256,0.1);
-}
-
-.alert {
-  z-index: 2000;
-  position: fixed;
-  top: 70px;
-  right: 30px;
-  background: #fff;
-  color: #888;
+/* Large desktop */
+@media (min-width: 1200px) { 
 }

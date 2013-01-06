@@ -1,0 +1,385 @@
+station_code,flow_data,sensors,station_name,station_type,query,altitude,latitude,longitude,county,river_basin,data_source
+ALN,   7380 CFS,flow,ALAMEDA CK NR NILES,real-time,/cgi-progs/queryF?ALN,86,37.587158203125,-121.960792541504,ALAMEDA,ALAMEDA CR,http://cdec.water.ca.gov/
+CBR,   3342 CFS,flow,AMERICAN RIVER AT CHILI BAR,real-time,/cgi-progs/queryF?CBR,931,38.772,-120.816,EL DORADO,AMERICAN R,http://cdec.water.ca.gov/
+AFO,   9550 CFS,flow,AMERICAN RIVER AT FAIR OAKS,real-time,/cgi-progs/queryF?AFO,72,38.6354598999023,-121.227729797363,SACRAMENTO,AMERICAN R,http://cdec.water.ca.gov/
+AMK,     86 CFS,flow,AMERICAN SF NR KYBURZ,real-time,/cgi-progs/queryF?AMK,3840,38.764,-120.325,EL DORADO,AMERICAN R,http://cdec.water.ca.gov/
+ASS,    613 CFS,flow,ARROYO SECO NR SOLEDAD,real-time,/cgi-progs/queryF?ASS,399,36.2805213928223,-121.322708129883,MONTEREY,SALINAS R,http://cdec.water.ca.gov/
+AVL,      2 CFS,flow,ARROYO VALLE NR LIVERMORE,real-time,/cgi-progs/queryF?AVL,510,37.6232643127441,-121.758842468262,ALAMEDA,EAST BAY,http://cdec.water.ca.gov/
+BAT,   1190 CFS,flow,BATTLE CREEK,real-time,/cgi-progs/queryF?BAT,200,40.3982086181641,-122.146385192871,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+BRK,    172 CFS,flow,BEAR CK AB HOLSTEN CYN NR RUMSEY,real-time,/cgi-progs/queryF?BRK,920,38.9576759338379,-122.342750549316,COLUSA,CACHE CR,http://cdec.water.ca.gov/
+MCK,    603 CFS,flow,BEAR CREEK AT MC KEE ROAD,real-time,/cgi-progs/queryF?MCK,167,37.3092,-120.4456,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+CFW,       BRT,flow,BEAR RIVER AT CAMP FAR WEST DAM,real-time,/cgi-progs/queryF?CFW,260,39.05,-121.317,YUBA,BEAR R,http://cdec.water.ca.gov/
+BPG,   3317 CFS,flow,BEAR RIVER AT PLEASANT GROVE RD,real-time,/cgi-progs/queryF?BPG,75,38.9833,-121.4881,SUTTER,BEAR R,http://cdec.water.ca.gov/
+BRW,   2900 CFS,flow,BEAR RIVER NEAR WHEATLAND,real-time,/cgi-progs/queryF?BRW,72,39.000171661377,-121.406623840332,PLACER,BEAR R,http://cdec.water.ca.gov/
+BIC,    571 CFS,flow,BIG CHICO CREEK NEAR CHICO,real-time,/cgi-progs/queryF?BIC,274,39.7684173583984,-121.778602600098,BUTTE,SACRAMENTO R,http://cdec.water.ca.gov/
+BBG,    844 CFS,flow,BLACK BUTTE GENERATOR,real-time,/cgi-progs/queryF?BBG,393,39.815,-122.3322,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+BCC,     88 CFS,flow,BLACK CREEK NR COPPEROPOLIS,real-time,/cgi-progs/queryF?BCC,746,37.9610366821289,-120.615203857422,CALAVERAS,STANISLAUS R,http://cdec.water.ca.gov/
+BCW,    718 CFS,flow,BULL CREEK NEAR WEOTT,real-time,/cgi-progs/queryF?BCW,269,40.3515281677246,-124.005043029785,HUMBOLDT,EEL R,http://cdec.water.ca.gov/
+BCK,    929 CFS,flow,BUTTE CREEK NR CHICO,real-time,/cgi-progs/queryF?BCK,300,39.7259941101074,-121.708862304687,BUTTE,BUTTE CR,http://cdec.water.ca.gov/
+BCD,    913 CFS,flow,BUTTE CREEK NR DURHAM,real-time,/cgi-progs/queryF?BCD,190,39.6780128479004,-121.777481079102,BUTTE,BUTTE CR,http://cdec.water.ca.gov/
+BSL,  15669 CFS,flow,BUTTE SLOUGH NR MERIDIAN,real-time,/cgi-progs/queryF?BSL,13,39.1714744567871,-121.901649475098,SUTTER,SACRAMENTO R,http://cdec.water.ca.gov/
+RUM,    867 CFS,flow,CACHE CREEK AT RUMSEY BRIDGE,real-time,/cgi-progs/queryF?RUM,400,38.89,-122.238,YOLO,CACHE CR,http://cdec.water.ca.gov/
+CCY,   1580 CFS,flow,CACHE CREEK AT YOLO,real-time,/cgi-progs/queryF?CCY,86,38.7271270751953,-121.807189941406,YOLO,CACHE CR,http://cdec.water.ca.gov/
+RYI,  67086 CFS,flow,CACHE SLOUGH AT RYER ISLAND,real-time,/cgi-progs/queryF?RYI,0,38.2128,-121.6692,SOLANO,SACRAMENTO R,http://cdec.water.ca.gov/
+CSK,BRT,flow,CASTAIC CANYON CK Z3-2388,real-time,/cgi-progs/queryF?CSK,1651,34.6061,-118.6656,LOS ANGELES,LOS ANGELES,http://cdec.water.ca.gov/
+CHC,    560 CFS,flow,CHEROKEE CANAL NR RICHVALE,real-time,/cgi-progs/queryF?CHC,106,39.4647026062012,-121.744735717773,BUTTE,COTTONWOOD CR,http://cdec.water.ca.gov/
+CBD,    853 CFS,flow,CHERRY CK BL DION R PH NR MATHER,real-time,/cgi-progs/queryF?CBD,2150,37.8902015686035,-119.969902038574,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+CBV,     11 CFS,flow,CHERRY CK BL VALLEY DAM NR HETCH HETCHY,real-time,/cgi-progs/queryF?CBV,4337,37.967700958252,-119.917404174805,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+CEI,    309 CFS,flow,CHERRY CREEK NEAR EARLY INTAKE,real-time,/cgi-progs/queryF?CEI,2272,37.8943672180176,-119.962684631348,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+CBP,       BRT,flow,CHOWCHILLA BYPASS,real-time,/cgi-progs/queryF?CBP,170,36.774,-120.285,MADERA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+IGO,    422 CFS,flow,CLEAR CREEK NR IGO,real-time,/cgi-progs/queryF?IGO,673,40.5132064819336,-122.52417755127,SHASTA,SACRAMENTO R,http://cdec.water.ca.gov/
+CDR,   3831 CFS,flow,COLUSA DRAIN NR HWY 20,real-time,/cgi-progs/queryF?CDR,60,39.1955108642578,-122.060516357422,COLUSA,SACRAMENTO R,http://cdec.water.ca.gov/
+TOT,     30 CFS,flow,COMBINED SSD & WCD FLOWS,real-time,/cgi-progs/queryF?TOT,4030,40.3814,-120.4342,LASSEN,SUSAN R,http://cdec.water.ca.gov/
+CMF,314 CFS,flow,COSUMNES R MID FK. NR SOMERSET,real-time,/cgi-progs/queryF?CMF,1648,38.625,-120.701,EL DORADO,EL DORADO,http://cdec.water.ca.gov/
+CNF,564 CFS,flow,COSUMNES R NO. FK. NR EL DORADO,real-time,/cgi-progs/queryF?CNF,840,38.59,-120.843,EL DORADO,EL DORADO,http://cdec.water.ca.gov/
+MHB,   2200 CFS,flow,COSUMNES RIVER AT MICHIGAN BAR,real-time,/cgi-progs/queryF?MHB,168,38.500186920166,-121.045219421387,SACRAMENTO,COSUMNES R,http://cdec.water.ca.gov/
+CWA,   3480 CFS,flow,COTTONWOOD CREEK AUXILIARY GAGE,real-time,/cgi-progs/queryF?CWA,364,40.3870964050293,-122.238609313965,TEHAMA,COTTONWOOD CR,http://cdec.water.ca.gov/
+CTK,     15 CFS,flow,COTTONWOOD CREEK NEAR FRIANT,real-time,/cgi-progs/queryF?CTK,300,36.967,-119.696,MADERA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+COW,   3290 CFS,flow,COW CREEK NEAR MILLVILLE,real-time,/cgi-progs/queryF?COW,385,40.5048751831055,-122.233055114746,SHASTA,SACRAMENTO R,http://cdec.water.ca.gov/
+DVD,       ART,flow,DEER CREEK BELOW STANFORD VINA DAM,real-time,/cgi-progs/queryF?DVD,335,39.9636154174805,-122.034362792969,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+DCS,    494 CFS,flow,DEER CREEK NR SMARTVILLE,real-time,/cgi-progs/queryF?DCS,630,39.2243385314941,-121.268569946289,NEVADA,YUBA R,http://cdec.water.ca.gov/
+DCV,    588 CFS,flow,DEER CREEK NR VINA,real-time,/cgi-progs/queryF?DCV,479,40.014045715332,-121.948318481445,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+DLC,    110 CFS,flow,DELTA CROSS CHANNEL BTW SAC R & SNODGRAS,real-time,/cgi-progs/queryF?DLC,10,38.245,-121.505,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+DNC,     45 CFS,flow,DONNER CREEK AT DONNER LAKE,real-time,/cgi-progs/queryF?DNC,5924,39.3235168457031,-120.234367370605,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+DCK,     63 CFS,flow,DONNER CREEK AT HWY 89,real-time,/cgi-progs/queryF?DCK,5870,39.3210182189941,-120.207977294922,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+DGY,    434 CFS,flow,DRY CK NR GEYSERVILLE,real-time,/cgi-progs/queryF?DGY,156,38.6986,-122.9569,SONOMA,RUSSIAN R,http://cdec.water.ca.gov/
+DCM,    294 CFS,flow,DRY CREEK AT MODESTO AT CLAUS ROAD,real-time,/cgi-progs/queryF?DCM,88,37.657,-120.923,STANISLAUS,TUOLUMNE R,http://cdec.water.ca.gov/
+DRY,       ART,flow,DRY CREEK NEAR HEALDSBURG,real-time,/cgi-progs/queryF?DRY,90,38.5874099731445,-122.862213134766,SONOMA,RUSSIAN R,http://cdec.water.ca.gov/
+LCV,     22 CFS,flow,DRY CREEK NEAR LEMONCOVE,real-time,/cgi-progs/queryF?LCV,589,36.4504,-119.0284,TULARE,KAWEAH R,http://cdec.water.ca.gov/
+DSN,   1084 CFS,flow,DRY CREEK NR SNELLING,real-time,/cgi-progs/queryF?DSN,230,37.555,-120.463,MERCED,MERCED R,http://cdec.water.ca.gov/
+DSJ,   6840 CFS,flow,DUTCH SLOUGH AT JERSEY ISLAND,real-time,/cgi-progs/queryF?DSJ,10,38.013,-121.671,CONTRA COSTA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+EBM,    121 CFS,flow,EASTSIDE BYPASS BLW MARIPOSA BYPASS,real-time,/cgi-progs/queryF?EBM,115,37.205,-120.6981,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+ELN,      2 CFS,flow,EASTSIDE BYPASS NEAR EL NIDO,real-time,/cgi-progs/queryF?ELN,100,37.1475,-120.6053,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+FSW,  28200 CFS,flow,EEL RIVER AT FORT SEWARD,real-time,/cgi-progs/queryF?FSW,320,40.2182006835938,-123.632530212402,HUMBOLDT,EEL R,http://cdec.water.ca.gov/
+LEG,   4400 CFS,flow,EEL RIVER AT LEGGETT,real-time,/cgi-progs/queryF?LEG,747,39.8745956420898,-123.720581054688,MENDOCINO,EEL R,http://cdec.water.ca.gov/
+SCO,  51000 CFS,flow,EEL RIVER AT SCOTIA,real-time,/cgi-progs/queryF?SCO,160,40.4915237426758,-124.099769592285,HUMBOLDT,EEL R,http://cdec.water.ca.gov/
+EVA,   3017 CFS,flow,EEL RIVER BELOW VAN ARSDALE DAM 24HR AVG,real-time,/cgi-progs/queryF?EVA,1400,39.3886,-123.115,MENDOCINO,EEL R,http://cdec.water.ca.gov/
+MRD,   9630 CFS,flow,EEL RIVER SF NR MIRANDA (AT SYLVANDALE),real-time,/cgi-progs/queryF?MRD,218,40.1818084716797,-123.776145935059,HUMBOLDT,EEL R,http://cdec.water.ca.gov/
+CDM,    191 CFS,flow,EF RUSSIAN R BLW COYOTE DAM,real-time,/cgi-progs/queryF?CDM,614,39.1975,-123.1864,MENDOCINO,RUSSIAN R,http://cdec.water.ca.gov/
+ECP,    221 CFS,flow,ELDER CREEK NEAR PASKENTA,real-time,/cgi-progs/queryF?ECP,718,40.0237655639648,-122.511947631836,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+EDB,       BRT,flow,ELDERBERRY CANYON CK,real-time,/cgi-progs/queryF?EDB,1554,34.52335,-118.62362,LOS ANGELES,SANTA CLARA R,http://cdec.water.ca.gov/
+ECK,    310 CFS,flow,ELEANOR CK NR HETCH HETCHY,real-time,/cgi-progs/queryF?ECK,4500,37.9690895080566,-119.882125854492,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+EST,     11 CFS,flow,ESTRELLA RIVER NEAR ESTRELLA,real-time,/cgi-progs/queryF?EST,672,35.717,-120.639,SAN LUIS OBISPO,SALINAS R,http://cdec.water.ca.gov/
+FHH,     17 CFS,flow,FALLS CK NR HETCH HETCHY,real-time,/cgi-progs/queryF?FHH,5350,37.9708,-119.7633,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+FAL,  44187 CFS,flow,FALSE RIVER,real-time,/cgi-progs/queryF?FAL,0,38.0558,-121.6669,CONTRA COSTA,DELTA,http://cdec.water.ca.gov/
+FSB,  12505 CFS,flow,FEATHER R ABV STAR BEND,real-time,/cgi-progs/queryF?FSB,50,39.045,-121.611,SUTTER,FEATHER R,http://cdec.water.ca.gov/
+FBL,  13180 CFS,flow,FEATHER RIVER AT BOYD'S LANDING,real-time,/cgi-progs/queryF?FBL,50,39.045,-121.611,SUTTER,FEATHER R,http://cdec.water.ca.gov/
+MER,   1579 CFS,flow,FEATHER RIVER AT MERRIMAC,real-time,/cgi-progs/queryF?MER,1560,39.709,-121.27,BUTTE,FEATHER R,http://cdec.water.ca.gov/
+GRL,   1623 CFS,flow,FEATHER RIVER NEAR GRIDLEY,real-time,/cgi-progs/queryF?GRL,92,39.3667,-121.6475,BUTTE,FEATHER R,http://cdec.water.ca.gov/
+FHL,    270 CFS,flow,FRESNO R ABV HENLEY LAKE,real-time,/cgi-progs/queryF?FHL,540,37.1506,-119.8561,MADERA,FRESNO R,http://cdec.water.ca.gov/
+FRU,     58 CFS,flow,FRESNO R LEWIS FORK NR OAKHURST,real-time,/cgi-progs/queryF?FRU,2295,37.345,-119.6392,MADERA,FRESNO R,http://cdec.water.ca.gov/
+GSS,  13126 CFS,flow,GEORGIANA SLOUGH AT SACRAMENTO RIVER,real-time,/cgi-progs/queryF?GSS,10,38.237,-121.518,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+GLC,   6595 CFS,flow,GRANTLINE CANAL (USGS),real-time,/cgi-progs/queryF?GLC,10,37.8196,-121.5485,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+GVC,     43 CFS,flow,GRASS VALLEY CK NR LEWISTON,real-time,/cgi-progs/queryF?GVC,1680,40.6865348815918,-122.861137390137,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+GRJ,    383 CFS,flow,GUADALUPE R ABV HWY 101 AT SAN JOSE,real-time,/cgi-progs/queryF?GRJ,72,37.3738288879395,-121.933013916016,SANTA CLARA,GUADALUPE R,http://cdec.water.ca.gov/
+HCB,     69 CFS,flow,HAT CK BLW HAT CK,real-time,/cgi-progs/queryF?HCB,3284,40.8625221252441,-121.552307128906,SHASTA,HAT CR,http://cdec.water.ca.gov/
+HCN,    105 CFS,flow,HAT CK NR HAT CK,real-time,/cgi-progs/queryF?HCN,4274,40.6891098022461,-121.422782897949,SHASTA,HAT CR,http://cdec.water.ca.gov/
+HOL,  19932 CFS,flow,HOLLAND CUT NEAR BETHEL ISLAND,real-time,/cgi-progs/queryF?HOL,0,38.0164,-121.5819,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+INC,     19 CFS,flow,INDEPENDENCE CREEK NEAR TRUCKEE,real-time,/cgi-progs/queryF?INC,6920,40.0554351806641,-120.961242675781,SIERRA,TRUCKEE R,http://cdec.water.ca.gov/
+ICD,     24 CFS,flow,INDIAN CK NR DOUGLAS CITY,real-time,/cgi-progs/queryF?ICD,1670,40.6519,-122.9133,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+ICR,    533 CFS,flow,INDIAN CREEK BELOW INDIAN FALLS ,real-time,/cgi-progs/queryF?ICR,3100,40.056,-120.962,PLUMAS,FEATHER R,http://cdec.water.ca.gov/
+IHC,    393 CFS,flow,INDIAN CREEK NEAR HAPPY CAMP,real-time,/cgi-progs/queryF?IHC,1198,41.8351249694824,-123.383110046387,SISKIYOU,KLAMATH R,http://cdec.water.ca.gov/
+JBP,       BRT,flow,JAMES BYPASS,real-time,/cgi-progs/queryF?JBP,170,36.653,-120.18,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+JTR,      2 CFS,flow,JONES TRACT,real-time,/cgi-progs/queryF?JTR,-19,37.9224,-121.5182,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+TRR,    322 CFS,flow,KAWEAH RIVER AT THREE RIVERS,real-time,/cgi-progs/queryF?TRR,833,36.4439,-118.9044,TULARE,KAWEAH R,http://cdec.water.ca.gov/
+KCK,    298 CFS,flow,KELSEY CK BLW KELSEYVILLE,real-time,/cgi-progs/queryF?KCK,1345,39.0083999633789,-122.839218139648,LAKE,SACRAMENTO R,http://cdec.water.ca.gov/
+KRD,210 CFS,flow,KERN R FISH RELEASE KE-16,real-time,/cgi-progs/queryF?KRD,2100,35.4602,-118.7804,KERN,KERN,http://cdec.water.ca.gov/
+KWK,   4880 CFS,flow,KESWICK (WATER QUALITY),real-time,/cgi-progs/queryF?KWK,596,40.6009826660156,-122.444458007812,SHASTA,SACRAMENTO R,http://cdec.water.ca.gov/
+KRT,    820 CFS,flow,KINGS R NR TRIMMER,real-time,/cgi-progs/queryF?KRT,942,36.8747,-119.1408,FRESNO,KINGS R,http://cdec.water.ca.gov/
+AMW,      0 CFS,flow,KINGS RIVER BELOW ARMY WEIR,real-time,/cgi-progs/queryF?AMW,230,36.386,-119.787,KINGS,KINGS R,http://cdec.water.ca.gov/
+OLS,   8420 CFS,flow,KLAMATH RIVER AT ORLEANS,real-time,/cgi-progs/queryF?OLS,430,41.3034591674805,-123.53450012207,HUMBOLDT,KLAMATH R,http://cdec.water.ca.gov/
+KIG,    998 CFS,flow,KLAMATH RIVER BELOW IRON GATE DAM,real-time,/cgi-progs/queryF?KIG,2162,41.9279174804688,-122.444190979004,SISKIYOU,KLAMATH R,http://cdec.water.ca.gov/
+KNK,  27000 CFS,flow,KLAMATH RIVER NEAR KLAMATH,real-time,/cgi-progs/queryF?KNK,60,41.5109558105469,-123.979515075684,DEL NORTE,KLAMATH R,http://cdec.water.ca.gov/
+KSV,   2280 CFS,flow,KLAMATH RIVER NEAR SEIAD VALLEY,real-time,/cgi-progs/queryF?KSV,1320,41.8537368774414,-123.232276916504,SISKIYOU,KLAMATH R,http://cdec.water.ca.gov/
+LWS,    297 CFS,flow,LEWISTON (WATER QUALITY),real-time,/cgi-progs/queryF?LWS,1830,40.719310760498,-122.803634643555,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+LIB,   8846 CFS,flow,LIBERTY ISLAND @ APPROX CNTR S END,real-time,/cgi-progs/queryF?LIB,0,38.2421,-121.6849,SOLANO,SACRAMENTO R,http://cdec.water.ca.gov/
+LCH,    154 CFS,flow,LINDO CHANNEL NR CHICO,real-time,/cgi-progs/queryF?LCH,183,39.7491607666016,-121.868896484375,BUTTE,SACRAMENTO R,http://cdec.water.ca.gov/
+LDC,       BRT,flow,LITTLE DRY CREEK (USBR),real-time,/cgi-progs/queryF?LDC,350,36.942,-119.683,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+LPS,   7783 CFS,flow,LITTLE POTATO SLOUGH AT TERMINOUS,real-time,/cgi-progs/queryF?LPS,0,38.0964,-121.4961,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+LRT,    575 CFS,flow,LITTLE RIVER NEAR TRINIDAD,real-time,/cgi-progs/queryF?LRT,18,41.0098495483398,-124.08145904541,HUMBOLDT,EEL R,http://cdec.water.ca.gov/
+LAB,    154 CFS,flow,LITTLE TRUCKEE R ABV BOCA RESERVOIR,real-time,/cgi-progs/queryF?LAB,5619,39.4357414245605,-120.084365844727,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+LTK,    128 CFS,flow,LITTLE TRUCKEE R BL BOCA RES,real-time,/cgi-progs/queryF?LTK,5500,39.3868522644043,-120.095474243164,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+LGC,       BRT,flow,LOS GATOS CREEK NEAR COALINGA,real-time,/cgi-progs/queryF?LGC,1080,36.2146759033203,-120.470710754395,FRESNO,LOS GATOS CR (NEAR COALINGA),http://cdec.water.ca.gov/
+MRF,   1000 CFS,flow,MAD R ABV RUTH RESERVOIR NR FOREST GLEN,real-time,/cgi-progs/queryF?MRF,2700,40.2843132019043,-123.335304260254,TRINITY,MAD R,http://cdec.water.ca.gov/
+ARC,   6230 CFS,flow,MAD RIVER NEAR ARCATA,real-time,/cgi-progs/queryF?ARC,33,40.9098510742188,-124.060615539551,HUMBOLDT,MAD R,http://cdec.water.ca.gov/
+MTK,     12 CFS,flow,MARTIS CK NR TRUCKEE,real-time,/cgi-progs/queryF?MTK,5730,39.3287963867188,-120.117698669434,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+MRE,   1950 CFS,flow,MATTOLE RIVER NEAR ETTERSBURG,real-time,/cgi-progs/queryF?MRE,626,40.1393089294434,-123.991424560547,HUMBOLDT,MATTOLE R,http://cdec.water.ca.gov/
+PTA,   4240 CFS,flow,MATTOLE RIVER NEAR PETROLIA,real-time,/cgi-progs/queryF?PTA,40,40.3131904602051,-124.283378601074,HUMBOLDT,MATTOLE R,http://cdec.water.ca.gov/
+MCA,    204 CFS,flow,MCCLOUD R AT AH-DI-NA,real-time,/cgi-progs/queryF?MCA,2130,41.1105,-122.0967,SHASTA,MC CLOUD R,http://cdec.water.ca.gov/
+MSS,    903 CFS,flow,MCCLOUD RIVER ABOVE SHASTA LAKE,real-time,/cgi-progs/queryF?MSS,1100,40.958,-122.219,SHASTA,MC CLOUD R,http://cdec.water.ca.gov/
+MC7,    139 CFS,flow,MCCLOUD RIVER BELOW MCCLOUD DAM,real-time,/cgi-progs/queryF?MC7,2400,41.122349,-122.064163,SHASTA,MC CLOUD R,http://cdec.water.ca.gov/
+MCD,    800 CFS,flow,MCCLOUD RIVER NEAR MCCLOUD,real-time,/cgi-progs/queryF?MCD,2711,41.186,-122.059,SISKIYOU,MC CLOUD R,http://cdec.water.ca.gov/
+HIB,    122 CFS,flow,MERCED R AT HAPPY ISLES BR NR YOSEMITE,real-time,/cgi-progs/queryF?HIB,4016,37.7315940856934,-119.558776855469,MARIPOSA,MERCED R,http://cdec.water.ca.gov/
+POH,    236 CFS,flow,MERCED R AT POHONO BR NR YOSEMITE,real-time,/cgi-progs/queryF?POH,3862,37.7168731689453,-119.666275024414,MARIPOSA,MERCED R,http://cdec.water.ca.gov/
+CRS,    629 CFS,flow,MERCED RIVER AT CRESSY,real-time,/cgi-progs/queryF?CRS,165,37.425,-120.663,MERCED,MERCED R,http://cdec.water.ca.gov/
+MMF,    511 CFS,flow,MERCED RIVER BELOW MERCED FALLS,real-time,/cgi-progs/queryF?MMF,310,37.522,-120.331,MERCED,MERCED R,http://cdec.water.ca.gov/
+MBB,   2139 CFS,flow,MERCED RIVER NEAR BRICEBURG,real-time,/cgi-progs/queryF?MBB,1150,37.5989,-119.9781,MARIPOSA,MERCED R,http://cdec.water.ca.gov/
+MSN,    467 CFS,flow,MERCED RIVER NEAR SNELLING,real-time,/cgi-progs/queryF?MSN,260,37.502,-120.451,MERCED,MERCED R,http://cdec.water.ca.gov/
+MST,    484 CFS,flow,MERCED RIVER NEAR STEVINSON,real-time,/cgi-progs/queryF?MST,82,37.371,-120.931,MERCED,MERCED R,http://cdec.water.ca.gov/
+MID,      0 CFS,flow,MID CANAL AT LA GRANGE,real-time,/cgi-progs/queryF?MID,296,37.672,-120.443,STANISLAUS,TUOLUMNE R,http://cdec.water.ca.gov/
+MCU,    571 CFS,flow,MIDDLE CK NR UPPER LAKE,real-time,/cgi-progs/queryF?MCU,1360,39.1825523376465,-122.911842346191,LAKE,SACRAMENTO R,http://cdec.water.ca.gov/
+OXB,   2020 CFS,flow,MIDDLE FK AMERICAN R NR OXBOW PH,real-time,/cgi-progs/queryF?OXB,1070,39.006,-120.76,PLACER,AMERICAN R,http://cdec.water.ca.gov/
+DOS,   5130 CFS,flow,MIDDLE FORK EEL RIVER NEAR DOS RIOS,real-time,/cgi-progs/queryF?DOS,900,39.7062683105469,-123.325294494629,MENDOCINO,EEL R,http://cdec.water.ca.gov/
+MFP,    116 CFS,flow,MIDDLE FORK FEATHER RIVER NEAR PORTOLA,real-time,/cgi-progs/queryF?MFP,4850,39.8189506530762,-120.444877624512,PLUMAS,FEATHER R,http://cdec.water.ca.gov/
+MDM,  13143 CFS,flow,MIDDLE RIVER AT MIDDLE RIVER,real-time,/cgi-progs/queryF?MDM,10,37.943,-121.534,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+HLT,  16717 CFS,flow,MIDDLE RIVER NEAR HOLT,real-time,/cgi-progs/queryF?HLT,0,38.0031,-121.5108,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+ORH,     38 CFS,flow,MIDDLE YUBA RIVER BELOW OUR HOUSE DAM,real-time,/cgi-progs/queryF?ORH,1958,39.412,-120.997,YUBA,YUBA R,http://cdec.water.ca.gov/
+MCH,    801 CFS,flow,MILL CREEK BELOW HWY 99,real-time,/cgi-progs/queryF?MCH,230,40.0400581359863,-122.104629516602,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+PDR,     25 CFS,flow,MILL CREEK NEAR PIEDRA,real-time,/cgi-progs/queryF?PDR,550,36.819,-119.3409,FRESNO,KINGS R,http://cdec.water.ca.gov/
+MLM,    756 CFS,flow,MILL CREEK NR LOS MOLINOS,real-time,/cgi-progs/queryF?MLM,385,40.0546035766602,-122.024154663086,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+HWB,  10414 CFS,flow,MINER SLOUGH AT HWY 84 BRIDGE,real-time,/cgi-progs/queryF?HWB,0,38.2917,-121.6308,SOLANO,SACRAMENTO R,http://cdec.water.ca.gov/
+MOK,  24859 CFS,flow,MOKELUMNE R @ SAN JOAQUIN RIVER,real-time,/cgi-progs/queryF?MOK,0,38.1061,-121.5711,SAN JOAQUIN,MOKELUMNE R,http://cdec.water.ca.gov/
+MRS,    101 CFS,flow,MORMON SLOUGH AT BELLOTA (USACE),real-time,/cgi-progs/queryF?MRS,130,38.054,-121.012,CALAVERAS,CALAVERAS R,http://cdec.water.ca.gov/
+MFR,    121 CFS,flow,MORRISON CREEK AT FLORIN ROAD,real-time,/cgi-progs/queryF?MFR,20,38.4985198974609,-121.452728271484,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+MUC,    243 CFS,flow,MUD CREEK NEAR CHICO,real-time,/cgi-progs/queryF?MUC,170,39.7833557128906,-121.88671875,BUTTE,SACRAMENTO R,http://cdec.water.ca.gov/
+MSG,    284 CFS,flow,MUD SLOUGH NR GUSTINE,real-time,/cgi-progs/queryF?MSG,70,37.2625,-120.9056,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+NFW,     16 CFS,flow,N FK WILLOW CK NR SUGAR PINE,real-time,/cgi-progs/queryF?NFW,5200,37.3978,-119.5592,MADERA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+NFC,    563 CFS,flow,N FORK CACHE CREEK AT HOUGH SPRINGS,real-time,/cgi-progs/queryF?NFC,1534,39.1654472351074,-122.619987487793,LAKE,CACHE CR,http://cdec.water.ca.gov/
+GYB,    914 CFS,flow,N YUBA R BLW GOODYEARS BAR,real-time,/cgi-progs/queryF?GYB,2453,39.5248947143555,-120.938003540039,SIERRA,YUBA R,http://cdec.water.ca.gov/
+NYS,   1464 CFS,flow,N YUBA R. ABV SLATE CK NR STRAWBERRY,real-time,/cgi-progs/queryF?NYS,2000,39.5247,-121.0906,YUBA,YUBA R,http://cdec.water.ca.gov/
+NAP,   1870 CFS,flow,NAPA RIVER NEAR NAPA,real-time,/cgi-progs/queryF?NAP,25,38.3682441711426,-122.30330657959,NAPA,NAPA R,http://cdec.water.ca.gov/
+STH,    644 CFS,flow,NAPA RIVER NEAR ST HELENA,real-time,/cgi-progs/queryF?STH,195,38.5112991333008,-122.455810546875,NAPA,NAPA R,http://cdec.water.ca.gov/
+NSL,   5090 CFS,flow,NATIONAL STEEL,real-time,/cgi-progs/queryF?NSL,0,38.1221,-121.8881,SOLANO,SACRAMENTO R,http://cdec.water.ca.gov/
+NRN,   3860 CFS,flow,NAVARRO RIVER NEAR NAVARRO,real-time,/cgi-progs/queryF?NRN,5,39.1704559326172,-123.668067932129,MENDOCINO,NAVARRO RIVER,http://cdec.water.ca.gov/
+NFD,   2460 CFS,flow,NF AMERICAN R AT NORTH FORK DAM,real-time,/cgi-progs/queryF?NFD,715,38.9360084533691,-121.023834228516,PLACER,AMERICAN R,http://cdec.water.ca.gov/
+NKD,    215 CFS,flow,NF KINGS RIVER BLW DINKEY CREEK ,real-time,/cgi-progs/queryF?NKD,1035,36.88,-119.128,FRESNO,KINGS R,http://cdec.water.ca.gov/
+NTR,    502 CFS,flow,NF TRINITY RIVER AT HELENA,real-time,/cgi-progs/queryF?NTR,1345,40.782,-123.127,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+NMR,   6374 CFS,flow,NORTH MOKELUNME R @ W WALNUT GROVE RD,real-time,/cgi-progs/queryF?NMR,0,38.2232,-121.5071,SAN JOAQUIN,MOKELUMNE R,http://cdec.water.ca.gov/
+OKN,    726 CFS,flow,O'KANE (BLUE LAKE),real-time,/cgi-progs/queryF?OKN,850,40.9059638977051,-123.815338134766,HUMBOLDT,REDWOOD CR,http://cdec.water.ca.gov/
+OMR,-1258 CFS,flow,OLD & MIDDLE RVRS TIDALLY FILTERED EST,real-time,/cgi-progs/queryF?OMR,10,37.97,-121.5711,SAN JOAQUIN,SAN JOAQUIN,http://cdec.water.ca.gov/
+ORQ,  14454 CFS,flow,OLD RIVER @ QUIMBLY IS NEAR BETHEL IS,real-time,/cgi-progs/queryF?ORQ,0,38.0272,-121.5645,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+OBI,  11169 CFS,flow,OLD RIVER AT BACON ISLAND (USGS),real-time,/cgi-progs/queryF?OBI,10,37.970001,-121.571114,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+ORI,   7359 CFS,flow,OLD RIVER AT CLIFTON COURT INTAKE,real-time,/cgi-progs/queryF?ORI,0,37.828,-121.5526,CONTRA COSTA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+ODM,   1723 CFS,flow,OLD RIVER AT DELTA MENDOTA CANAL,real-time,/cgi-progs/queryF?ODM,10,37.81,-121.541,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+OH1,   2321 CFS,flow,OLD RIVER AT HEAD,real-time,/cgi-progs/queryF?OH1,15,37.808,-121.329,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+OH4,100000000 CFS,flow,OLD RIVER AT HIGHWAY 4,real-time,/cgi-progs/queryF?OH4,10,37.891109,-121.569168,CONTRA COSTA,DELTA,http://cdec.water.ca.gov/
+OLD,    365 CFS,flow,OLD RIVER NEAR TRACY,real-time,/cgi-progs/queryF?OLD,5,37.805,-121.449,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+LCB,     21 CFS,flow,OREGON CREEK BELOW LOG CABIN,real-time,/cgi-progs/queryF?LCB,1913,39.445,-121.058,YUBA,YUBA R,http://cdec.water.ca.gov/
+OCL,       BRT,flow,ORESTIMBA CK AT RIVER RD NR CROWS LNDG,real-time,/cgi-progs/queryF?OCL,65,37.4135475158691,-121.016044616699,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+ORE,    476 CFS,flow,ORESTIMBA CREEK NR NEWMAN,real-time,/cgi-progs/queryF?ORE,0,37.3154907226563,-121.125205993652,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+CHT,    711 CFS,flow,PAJARO RIVER AT CHITTENDEN,real-time,/cgi-progs/queryF?CHT,82,36.9002304077148,-121.597724914551,SANTA CRUZ,PAJARO R,http://cdec.water.ca.gov/
+BPD,     49 CFS,flow,PARROT DIV FROM BUTTE CREEK,real-time,/cgi-progs/queryF?BPD,269,39.7089042663574,-121.754188537598,BUTTE,BUTTE CR,http://cdec.water.ca.gov/
+PRB,   2516 CFS,flow,PH-27 PIT RIVER AT BIG BEND 11-3630.00,real-time,/cgi-progs/queryF?PRB,1680,41.02,-121.909,SHASTA,PIT R,http://cdec.water.ca.gov/
+PR4,    424 CFS,flow,PH-30 PIT RIVER BLW PIT NO-4 DAM 11-3625,real-time,/cgi-progs/queryF?PR4,2360,40.975,-121.779,SHASTA,PIT R,http://cdec.water.ca.gov/
+PIL,       ART,flow,PILARCITOS CREEK BL STONE DAM,real-time,/cgi-progs/queryF?PIL,500,37.5246620178223,-122.3994140625,SAN MATEO,COAST-SAN MATEO,http://cdec.water.ca.gov/
+PIR,      5 CFS,flow,PIRU CREEK BLW BUCK CR NR PYRAMID LAKE,real-time,/cgi-progs/queryF?PIR,2600,34.665,-118.823,VENTURA,PIRU CR,http://cdec.water.ca.gov/
+PP1,   1590 CFS,flow,PIT R BELOW PIT #1 PH NEAR FALL R MILLS,real-time,/cgi-progs/queryF?PP1,2798,40.9832191467285,-121.511924743652,SHASTA,PIT R,http://cdec.water.ca.gov/
+P35,    330 CFS,flow,PIT RIVER BELOW LAKE BRITTON,real-time,/cgi-progs/queryF?P35,2750,41.021294,-121.675692,SHASTA,PIT R,http://cdec.water.ca.gov/
+PCN,     98 CFS,flow,PIT RIVER NEAR CANBY,real-time,/cgi-progs/queryF?PCN,4266,41.4060020446777,-120.927742004395,MODOC,PIT R,http://cdec.water.ca.gov/
+PTK,     55 CFS,flow,PROSSER CREEK NEAR TRUCKEE,real-time,/cgi-progs/queryF?PTK,5602,39.3732414245605,-120.13158416748,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+PCG,    892 CFS,flow,PUTAH CREEK NEAR GUENOC,real-time,/cgi-progs/queryF?PCG,914,38.7787895202637,-122.517478942871,LAKE,PUTAH CR,http://cdec.water.ca.gov/
+PUT,     92 CFS,flow,PUTAH CREEK NEAR WINTERS,real-time,/cgi-progs/queryF?PUT,161,38.5151863098145,-122.081916809082,YOLO,PUTAH CR,http://cdec.water.ca.gov/
+RBW,    392 CFS,flow,RAINBOW DIVERSION DAM,real-time,/cgi-progs/queryF?RBW,1297,39.371,-122.605,COLUSA,STONY CR,http://cdec.water.ca.gov/
+ORK,   3810 CFS,flow,REDWOOD CREEK AT ORICK,real-time,/cgi-progs/queryF?ORK,36,41.2992897033691,-124.05118560791,HUMBOLDT,REDWOOD CR,http://cdec.water.ca.gov/
+RRI,   5386 CFS,flow,ROUGH AND READY ISLAND,real-time,/cgi-progs/queryF?RRI,15,37.963,-121.365,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+RCL,     70 CFS,flow,RUSH CREEK NEAR LEWISTON,real-time,/cgi-progs/queryF?RCL,1700,40.725,-122.834,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+RRU,   1570 CFS,flow,RUSSIAN R NR UKIAH,real-time,/cgi-progs/queryF?RRU,599,39.1956,-123.1939,MENDOCINO,RUSSIAN R,http://cdec.water.ca.gov/
+CLV,   5930 CFS,flow,RUSSIAN RIVER AT CLOVERDALE,real-time,/cgi-progs/queryF?CLV,107,38.8793487548828,-123.053611755371,MENDOCINO,RUSSIAN R,http://cdec.water.ca.gov/
+HAC,  15500 CFS,flow,RUSSIAN RIVER NEAR HACIENDA BRIDGE,real-time,/cgi-progs/queryF?HAC,20,38.5085220336914,-122.927772521973,SONOMA,RUSSIAN R,http://cdec.water.ca.gov/
+HEA,  10600 CFS,flow,RUSSIAN RIVER NEAR HEALDSBURG,real-time,/cgi-progs/queryF?HEA,108,38.6132431030273,-122.836380004883,SONOMA,RUSSIAN R,http://cdec.water.ca.gov/
+HOP,   3840 CFS,flow,RUSSIAN RIVER NEAR HOPLAND,real-time,/cgi-progs/queryF?HOP,498,39.0265617370605,-123.130561828613,MENDOCINO,RUSSIAN R,http://cdec.water.ca.gov/
+DWS,  11621 CFS,flow,SACRAMENTO DEEP WATER SHIPPING CHANNEL,real-time,/cgi-progs/queryF?DWS,0,38.25611,-121.66667,YOLO,SACRAMENTO R,http://cdec.water.ca.gov/
+SDC,  40725 CFS,flow,SACRAMENTO R ABOVE DELTA CROSS CHANNEL,real-time,/cgi-progs/queryF?SDC,10,38.257,-121.518,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+HMC,  29081 CFS,flow,SACRAMENTO R AT HAMILTON CITY-MAIN CH,real-time,/cgi-progs/queryF?HMC,145,39.7509231567383,-121.99787902832,GLENN,SACRAMENTO R,http://cdec.water.ca.gov/
+ORD,  36490 CFS,flow,SACRAMENTO R AT ORD FERRY-MAIN CHANNEL,real-time,/cgi-progs/queryF?ORD,115,39.6281318664551,-121.993179321289,GLENN,SACRAMENTO R,http://cdec.water.ca.gov/
+BND,  17000 CFS,flow,SACRAMENTO RIVER AT BEND BRIDGE,real-time,/cgi-progs/queryF?BND,286,40.2884864807129,-122.186660766602,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+BTC,  35823 CFS,flow,SACRAMENTO RIVER AT BUTTE CITY,real-time,/cgi-progs/queryF?BTC,99,39.4578399658203,-121.994163513184,GLENN,SACRAMENTO R,http://cdec.water.ca.gov/
+COL,  31800 CFS,flow,SACRAMENTO RIVER AT COLUSA,real-time,/cgi-progs/queryF?COL,-3,39.2140579223633,-122.00025177002,COLUSA,SACRAMENTO R,http://cdec.water.ca.gov/
+DLT,   1190 CFS,flow,SACRAMENTO RIVER AT DELTA ,real-time,/cgi-progs/queryF?DLT,1075,40.9395942687988,-122.417236328125,SHASTA,SACRAMENTO R,http://cdec.water.ca.gov/
+FPT,  70448 CFS,flow,SACRAMENTO RIVER AT FREEPORT,real-time,/cgi-progs/queryF?FPT,0,38.45,-121.5,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+IST,  71550 CFS,flow,SACRAMENTO RIVER AT I STREET BRIDGE,real-time,/cgi-progs/queryF?IST,27,38.589,-121.504,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+MAL,     35 CFS,flow,SACRAMENTO RIVER AT MALLARD ISLAND,real-time,/cgi-progs/queryF?MAL,0,38.044,-121.919,CONTRA COSTA,SACRAMENTO R,http://cdec.water.ca.gov/
+SRV, 132282 CFS,flow,SACRAMENTO RIVER AT RIO VISTA (USGS),real-time,/cgi-progs/queryF?SRV,0,38.16,-121.686,SOLANO,SACRAMENTO R,http://cdec.water.ca.gov/
+VON,  62600 CFS,flow,SACRAMENTO RIVER AT VERONA,real-time,/cgi-progs/queryF?VON,43,38.7743453979492,-121.598289489746,SUTTER,SACRAMENTO R,http://cdec.water.ca.gov/
+VIN,  26280 CFS,flow,SACRAMENTO RIVER AT VINA BRIDGE-MAIN CH,real-time,/cgi-progs/queryF?VIN,185,39.9087371826172,-122.092468261719,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+GES,  28059 CFS,flow,SACRAMENTO RIVER BELOW GEORGIANA SLOUGH,real-time,/cgi-progs/queryF?GES,0,38.2389,-121.5234,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+WLK,  25400 CFS,flow,SACRAMENTO RIVER BELOW WILKINS SLOUGH,real-time,/cgi-progs/queryF?WLK,30,39.009895324707,-121.824691772461,SUTTER,SACRAMENTO R,http://cdec.water.ca.gov/
+CLW,     19 CFS,flow,SACTO R AT COLUSA WEIR (CREST 61.8'),real-time,/cgi-progs/queryF?CLW,70,39.2368202209473,-121.994758605957,COLUSA,SACRAMENTO R,http://cdec.water.ca.gov/
+FRE,  27651 CFS,flow,SACTO R AT FREMONT WEIR (CREST 33.5'),real-time,/cgi-progs/queryF?FRE,40,38.759445,-121.666389,YOLO,SACRAMENTO R,http://cdec.water.ca.gov/
+TIS,   7237 CFS,flow,SACTO R AT TISDALE WEIR (CREST 45.5'),real-time,/cgi-progs/queryF?TIS,45,39.026439666748,-121.822082519531,SUTTER,SACRAMENTO R,http://cdec.water.ca.gov/
+PAS,    164 CFS,flow,SALINAS RIVER AT PASO ROBLES,real-time,/cgi-progs/queryF?PAS,700,35.6285820007324,-120.68433380127,SAN LUIS OBISPO,SALINAS R,http://cdec.water.ca.gov/
+BRA,     45 CFS,flow,SALINAS RIVER NEAR BRADLEY,real-time,/cgi-progs/queryF?BRA,443,35.9302444458008,-120.868789672852,MONTEREY,SALINAS R,http://cdec.water.ca.gov/
+SPR,    500 CFS,flow,SALINAS RIVER NEAR SPRECKELS,real-time,/cgi-progs/queryF?SPR,53,36.6310691833496,-121.67244720459,MONTEREY,SALINAS R,http://cdec.water.ca.gov/
+SMS,   2320 CFS,flow,SALMON RIVER AT SOMES BAR,real-time,/cgi-progs/queryF?SMS,483,41.3765144348145,-123.477005004883,SISKIYOU,SALMON R,http://cdec.water.ca.gov/
+SSH,    254 CFS,flow,SALT SLOUGH AT HWY 165 NR STEVINSON,real-time,/cgi-progs/queryF?SSH,75,37.2478,-120.8511,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SBH,     16 CFS,flow,SAN BENITO R AT HWY 156 NEAR HOLLISTER,real-time,/cgi-progs/queryF?SBH,260,36.8518981933594,-121.42993927002,SAN BENITO,SAN BENITO R,http://cdec.water.ca.gov/
+FSN,     24 CFS,flow,SAN DIEGO RIVER AT FASHION VALLEY,real-time,/cgi-progs/queryF?FSN,30,32.7650489807129,-117.168647766113,SAN DIEGO,SAN DIEGO R,http://cdec.water.ca.gov/
+SMN,       BRT,flow,SAN JOAQUIN R ABV MERCED R NR NEWMAN,real-time,/cgi-progs/queryF?SMN,60,37.3472137451172,-120.976181030273,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+BDT,   2923 CFS,flow,SAN JOAQUIN R AT BRANDT BRIDGE,real-time,/cgi-progs/queryF?BDT,0,37.865,-121.3231,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+DNB,    275 CFS,flow,SAN JOAQUIN R AT DONNY BRIDGE,real-time,/cgi-progs/queryF?DNB,239,36.8335,-119.9658,MADERA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+FFB,   1180 CFS,flow,SAN JOAQUIN R AT FREMONT FORD BRIDGE,real-time,/cgi-progs/queryF?FFB,65,37.3099403381348,-120.931037902832,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+H41,    406 CFS,flow,SAN JOAQUIN R AT HWY 41,real-time,/cgi-progs/queryF?H41,260,36.8762,-119.7932,MADERA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+MRB,   2367 CFS,flow,SAN JOAQUIN R AT MAZE RD BRIDGE,real-time,/cgi-progs/queryF?MRB,39,37.6414,-121.2276,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+PRI,  52082 CFS,flow,SAN JOAQUIN R AT PRISONERS PT NR TERMINO,real-time,/cgi-progs/queryF?PRI,0,38.0594,-121.5572,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJN,     78 CFS,flow,SAN JOAQUIN R AT SAN MATEO RD NR MENDOTA,real-time,/cgi-progs/queryF?SJN,163,36.7788887023926,-120.306663513184,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SKB,    256 CFS,flow,SAN JOAQUIN R BLW HWY 145 (SKAGGS BR),real-time,/cgi-progs/queryF?SKB,200,36.8229,-120.0884,MADERA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SCL,   1710 CFS,flow,SAN JOAQUIN R NR CROWS LANDING,real-time,/cgi-progs/queryF?SCL,60,37.4318809509277,-121.013816833496,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SDP,      8 CFS,flow,SAN JOAQUIN R NR DOS PALOS,real-time,/cgi-progs/queryF?SDP,116,36.994,-120.5015,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SWA,       BRT,flow,SAN JOAQUIN R NR WASHINGTON RD,real-time,/cgi-progs/queryF?SWA,109,37.11532,-120.587,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJG,   4425 CFS,flow,SAN JOAQUIN RIVER AT GARWOOD BRIDGE,real-time,/cgi-progs/queryF?SJG,13,37.935,-121.329,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+GRF,    219 CFS,flow,SAN JOAQUIN RIVER AT GRAVELLY FORD,real-time,/cgi-progs/queryF?GRF,170,36.798,-120.16,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJJ, 159661 CFS,flow,SAN JOAQUIN RIVER AT JERSEY POINT (USGS),real-time,/cgi-progs/queryF?SJJ,10,38.052,-121.689,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+MSD,   4174 CFS,flow,SAN JOAQUIN RIVER AT MOSSDALE BRIDGE,real-time,/cgi-progs/queryF?MSD,31,37.786,-121.306,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJB,    150 CFS,flow,SAN JOAQUIN RIVER BELOW BIFURCATION,real-time,/cgi-progs/queryF?SJB,170,36.773,-120.286,MADERA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJF,    416 CFS,flow,SAN JOAQUIN RIVER BELOW FRIANT,real-time,/cgi-progs/queryF?SJF,294,36.9843940734863,-119.724311828613,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJA,     36 CFS,flow,SAN JOAQUIN RIVER NEAR AUBERRY,real-time,/cgi-progs/queryF?SJA,870,37.132,-119.531,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+MEN,    152 CFS,flow,SAN JOAQUIN RIVER NEAR MENDOTA,real-time,/cgi-progs/queryF?MEN,170,36.8105049133301,-120.378227233887,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+NEW,   1680 CFS,flow,SAN JOAQUIN RIVER NEAR NEWMAN,real-time,/cgi-progs/queryF?NEW,90,37.3504943847656,-120.977149963379,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJP,   1506 CFS,flow,SAN JOAQUIN RIVER NEAR PATTERSON,real-time,/cgi-progs/queryF?SJP,97,37.494,-121.081,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJS,    880 CFS,flow,SAN JOAQUIN RIVER NEAR STEVINSON,real-time,/cgi-progs/queryF?SJS,82,37.295,-120.851,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+VNS,   3100 CFS,flow,SAN JOAQUIN RIVER NEAR VERNALIS,real-time,/cgi-progs/queryF?VNS,35,37.6760406494141,-121.266326904297,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+ELF,    132 CFS,flow,SANTA CLARA R AT E LA FALDA WY NR PIRU,real-time,/cgi-progs/queryF?ELF,710,34.403526,-118.739143,VENTURA,SANTA CLARA R,http://cdec.water.ca.gov/
+SYH,       ART,flow,SANTA YNEZ R AT H ST NR LOMPOC,real-time,/cgi-progs/queryF?SYH,57,34.6683158874512,-120.457939147949,SANTA BARBARA,SANTA YNEZ R,http://cdec.water.ca.gov/
+SFJ,    324 CFS,flow,SCOTT RIVER NEAR FORT JONES,real-time,/cgi-progs/queryF?SFJ,2623,41.6406898498535,-123.015037536621,SISKIYOU,KLAMATH R,http://cdec.water.ca.gov/
+SCS,    727 CFS,flow,SCOTTS CK NR LAKEPORT,real-time,/cgi-progs/queryF?SCS,1400,39.0954475402832,-122.961044311523,LAKE,SACRAMENTO R,http://cdec.water.ca.gov/
+SSP,      8 CFS,flow,SESPE CREEK NR FILLMORE,real-time,/cgi-progs/queryF?SSP,565,34.4416618347168,-118.927322387695,VENTURA,SANTA CLARA R,http://cdec.water.ca.gov/
+PLK,      6 CFS,flow,SF PIT RIVER NEAR LIKELY,real-time,/cgi-progs/queryF?PLK,4508,41.2307281494141,-120.437171936035,MODOC,PIT R,http://cdec.water.ca.gov/
+STO,    115 CFS,flow,SF TUOLUMNE R NR OAKLAND REC CAMP,real-time,/cgi-progs/queryF?STO,2800,37.8217,-120.0119,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+SRM,    153 CFS,flow,SHASTA RIVER NEAR MONTAGUE,real-time,/cgi-progs/queryF?SRM,2458,41.7090301513672,-122.538078308105,SISKIYOU,SHASTA R,http://cdec.water.ca.gov/
+SRY,    190 CFS,flow,SHASTA RIVER NEAR YREKA,real-time,/cgi-progs/queryF?SRY,2000,41.8229179382324,-122.595581054688,SISKIYOU,SHASTA R,http://cdec.water.ca.gov/
+GRY,       BRT,flow,SISQUOC RIVER AT GAREY,real-time,/cgi-progs/queryF?GRY,354,34.8397026062012,-120.16820526123,SANTA BARBARA,SISQUOC R,http://cdec.water.ca.gov/
+JED,  11700 CFS,flow,SMITH R NR CRESCENT CITY (JED SMITH SP),real-time,/cgi-progs/queryF?JED,120,41.79150390625,-124.076187133789,DEL NORTE,SMITH R,http://cdec.water.ca.gov/
+SKO,     29 CFS,flow,SOUTH FORK KERN RIVER NEAR ONYX,real-time,/cgi-progs/queryF?SKO,2900,35.7374534606934,-118.173690795898,KERN,KERN R,http://cdec.water.ca.gov/
+SMW,     81 CFS,flow,SOUTH FORK MERCED RIVER AT WAWONA,real-time,/cgi-progs/queryF?SMW,3960,37.5417,-119.6722,MARIPOSA,MERCED R,http://cdec.water.ca.gov/
+TBH,   2480 CFS,flow,SOUTH FORK TRINITY RIVER BELOW HYAMPOM,real-time,/cgi-progs/queryF?TBH,12,40.6498641967773,-123.494201660156,HUMBOLDT,TRINITY R,http://cdec.water.ca.gov/
+SFH,    182 CFS,flow,SOUTH HONCUT CREEK NEAR BANGOR,real-time,/cgi-progs/queryF?SFH,630,39.3683,-121.3717,BUTTE,FEATHER R,http://cdec.water.ca.gov/
+SMR,   3538 CFS,flow,SOUTH MOKELUMNE R @ W WALNUT GROVE RD,real-time,/cgi-progs/queryF?SMR,0,38.2255,-121.4911,SAN JOAQUIN,MOKELUMNE R,http://cdec.water.ca.gov/
+SPK,    346 CFS,flow,SPANISH CK ABV BLACKHAWK CK AT KEDDIE,real-time,/cgi-progs/queryF?SPK,3130,40.0029487609863,-120.954399108887,PLUMAS,FEATHER R,http://cdec.water.ca.gov/
+STP,    148 CFS,flow,STAMPEDE,real-time,/cgi-progs/queryF?STP,5956,39.471,-120.103,SIERRA,TRUCKEE R,http://cdec.water.ca.gov/
+OBB,    383 CFS,flow,STANISLAUS R AT ORANGE BLOSSOM BRIDGE,real-time,/cgi-progs/queryF?OBB,117,37.783,-120.75,STANISLAUS,STANISLAUS R,http://cdec.water.ca.gov/
+RIP,    538 CFS,flow,STANISLAUS RIVER AT RIPON,real-time,/cgi-progs/queryF?RIP,73,37.7296524047852,-121.110496520996,SAN JOAQUIN,STANISLAUS R,http://cdec.water.ca.gov/
+SSS,  14807 CFS,flow,STEAMBOAT SLOUGH BTW SAC R AND SUTTER SL,real-time,/cgi-progs/queryF?SSS,10,38.285,-121.587,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+SSD,     10 CFS,flow,SUSAN R NR STANDISH,real-time,/cgi-progs/queryF?SSD,4030,40.3810920715332,-120.435035705566,LASSEN,SUSAN R,http://cdec.water.ca.gov/
+SBP,   2073 CFS,flow,SUTTER BYPASS AT RD 1500 PUMP,real-time,/cgi-progs/queryF?SBP,21,38.7852745056152,-121.654319763184,SUTTER,SACRAMENTO R,http://cdec.water.ca.gov/
+THO,    254 CFS,flow,THOMES CREEK AT PASKENTA,real-time,/cgi-progs/queryF?THO,720,39.8878402709961,-122.528564453125,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+TSL,  23191 CFS,flow,THREEMILE SLOUGH AT SAN JOAQUIN RIVER,real-time,/cgi-progs/queryF?TSL,10,38.09,-121.687,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+TIL,      0 CFS,flow,TID CANAL AT LA GRANGE,real-time,/cgi-progs/queryF?TIL,296,37.672,-120.443,STANISLAUS,TUOLUMNE R,http://cdec.water.ca.gov/
+TRC,    140 CFS,flow,TRINITY R ABV COFFEE CR NR TRINITY CTR,real-time,/cgi-progs/queryF?TRC,2537,41.111255645752,-122.705581665039,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+NFH,   1140 CFS,flow,TRINITY R ABV NF TRINITY NR HELENA,real-time,/cgi-progs/queryF?NFH,1410,40.7665328979492,-123.114479064941,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+TJC,   1030 CFS,flow,TRINITY R AT JUNCTION CITY,real-time,/cgi-progs/queryF?TJC,1445,40.7284774780273,-123.061973571777,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+DGC,    658 CFS,flow,TRINITY RIVER AT DOUGLAS CITY,real-time,/cgi-progs/queryF?DGC,1600,40.6452789306641,-122.956665039063,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+HPA,   8170 CFS,flow,TRINITY RIVER AT HOOPA,real-time,/cgi-progs/queryF?HPA,330,41.0498504638672,-123.673667907715,HUMBOLDT,TRINITY R,http://cdec.water.ca.gov/
+TLK,    440 CFS,flow,TRINITY RIVER BELOW LIMEKILN GULCH,real-time,/cgi-progs/queryF?TLK,1650,40.673,-122.919,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+TBR,   1900 CFS,flow,TRINITY RIVER NEAR BURNT RANCH,real-time,/cgi-progs/queryF?TBR,944,40.7887496948242,-123.440040588379,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+TBB,    376 CFS,flow,TRUCKEE R AT BOCA BRIDGE,real-time,/cgi-progs/queryF?TBB,5484,39.3851852416992,-120.087699890137,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+FAR,    402 CFS,flow,TRUCKEE RIVER AT FARAD,real-time,/cgi-progs/queryF?FAR,5153,39.4279632568359,-120.034088134766,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+TTC,     56 CFS,flow,TRUCKEE RIVER AT TAHOE CITY,real-time,/cgi-progs/queryF?TTC,5930,39.1662940979004,-120.144355773926,PLACER,TRUCKEE R,http://cdec.water.ca.gov/
+TRK,     95 CFS,flow,TRUCKEE RIVER NEAR TRUCKEE,real-time,/cgi-progs/queryF?TRK,5858,39.2962951660156,-120.205474853516,NEVADA,TRUCKEE R,http://cdec.water.ca.gov/
+TAI,    152 CFS,flow,TUOLUMNE R ABV EARLY INTAKE NEAR MATHER,real-time,/cgi-progs/queryF?TAI,2420,37.8793678283691,-119.947128295898,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+TGC,    152 CFS,flow,TUOLUMNE R AT THE GRAND CYN OF TUOLUMNE ,real-time,/cgi-progs/queryF?TGC,3830,37.9165878295898,-119.659896850586,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+TRW,    225 CFS,flow,TUOLUMNE R AT WATERFORD,real-time,/cgi-progs/queryF?TRW,100,37.6336,-120.76556,STANISLAUS,TUOLUMNE R,http://cdec.water.ca.gov/
+TBI,    184 CFS,flow,TUOLUMNE R BL EARLY INTAKE NEAR MATHER,real-time,/cgi-progs/queryF?TBI,2200,37.881591796875,-119.970184326172,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+LGN,    169 CFS,flow,TUOLUMNE R BLW LA GRANGE DAM NR LA GRANG,real-time,/cgi-progs/queryF?LGN,170,37.6663208007813,-120.442138671875,STANISLAUS,TUOLUMNE R,http://cdec.water.ca.gov/
+MOD,    538 CFS,flow,TUOLUMNE RIVER AT MODESTO,real-time,/cgi-progs/queryF?MOD,90,37.6268768310547,-120.987991333008,STANISLAUS,TUOLUMNE R,http://cdec.water.ca.gov/
+TRH,     48 CFS,flow,TUOLUMNE RIVER NEAR HETCH HETCHY,real-time,/cgi-progs/queryF?TRH,3430,37.9374198913574,-119.798233032227,TUOLUMNE,TUOLUMNE R,http://cdec.water.ca.gov/
+TRN,   2992 CFS,flow,TURNER CUT NEAR HOLT,real-time,/cgi-progs/queryF?TRN,0,37.9928,-121.4542,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+UPT,     54 CFS,flow,UPPER TRUCKEE AT SOUTH LAKE TAHOE,real-time,/cgi-progs/queryF?UPT,6229,38.9224090576172,-119.991569519043,EL DORADO,TRUCKEE R,http://cdec.water.ca.gov/
+BRI,   2720 CFS,flow,VAN DUZEN R NR BRIDGEVILLE AT GRIZZLY CR,real-time,/cgi-progs/queryF?BRI,358,40.4804153442383,-123.89087677002,HUMBOLDT,VAN DUZEN R,http://cdec.water.ca.gov/
+VCU,   3434 CFS,flow,VICTORIA CANAL NEAR BYRON,real-time,/cgi-progs/queryF?VCU,0,37.8717,-121.5283,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+WFR,    666 CFS,flow,WEST BRANCH FEATHER RIVER NEAR MAGALIA,real-time,/cgi-progs/queryF?WFR,1380,39.8139839172363,-121.571182250977,BUTTE,FEATHER R,http://cdec.water.ca.gov/
+WCI,   6151 CFS,flow,WEST CANAL AT CLIFTON COURT INTAKE,real-time,/cgi-progs/queryF?WCI,0,37.8316,-121.554,CONTRA COSTA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+WCD,     20 CFS,flow,WILLOW CREEK NEAR STANDISH,real-time,/cgi-progs/queryF?WCD,4030,40.3811683654785,-120.434997558594,LASSEN,SURPRISE VALLEY,http://cdec.water.ca.gov/
+WSL,       ART,flow,WILLOW SLOUGH AT SB WEST BURROW PIT,real-time,/cgi-progs/queryF?WSL,28,38.9145889282227,-121.627555847168,SUTTER,SACRAMENTO R,http://cdec.water.ca.gov/
+LIS,      3 CFS,flow,YOLO BYPASS AT LISBON,real-time,/cgi-progs/queryF?LIS,0,38.475,-121.587,YOLO,SACRAMENTO R,http://cdec.water.ca.gov/
+YBY,  15100 CFS,flow,YOLO BYPASS NEAR WOODLAND,real-time,/cgi-progs/queryF?YBY,-3,38.6776809692383,-121.64412689209,YOLO,SACRAMENTO R,http://cdec.water.ca.gov/
+JBR,   1700 CFS,flow,YUBA RIVER AT JONES BAR,real-time,/cgi-progs/queryF?JBR,1060,39.292,-121.104,NEVADA,YUBA R,http://cdec.water.ca.gov/
+YPB,   4828 CFS,flow,YUBA RIVER AT PARKS BAR BRIDGE,real-time,/cgi-progs/queryF?YPB,0,39.2306,-121.2817,YUBA,YUBA R,http://cdec.water.ca.gov/
+MRY,   5510 CFS,flow,YUBA RIVER NEAR MARYSVILLE,real-time,/cgi-progs/queryF?MRY,88,39.175724029541,-121.524963378906,YUBA,YUBA R,http://cdec.water.ca.gov/
+YRS,   4334 CFS,flow,YUBA RIVER NEAR SMARTVILLE,real-time,/cgi-progs/queryF?YRS,280,39.2351722717285,-121.274124145508,YUBA,YUBA R,http://cdec.water.ca.gov/
+BAT,   1190 CFS,flow,BATTLE CREEK,daily,/cgi-progs/queryDaily?BAT,200,40.3982086181641,-122.146385192871,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+MCK,    603 CFS,flow,BEAR CREEK AT MC KEE ROAD,daily,/cgi-progs/queryDaily?MCK,167,37.3092,-120.4456,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+CFW,       BRT,flow,BEAR RIVER AT CAMP FAR WEST DAM,daily,/cgi-progs/queryDaily?CFW,260,39.05,-121.317,YUBA,BEAR R,http://cdec.water.ca.gov/
+BCK,    929 CFS,flow,BUTTE CREEK NR CHICO,daily,/cgi-progs/queryDaily?BCK,300,39.7259941101074,-121.708862304687,BUTTE,BUTTE CR,http://cdec.water.ca.gov/
+BCD,    913 CFS,flow,BUTTE CREEK NR DURHAM,daily,/cgi-progs/queryDaily?BCD,190,39.6780128479004,-121.777481079102,BUTTE,BUTTE CR,http://cdec.water.ca.gov/
+RUM,    867 CFS,flow,CACHE CREEK AT RUMSEY BRIDGE,daily,/cgi-progs/queryDaily?RUM,400,38.89,-122.238,YOLO,CACHE CR,http://cdec.water.ca.gov/
+CCY,   1580 CFS,flow,CACHE CREEK AT YOLO,daily,/cgi-progs/queryDaily?CCY,86,38.7271270751953,-121.807189941406,YOLO,CACHE CR,http://cdec.water.ca.gov/
+IGO,    422 CFS,flow,CLEAR CREEK NR IGO,daily,/cgi-progs/queryDaily?IGO,673,40.5132064819336,-122.52417755127,SHASTA,SACRAMENTO R,http://cdec.water.ca.gov/
+MHB,   2200 CFS,flow,COSUMNES RIVER AT MICHIGAN BAR,daily,/cgi-progs/queryDaily?MHB,168,38.500186920166,-121.045219421387,SACRAMENTO,COSUMNES R,http://cdec.water.ca.gov/
+CWA,   3480 CFS,flow,COTTONWOOD CREEK AUXILIARY GAGE,daily,/cgi-progs/queryDaily?CWA,364,40.3870964050293,-122.238609313965,TEHAMA,COTTONWOOD CR,http://cdec.water.ca.gov/
+COW,   3290 CFS,flow,COW CREEK NEAR MILLVILLE,daily,/cgi-progs/queryDaily?COW,385,40.5048751831055,-122.233055114746,SHASTA,SACRAMENTO R,http://cdec.water.ca.gov/
+ELN,      2 CFS,flow,EASTSIDE BYPASS NEAR EL NIDO,daily,/cgi-progs/queryDaily?ELN,100,37.1475,-120.6053,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+FSW,  28200 CFS,flow,EEL RIVER AT FORT SEWARD,daily,/cgi-progs/queryDaily?FSW,320,40.2182006835938,-123.632530212402,HUMBOLDT,EEL R,http://cdec.water.ca.gov/
+LEG,   4400 CFS,flow,EEL RIVER AT LEGGETT,daily,/cgi-progs/queryDaily?LEG,747,39.8745956420898,-123.720581054688,MENDOCINO,EEL R,http://cdec.water.ca.gov/
+SCO,  51000 CFS,flow,EEL RIVER AT SCOTIA,daily,/cgi-progs/queryDaily?SCO,160,40.4915237426758,-124.099769592285,HUMBOLDT,EEL R,http://cdec.water.ca.gov/
+EVA,   3017 CFS,flow,EEL RIVER BELOW VAN ARSDALE DAM 24HR AVG,daily,/cgi-progs/queryDaily?EVA,1400,39.3886,-123.115,MENDOCINO,EEL R,http://cdec.water.ca.gov/
+MRD,   9630 CFS,flow,EEL RIVER SF NR MIRANDA (AT SYLVANDALE),daily,/cgi-progs/queryDaily?MRD,218,40.1818084716797,-123.776145935059,HUMBOLDT,EEL R,http://cdec.water.ca.gov/
+MER,   1579 CFS,flow,FEATHER RIVER AT MERRIMAC,daily,/cgi-progs/queryDaily?MER,1560,39.709,-121.27,BUTTE,FEATHER R,http://cdec.water.ca.gov/
+GRL,   1623 CFS,flow,FEATHER RIVER NEAR GRIDLEY,daily,/cgi-progs/queryDaily?GRL,92,39.3667,-121.6475,BUTTE,FEATHER R,http://cdec.water.ca.gov/
+GLC,   6595 CFS,flow,GRANTLINE CANAL (USGS),daily,/cgi-progs/queryDaily?GLC,10,37.8196,-121.5485,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+KWK,   4880 CFS,flow,KESWICK (WATER QUALITY),daily,/cgi-progs/queryDaily?KWK,596,40.6009826660156,-122.444458007812,SHASTA,SACRAMENTO R,http://cdec.water.ca.gov/
+OLS,   8420 CFS,flow,KLAMATH RIVER AT ORLEANS,daily,/cgi-progs/queryDaily?OLS,430,41.3034591674805,-123.53450012207,HUMBOLDT,KLAMATH R,http://cdec.water.ca.gov/
+KNK,  27000 CFS,flow,KLAMATH RIVER NEAR KLAMATH,daily,/cgi-progs/queryDaily?KNK,60,41.5109558105469,-123.979515075684,DEL NORTE,KLAMATH R,http://cdec.water.ca.gov/
+ARC,   6230 CFS,flow,MAD RIVER NEAR ARCATA,daily,/cgi-progs/queryDaily?ARC,33,40.9098510742188,-124.060615539551,HUMBOLDT,MAD R,http://cdec.water.ca.gov/
+MSS,    903 CFS,flow,MCCLOUD RIVER ABOVE SHASTA LAKE,daily,/cgi-progs/queryDaily?MSS,1100,40.958,-122.219,SHASTA,MC CLOUD R,http://cdec.water.ca.gov/
+POH,    236 CFS,flow,MERCED R AT POHONO BR NR YOSEMITE,daily,/cgi-progs/queryDaily?POH,3862,37.7168731689453,-119.666275024414,MARIPOSA,MERCED R,http://cdec.water.ca.gov/
+CRS,    629 CFS,flow,MERCED RIVER AT CRESSY,daily,/cgi-progs/queryDaily?CRS,165,37.425,-120.663,MERCED,MERCED R,http://cdec.water.ca.gov/
+MBB,   2139 CFS,flow,MERCED RIVER NEAR BRICEBURG,daily,/cgi-progs/queryDaily?MBB,1150,37.5989,-119.9781,MARIPOSA,MERCED R,http://cdec.water.ca.gov/
+MSN,    467 CFS,flow,MERCED RIVER NEAR SNELLING,daily,/cgi-progs/queryDaily?MSN,260,37.502,-120.451,MERCED,MERCED R,http://cdec.water.ca.gov/
+MST,    484 CFS,flow,MERCED RIVER NEAR STEVINSON,daily,/cgi-progs/queryDaily?MST,82,37.371,-120.931,MERCED,MERCED R,http://cdec.water.ca.gov/
+MDM,  13143 CFS,flow,MIDDLE RIVER AT MIDDLE RIVER,daily,/cgi-progs/queryDaily?MDM,10,37.943,-121.534,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+ORH,     38 CFS,flow,MIDDLE YUBA RIVER BELOW OUR HOUSE DAM,daily,/cgi-progs/queryDaily?ORH,1958,39.412,-120.997,YUBA,YUBA R,http://cdec.water.ca.gov/
+MSG,    284 CFS,flow,MUD SLOUGH NR GUSTINE,daily,/cgi-progs/queryDaily?MSG,70,37.2625,-120.9056,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+NFW,     16 CFS,flow,N FK WILLOW CK NR SUGAR PINE,daily,/cgi-progs/queryDaily?NFW,5200,37.3978,-119.5592,MADERA,SAN JOAQUIN R,http://cdec.water.ca.gov/
+NAP,   1870 CFS,flow,NAPA RIVER NEAR NAPA,daily,/cgi-progs/queryDaily?NAP,25,38.3682441711426,-122.30330657959,NAPA,NAPA R,http://cdec.water.ca.gov/
+STH,    644 CFS,flow,NAPA RIVER NEAR ST HELENA,daily,/cgi-progs/queryDaily?STH,195,38.5112991333008,-122.455810546875,NAPA,NAPA R,http://cdec.water.ca.gov/
+NFD,   2460 CFS,flow,NF AMERICAN R AT NORTH FORK DAM,daily,/cgi-progs/queryDaily?NFD,715,38.9360084533691,-121.023834228516,PLACER,AMERICAN R,http://cdec.water.ca.gov/
+OKN,    726 CFS,flow,O'KANE (BLUE LAKE),daily,/cgi-progs/queryDaily?OKN,850,40.9059638977051,-123.815338134766,HUMBOLDT,REDWOOD CR,http://cdec.water.ca.gov/
+OBI,  11169 CFS,flow,OLD RIVER AT BACON ISLAND (USGS),daily,/cgi-progs/queryDaily?OBI,10,37.970001,-121.571114,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+ODM,   1723 CFS,flow,OLD RIVER AT DELTA MENDOTA CANAL,daily,/cgi-progs/queryDaily?ODM,10,37.81,-121.541,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+OH1,   2321 CFS,flow,OLD RIVER AT HEAD,daily,/cgi-progs/queryDaily?OH1,15,37.808,-121.329,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+OLD,    365 CFS,flow,OLD RIVER NEAR TRACY,daily,/cgi-progs/queryDaily?OLD,5,37.805,-121.449,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+LCB,     21 CFS,flow,OREGON CREEK BELOW LOG CABIN,daily,/cgi-progs/queryDaily?LCB,1913,39.445,-121.058,YUBA,YUBA R,http://cdec.water.ca.gov/
+OCL,       BRT,flow,ORESTIMBA CK AT RIVER RD NR CROWS LNDG,daily,/cgi-progs/queryDaily?OCL,65,37.4135475158691,-121.016044616699,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+CHT,    711 CFS,flow,PAJARO RIVER AT CHITTENDEN,daily,/cgi-progs/queryDaily?CHT,82,36.9002304077148,-121.597724914551,SANTA CRUZ,PAJARO R,http://cdec.water.ca.gov/
+BPD,     49 CFS,flow,PARROT DIV FROM BUTTE CREEK,daily,/cgi-progs/queryDaily?BPD,269,39.7089042663574,-121.754188537598,BUTTE,BUTTE CR,http://cdec.water.ca.gov/
+PCN,     98 CFS,flow,PIT RIVER NEAR CANBY,daily,/cgi-progs/queryDaily?PCN,4266,41.4060020446777,-120.927742004395,MODOC,PIT R,http://cdec.water.ca.gov/
+RBW,    392 CFS,flow,RAINBOW DIVERSION DAM,daily,/cgi-progs/queryDaily?RBW,1297,39.371,-122.605,COLUSA,STONY CR,http://cdec.water.ca.gov/
+ORK,   3810 CFS,flow,REDWOOD CREEK AT ORICK,daily,/cgi-progs/queryDaily?ORK,36,41.2992897033691,-124.05118560791,HUMBOLDT,REDWOOD CR,http://cdec.water.ca.gov/
+RRI,   5386 CFS,flow,ROUGH AND READY ISLAND,daily,/cgi-progs/queryDaily?RRI,15,37.963,-121.365,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+CLV,   5930 CFS,flow,RUSSIAN RIVER AT CLOVERDALE,daily,/cgi-progs/queryDaily?CLV,107,38.8793487548828,-123.053611755371,MENDOCINO,RUSSIAN R,http://cdec.water.ca.gov/
+HAC,  15500 CFS,flow,RUSSIAN RIVER NEAR HACIENDA BRIDGE,daily,/cgi-progs/queryDaily?HAC,20,38.5085220336914,-122.927772521973,SONOMA,RUSSIAN R,http://cdec.water.ca.gov/
+HEA,  10600 CFS,flow,RUSSIAN RIVER NEAR HEALDSBURG,daily,/cgi-progs/queryDaily?HEA,108,38.6132431030273,-122.836380004883,SONOMA,RUSSIAN R,http://cdec.water.ca.gov/
+HOP,   3840 CFS,flow,RUSSIAN RIVER NEAR HOPLAND,daily,/cgi-progs/queryDaily?HOP,498,39.0265617370605,-123.130561828613,MENDOCINO,RUSSIAN R,http://cdec.water.ca.gov/
+HMC,  29081 CFS,flow,SACRAMENTO R AT HAMILTON CITY-MAIN CH,daily,/cgi-progs/queryDaily?HMC,145,39.7509231567383,-121.99787902832,GLENN,SACRAMENTO R,http://cdec.water.ca.gov/
+ORD,  36490 CFS,flow,SACRAMENTO R AT ORD FERRY-MAIN CHANNEL,daily,/cgi-progs/queryDaily?ORD,115,39.6281318664551,-121.993179321289,GLENN,SACRAMENTO R,http://cdec.water.ca.gov/
+BND,  17000 CFS,flow,SACRAMENTO RIVER AT BEND BRIDGE,daily,/cgi-progs/queryDaily?BND,286,40.2884864807129,-122.186660766602,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+BTC,  35823 CFS,flow,SACRAMENTO RIVER AT BUTTE CITY,daily,/cgi-progs/queryDaily?BTC,99,39.4578399658203,-121.994163513184,GLENN,SACRAMENTO R,http://cdec.water.ca.gov/
+COL,  31800 CFS,flow,SACRAMENTO RIVER AT COLUSA,daily,/cgi-progs/queryDaily?COL,-3,39.2140579223633,-122.00025177002,COLUSA,SACRAMENTO R,http://cdec.water.ca.gov/
+DLT,   1190 CFS,flow,SACRAMENTO RIVER AT DELTA ,daily,/cgi-progs/queryDaily?DLT,1075,40.9395942687988,-122.417236328125,SHASTA,SACRAMENTO R,http://cdec.water.ca.gov/
+FPT,  70448 CFS,flow,SACRAMENTO RIVER AT FREEPORT,daily,/cgi-progs/queryDaily?FPT,0,38.45,-121.5,SACRAMENTO,SACRAMENTO R,http://cdec.water.ca.gov/
+MAL,     35 CFS,flow,SACRAMENTO RIVER AT MALLARD ISLAND,daily,/cgi-progs/queryDaily?MAL,0,38.044,-121.919,CONTRA COSTA,SACRAMENTO R,http://cdec.water.ca.gov/
+VON,  62600 CFS,flow,SACRAMENTO RIVER AT VERONA,daily,/cgi-progs/queryDaily?VON,43,38.7743453979492,-121.598289489746,SUTTER,SACRAMENTO R,http://cdec.water.ca.gov/
+VIN,  26280 CFS,flow,SACRAMENTO RIVER AT VINA BRIDGE-MAIN CH,daily,/cgi-progs/queryDaily?VIN,185,39.9087371826172,-122.092468261719,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+WLK,  25400 CFS,flow,SACRAMENTO RIVER BELOW WILKINS SLOUGH,daily,/cgi-progs/queryDaily?WLK,30,39.009895324707,-121.824691772461,SUTTER,SACRAMENTO R,http://cdec.water.ca.gov/
+FRE,  27651 CFS,flow,SACTO R AT FREMONT WEIR (CREST 33.5'),daily,/cgi-progs/queryDaily?FRE,40,38.759445,-121.666389,YOLO,SACRAMENTO R,http://cdec.water.ca.gov/
+PAS,    164 CFS,flow,SALINAS RIVER AT PASO ROBLES,daily,/cgi-progs/queryDaily?PAS,700,35.6285820007324,-120.68433380127,SAN LUIS OBISPO,SALINAS R,http://cdec.water.ca.gov/
+BRA,     45 CFS,flow,SALINAS RIVER NEAR BRADLEY,daily,/cgi-progs/queryDaily?BRA,443,35.9302444458008,-120.868789672852,MONTEREY,SALINAS R,http://cdec.water.ca.gov/
+SPR,    500 CFS,flow,SALINAS RIVER NEAR SPRECKELS,daily,/cgi-progs/queryDaily?SPR,53,36.6310691833496,-121.67244720459,MONTEREY,SALINAS R,http://cdec.water.ca.gov/
+SSH,    254 CFS,flow,SALT SLOUGH AT HWY 165 NR STEVINSON,daily,/cgi-progs/queryDaily?SSH,75,37.2478,-120.8511,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+BDT,   2923 CFS,flow,SAN JOAQUIN R AT BRANDT BRIDGE,daily,/cgi-progs/queryDaily?BDT,0,37.865,-121.3231,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+FFB,   1180 CFS,flow,SAN JOAQUIN R AT FREMONT FORD BRIDGE,daily,/cgi-progs/queryDaily?FFB,65,37.3099403381348,-120.931037902832,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+MRB,   2367 CFS,flow,SAN JOAQUIN R AT MAZE RD BRIDGE,daily,/cgi-progs/queryDaily?MRB,39,37.6414,-121.2276,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SCL,   1710 CFS,flow,SAN JOAQUIN R NR CROWS LANDING,daily,/cgi-progs/queryDaily?SCL,60,37.4318809509277,-121.013816833496,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SDP,      8 CFS,flow,SAN JOAQUIN R NR DOS PALOS,daily,/cgi-progs/queryDaily?SDP,116,36.994,-120.5015,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SWA,       BRT,flow,SAN JOAQUIN R NR WASHINGTON RD,daily,/cgi-progs/queryDaily?SWA,109,37.11532,-120.587,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+MSD,   4174 CFS,flow,SAN JOAQUIN RIVER AT MOSSDALE BRIDGE,daily,/cgi-progs/queryDaily?MSD,31,37.786,-121.306,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+MEN,    152 CFS,flow,SAN JOAQUIN RIVER NEAR MENDOTA,daily,/cgi-progs/queryDaily?MEN,170,36.8105049133301,-120.378227233887,FRESNO,SAN JOAQUIN R,http://cdec.water.ca.gov/
+NEW,   1680 CFS,flow,SAN JOAQUIN RIVER NEAR NEWMAN,daily,/cgi-progs/queryDaily?NEW,90,37.3504943847656,-120.977149963379,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJP,   1506 CFS,flow,SAN JOAQUIN RIVER NEAR PATTERSON,daily,/cgi-progs/queryDaily?SJP,97,37.494,-121.081,STANISLAUS,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SJS,    880 CFS,flow,SAN JOAQUIN RIVER NEAR STEVINSON,daily,/cgi-progs/queryDaily?SJS,82,37.295,-120.851,MERCED,SAN JOAQUIN R,http://cdec.water.ca.gov/
+VNS,   3100 CFS,flow,SAN JOAQUIN RIVER NEAR VERNALIS,daily,/cgi-progs/queryDaily?VNS,35,37.6760406494141,-121.266326904297,SAN JOAQUIN,SAN JOAQUIN R,http://cdec.water.ca.gov/
+SFJ,    324 CFS,flow,SCOTT RIVER NEAR FORT JONES,daily,/cgi-progs/queryDaily?SFJ,2623,41.6406898498535,-123.015037536621,SISKIYOU,KLAMATH R,http://cdec.water.ca.gov/
+STP,    148 CFS,flow,STAMPEDE,daily,/cgi-progs/queryDaily?STP,5956,39.471,-120.103,SIERRA,TRUCKEE R,http://cdec.water.ca.gov/
+OBB,    383 CFS,flow,STANISLAUS R AT ORANGE BLOSSOM BRIDGE,daily,/cgi-progs/queryDaily?OBB,117,37.783,-120.75,STANISLAUS,STANISLAUS R,http://cdec.water.ca.gov/
+RIP,    538 CFS,flow,STANISLAUS RIVER AT RIPON,daily,/cgi-progs/queryDaily?RIP,73,37.7296524047852,-121.110496520996,SAN JOAQUIN,STANISLAUS R,http://cdec.water.ca.gov/
+THO,    254 CFS,flow,THOMES CREEK AT PASKENTA,daily,/cgi-progs/queryDaily?THO,720,39.8878402709961,-122.528564453125,TEHAMA,SACRAMENTO R,http://cdec.water.ca.gov/
+DGC,    658 CFS,flow,TRINITY RIVER AT DOUGLAS CITY,daily,/cgi-progs/queryDaily?DGC,1600,40.6452789306641,-122.956665039063,TRINITY,TRINITY R,http://cdec.water.ca.gov/
+HPA,   8170 CFS,flow,TRINITY RIVER AT HOOPA,daily,/cgi-progs/queryDaily?HPA,330,41.0498504638672,-123.673667907715,HUMBOLDT,TRINITY R,http://cdec.water.ca.gov/
+TTC,     56 CFS,flow,TRUCKEE RIVER AT TAHOE CITY,daily,/cgi-progs/queryDaily?TTC,5930,39.1662940979004,-120.144355773926,PLACER,TRUCKEE R,http://cdec.water.ca.gov/
+LGN,    169 CFS,flow,TUOLUMNE R BLW LA GRANGE DAM NR LA GRANG,daily,/cgi-progs/queryDaily?LGN,170,37.6663208007813,-120.442138671875,STANISLAUS,TUOLUMNE R,http://cdec.water.ca.gov/
+MOD,    538 CFS,flow,TUOLUMNE RIVER AT MODESTO,daily,/cgi-progs/queryDaily?MOD,90,37.6268768310547,-120.987991333008,STANISLAUS,TUOLUMNE R,http://cdec.water.ca.gov/
+BRI,   2720 CFS,flow,VAN DUZEN R NR BRIDGEVILLE AT GRIZZLY CR,daily,/cgi-progs/queryDaily?BRI,358,40.4804153442383,-123.89087677002,HUMBOLDT,VAN DUZEN R,http://cdec.water.ca.gov/
+VCU,   3434 CFS,flow,VICTORIA CANAL NEAR BYRON,daily,/cgi-progs/queryDaily?VCU,0,37.8717,-121.5283,SAN JOAQUIN,DELTA,http://cdec.water.ca.gov/
+YBY,  15100 CFS,flow,YOLO BYPASS NEAR WOODLAND,daily,/cgi-progs/queryDaily?YBY,-3,38.6776809692383,-121.64412689209,YOLO,SACRAMENTO R,http://cdec.water.ca.gov/
+MRY,   5510 CFS,flow,YUBA RIVER NEAR MARYSVILLE,daily,/cgi-progs/queryDaily?MRY,88,39.175724029541,-121.524963378906,YUBA,YUBA R,http://cdec.water.ca.gov/
+YRS,   4334 CFS,flow,YUBA RIVER NEAR SMARTVILLE,daily,/cgi-progs/queryDaily?YRS,280,39.2351722717285,-121.274124145508,YUBA,YUBA R,http://cdec.water.ca.gov/
