@@ -12,7 +12,7 @@ water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.WaterTransfer-Markers';
 water.map_defaults.div_container = 'map-container';
 water.map_defaults.close_up_zoom_level = 11;
-water.map_defaults.lowest_tilemill_marker_level = 14;
+water.map_defaults.lowest_tilemill_marker_level = 12;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -28,7 +28,9 @@ water.map_interaction.counter = 0;
 water.map_interaction.date_start = new Date();
 water.map_interaction.dragtime = water.map_interaction.date_start.getTime();
 water.map_interaction.dragtime_diff = null;
+water.map_interaction.dragtime_override = false;
 water.map_interaction.wait = null;
+
 
 water.setupMap = function() {
   // Create map.
@@ -72,6 +74,8 @@ water.setupMap = function() {
   water.loadMarkers();
   
   $(".alert .content").html("Showing all 45K+ water rights.");
+  water.zoomWayInButton();
+
 };
 
 // Utility function to recenter (and maybe also to reset / reload the map)
@@ -91,10 +95,20 @@ water.loadMarkers = function() {
   
   water.map.addCallback('zoomed', function(m) {
     var zoom = water.map.zoom();
+    
     if(zoom >= water.map_defaults.close_up_zoom_level) {
+      $('.zoom-level').html("Move map to load more information.");
+    
       console.log('zoomed in');
+    
       water.map.addCallback('panned', water.markersPanned);
       // @TODO Add alert to pan to load more up to date info
+      
+      if(zoom == water.map_defaults.close_up_zoom_level) {
+        console.log('dispatching');
+        //@TODO not working yet...
+        water.triggerMarkers();
+      }
       
       // Hide the marker tiles layer because they will not display properly.
       if(zoom >= water.map_defaults.lowest_tilemill_marker_level) {
@@ -114,10 +128,23 @@ water.loadMarkers = function() {
     else {
       console.log('zoomed out - removing pan');
       water.map.removeCallback('panned', water.markersPanned);
+      water.zoomWayInButton();
     }
     
 /*     $('.zoom-level').html(water.map.zoom()); */
   });
+};
+
+water.zoomWayInButton = function () {
+  $('.zoom-level').html("<span class=\"zoom-way-in\">Zoom</span> in for more detailed information.");
+  $('.zoom-way-in').click(function(){
+    water.map.zoom(water.map_defaults.close_up_zoom_level);
+  });
+}
+
+water.triggerMarkers = function () {
+  water.map_interaction.dragtime_override = true;
+  water.map.dispatchCallback('panned');
 };
 
 water.markersPanned = function() {
@@ -125,22 +152,27 @@ water.markersPanned = function() {
   
   var zoom = water.map.zoom();
   if(zoom >= water.map_defaults.close_up_zoom_level) {
+    console.log('sufficient zoom');
     
     var dragtime_old = water.map_interaction.dragtime;
     var d = new Date();
     water.map_interaction.dragtime = d.getTime();
     var dragtime_diff = water.map_interaction.dragtime - dragtime_old;
     
-    if(dragtime_diff < 500) {
+    if(dragtime_diff < 500 || water.map_interaction.dragtime_override === true) {
+      console.log('in if');
       water.map_interaction.counter++;
       // console.log("moving " + water.map_interaction.counter + " " + dragtime_diff);
       if (water.map_interaction.wait === null) {
         water.map_interaction.wait = water.triggerMapMoveTimeout();
       }
+      water.map_interaction.dragtime_override = false;
     }
     else {
+      console.log('in else');
       clearTimeout(water.map_interaction.wait);
       water.map_interaction.wait = null;
+      water.map_interaction.dragtime_override = false;
     }
   }
 };
@@ -238,7 +270,12 @@ water.drawMarkers = function(features, featureDetails) {
     }
 
     // display a list of markers.
-    $('#map-panel .list-content').html('<h3>Water Rights</h3>' + inextent.join('<br />'));
+    if(inextent.length > 0) {
+      $('#map-panel .list-content').html('<h3>Water Rights</h3>' + inextent.join('<br />'));
+    }
+    else {
+      $('#map-panel .list-content').html();
+    }
     $('.map-tooltip').close();
     
   });
@@ -277,7 +314,7 @@ water.drawStationMarkers = function(features) {
 
   var featureDetails = {
     name: "station",
-    icon: "/images/icons/station_icon.png",
+    icon: "/images/icons/usgs_icon.png",
     layer: "markers_station_cdec"
   };
   
@@ -288,7 +325,7 @@ water.drawStationUSGSMarkers = function(features) {
 
   var featureDetails = {
     name: "station_usgs",
-    icon: "/images/icons/usgs_icon.png",
+    icon: "/images/icons/station_icon.png",
     layer: "markers_station_usgs"
   };
   
