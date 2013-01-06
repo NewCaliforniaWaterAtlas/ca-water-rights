@@ -85,7 +85,7 @@ app.post('/data', function(req, res, options){
 
 app.get('/search/holders', function(req, res, options){
   console.log(req.query);
-  var regex = new RegExp('^' + req.query.value, "i");
+  var regex = new RegExp('' + req.query.value, "i");
   var query = { $and: [ {'kind': 'right'}, {'properties.holder_name': regex}]};
 
 /*   var blob = req.body; */
