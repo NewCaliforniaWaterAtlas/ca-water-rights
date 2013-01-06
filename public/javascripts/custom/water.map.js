@@ -377,9 +377,19 @@ water.onMarkerOver = function(e) {
     station_id = $(this).attr('marker_id');
     // console.log('hovering on', station_id);
   
-    $.getJSON("/usgs", function(json) {
-      console.log(json);
+    // $.getJSON("/usgs", function(json) {
+    //   console.log(json);
+    // });
+
+    $.ajax({
+      type: "GET",
+      url: "/usgs/" + station_id,
+      // data: station_id,
+      success: function(response) {
+         console.log(response);
+      }
     });
+
   
     },function() {
         console.log("out");
