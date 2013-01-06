@@ -104,7 +104,8 @@ water.loadMarkers = function() {
     var zoom = water.map.zoom();
     if(zoom >= water.map_defaults.close_up_zoom_level) {
       console.log('zoomed in');
-      water.map.addCallback('panned', water.markersPanned);  
+      water.map.addCallback('panned', water.markersPanned);
+      // @TODO Add alert to pan to load more up to date info
     }
     else {
       console.log('zoomed out - removing pan');
@@ -233,7 +234,9 @@ water.drawMarkers = function(features, featureDetails) {
     }
 
     // display a list of markers.
-    onscreen.innerHTML = inextent.join('<br />');
+    $('#map-panel .list-content').html('<h3>Water Rights</h3>' + inextent.join('<br />'));
+    $('.map-tooltip').close();
+    
   });
   
 };
