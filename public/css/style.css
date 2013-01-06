@@ -1,37 +1,93 @@
 body {
   padding-top: 60px;
   padding-bottom: 40px;
-}
-.sidebar-nav {
-  padding: 9px 0;
+  background: #2B929B;
 }
 
- /* Landscape phones and down */
-@media (max-width: 480px) { 
+.container-fluid {
+  padding-right: 0px;
+  padding-left: 0px;
+  background: #2B929B;
 }
 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) { 
+#page-content {
+  margin: 20px 0;
 }
 
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) { 
+
+/* MARKUP */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1em;
+  margin-bottom: 10px;
+  color: #0B4B4C;
 }
 
-/* Large desktop */
-@media (min-width: 1200px) { 
+h1 {
+  font-size: 60px;
 }
 
-#onscreen {
-    position:absolute;
-    top:120px;
-    left:40px;
-    width:300px;
-    height: auto;
-    background:#fff;
-    z-index:100;
-    opacity: 0.7;
-    font-size: 0.8em;
+.navbar-inner {
+  background: #2B929B;
+}
+
+.navbar .brand {
+  font-size: 26px;
+  display: block;
+  padding: 18px 0 10px 30px;
+}
+
+.navbar a.tagline {
+  font-size: 26px;
+  font-size: 1.2em;
+  padding: 20px 0 14px 0px;
+  text-shadow: none;
+  text-decoration: none;
+  display: block;
+  float: left;
+  padding: 20px 0 0px 30px;
+}
+.navbar a.tagline:hover {
+color: #013435;
+}
+
+h2 {
+  font-size: 38px;  
+}
+
+.label, .label:hover {
+  background-color: rgba(256, 256, 256, 0.2);
+  text-shadow: none;
+  color: #333;
+}
+
+input, textarea {
+  width: 400px;
+}
+
+.form-label,
+.form-detail {
+  padding: 0 10px 0 5px;
+}
+
+.form-image {
+  padding: 0 10px 0 5px;
+}
+
+a {
+  color: #013435;
+  font-weight: bold;
+}
+
+hr {
+  border-top: none;
+  border-bottom: 2px solid rgba(256,256,256,0.1);
+}
+
+/** MAP **/
+
+#map-container {
+  position:absolute; top:0; bottom:0; width:100%;
 }
 
 .marker-popup p {
@@ -40,57 +96,73 @@ body {
 }
 
 .marker-image {
-    width:20px;
-    height:20px;
-
-    margin-left:-10px;
-    margin-top:-10px;
-    pointer-events: all;
-    position:absolute;
-/*     opacity: 0.5; */
+  width:20px;
+  height:20px;
+  
+  margin-left:-10px;
+  margin-top:-10px;
+  pointer-events: all;
+  position:absolute;
 }
 
+#map-panel {
+  position:fixed;
+  top:50px;
+  right:0px;
+  height: 100%;
+  width: 25%;
+  background:#fff;
+  z-index:100;
+  padding: 10px;
+  font-size: 0.8em;
+}
 
+#map-panel .alert {
+  height: 40px;
+  background: #fff;
+  color: #888;
+}
 
-.alert {
-  z-index: 2000;
+#map-panel .inputs {
+  height: 40px;
+  padding-left: 10px;
+}
+
+#map-panel .search-holders {
+  background: #fff;
+  color: #888;
+  width: 180px;
+}
+
+#map-panel .list-content {
+  color: #888;
+  width: 180px;
+  padding: 0px 10px 10px 10px;
   position: fixed;
-  width:300px;
-  bottom: 20px;
-  left: 30px;
-  background: #fff;
-  color: #888;
-}
-
-#map-container {
-  position:absolute; top:0; bottom:0; width:100%;
-}
-
-.search-holders {
-/*   z-index: 2000; */
-/*   position: fixed; */
-/*   bottom: 200px; */
-/*   left: 30px; */
-  background: #fff;
-  color: #888;
+  top: 180px;
+  z-index: 1000;
 }
 
 .map-tooltip {
-  padding: 10px 40px 10px 10px;
-  max-height: 100%;
+  padding: 0px 10px 10px 0px;
+  top: 180px;
+  left: 75%;
+  z-index: 900;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
-/*
 #map-outer-container {
 	height: 100%;
 }
-*/
 
 #map-outer-container .zoomer {
   width: 28px;
   height: 28px;
-  top: 60px;
+  top: 65px;
 }
+
 
 .ui-tooltip-content {
   width: 300px;
@@ -118,84 +190,20 @@ body {
   color: #ffffff;
 }
 
-.hero-unit h1 {
-  margin-bottom: 0.2em; 
+/* RESPONSIVE */
+
+ /* Landscape phones and down */
+@media (max-width: 480px) { 
 }
 
-.tagline {
-/*   color: #F5F3DC; */
-  font-size: 1.2em;
-  padding: 20px 0 14px 0px;
-  text-shadow: none;
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
 }
 
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1em;
-  margin-bottom: 1em;
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
 }
 
-.nav-collapse.collapse {
-    height: auto !important;
-    overflow: visible !important;
-     height: 0; overflow: visible; 
-}
-
-#page-content {
-  margin: 20px 0;
-}
-
-#facebook-depiction {
-  height: 30px;
-}
-
-h1 {
-  font-size: 60px;
-}
-
-h2 {
-  font-size: 38px;  
-}
-
-.label, .label:hover {
-  background-color: rgba(256, 256, 256, 0.2);
-  text-shadow: none;
-  color: #333;
-}
-/*
-
-.ts-map .wax-attribution {
-  background: rgba(256,256,256, 0.3);
-  color: rgba(0,0,0,0.7);
-}
-
-.ts-map .wax-attribution a {
-  color: rgba(0,0,0,0.5);
-}
-
-.ts-map .wax-attribution a:hover {
-  color: rgba(0,0,0,1);  
-}
-*/
-
-input, textarea {
-  width: 400px;
-}
-
-.form-label,
-.form-detail {
-  padding: 0 10px 0 5px;
-}
-
-.form-image {
-  padding: 0 10px 0 5px;
-}
-
-a {
-  color: #013435;
-  font-weight: bold;
-}
-
-hr {
-  border-top: none;
-  border-bottom: 2px solid rgba(256,256,256,0.1);
+/* Large desktop */
+@media (min-width: 1200px) { 
 }

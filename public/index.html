@@ -22,75 +22,32 @@
     <script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script>
     <script src='/javascripts/libraries/mapbox.js'></script>    
   </head>
-  <body>
-
-    <!-- Set up Facebook -->
-<!--     <div id="fb-root"></div> -->
-    
+  <body>    
     <!-- Page content -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
+<!--
         <div class="container-fluid">
-          <a class="brand span4" href="#home" data-toggle="tab">Water Transfer</a>
-
+          <div class="row">
+-->
+            <a class="brand">Water Transfer</a>
+            <a class="tagline">Real-time water brokerage</a>
+<!--           </div> -->
+<!--
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-        	    <li><a href="#map" data-toggle="tab">Map</a></li>
-              <li><a href="#data" data-toggle="tab">Data</a></li>
+              <li class="active"><a href="#map" data-toggle="tab">Map</a></li>
               <li><a href="#about" data-toggle="tab">About</a></li>
             </ul>
-          </div><!--/.nav-collapse -->
-         <div class="tagline span4"><!-- Real-time water brokerage -->
-
-            <div class="filters"> 
-              <div class="inputs">
-                <input class="search-holders" type="text" data-provide="typeahead">
-              </div>
-
           </div>
-         </div>         
-        </div>
+-->
+<!--         </div> -->
       </div>
     </div>
   <!-- Main page content -->
 
   <div class="container-fluid">
   <div id="page-content" class="tab-content">
-    <!-- home-->
-    <div class="tab-pane fade in row" id="home">
-
-        <div class="left span8">      
-          <div class="hero-unit">
-            <h1>Water Transfer</h1>
-          </div>
-
-          <div class="span6">            
-            side area
-          </div>
-        </div> 
-
-        <div class="span4">          
-          <div class="sidebar-nav">
-            sidebar
-          </div>
-
-      </div>
-    </div><!--/end home-->
-
-   <div class="tab-pane fade in span8" id="about">
-      <h1>About</h1>
-      <p>about</p>
-    </div><!--/end about-->
-
-
-   <div class="tab-pane fade in span8" id="data">
-      <h1>Data</h1>
-      <p>content</p>
-
-    </div><!--/end data-->
-
-
     <!--map-->
     <div class="tab-pane fade active in" id="map">
     <div class="container-fluid"> 
@@ -100,19 +57,40 @@
             <div id="map-container">  
             </div>
           </div>
-          <div class="alert"> 
-              <div class="content">Loading the map</div>
-              <div class="zoom-level">6</div>
+
+
+
+
+          <div id="map-panel">
+
+            <div class="alert"> 
+                <div class="content">Loading the map</div>
+                <div class="zoom-level">6</div>
+            </div>
+          
+        
+            <div class="filters"> 
+                <div class="inputs">
+                  <input class="search-holders" type="text" data-provide="typeahead">
+                </div>
+            </div>
+          
+            <div class="list-content">
+            </div>
+         
           </div>
-
-
-
-          <div id='onscreen'></div>
 
         </div>
         
       </div>
     </div>
+
+
+    <div class="tab-pane fade in span8" id="about">
+      <h1>About</h1>
+      <p>about</p>
+    </div><!--/end about-->
+
     </div><!--/end container-fluid-->
 
     <hr>
@@ -120,10 +98,22 @@
     <footer>
         <div class="container-fluid">      
         <div class="row-fluid">
-          <div class="span8">
-          <br />
-            Footer
+
+          <div class="span12">
+            <h2>A map of water rights in California.</h2>
+        
           </div>
+          
+          <div class="span6">
+            <h3>Learn more</h3>
+        
+          </div>
+
+          <div class="span6">
+            <h3>About the project</h3>        
+        
+          </div>
+          
         </div>
       </div><!--/end container-fluid-->
     </footer>
