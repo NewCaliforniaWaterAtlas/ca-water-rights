@@ -188,7 +188,7 @@ WW
         $and: [{'kind': 'right'}, {'properties.application_id': feature['EWRIMS.Points_of_Diversion.APPL_ID']}] 
       };
 
-      console.log(lookup);
+//      console.log(lookup);
         
 
       engine.find_many_by(lookup,function(error, results) {
@@ -199,12 +199,19 @@ WW
         }
         
         console.log(results);
-        if(results === []) {
+        if(results.length == 0) {
           console.log("empty");
 
           var newFeature = watermap_app.formatEWRIMSforSaving(feature);      
-          engine.save(newFeature);
 
+          engine.save(newFeature,function(error,agent) {
+            if(error) { res.send("Server agent storage error #5",404); return; }
+            if(!agent) { res.send("Server agent storage error #6",404); return; }
+     /*        res.send(agent); */
+          });
+  
+
+        
         }
 
         //res.send(output);
@@ -221,7 +228,7 @@ watermap_app.formatEWRIMSforSaving = function(feature) {
   var obj = {};
   
   obj.id = feature['EWRIMS.Points_of_Diversion.APPL_ID'];
-  obj.kind = "right";  
+  obj.kind = "right_test";  
   obj.type = "Feature";   
   obj.coordinates = [
                 feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
@@ -237,7 +244,7 @@ watermap_app.formatEWRIMSforSaving = function(feature) {
 
   obj.properties = {
                 "id" : feature['EWRIMS.Points_of_Diversion.APPL_ID'],
-                "kind" : "right",
+                "kind" : "right_test",
                 "source": "http://gispublic.waterboards.ca.gov/",
                 "name" : feature['EWRIMS.Points_of_Diversion.APPL_ID'],
 /*                 "description" : "Migrated data from old WRIMS system.", */ // missing
