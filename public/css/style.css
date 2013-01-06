@@ -2,6 +2,7 @@ body {
   padding-top: 60px;
   padding-bottom: 40px;
   background: #2B929B;
+  color: #514E48;
 }
 
 .container-fluid {
@@ -20,7 +21,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   line-height: 1em;
   margin-bottom: 10px;
-  color: #0B4B4C;
+  color: #1E5E60;
 }
 
 h1 {
@@ -34,6 +35,7 @@ h1 {
 .navbar .brand {
   font-size: 26px;
   display: block;
+  color: #E6D9B5;
   padding: 18px 0 10px 30px;
 }
 
@@ -46,9 +48,10 @@ h1 {
   display: block;
   float: left;
   padding: 20px 0 0px 30px;
+  color: #514E48;
 }
 .navbar a.tagline:hover {
-color: #013435;
+  color: #514E48;
 }
 
 h2 {
@@ -56,9 +59,9 @@ h2 {
 }
 
 .label, .label:hover {
-  background-color: rgba(256, 256, 256, 0.2);
+  background-color: inherit;
   text-shadow: none;
-  color: #333;
+  color: #1E5E60;
 }
 
 input, textarea {
@@ -75,7 +78,7 @@ input, textarea {
 }
 
 a {
-  color: #013435;
+  color: #A3936C;
   font-weight: bold;
 }
 
@@ -105,22 +108,26 @@ hr {
   position:absolute;
 }
 
+.map-attribution {
+  background:#F9F0DC;
+}
+
 #map-panel {
   position:fixed;
   top:50px;
   right:0px;
   height: 100%;
   width: 25%;
-  background:#fff;
+  background:#F9F0DC;
   z-index:100;
   padding: 10px;
   font-size: 0.8em;
 }
 
 #map-panel .alert {
-  height: 40px;
-  background: #fff;
-  color: #888;
+  height: 20px;
+  background: #F9F0DC;
+  color: #514E48;
 }
 
 #map-panel .inputs {
@@ -129,14 +136,18 @@ hr {
 }
 
 #map-panel .search-holders {
-  background: #fff;
-  color: #888;
+  background: #FFF;
+  color: #514E48;
   width: 180px;
 }
 
+#map-panel h3 {
+  margin: 20px 0 0 0;
+}
+
 #map-panel .list-content {
-  color: #888;
-  width: 180px;
+  color: #514E48;
+  width: 160px;
   padding: 0px 10px 10px 10px;
   position: fixed;
   top: 180px;
@@ -145,12 +156,14 @@ hr {
 
 .map-tooltip {
   padding: 0px 10px 10px 0px;
-  top: 180px;
+  top: 160px;
   left: 75%;
+  height: 100%;
   z-index: 900;
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+  background: #F9F0DC;
 }
 
 #map-outer-container {
