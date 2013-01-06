@@ -233,7 +233,7 @@ water.drawMarkers = function(features, featureDetails) {
     }
 
     // display a list of markers.
-    onscreen.innerHTML = inextent.join('\n');
+    onscreen.innerHTML = inextent.join('<br />');
   });
   
 };
