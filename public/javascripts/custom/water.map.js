@@ -112,7 +112,7 @@ water.loadMarkers = function() {
       water.map.removeCallback('panned', water.markersPanned);
     }
     
-    $('.zoom-level').html(water.map.zoom());
+/*     $('.zoom-level').html(water.map.zoom()); */
   });
 };
 
