@@ -12,6 +12,7 @@ water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.WaterTransfer-Markers';
 water.map_defaults.div_container = 'map-container';
 water.map_defaults.close_up_zoom_level = 11;
+water.map_defaults.lowest_tilemill_marker_level = 14;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -38,18 +39,6 @@ water.setupMap = function() {
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
       water.map.interaction.auto(); 
-
-/*    //@TODO seeing if we have any control at all over the interactions
-
-      water.mapboxMarkerInteraction = mapbox.markers.interaction(water.interactiveLayer);
-
-      water.mapboxMarkerInteraction.formatter(function(feature) {
-        var string = water.formatTooltipStrings;
-        return string;
-      });
-
-      water.map.interaction.refresh(); 
-*/
   });
 
   // Add map interface elements.
@@ -106,6 +95,21 @@ water.loadMarkers = function() {
       console.log('zoomed in');
       water.map.addCallback('panned', water.markersPanned);
       // @TODO Add alert to pan to load more up to date info
+      
+      // Hide the marker tiles layer because they will not display properly.
+      if(zoom >= water.map_defaults.lowest_tilemill_marker_level) {
+        console.log('marker last level');
+        water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
+      }
+      else {
+        if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
+          mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
+            water.map.addLayer(interactive.layer);
+            water.map.interaction.auto(); 
+          });
+        }
+      }
+      
     }
     else {
       console.log('zoomed out - removing pan');
