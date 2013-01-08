@@ -103,7 +103,7 @@ app.get('/search/holders', function(req, res, options){
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// get USGS test
+// get USGS daily-mean stream flow
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 var request = require('request');
@@ -112,7 +112,7 @@ app.get('/usgs/:station', function(req, res) {
   var station = req.params.station;
   
   request.get({ 
-    url: 'http://waterservices.usgs.gov/nwis/dv/?format=json', 
+    url: 'http://waterservices.usgs.gov/nwis/dv/?format=json&parameterCd=00060', 
     qs: {site: station}
 
     }, function(err,res,body){
