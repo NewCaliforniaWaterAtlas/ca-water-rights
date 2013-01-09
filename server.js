@@ -91,6 +91,12 @@ app.get('/search/holders', function(req, res, options){
 });
 
 
+watermap_app.xls_counter = 604;
+watermap_app.load_file_counter = 0;
+watermap_app.db_ids = [];
+watermap_app.current = 80;
+watermap_app.counter_xls_parser = 0;
+
 
 
 
@@ -102,16 +108,24 @@ app.get('/data/update/water_rights', function(req, res, options){
   watermap_app.format_rights();
 });
 
-
-watermap_app.xls_counter = 604;
-
 app.get('/data/load/water_rights/xls', function(req, res, options){
   watermap_app.load_files();
 });
 
+app.get('/data/load/water_rights/parse', function(req, res, options){
+  watermap_app.parseXLSWaterRights();
+});
 
-watermap_app.load_file_counter = 0;
-watermap_app.db_ids = [];
+app.get('/data/water_rights/excel', function(req, res, options){
+  watermap_app.getXLS();
+});
+
+app.get('/data/water_rights/app_id_array', function(req, res, options){
+  watermap_app.getXLS_APPID();
+});
+
+
+
 watermap_app.load_files = function() {
   // open csv file
   // read first line
@@ -135,22 +149,14 @@ watermap_app.load_files = function() {
     }
 
   }, 1000);
-  
-
 };
-
-
-
 
 watermap_app.load_xls_files = function(db_id) {
 
     var baseURL = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Purpose=getFullReportExport&applicationID=' + db_id;
     console.log(baseURL);
 
-
-
-
- // save xls file locally
+  // save xls file locally
   var filename = 'water_rights_data/water_right-' + db_id +'.xls';  
   
   http.get({ 
@@ -244,20 +250,226 @@ WW
 
 // cat all files, google refine
 //skip #79
-watermap_app.current = 80;
 
 
+watermap_app.parseXLSWaterRights = function() {
+  fs.readFileSync('./server_data/test.csv').toString().split('\n').forEach(function (line) { 
+      var split_line = line.split(',');
+      watermap_app.db_ids.push(split_line[2]);
+      watermap_app.loadXLSfile(split_line[2]);
+  });
+};
 
+
+watermap_app.loadXLSfile = function(db_id){
+  var obj = {};
+  var currentFile = fs.readFileSync('./water_rights_data/water_right-' + db_id + '.xls' ).toString().split('\r').forEach(function (line) { 
   
-//http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=Z002641&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=  
+  var split_line = line.split('\t');
+  split_line.shift();
+
+  obj[split_line[0]] = split_line[1];  
+});
+
+ var formattedObj =  watermap_app.formatXLSforSaving(obj);
+};
+
+watermap_app.formatXLSforSaving = function(feature) {
+
+  var obj = {};
+  
+  obj.id = feature['Application ID'];
+    
+  obj.kind = "right_test";  
+  obj.type = "Feature";   
+/*
+  obj.coordinates = [
+                feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
+                feature['EWRIMS.Points_of_Diversion.LATITUDE']
+              ];    
+  obj.geometry = {
+             "type" : "Point",
+              "coordinates" : [
+                  feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
+                  feature['EWRIMS.Points_of_Diversion.LATITUDE']
+                ]
+  };
+*/
+
+  obj.properties = {
+    "id" : feature['Application ID'],
+    "kind" : "right",
+    "source_alt": "http://ciwqs.waterboards.ca.gov/",
+    "name" : feature['Application ID'],
+
+    "application_id" : feature['Application ID'],
+
+
+    "date_received": feature['Appliation Rec\'d Date'],
+    "date_accepted": feature['Application Acceptance Date'],
+    "date_notice": feature['Notice Date'],
+    "protest": feature['Protest'],
+    "number_protests": feature['Number of Protests'],
+    "agent_name": feature['Agent Name'],
+    "agent_entity_type": feature['Agent Entity Type'],
+    "primary_owner": feature['Primary Owner'],
+    "primary_owner_entity_type": feature['Primary Owner Entity Type'],
+    "water_right_type" : feature['Water Right Type'],
+    "face_value_amount" : feature['Face Value Amount'],
+    "face_value_units": feature['Face Value Units'],
+/*     'Appl Fee Amount', */
+/*     'Appl Fee Amt Recd', */
+    "max_dd_appl": feature['Max DD Appl'],
+    "max_dd_units": feature['Max DD Units'],
+    "max_dd_ann": feature['Max DD Ann'],
+    "max_storage": feature['Max Storage'],
+    "max_use_appl": feature['Max Use Ann'],
+    "year_first_use": feature['Year First Use'],
+/*     'Billing Determination', */
+/*     'Power Discount %', */
+/*     'FERC #', */
+/*     'FERC Facility', */
+/*     'Initial 401 Certification Start', */
+/*     'Initial 401 Certification End', */
+/*     'Renewed 401 Certification Start', */
+/*     'Renewed 401 Certification End', */
+/*     'Kilowatts Face Plate', */
+/*     'Name Type', */
+    "effective_from_date": feature['Effective From Date'],
+    "effective_to_date": feature['Effective To Date'],
+/*     'Salutation', */
+    "entity_type": feature['Entity Type'],
+    "holder_name": feature['Last Name'],
+/*     'Middle Name', */
+    "first_name": feature['First Name'],
+/*
+    'Mailing Street Number',
+    'Mailing Street Name',
+    'Mailing Address Line2',
+*/
+    "city": feature['Mailing City'],
+    "state": feature['Mailing State'],
+    "zipcode": feature['Mailing Zip'],
+/*
+    'Mailing Country',
+    'Mailing Foreign Code',
+    'Billing Street Number',
+    'Billing Street Name',
+    'Billing Address Line2',
+    'Billing City',
+    'Billing State',
+    'Billing Zip',
+    'Billing Country',
+    'Billing Foreign Code',
+*/
+    "phone": feature['Phone'],
+    "status": feature['Current Status'],
+    "use_code": feature['Use Code'],
+    "use_status_new": feature['Use Status (New) '],
+    "use_population": feature['Use Population '],
+    "use_net_acreage": feature['Use Net Acreage '],
+    "use_gross_acreage": feature['Use Gross Acreage '],
+    "use_dd_annual": feature['Use Direct Diversion Annual Amount (AFA)'],
+    "use_dd_rate": feature['Use Direct Diversion Rate (New)'],
+    "use_dd_rate_units": feature['Use Direct Diversion Rate Units'],
+    "use_storage_amount": feature['Use Storage Amount (New) (AFA)'],
+    
+    "pod_unit": feature['POD Unit'],
+    "pod_status": feature['POD Status'],
+    "pod_id" : feature['POD Number'],    
+    "direct_div_amount": feature['Direct Div Amount'],
+    "diversion_acre_feet": feature['Direct Div Ac Ft'],
+    "diversion_storage_amount": feature['Amount Storage'],
+    "pod_max_dd": feature['POD Max Dd'],
+    "source_max_dd_unit": feature['Source Max Dd Unit'],
+    "pod_max_storage": feature['POD Max Storage'],
+    "source_max_storage_unit": feature['Source Max Storage Unit'],
+    "storage_type": feature['Storage Type'],
+    "pod_gis_maintained_data": feature['POD GIS Maintained Data'],
+    "appl_id": feature['Appl ID'],
+    "water_right_id": feature['Object ID'],
+    "pod_number": feature['POD Number'],
+    "has_opod": feature['Has Opod'],
+    "appl_pod": feature['Appl Pod'],
+    "podid": feature['podId'],
+    "county": feature['County'],
+    "parcel_number": feature['Parcel Number'],
+    "sp_zone": feature['Sp Zone'],
+    "northing": feature['North Coord'],
+    "easting": feature['East Coord'],
+    "quarter_quarter": feature['Quarter Quarter'],
+    "quarter": feature['Quarter'],
+    "section_classifier": feature['Section Classifier'],
+    "section_number": feature['Section Number'],
+    "township_number": feature['Township Number'],
+    "township_direction": feature['Township Direction'],
+    "range_number": feature['Range Number'],
+    "range_direction": feature['Range Direction'],
+    "meridian": feature['Meridian'],
+    "location_method": feature['Location Method'],
+    "source_name": feature['Source Name'],
+    "trib_desc": feature['TribDesc'],
+    "watershed": feature['Watershed'],
+    "quad_map_name": feature['Quad Map Name'],
+    "permit_id": feature['Permit ID'],
+    "water_right_description": feature['Water Right Description'],
+    "issue_date": feature['Issue Date'],
+    "construction_completed_by": feature['Construction Completed by'],
+    "planned_project_completion_date": feature['Planned Project Completion Date'],
+    "permit_terms": feature['Permit Terms'],
+    "term_id": feature['Term ID'],
+    "version_number": feature['Version Number']
+
+
+   // "diversion_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_TYPE'], 
+   // "diversion_code_type": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_CODE_TYPE'], 
+   // "water_right_status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_STATUS'],
+   // "storage_type": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.STORAGE_TYPE'],
+   // "organization_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.ENTITY_TYPE'],
+   // "application_pod" : feature['EWRIMS.Points_of_Diversion.APPL_POD'],
+   // "township_number" : feature['EWRIMS.Points_of_Diversion.TOWNSHIP_NUMBER'],
+   // "range_direction" : feature['EWRIMS.Points_of_Diversion.RANGE_DIRECTION'],
+   // "township_direction" : feature['EWRIMS.Points_of_Diversion.TOWNSHIP_DIRECTION'],
+   // "range_number" : feature['EWRIMS.Points_of_Diversion.RANGE_NUMBER'],
+  //  "section_number" : feature['EWRIMS.Points_of_Diversion.SECTION_NUMBER'],
+  //  "latitude" : feature['EWRIMS.Points_of_Diversion.LATITUDE'],
+  //  "longitude" : feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
+  //  "location_method" : feature['EWRIMS.Points_of_Diversion.LOCATION_METHOD'],
+  //  "moveable" : feature['EWRIMS.Points_of_Diversion.MOVEABLE'],
+  //  "well_number" : feature['EWRIMS.Points_of_Diversion.WELL_NUMBER'],
+  //  "quad_map_name" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_NAME'],
+  //  "quad_map_num" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_NUM'],
+  //  "quad_map_min_ser" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_MIN_SER'],
+  //  "special_area" : feature['EWRIMS.Points_of_Diversion.SPECIAL_AREA'],          
+  //  "last_update_user_id" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_USER_ID'],
+  //  "date_last_updated" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_DATE'],
+  //  "status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS']
+  };
+  
+/*
+  
+  if(results.kind === 'right_test') {
+  
+    var resaveObj = results;
+    resaveObj.kind = "right_test";
+    resaveObj.coordinates = obj.coordinates;
+    resaveObj.geometry = obj.geometry;
+    resaveObj.properties = obj.properties;
+    obj = resaveObj;
+    console.log("resaving");
+
+  }
+*/
+    console.log(obj);  
+  return obj;
+};
+
+
   
   
 /* Scrape all pages to get the ID to get the download link to get the xls files*/
 watermap_app.getXLS = function(){
-/*   var max = 976; */
-
-
-
+  
   setInterval(function(){
     var i = watermap_app.current;
     var query = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=&watershed=&waterHolderName=&curPage=' + i + '&sortBy=APPLICATION_NUMBER&sortDir=ASC&pagination=true';
@@ -311,8 +523,8 @@ watermap_app.getXLS = function(){
     }});  
     
   });
-  watermap_app.current++;
-}, 20000);
+    watermap_app.current++;
+  }, 20000);
 
 };
 
@@ -1434,8 +1646,6 @@ var app_id_array = [
 watermap_app.getXLS_APPID = function(){
 /*   var max = 976; */
 
-
-
   setInterval(function(){
     var i = watermap_app.current;
     
@@ -1494,16 +1704,6 @@ watermap_app.getXLS_APPID = function(){
 }, 10000);
 
 };
-
-
-
-app.get('/data/water_rights/excel', function(req, res, options){
-  watermap_app.getXLS();
-});
-
-app.get('/data/water_rights/app_id_array', function(req, res, options){
-  watermap_app.getXLS_APPID();
-});
 
 watermap_app.formatEWRIMSforSaving = function(feature, results) {
 
