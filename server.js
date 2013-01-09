@@ -102,6 +102,66 @@ app.get('/data/update/water_rights', function(req, res, options){
   watermap_app.format_rights();
 });
 
+
+watermap_app.xls_counter = 604;
+
+app.get('/data/load/water_rights/xls', function(req, res, options){
+  watermap_app.load_files();
+});
+
+
+watermap_app.load_file_counter = 0;
+watermap_app.db_ids = [];
+watermap_app.load_files = function() {
+  // open csv file
+  // read first line
+  // split
+  // take third value
+
+  fs.readFileSync('./server_data/test.csv').toString().split('\n').forEach(function (line) { 
+      var split_line = line.split(',');
+      watermap_app.db_ids.push(split_line[2]);
+
+  });
+
+  var load_files = setInterval(function() {
+    // do query
+    console.log(watermap_app.db_ids[watermap_app.load_file_counter]);
+    watermap_app.load_xls_files(watermap_app.db_ids[watermap_app.load_file_counter]); 
+    watermap_app.load_file_counter++;
+
+    if(watermap_app.db_ids[watermap_app.load_file_counter] === undefined) {
+      clearInterval(load_files);
+    }
+
+  }, 1000);
+  
+
+};
+
+
+
+
+watermap_app.load_xls_files = function(db_id) {
+
+    var baseURL = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Purpose=getFullReportExport&applicationID=' + db_id;
+    console.log(baseURL);
+
+
+
+
+ // save xls file locally
+  var filename = 'water_rights_data/water_right-' + db_id +'.xls';  
+  
+  http.get({ 
+    host: "ciwqs.waterboards.ca.gov", 
+    path: "/ciwqs/ewrims/EWServlet?Purpose=getFullReportExport&applicationID=" + db_id },
+    function(res) {
+      var stream = fs.createWriteStream(filename);
+      res.pipe(stream);
+    });
+};
+
 watermap_app.format_rights = function() {
   var output = '';    
     
@@ -183,8 +243,8 @@ WW
 
 
 // cat all files, google refine
-
-watermap_app.current = 1;
+//skip #79
+watermap_app.current = 80;
 
 
 
@@ -257,7 +317,8 @@ watermap_app.getXLS = function(){
 };
 
 
-var app_id_array = ['Z002641',
+var app_id_array = [
+'Z002641',
 'Z002315',
 'A004566',
 'Z002641',
@@ -1377,12 +1438,13 @@ watermap_app.getXLS_APPID = function(){
 
   setInterval(function(){
     var i = watermap_app.current;
-    var query = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=&watershed=&waterHolderName=&curPage=' + i + '&sortBy=APPLICATION_NUMBER&sortDir=ASC&pagination=true';
+    
+    var query = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=' + app_id_array[i] + '&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=';
     
     console.log(query);
     
     var j = request.jar();
-    var cookie = request.cookie('JSESSIONID=c6e01ad5ec1922a1cc53d07a5d15e0b109d7383f430830012cd584e52f0e7622');
+    var cookie = request.cookie('JSESSIONID=6aa7f14069a9306d2c28f0608416d166033139a6603f39347e2f207c39e76f78');
     j.add(cookie);
 
     request.get({ uri:query, jar: j }, function (error, response, body) {
@@ -1415,7 +1477,7 @@ watermap_app.getXLS_APPID = function(){
         });
   
         console.log('done ' + i);
-        fs.writeFile('files/water_right_' + i + '.txt', output, function (err) {
+        fs.writeFile('files_extra/water_right_' + i + '.txt', output, function (err) {
           if (err) return console.log(err);
             console.log("saved " + i);
   
@@ -1429,7 +1491,7 @@ watermap_app.getXLS_APPID = function(){
     
   });
   watermap_app.current++;
-}, 20000);
+}, 10000);
 
 };
 
