@@ -1,6 +1,6 @@
 #!/bin/env node
 
-var watermap_app = {};
+var watermapApp = {};
   
 var http = require('http');
  
@@ -58,10 +58,16 @@ app.dynamicHelpers({
 // routes
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * Provide webpage.
+ */
 app.get('/', function(req, res){
     res.send(zcache['index.html'], {'Content-Type': 'text/html'});
 });
 
+/**
+ * Search database by passing it a mongo search object.
+ */
 app.post('/data', function(req, res, options){
   var blob = req.body;
 
@@ -75,6 +81,9 @@ app.post('/data', function(req, res, options){
   },{}, {'limit': 0});
 });
 
+/** 
+ * Search function for typeahead
+ */
 app.get('/search/holders', function(req, res, options){
   console.log(req.query);
   var regex = new RegExp('' + req.query.value, "i");
@@ -91,70 +100,225 @@ app.get('/search/holders', function(req, res, options){
 });
 
 
-watermap_app.xls_counter = 604;
-watermap_app.load_file_counter = 0;
-watermap_app.db_ids = [];
-watermap_app.current = 80;
-watermap_app.counter_xls_parser = 0;
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Update Water Rights Data
+// Load data from eWRIMS database and GIS server.
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get('/data/update/water_rights', function(req, res, options){
-  watermap_app.format_rights();
+// Global helpers & counters.
+watermapApp.xlsCounter = 604;
+watermapApp.loadFileCounter = 0;
+watermapApp.dbIDs = [];
+watermapApp.current = 80;
+watermapApp.counterXLSParser = 0;
+watermapApp.getBatchCounter = 0;
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Data handling callbacks.
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Get database ID for all records in eWRIMS database.
+ * Scrape all pages to get the ID to get the download link to get the xls files 
+ * These are stored as flat files, which need to be cleaned up and cat'ed into one file.
+ * Takes about 1 day to run (947 pages)
+ * Is not error proof, also had to get the missing values and reload them - then cat into one master file.
+ */
+// @TODO Refactored, test it.
+app.get('/data/water_rights/scrape/pages', function(req, res, options){
+  watermapApp.getXLSAllPages();
 });
 
-app.get('/data/load/water_rights/xls', function(req, res, options){
-  watermap_app.load_files();
+// @TODO Refactored, test it.
+// @TODO Finish downloading.
+app.get('/data/water_rights/scrape/app_id_array', function(req, res, options){
+  watermapApp.getXLSByAppIDArray();
 });
 
-app.get('/data/load/water_rights/parse', function(req, res, options){
-  watermap_app.parseXLSWaterRights();
+/** Once we have all of the DB ids in a CSV file on the server (manually created)
+ *  Download all xls files for water rights. 
+ */
+// @TODO Refactored, test it.
+app.get('/data/water_rights/download/xls', function(req, res, options){
+  watermapApp.downloadWaterRightDBDataXLS();
 });
 
-app.get('/data/water_rights/excel', function(req, res, options){
-  watermap_app.getXLS();
+// Once downloaded, parse all XLS files. Convert to object for mongo. Store in database.
+app.get('/data/water_rights/parse/xls', function(req, res, options){
+  watermapApp.parseXLSWaterRights();
 });
 
-app.get('/data/water_rights/app_id_array', function(req, res, options){
-  watermap_app.getXLS_APPID();
+// Lookup GIS data for sets of records to get Lat/Lon and other extra values. Update in Mongo.
+app.get('/data/water_rights/update/gis', function(req, res, options){
+  watermapApp.getGISRights();
 });
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Process data.
+/////////////////////////////////////////////////////////////////////////////////////////////
 
+ 
+/* Scrape all pages to get the ID to get the download link to get the xls files*/
+watermapApp.getXLSAllPages = function(){
+  
+  setInterval(function(){
+    var i = watermapApp.current;
+    var query = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=&watershed=&waterHolderName=&curPage=' + i + '&sortBy=APPLICATION_NUMBER&sortDir=ASC&pagination=true';
+    
+    console.log(query);
+    
+    var j = request.jar();
+    var cookie = request.cookie('JSESSIONID=c6e01ad5ec1922a1cc53d07a5d15e0b109d7383f430830012cd584e52f0e7622');
+    j.add(cookie);
 
-watermap_app.load_files = function() {
+    request.get({ uri:query, jar: j }, function (error, response, body) {
+
+    if (error && response.statusCode !== 200) {
+      console.log('Error when contacting server')
+    }
+    
+    var output = ''; 
+    
+    jsdom.env({
+      html: body,
+      scripts: [
+        'http://code.jquery.com/jquery-1.8.3.min.js'
+      ],
+    
+      done: function (err, window) {
+        var $ = window.jQuery;      
+/*         console.log(body); */
+        $('body table.dataentry tr').each(function(){
+          var app_id = $(this).find('td:first-child a').html();
+          if (app_id === undefined) {
+            var app_id = $(this).find('td:first-child').html();
+          }
+
+          var link = $(this).find('td:last-child a').attr('href') + '\n';
+/*           if(app_id !== undefined) { */
+            output = output + app_id + " , " + link; 
+/*           } */
+        });
+  
+        console.log('done ' + i);
+        fs.writeFile('files/water_right_' + i + '.txt', output, function (err) {
+          if (err) return console.log(err);
+            console.log("saved " + i);
+  
+            if(output === '') {
+              watermapApp.current--;            
+              console.log('empty, restarting ' + i);
+            }
+        });
+       
+    }});  
+    
+  });
+    watermapApp.current++;
+  }, 20000);
+
+};
+
+// Scrape all pages to get the ID to get the download link to get the xls files
+watermapApp.getXLSByAppIDArray = function(){
+/*   var max = 976; */
+
+  setInterval(function(){
+    var i = watermapApp.current;
+    
+    var query = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=' + app_id_array[i] + '&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=';
+    
+    console.log(query);
+    
+    var j = request.jar();
+    var cookie = request.cookie('JSESSIONID=6aa7f14069a9306d2c28f0608416d166033139a6603f39347e2f207c39e76f78');
+    j.add(cookie);
+
+    request.get({ uri:query, jar: j }, function (error, response, body) {
+
+    if (error && response.statusCode !== 200) {
+      console.log('Error when contacting server')
+    }
+    
+    var output = ''; 
+    
+    jsdom.env({
+      html: body,
+      scripts: [
+        'http://code.jquery.com/jquery-1.8.3.min.js'
+      ],
+    
+      done: function (err, window) {
+        var $ = window.jQuery;      
+/*         console.log(body); */
+        $('body table.dataentry tr').each(function(){
+          var app_id = $(this).find('td:first-child a').html();
+          if (app_id === undefined) {
+            var app_id = $(this).find('td:first-child').html();
+          }
+
+          var link = $(this).find('td:last-child a').attr('href') + '\n';
+/*           if(app_id !== undefined) { */
+            output = output + app_id + " , " + link; 
+/*           } */
+        });
+  
+        console.log('done ' + i);
+        fs.writeFile('files_extra/water_right_' + i + '.txt', output, function (err) {
+          if (err) return console.log(err);
+            console.log("saved " + i);
+  
+            if(output === '') {
+              watermapApp.current--;            
+              console.log('empty, restarting ' + i);
+            }
+        });
+       
+    }});  
+    
+    });
+    watermapApp.current++;
+  }, 10000);
+};
+
+watermapApp.downloadWaterRightDBDataXLS = function() {
   // open csv file
   // read first line
   // split
   // take third value
 
-  fs.readFileSync('./server_data/test.csv').toString().split('\n').forEach(function (line) { 
-      var split_line = line.split(',');
-      watermap_app.db_ids.push(split_line[2]);
+  // @TODO may have limits on how many to do at once.
+  // @TODO Also, it would take 11 days to download them all individually--- which is probably necessary because the 
+  // XLS file is generated dynamically.
+  // It's 30-seconds to download the data, and 1 minute to download the data from the DB server and the GIS server.
+  // Would be nice if we could do it all in one swoop, and then get a list of updated and new records - especially because the records only change once a year it seems.
+  // The GIS server might be able to tell us which records are new - if the Water Control Board is not able to help.
 
+  fs.readFileSync('./server_data/test_100.csv').toString().split('\n').forEach(function (line) { 
+      var split_line = line.split(',');
+      watermapApp.dbIDs.push(split_line[2]);
   });
 
-  var load_files = setInterval(function() {
-    // do query
-    console.log(watermap_app.db_ids[watermap_app.load_file_counter]);
-    watermap_app.load_xls_files(watermap_app.db_ids[watermap_app.load_file_counter]); 
-    watermap_app.load_file_counter++;
 
-    if(watermap_app.db_ids[watermap_app.load_file_counter] === undefined) {
-      clearInterval(load_files);
+  // Do a query every 4 seconds -- should be about 8 concurrent queries.
+  // Should do 100 in 6 minutes.
+  watermapApp.getFile = setInterval(function() {
+    watermapApp.downloadXLSFile(watermapApp.dbIDs[watermapApp.loadFileCounter]); 
+    watermapApp.loadFileCounter++;
+    watermapApp.getBatchCounter++;  
+    console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
+
+    if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
+      clearInterval(watermapApp.getFile);
     }
+  }, 4000);
 
-  }, 1000);
 };
 
-watermap_app.load_xls_files = function(db_id) {
+watermapApp.downloadXLSFile = function(db_id) {
 
-    var baseURL = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Purpose=getFullReportExport&applicationID=' + db_id;
-    console.log(baseURL);
+  var baseURL = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Purpose=getFullReportExport&applicationID=' + db_id;
+  console.log(baseURL);
 
   // save xls file locally
   var filename = 'water_rights_data/water_right-' + db_id +'.xls';  
@@ -165,10 +329,10 @@ watermap_app.load_xls_files = function(db_id) {
     function(res) {
       var stream = fs.createWriteStream(filename);
       res.pipe(stream);
-    });
+  });
 };
 
-watermap_app.format_rights = function() {
+watermapApp.getGISRights = function() {
   var output = '';    
     
 /*
@@ -225,7 +389,7 @@ WW
         if(results.length == 0) {
           console.log("empty");
 
-          var newFeature = watermap_app.formatEWRIMSforSaving(feature); 
+          var newFeature = watermapApp.formatEWRIMSforSaving(feature); 
 
           engine.save(newFeature,function(error,agent) {
             if(error) { res.send("Server agent storage error #5",404); return; }
@@ -237,7 +401,7 @@ WW
 /*           console.log(results[0]); */
           // use id
 
-          watermap_app.formatEWRIMSforSaving(feature, results[0]);
+          watermapApp.formatEWRIMSforSaving(feature, results[0]);
         
         }
         
@@ -252,16 +416,16 @@ WW
 //skip #79
 
 
-watermap_app.parseXLSWaterRights = function() {
+watermapApp.parseXLSWaterRights = function() {
   fs.readFileSync('./server_data/test.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
-      watermap_app.db_ids.push(split_line[2]);
-      watermap_app.loadXLSfile(split_line[2]);
+      watermapApp.dbIDs.push(split_line[2]);
+      watermapApp.loadXLSfile(split_line[2]);
   });
 };
 
 
-watermap_app.loadXLSfile = function(db_id){
+watermapApp.loadXLSfile = function(db_id){
   var obj = {};
   var currentFile = fs.readFileSync('./water_rights_data/water_right-' + db_id + '.xls' ).toString().split('\r').forEach(function (line) { 
   
@@ -271,10 +435,10 @@ watermap_app.loadXLSfile = function(db_id){
   obj[split_line[0]] = split_line[1];  
 });
 
- var formattedObj =  watermap_app.formatXLSforSaving(obj);
+ var formattedObj =  watermapApp.formatXLSforSaving(obj);
 };
 
-watermap_app.formatXLSforSaving = function(feature) {
+watermapApp.formatXLSforSaving = function(feature) {
 
   var obj = {};
   
@@ -466,69 +630,258 @@ watermap_app.formatXLSforSaving = function(feature) {
 
 
   
-  
-/* Scrape all pages to get the ID to get the download link to get the xls files*/
-watermap_app.getXLS = function(){
-  
-  setInterval(function(){
-    var i = watermap_app.current;
-    var query = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=&watershed=&waterHolderName=&curPage=' + i + '&sortBy=APPLICATION_NUMBER&sortDir=ASC&pagination=true';
-    
-    console.log(query);
-    
-    var j = request.jar();
-    var cookie = request.cookie('JSESSIONID=c6e01ad5ec1922a1cc53d07a5d15e0b109d7383f430830012cd584e52f0e7622');
-    j.add(cookie);
+ 
 
-    request.get({ uri:query, jar: j }, function (error, response, body) {
+watermapApp.formatEWRIMSforSaving = function(feature, results) {
 
-    if (error && response.statusCode !== 200) {
-      console.log('Error when contacting server')
-    }
-    
-    var output = ''; 
-    
-    jsdom.env({
-      html: body,
-      scripts: [
-        'http://code.jquery.com/jquery-1.8.3.min.js'
-      ],
-    
-      done: function (err, window) {
-        var $ = window.jQuery;      
-/*         console.log(body); */
-        $('body table.dataentry tr').each(function(){
-          var app_id = $(this).find('td:first-child a').html();
-          if (app_id === undefined) {
-            var app_id = $(this).find('td:first-child').html();
-          }
-
-          var link = $(this).find('td:last-child a').attr('href') + '\n';
-/*           if(app_id !== undefined) { */
-            output = output + app_id + " , " + link; 
-/*           } */
-        });
+  var obj = {};
   
-        console.log('done ' + i);
-        fs.writeFile('files/water_right_' + i + '.txt', output, function (err) {
-          if (err) return console.log(err);
-            console.log("saved " + i);
-  
-            if(output === '') {
-              watermap_app.current--;            
-              console.log('empty, restarting ' + i);
-            }
-        });
-       
-    }});  
-    
-  });
-    watermap_app.current++;
-  }, 20000);
+  obj.id = feature['EWRIMS.Points_of_Diversion.APPL_ID'];
+  obj.kind = "right_test";  
+  obj.type = "Feature";   
+  obj.coordinates = [
+                feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
+                feature['EWRIMS.Points_of_Diversion.LATITUDE']
+              ];    
+  obj.geometry = {
+             "type" : "Point",
+              "coordinates" : [
+                  feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
+                  feature['EWRIMS.Points_of_Diversion.LATITUDE']
+                ]
+  };
 
+  obj.properties = {
+    "id" : feature['EWRIMS.Points_of_Diversion.APPL_ID'],
+    "kind" : "right_test",
+    "source": "http://gispublic.waterboards.ca.gov/",
+    "name" : feature['EWRIMS.Points_of_Diversion.APPL_ID'],
+  /*                 "description" : "Migrated data from old WRIMS system.", */ // missing
+  /*                 "date" : "04/12/1967", */ // this comes from the EWRIMS database, the GIS databse doesn't have it.
+  /*                 "license_id" : null, */
+  /*                 "permit_id" : null, */
+  /*                 "db_id" : 28012, */
+    "pod_id" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.CORE_POD_ID'],
+    "water_right_id" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_WATER_RIGHT_ID'],                
+    "pod_number" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_NUMBER'],
+    "application_id" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.APPL_ID'],
+    "direct_div_amount": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIRECT_DIV_AMOUNT'],
+    "diversion_storage_amount" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_STORAGE_AMOUNT'],
+    "diversion_acre_feet": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_AC_FT'],                
+    "place_id": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.P_PLACE_ID'],                
+    "pod_status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS'],
+    "face_value_amount" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.FACE_VALUE_AMOUNT'],
+    "diversion_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_TYPE'],
+    "diversion_code_type": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_CODE_TYPE'],
+    "water_right_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_TYPE'],
+    "water_right_status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_STATUS'],
+    "storage_type": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.STORAGE_TYPE'],
+    "pod_unit": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_UNIT'],
+    "first_name": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.FIRST_NAME'],
+    "holder_name" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.LAST_NAME'],               
+    "organization_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.ENTITY_TYPE'],
+    "application_pod" : feature['EWRIMS.Points_of_Diversion.APPL_POD'],
+    "township_number" : feature['EWRIMS.Points_of_Diversion.TOWNSHIP_NUMBER'],
+    "range_direction" : feature['EWRIMS.Points_of_Diversion.RANGE_DIRECTION'],
+    "township_direction" : feature['EWRIMS.Points_of_Diversion.TOWNSHIP_DIRECTION'],
+    "range_number" : feature['EWRIMS.Points_of_Diversion.RANGE_NUMBER'],
+    "section_number" : feature['EWRIMS.Points_of_Diversion.SECTION_NUMBER'],
+    "section_classifier" : feature['EWRIMS.Points_of_Diversion.SECTION_CLASSIFIER'],
+    "quarter" : feature['EWRIMS.Points_of_Diversion.QUARTER'],
+    "quarter_quarter" : feature['EWRIMS.Points_of_Diversion.QUARTER_QUARTER'],
+    "meridian" : feature['EWRIMS.Points_of_Diversion.MERIDIAN'],
+    "northing" : feature['EWRIMS.Points_of_Diversion.NORTH_COORD'],
+    "easting" : feature['EWRIMS.Points_of_Diversion.EAST_COORD'],
+    "sp_zone" : feature['EWRIMS.Points_of_Diversion.SP_ZONE'],
+    "latitude" : feature['EWRIMS.Points_of_Diversion.LATITUDE'],
+    "longitude" : feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
+    "trib_desc" : feature['EWRIMS.Points_of_Diversion.TRIB_DESC'],
+    "location_method" : feature['EWRIMS.Points_of_Diversion.LOCATION_METHOD'],
+    "source_name" : feature['EWRIMS.Points_of_Diversion.SOURCE_NAME'],
+    "moveable" : feature['EWRIMS.Points_of_Diversion.MOVEABLE'],
+    "has_opod" : feature['EWRIMS.Points_of_Diversion.HAS_OPOD'],
+    "watershed" : feature['EWRIMS.Points_of_Diversion.WATERSHED'],
+    "county" : feature['EWRIMS.Points_of_Diversion.COUNTY'],
+    "well_number" : feature['EWRIMS.Points_of_Diversion.WELL_NUMBER'],
+    "quad_map_name" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_NAME'],
+    "quad_map_num" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_NUM'],
+    "quad_map_min_ser" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_MIN_SER'],
+    "parcel_number" : feature['EWRIMS.Points_of_Diversion.PARCEL_NUMBER'],
+    "special_area" : feature['EWRIMS.Points_of_Diversion.SPECIAL_AREA'],          
+    "last_update_user_id" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_USER_ID'],
+    "watershed" : feature['EWRIMS.Points_of_Diversion.WATERSHED'],
+    "county" : feature['EWRIMS.Points_of_Diversion.COUNTY'],
+    "date_last_updated" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_DATE'],
+    "status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS']
+  };
+  
+  
+  if(results.kind === 'right_test') {
+  
+    var resaveObj = results;
+    resaveObj.kind = "right_test";
+    resaveObj.coordinates = obj.coordinates;
+    resaveObj.geometry = obj.geometry;
+    resaveObj.properties = obj.properties;
+    obj = resaveObj;
+    console.log("resaving");
+    console.log(obj);
+  }
+  
+  
+  return obj;
 };
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+// get USGS test
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get('/usgs/:station', function(req, res) {
+  var station = req.params.station;
+  
+  request.get({ 
+    url: 'http://waterservices.usgs.gov/nwis/dv/?format=json', 
+    qs: {site: station}
+    }, function(err,res,body){
+
+      var obj = JSON.parse(body);
+      // obj.value.timeSeries.forEach(function (d) {
+      //   console.log(d.sourceInfo.siteName);
+      // });
+
+  }).pipe(res);
+
+});
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// openshift internal routes
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get('/health', function(req, res){
+    res.send('1');
+});
+
+// Handler for GET /asciimo
+app.get('/asciimo', function(req, res){
+    var link="https://a248.e.akamai.net/assets.github.com/img/d84f00f173afcf3bc81b4fad855e39838b23d8ff/687474703a2f2f696d6775722e636f6d2f6b6d626a422e706e67";
+    res.send("<html><body><img src='" + link + "'></body></html>");
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// openshift boot up
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+var ipaddr  = process.env.OPENSHIFT_INTERNAL_IP;
+var port    = process.env.OPENSHIFT_INTERNAL_PORT || 3000;
+
+if (typeof ipaddr === "undefined") {
+   console.warn('No OPENSHIFT_INTERNAL_IP environment variable');
+}
+
+function terminator(sig) {
+   if (typeof sig === "string") {
+      console.log('%s: Received %s - terminating Node server ...',
+                  Date(Date.now()), sig);
+      process.exit(1);
+   }
+   console.log('%s: Node server stopped.', Date(Date.now()) );
+}
+
+process.on('exit', function() { terminator(); });
+
+['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT', 'SIGBUS',
+ 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGPIPE', 'SIGTERM'
+].forEach(function(element, index, array) {
+    process.on(element, function() { terminator(element); });
+});
+
+app.listen(port, ipaddr, function() {
+   console.log('%s: Node server started on %s:%d ...', Date(Date.now() ),
+               ipaddr, port);
+});
+
+
+  /*
+  "_id" : ObjectId("50d15c61e730dbcccc3546e5"),
+        "id" : "S000550",
+        "kind" : "right",
+        "type" : "Feature",
+        "coordinates" : [
+                -121.8921916,
+                39.33543549
+        ],
+        "geometry" : {
+                "type" : "Point",
+                "coordinates" : [
+                        -121.8921916,
+                        39.33543549
+                ]
+        },
+        "properties" : {
+                "id" : "S000550",
+                "kind" : "right",
+                "name" : "BUTTE SINK WATERFOWL ASSOCIATION",
+                "application_id" : "S000550",
+                "source" : "BUTTE CREEK",
+                "watershed" : "COLUSA BASIN",
+                "county" : "Butte",
+                "face_amt" : 0,
+                "description" : "Migrated data from old WRIMS system.",
+                "date" : "04/12/1967",
+                "organization_type" : "Corporation",
+                "status" : "Claimed",
+                "water_right_type" : "Statement of Div and Use",
+                "license_id" : null,
+                "permit_id" : null,
+                "db_id" : 28012,
+                "holder_name" : "BUTTE SINK WATERFOWL ASSOCIATION",
+                "pod_id" : 7670,
+                "pod_number" : 1,
+                "application_pod" : "S000550_01",
+                "township_number" : 17,
+                "township_direction" : "N",
+                "range_number" : 1,
+                "range_direction" : "E",
+                "section_number" : 7,
+                "section_classifier" : null,
+                "quarter" : "SE",
+                "quarter_quarter" : "SE",
+                "meridian" : 21,
+                "northing" : 2248187.979,
+                "easting" : 6592159.039,
+                "sp_zone" : 2,
+                "latitude" : 39.33543549,
+                "longitude" : -121.8921916,
+                "trib_desc" : null,
+                "location_method" : "DD_NE",
+                "source_name" : "BUTTE CREEK",
+                "moveable" : "N",
+                "has_opod" : "N",
+                "watershed" : "COLUSA BASIN",
+                "county" : "Butte",
+                "well_number" : null,
+                "quad_map_name" : "SANBORN SLOUGH",
+                "quad_map_1,C,50" : "F 049",
+                "quad_map_M,C,3" : 7.5,
+                "parcel_number" : null,
+                "diversion" : null,
+                "last_updated" : "Sun Sep 28 00:00:00 PDT 2003",
+                "last_upd_1,N,10,0" : 9,
+                "special_ar,C,50" : null,
+                "water_right_type2" : "Statement of Div and Use",
+                "water_right_status" : "Claimed",
+                "face_value_(afa)" : 0,
+                "pod_value" : "Active",
+                "annual_direct_diversion" : 0,
+                "diversion_units" : "Cubic Feet per Second",
+                "diversion_storage_amount" : 0
+        }
+*/
+
+
+// Missing values -- in progress.
 var app_id_array = [
 'Z002641',
 'Z002315',
@@ -1641,314 +1994,3 @@ var app_id_array = [
 'UN000302',
 'UN00246'
 ];
-
-/* Scrape all pages to get the ID to get the download link to get the xls files*/
-watermap_app.getXLS_APPID = function(){
-/*   var max = 976; */
-
-  setInterval(function(){
-    var i = watermap_app.current;
-    
-    var query = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=' + app_id_array[i] + '&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=';
-    
-    console.log(query);
-    
-    var j = request.jar();
-    var cookie = request.cookie('JSESSIONID=6aa7f14069a9306d2c28f0608416d166033139a6603f39347e2f207c39e76f78');
-    j.add(cookie);
-
-    request.get({ uri:query, jar: j }, function (error, response, body) {
-
-    if (error && response.statusCode !== 200) {
-      console.log('Error when contacting server')
-    }
-    
-    var output = ''; 
-    
-    jsdom.env({
-      html: body,
-      scripts: [
-        'http://code.jquery.com/jquery-1.8.3.min.js'
-      ],
-    
-      done: function (err, window) {
-        var $ = window.jQuery;      
-/*         console.log(body); */
-        $('body table.dataentry tr').each(function(){
-          var app_id = $(this).find('td:first-child a').html();
-          if (app_id === undefined) {
-            var app_id = $(this).find('td:first-child').html();
-          }
-
-          var link = $(this).find('td:last-child a').attr('href') + '\n';
-/*           if(app_id !== undefined) { */
-            output = output + app_id + " , " + link; 
-/*           } */
-        });
-  
-        console.log('done ' + i);
-        fs.writeFile('files_extra/water_right_' + i + '.txt', output, function (err) {
-          if (err) return console.log(err);
-            console.log("saved " + i);
-  
-            if(output === '') {
-              watermap_app.current--;            
-              console.log('empty, restarting ' + i);
-            }
-        });
-       
-    }});  
-    
-  });
-  watermap_app.current++;
-}, 10000);
-
-};
-
-watermap_app.formatEWRIMSforSaving = function(feature, results) {
-
-  var obj = {};
-  
-  obj.id = feature['EWRIMS.Points_of_Diversion.APPL_ID'];
-  obj.kind = "right_test";  
-  obj.type = "Feature";   
-  obj.coordinates = [
-                feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
-                feature['EWRIMS.Points_of_Diversion.LATITUDE']
-              ];    
-  obj.geometry = {
-             "type" : "Point",
-              "coordinates" : [
-                  feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
-                  feature['EWRIMS.Points_of_Diversion.LATITUDE']
-                ]
-  };
-
-  obj.properties = {
-    "id" : feature['EWRIMS.Points_of_Diversion.APPL_ID'],
-    "kind" : "right_test",
-    "source": "http://gispublic.waterboards.ca.gov/",
-    "name" : feature['EWRIMS.Points_of_Diversion.APPL_ID'],
-  /*                 "description" : "Migrated data from old WRIMS system.", */ // missing
-  /*                 "date" : "04/12/1967", */ // this comes from the EWRIMS database, the GIS databse doesn't have it.
-  /*                 "license_id" : null, */
-  /*                 "permit_id" : null, */
-  /*                 "db_id" : 28012, */
-    "pod_id" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.CORE_POD_ID'],
-    "water_right_id" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_WATER_RIGHT_ID'],                
-    "pod_number" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_NUMBER'],
-    "application_id" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.APPL_ID'],
-    "direct_div_amount": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIRECT_DIV_AMOUNT'],
-    "diversion_storage_amount" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_STORAGE_AMOUNT'],
-    "diversion_acre_feet": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_AC_FT'],                
-    "place_id": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.P_PLACE_ID'],                
-    "pod_status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS'],
-    "face_value_amount" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.FACE_VALUE_AMOUNT'],
-    "diversion_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_TYPE'],
-    "diversion_code_type": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_CODE_TYPE'],
-    "water_right_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_TYPE'],
-    "water_right_status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_STATUS'],
-    "storage_type": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.STORAGE_TYPE'],
-    "pod_unit": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_UNIT'],
-    "first_name": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.FIRST_NAME'],
-    "holder_name" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.LAST_NAME'],               
-    "organization_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.ENTITY_TYPE'],
-    "application_pod" : feature['EWRIMS.Points_of_Diversion.APPL_POD'],
-    "township_number" : feature['EWRIMS.Points_of_Diversion.TOWNSHIP_NUMBER'],
-    "range_direction" : feature['EWRIMS.Points_of_Diversion.RANGE_DIRECTION'],
-    "township_direction" : feature['EWRIMS.Points_of_Diversion.TOWNSHIP_DIRECTION'],
-    "range_number" : feature['EWRIMS.Points_of_Diversion.RANGE_NUMBER'],
-    "section_number" : feature['EWRIMS.Points_of_Diversion.SECTION_NUMBER'],
-    "section_classifier" : feature['EWRIMS.Points_of_Diversion.SECTION_CLASSIFIER'],
-    "quarter" : feature['EWRIMS.Points_of_Diversion.QUARTER'],
-    "quarter_quarter" : feature['EWRIMS.Points_of_Diversion.QUARTER_QUARTER'],
-    "meridian" : feature['EWRIMS.Points_of_Diversion.MERIDIAN'],
-    "northing" : feature['EWRIMS.Points_of_Diversion.NORTH_COORD'],
-    "easting" : feature['EWRIMS.Points_of_Diversion.EAST_COORD'],
-    "sp_zone" : feature['EWRIMS.Points_of_Diversion.SP_ZONE'],
-    "latitude" : feature['EWRIMS.Points_of_Diversion.LATITUDE'],
-    "longitude" : feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
-    "trib_desc" : feature['EWRIMS.Points_of_Diversion.TRIB_DESC'],
-    "location_method" : feature['EWRIMS.Points_of_Diversion.LOCATION_METHOD'],
-    "source_name" : feature['EWRIMS.Points_of_Diversion.SOURCE_NAME'],
-    "moveable" : feature['EWRIMS.Points_of_Diversion.MOVEABLE'],
-    "has_opod" : feature['EWRIMS.Points_of_Diversion.HAS_OPOD'],
-    "watershed" : feature['EWRIMS.Points_of_Diversion.WATERSHED'],
-    "county" : feature['EWRIMS.Points_of_Diversion.COUNTY'],
-    "well_number" : feature['EWRIMS.Points_of_Diversion.WELL_NUMBER'],
-    "quad_map_name" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_NAME'],
-    "quad_map_num" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_NUM'],
-    "quad_map_min_ser" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_MIN_SER'],
-    "parcel_number" : feature['EWRIMS.Points_of_Diversion.PARCEL_NUMBER'],
-    "special_area" : feature['EWRIMS.Points_of_Diversion.SPECIAL_AREA'],          
-    "last_update_user_id" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_USER_ID'],
-    "watershed" : feature['EWRIMS.Points_of_Diversion.WATERSHED'],
-    "county" : feature['EWRIMS.Points_of_Diversion.COUNTY'],
-    "date_last_updated" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_DATE'],
-    "status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS']
-  };
-  
-  
-  if(results.kind === 'right_test') {
-  
-    var resaveObj = results;
-    resaveObj.kind = "right_test";
-    resaveObj.coordinates = obj.coordinates;
-    resaveObj.geometry = obj.geometry;
-    resaveObj.properties = obj.properties;
-    obj = resaveObj;
-    console.log("resaving");
-    console.log(obj);
-  }
-  
-  
-  return obj;
-};
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-// get USGS test
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-app.get('/usgs/:station', function(req, res) {
-  var station = req.params.station;
-  
-  request.get({ 
-    url: 'http://waterservices.usgs.gov/nwis/dv/?format=json', 
-    qs: {site: station}
-    }, function(err,res,body){
-
-      var obj = JSON.parse(body);
-      // obj.value.timeSeries.forEach(function (d) {
-      //   console.log(d.sourceInfo.siteName);
-      // });
-
-  }).pipe(res);
-
-});
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-// openshift internal routes
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-app.get('/health', function(req, res){
-    res.send('1');
-});
-
-// Handler for GET /asciimo
-app.get('/asciimo', function(req, res){
-    var link="https://a248.e.akamai.net/assets.github.com/img/d84f00f173afcf3bc81b4fad855e39838b23d8ff/687474703a2f2f696d6775722e636f6d2f6b6d626a422e706e67";
-    res.send("<html><body><img src='" + link + "'></body></html>");
-});
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-// openshift boot up
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-var ipaddr  = process.env.OPENSHIFT_INTERNAL_IP;
-var port    = process.env.OPENSHIFT_INTERNAL_PORT || 3000;
-
-if (typeof ipaddr === "undefined") {
-   console.warn('No OPENSHIFT_INTERNAL_IP environment variable');
-}
-
-function terminator(sig) {
-   if (typeof sig === "string") {
-      console.log('%s: Received %s - terminating Node server ...',
-                  Date(Date.now()), sig);
-      process.exit(1);
-   }
-   console.log('%s: Node server stopped.', Date(Date.now()) );
-}
-
-process.on('exit', function() { terminator(); });
-
-['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT', 'SIGBUS',
- 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGPIPE', 'SIGTERM'
-].forEach(function(element, index, array) {
-    process.on(element, function() { terminator(element); });
-});
-
-app.listen(port, ipaddr, function() {
-   console.log('%s: Node server started on %s:%d ...', Date(Date.now() ),
-               ipaddr, port);
-});
-
-
-  /*
-  "_id" : ObjectId("50d15c61e730dbcccc3546e5"),
-        "id" : "S000550",
-        "kind" : "right",
-        "type" : "Feature",
-        "coordinates" : [
-                -121.8921916,
-                39.33543549
-        ],
-        "geometry" : {
-                "type" : "Point",
-                "coordinates" : [
-                        -121.8921916,
-                        39.33543549
-                ]
-        },
-        "properties" : {
-                "id" : "S000550",
-                "kind" : "right",
-                "name" : "BUTTE SINK WATERFOWL ASSOCIATION",
-                "application_id" : "S000550",
-                "source" : "BUTTE CREEK",
-                "watershed" : "COLUSA BASIN",
-                "county" : "Butte",
-                "face_amt" : 0,
-                "description" : "Migrated data from old WRIMS system.",
-                "date" : "04/12/1967",
-                "organization_type" : "Corporation",
-                "status" : "Claimed",
-                "water_right_type" : "Statement of Div and Use",
-                "license_id" : null,
-                "permit_id" : null,
-                "db_id" : 28012,
-                "holder_name" : "BUTTE SINK WATERFOWL ASSOCIATION",
-                "pod_id" : 7670,
-                "pod_number" : 1,
-                "application_pod" : "S000550_01",
-                "township_number" : 17,
-                "township_direction" : "N",
-                "range_number" : 1,
-                "range_direction" : "E",
-                "section_number" : 7,
-                "section_classifier" : null,
-                "quarter" : "SE",
-                "quarter_quarter" : "SE",
-                "meridian" : 21,
-                "northing" : 2248187.979,
-                "easting" : 6592159.039,
-                "sp_zone" : 2,
-                "latitude" : 39.33543549,
-                "longitude" : -121.8921916,
-                "trib_desc" : null,
-                "location_method" : "DD_NE",
-                "source_name" : "BUTTE CREEK",
-                "moveable" : "N",
-                "has_opod" : "N",
-                "watershed" : "COLUSA BASIN",
-                "county" : "Butte",
-                "well_number" : null,
-                "quad_map_name" : "SANBORN SLOUGH",
-                "quad_map_1,C,50" : "F 049",
-                "quad_map_M,C,3" : 7.5,
-                "parcel_number" : null,
-                "diversion" : null,
-                "last_updated" : "Sun Sep 28 00:00:00 PDT 2003",
-                "last_upd_1,N,10,0" : 9,
-                "special_ar,C,50" : null,
-                "water_right_type2" : "Statement of Div and Use",
-                "water_right_status" : "Claimed",
-                "face_value_(afa)" : 0,
-                "pod_value" : "Active",
-                "annual_direct_diversion" : 0,
-                "diversion_units" : "Cubic Feet per Second",
-                "diversion_storage_amount" : 0
-        }
-*/
