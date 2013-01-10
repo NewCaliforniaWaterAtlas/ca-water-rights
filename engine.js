@@ -13,22 +13,28 @@ EngineProvider = function() {
 };
 
 EngineProvider.prototype.save = function(blob,handler) {
-
+  console.log("blob----------");
+/*   console.log(this.db); */
   var _id =           blob["_id"];
 
   // debug
 
+/*
   console.log("Server::agent::save got a request to save object id " + _id);
   for(var property in blob) {
     console.log("..Saving property " + property + " " + blob[property] );
   }
+*/
 
-  // Search for existing by ID or FBID
-
+  // Search for existing by ID
   var search = 0;
-  if(_id) search = {_id: c.db.bson_serializer.ObjectID.createFromHexString(id)};
+  if(_id) search = {_id: _id.toHexString()};
+
+/*   console.log(this.db.db.bson_serializer.ObjectID.createFromHexString(_id.toHexString())); */
 
   // If no ID yet then save as a new object and return it
+
+  console.log(search);
 
   if(!search) {
     console.log("Server::save got a request to save object id " + _id );
@@ -44,11 +50,16 @@ EngineProvider.prototype.save = function(blob,handler) {
     if(agent) {
       _id = agent._id;
       console.log("Server::save got a request to update object id " + _id);
+
       for(var property in blob) {
+      console.log("resaving");
+      console.log(property);
+
         if(blob.hasOwnProperty(property) && blob[property]) {
           agent[property] = blob[property];
         }
       }
+            
       mydatabase.update(agent,handler);
       return;
     }
@@ -56,8 +67,9 @@ EngineProvider.prototype.save = function(blob,handler) {
       handler("Could not find specified by id " + _id,0);
       return;
     }
-    // FBID's can be saved as new objects - this is an exception to the general rule
-    mydatabase.save( blob, handler );
+
+
+    //mydatabase.save( blob, handler );
   });
 
 };
@@ -79,7 +91,7 @@ EngineProvider.prototype.findAll = function(handler) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 EngineProvider.prototype.find_many_by = function(blob,handler,arg1,options) {
-console.log(options);
+  console.log(options);
   this.db.find_many_by(blob,handler,arg1, options);
 };
 

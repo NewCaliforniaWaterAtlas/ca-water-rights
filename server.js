@@ -144,7 +144,7 @@ app.get('/data/water_rights/download/xls', function(req, res, options){
 });
 
 // Once downloaded, parse all XLS files. Convert to object for mongo. Store in database.
-app.get('/data/water_rights/parse/xls', function(req, res, options){
+app.get('/data/water_rights/update/db', function(req, res, options){
   watermapApp.parseXLSWaterRights();
 });
 
@@ -281,6 +281,10 @@ watermapApp.getXLSByAppIDArray = function(){
   }, 10000);
 };
 
+
+/**
+ * Download the XLS files for each EWRIMS database record.
+ */
 watermapApp.downloadWaterRightDBDataXLS = function() {
   // open csv file
   // read first line
@@ -294,7 +298,7 @@ watermapApp.downloadWaterRightDBDataXLS = function() {
   // Would be nice if we could do it all in one swoop, and then get a list of updated and new records - especially because the records only change once a year it seems.
   // The GIS server might be able to tell us which records are new - if the Water Control Board is not able to help.
 
-  fs.readFileSync('./server_data/test_100.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/test_400.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
       watermapApp.dbIDs.push(split_line[2]);
   });
@@ -415,32 +419,112 @@ WW
 // cat all files, google refine
 //skip #79
 
+// stopped at 4422 db_id - downloading XLS.
 
 watermapApp.parseXLSWaterRights = function() {
   fs.readFileSync('./server_data/test.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
-      watermapApp.dbIDs.push(split_line[2]);
-      watermapApp.loadXLSfile(split_line[2]);
+      var db_id = split_line[2];
+      watermapApp.dbIDs.push(db_id);
+      watermapApp.loadXLSfile(db_id);
   });
 };
 
-
+/**
+ * Read and parse each stored XLS file from the eWRIMS database.
+ */
 watermapApp.loadXLSfile = function(db_id){
   var obj = {};
   var currentFile = fs.readFileSync('./water_rights_data/water_right-' + db_id + '.xls' ).toString().split('\r').forEach(function (line) { 
+    var split_line = line.split('\t');
+    split_line.shift(); // pop off first empty value
+    obj[split_line[0]] = split_line[1];
+  });
+
+  // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
+  // @NOTE Does not have geocoded data, that has to come from the GIS server.
+  var formattedObj =  watermapApp.formatXLSforSaving(obj);
+  watermapApp.storeWaterRightFromEWRIMSDatabase(formattedObj);
+};
+
+/**
+ * Find the water rights record in Mongo and update it. If it does not exist, create it.
+ */ 
+watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
+ 
+  var feature = formattedObject;
+
+  // @TODO - storing in separate collection for testing purposes.
+  var lookup =  { 
+    $and: [{'kind': 'right_test'}, {'properties.application_id': feature['id']}] 
+  };
   
-  var split_line = line.split('\t');
-  split_line.shift();
+  engine.find_many_by(lookup,function(error, results) {
+    if(!results || error) {
+      console.log("agent query error");
+      res.send("[]");
+      return;
+    }
+    
+    console.log(results);
+    
+    // Create if record does not exist.
+    if(results.length == 0) {
+      console.log("empty");
+  
+      var newFeature = formattedObject;
+  
+      engine.save(newFeature,function(error,agent) {
+        if(error) { res.send("Server agent storage error #5",404); return; }
+        if(!agent) { res.send("Server agent storage error #6",404); return; }
+      });
+    }
+    else {
+      console.log('exists, updating fields');
+      
+      // merge _id from existing record with new stuff.
+      var original = results[0];
+      var newFeature = feature;
+      
+      //newFeature._id = results[0]._id;
+      for (var value in newFeature) { 
+        console.log(value);
+/*
+        if(value === '_id'){
+          original[value] = newFeature[value];
+        }   
+*/   
+        if(value === 'properties'){
+          console.log("found properties");
+          for(var attribute in newFeature[value]) {
+            console.log(attribute);
+             original[value][attribute] = newFeature[value][attribute];
+          
+          }
+        }
+        if(value === 'geometry'){
+          console.log("found geometry");
+        }
 
-  obj[split_line[0]] = split_line[1];  
-});
+        if(value === 'coordinates'){
+          console.log("found coordinates");
+        }
 
- var formattedObj =  watermapApp.formatXLSforSaving(obj);
+      }
+      // Save the original version, to which has been added the new items from the feature.
+      engine.save(original,function(error,agent) {
+        if(error) { res.send("Server agent storage error #5",404); return; }
+        if(!agent) { res.send("Server agent storage error #6",404); return; }
+      });    
+    }
+    
+  },{}, {'limit': 1});
 };
 
 watermapApp.formatXLSforSaving = function(feature) {
-
-  var obj = {};
+/*   console.log(feature); */
+  var feature = feature; // feature data
+  var obj = {}; // build new object
   
   obj.id = feature['Application ID'];
     
@@ -624,7 +708,7 @@ watermapApp.formatXLSforSaving = function(feature) {
 
   }
 */
-    console.log(obj);  
+/*     console.log(obj);   */
   return obj;
 };
 
