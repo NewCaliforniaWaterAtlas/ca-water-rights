@@ -370,7 +370,7 @@ water.formatTooltipStrings = function(feature) {
       + "<p>" + "Storage: " + feature.properties.diversion_storage_amount + "</p>";
     }
   
-       console.log(feature.properties.station_code);
+       // console.log(feature.properties.station_code);
 
     if (feature.properties.station_code !== undefined) {
       string +=  
@@ -392,40 +392,65 @@ water.formatTooltipStrings = function(feature) {
       string +=  
         "<p>" + "Station Name: " + feature.properties.station_nm + "</p>"
       + "<p>" + "Station ID: " + feature.properties.site_no + "</p>"
-      // + "<p>" + "Water Temperature: " + feature.tempValue + feature.tempUnitAbrv + "</p>"
+      + "<p>" + "Water Temperature: " + feature.tempValue + " " + feature.tempUnitAbrv + "</p>"
       + "<p>" + "Physical Discharge: " + "<strong>" + feature.flowValue + "</strong>" +" "+ feature.flowUnitAbrv + "</p>"
-      // + "<p>" + "Gage Height: " + feature.gageValue + feature.gageUnitAbrv + "</p>"
+      + "<p>" + "Gage Height: " + feature.gageValue + feature.gageUnitAbrv + "</p>"
       ;
 
       // &parameterCd=00004,00010,00060,00064,00065
 
-      $.ajax({
-        type: "GET",
-        url: "/usgs/" + feature.properties.site_no,
-        dataType: 'json',
-        success: function(data) {
-          
-          // var siteName = data.value.timeSeries[0].sourceInfo.siteName;
+        $.ajax({
+          type: "GET",
+          url: "/usgs/" + feature.properties.site_no + "/00010",
+          dataType: 'json',
+          success: function(data) {
+            
+            // feature.siteName = data.value.timeSeries[0].sourceInfo.siteName;
 
-          //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
-          // feature.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-          // feature.tempValue = data.value.timeSeries[0].values[0].value[0].value;
-          
-          //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
-          feature.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-          feature.flowValue = data.value.timeSeries[0].values[0].value[0].value;
+            //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
+            feature.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            feature.tempValue = data.value.timeSeries[0].values[0].value[0].value;
+            
+            //00004 Physical Stream width, feet, Instream features, est. stream width ft
+            //00064 Physical Mean depth of stream, feet, Depth ft
 
-          //00065 Physical Gage height, feet, Height, gage ft
-          // feature.gageUnitAbrv = data.value.timeSeries[2].variable.unit.unitAbbreviation;
-          // feature.ageValue = ata.value.timeSeries[2].values[0].value[0].value;
-          
-          //00004 Physical Stream width, feet, Instream features, est. stream width ft
-          //00064 Physical Mean depth of stream, feet, Depth ft
+            // console.log(data.value.timeSeries[0].values[0].value[0].value);
 
-          // console.log(feature.flowValue);
+          }
+        });
 
-        }
-      });
+        $.ajax({
+          type: "GET",
+          url: "/usgs/" + feature.properties.site_no + "/00060",
+          dataType: 'json',
+          success: function(data) {
+            
+            //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
+            feature.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            feature.flowValue = data.value.timeSeries[0].values[0].value[0].value
+
+          }
+        });
+
+        $.ajax({
+          type: "GET",
+          url: "/usgs/" + feature.properties.site_no + "/00065",
+          dataType: 'json',
+          success: function(data) {
+
+            //00065 Physical Gage height, feet, Height, gage ft
+            feature.gageUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            feature.ageValue = data.value.timeSeries[0].values[0].value[0].value;
+
+          }
+        });
+      
+
+      // $.when( getUSGS()).done(function(results1) {
+        
+      //   console.log(results1); 
+      // });
+    
     }  
     return string;
 };
