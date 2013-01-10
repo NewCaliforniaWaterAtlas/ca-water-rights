@@ -16,10 +16,12 @@ EngineProvider.prototype.save = function(blob,handler) {
 
   var _id =           blob["_id"];
 
+/*
   console.log("Server::agent::save got a request to save object id " + _id);
   for(var property in blob) {
     console.log("..Saving property " + property + " " + blob[property] );
   }
+*/
 
   // Search for existing by ID
   var search = 0;
@@ -27,7 +29,7 @@ EngineProvider.prototype.save = function(blob,handler) {
 
   // If no ID yet then save as a new object and return it
   if(!search) {
-    console.log("Server::save got a request to save object id " + _id );
+/*     console.log("Server::save got a request to save object id " + _id ); */
     this.db.save(blob,handler);
     return;
   }
@@ -38,11 +40,11 @@ EngineProvider.prototype.save = function(blob,handler) {
     if(error) { handler(error,0); return; }
     if(agent) {
       _id = agent._id;
-      console.log("Server::save got a request to update object id " + _id);
+/*       console.log("Server::save got a request to update object id " + _id); */
 
       for(var property in blob) {
-      console.log("resaving");
-      console.log(property);
+/*       console.log("resaving"); */
+/*       console.log(property); */
 
         if(blob.hasOwnProperty(property) && blob[property]) {
           agent[property] = blob[property];
@@ -80,7 +82,7 @@ EngineProvider.prototype.findAll = function(handler) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 EngineProvider.prototype.find_many_by = function(blob,handler,arg1,options) {
-  console.log(options);
+/*   console.log(options); */
   this.db.find_many_by(blob,handler,arg1, options);
 };
 
