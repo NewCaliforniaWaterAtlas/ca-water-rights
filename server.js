@@ -374,9 +374,19 @@ watermapApp.getGISRights = function() {
   
   console.log(query);
   console.log(value);
+
+
+  var filename = 'water_rights_gis_data/water_right-' + value +'.json';  
+  var stream = fs.createWriteStream(filename);
+
+
+
   request.get(query, function(err,res,body){   
     // Read the response (JSON format)
     var obj = JSON.parse(body);
+    
+
+    
     // Queries can return multiple results.
     for(var i=0; i < obj.features.length; i++) {
       var feature = obj.features[i].attributes;
@@ -419,7 +429,7 @@ console.log(newFeature);
         
       },{}, {'limit': 1});
     }
-  });
+  }).pipe(stream);
 };
 //1,4,6,8,10,13,17,19,21,23,25,27,30,32,33,35,37,38,39,40,43,45
 
