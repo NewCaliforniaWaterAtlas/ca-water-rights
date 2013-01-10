@@ -336,8 +336,6 @@ watermapApp.downloadXLSFile = function(db_id) {
   });
 };
 
-watermapApp.getGISRights = function() {
-  var output = '';    
     
 /*
 
@@ -369,17 +367,22 @@ AP
 S1
 WW
 */
-    
-    var value = 'WW';
-    var query = 'http://gispublic.waterboards.ca.gov/ArcGIS/rest/services/Water_Rights/Points_of_Diversion/MapServer/0/query?text=' + value + '&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=&outFields=EWRIMS.Points_of_Diversion.POD_ID%2CEWRIMS.Points_of_Diversion.APPL_ID%2CEWRIMS.Points_of_Diversion.POD_NUM%2CEWRIMS.Points_of_Diversion.APPL_POD%2CEWRIMS.Points_of_Diversion.TOWNSHIP_NUMBER%2CEWRIMS.Points_of_Diversion.TOWNSHIP_DIRECTION%2CEWRIMS.Points_of_Diversion.RANGE_NUMBER%2CEWRIMS.Points_of_Diversion.RANGE_DIRECTION%2CEWRIMS.Points_of_Diversion.SECTION_NUMBER%2CEWRIMS.Points_of_Diversion.SECTION_CLASSIFIER%2C+EWRIMS.Points_of_Diversion.QUARTER%2CEWRIMS.Points_of_Diversion.QUARTER_QUARTER%2CEWRIMS.Points_of_Diversion.MERIDIAN%2CEWRIMS.Points_of_Diversion.NORTH_COORD%2CEWRIMS.Points_of_Diversion.EAST_COORD%2CEWRIMS.Points_of_Diversion.SP_ZONE%2CEWRIMS.Points_of_Diversion.LATITUDE%2CEWRIMS.Points_of_Diversion.LONGITUDE%2CEWRIMS.Points_of_Diversion.TRIB_DESC%2CEWRIMS.Points_of_Diversion.LOCATION_METHOD%2CEWRIMS.Points_of_Diversion.SOURCE_NAME%2CEWRIMS.Points_of_Diversion.MOVEABLE%2CEWRIMS.Points_of_Diversion.HAS_OPOD%2CEWRIMS.Points_of_Diversion.WATERSHED%2CEWRIMS.Points_of_Diversion.COUNTY%2CEWRIMS.Points_of_Diversion.WELL_NUMBER%2CEWRIMS.Points_of_Diversion.QUAD_MAP_NAME%2CEWRIMS.Points_of_Diversion.QUAD_MAP_NUM%2CEWRIMS.Points_of_Diversion.QUAD_MAP_MIN_SER%2CEWRIMS.Points_of_Diversion.PARCEL_NUMBER%2CEWRIMS.Points_of_Diversion.DIVERSION_SITE_NAME%2C+EWRIMS.Points_of_Diversion.LAST_UPDATE_DATE%2CEWRIMS.Points_of_Diversion.LAST_UPDATE_USER_ID%2CEWRIMS.Points_of_Diversion.SPECIAL_AREA%2C+GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.CORE_POD_ID%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_WATER_RIGHT_ID%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_NUMBER%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.APPL_ID%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIRECT_DIV_AMOUNT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_STORAGE_AMOUNT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_AC_FT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.P_PLACE_ID%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.FACE_VALUE_AMOUNT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_TYPE%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_CODE_TYPE%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_TYPE%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_STATUS%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.STORAGE_TYPE%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_UNIT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.FIRST_NAME%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.LAST_NAME%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.ENTITY_TYPE&f=pjson';
-      
+watermapApp.getGISRights = function() {
+  var output = ''; 
+  var value = 'S016589';
+  var query = 'http://gispublic.waterboards.ca.gov/ArcGIS/rest/services/Water_Rights/Points_of_Diversion/MapServer/0/query?text=' + value + '&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=&outFields=EWRIMS.Points_of_Diversion.POD_ID%2CEWRIMS.Points_of_Diversion.APPL_ID%2CEWRIMS.Points_of_Diversion.POD_NUM%2CEWRIMS.Points_of_Diversion.APPL_POD%2CEWRIMS.Points_of_Diversion.TOWNSHIP_NUMBER%2CEWRIMS.Points_of_Diversion.TOWNSHIP_DIRECTION%2CEWRIMS.Points_of_Diversion.RANGE_NUMBER%2CEWRIMS.Points_of_Diversion.RANGE_DIRECTION%2CEWRIMS.Points_of_Diversion.SECTION_NUMBER%2CEWRIMS.Points_of_Diversion.SECTION_CLASSIFIER%2C+EWRIMS.Points_of_Diversion.QUARTER%2CEWRIMS.Points_of_Diversion.QUARTER_QUARTER%2CEWRIMS.Points_of_Diversion.MERIDIAN%2CEWRIMS.Points_of_Diversion.NORTH_COORD%2CEWRIMS.Points_of_Diversion.EAST_COORD%2CEWRIMS.Points_of_Diversion.SP_ZONE%2CEWRIMS.Points_of_Diversion.LATITUDE%2CEWRIMS.Points_of_Diversion.LONGITUDE%2CEWRIMS.Points_of_Diversion.TRIB_DESC%2CEWRIMS.Points_of_Diversion.LOCATION_METHOD%2CEWRIMS.Points_of_Diversion.SOURCE_NAME%2CEWRIMS.Points_of_Diversion.MOVEABLE%2CEWRIMS.Points_of_Diversion.HAS_OPOD%2CEWRIMS.Points_of_Diversion.WATERSHED%2CEWRIMS.Points_of_Diversion.COUNTY%2CEWRIMS.Points_of_Diversion.WELL_NUMBER%2CEWRIMS.Points_of_Diversion.QUAD_MAP_NAME%2CEWRIMS.Points_of_Diversion.QUAD_MAP_NUM%2CEWRIMS.Points_of_Diversion.QUAD_MAP_MIN_SER%2CEWRIMS.Points_of_Diversion.PARCEL_NUMBER%2CEWRIMS.Points_of_Diversion.DIVERSION_SITE_NAME%2C+EWRIMS.Points_of_Diversion.LAST_UPDATE_DATE%2CEWRIMS.Points_of_Diversion.LAST_UPDATE_USER_ID%2CEWRIMS.Points_of_Diversion.SPECIAL_AREA%2C+GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.CORE_POD_ID%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_WATER_RIGHT_ID%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_NUMBER%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.APPL_ID%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIRECT_DIV_AMOUNT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_STORAGE_AMOUNT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_AC_FT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.P_PLACE_ID%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.FACE_VALUE_AMOUNT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_TYPE%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_CODE_TYPE%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_TYPE%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_STATUS%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.STORAGE_TYPE%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_UNIT%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.FIRST_NAME%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.LAST_NAME%2CGIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.ENTITY_TYPE&f=pjson';
+  
+  console.log(query);
+  console.log(value);
   request.get(query, function(err,res,body){   
+    // Read the response (JSON format)
     var obj = JSON.parse(body);
+    // Queries can return multiple results.
     for(var i=0; i < obj.features.length; i++) {
       var feature = obj.features[i].attributes;
-
+      // See if result is in mongo database.
       var lookup =  { 
-        $and: [{'kind': 'right_test'}, {'properties.application_id': feature['EWRIMS.Points_of_Diversion.APPL_ID']}] 
+        $and: [{'kind': 'right'}, {'properties.application_id': feature['EWRIMS.Points_of_Diversion.APPL_ID']}] 
       };
 
       engine.find_many_by(lookup,function(error, results) {
@@ -390,23 +393,28 @@ WW
         }
         
         console.log(results);
+        // If the item does not exist in the database already save it.
         if(results.length == 0) {
           console.log("empty");
-
+          // Format the JSON data form server into GEOJson record.
           var newFeature = watermapApp.formatEWRIMSforSaving(feature); 
+          console.log(newFeature);
 
+          watermapApp.storeWaterRightFromEWRIMSDatabase(newFeature);
+/*
           engine.save(newFeature,function(error,agent) {
             if(error) { res.send("Server agent storage error #5",404); return; }
             if(!agent) { res.send("Server agent storage error #6",404); return; }
           });
+*/
         }
         else {
           console.log('exists');
-/*           console.log(results[0]); */
           // use id
+console.log(newFeature);
+          var newFeature = watermapApp.formatEWRIMSforSaving(feature, results[0]);
+          watermapApp.storeWaterRightFromEWRIMSDatabase(newFeature);
 
-          watermapApp.formatEWRIMSforSaving(feature, results[0]);
-        
         }
         
       },{}, {'limit': 1});
@@ -456,7 +464,7 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
 
   // @TODO - storing in separate collection for testing purposes.
   var lookup =  { 
-    $and: [{'kind': 'right_test'}, {'properties.application_id': feature['id']}] 
+    $and: [{'kind': 'right'}, {'properties.application_id': feature['id']}] 
   };
   
   engine.find_many_by(lookup,function(error, results) {
@@ -465,9 +473,7 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
       res.send("[]");
       return;
     }
-    
-    console.log(results);
-    
+
     // Create if record does not exist.
     if(results.length == 0) {
       console.log("empty");
@@ -485,29 +491,44 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
       // merge _id from existing record with new stuff.
       var original = results[0];
       var newFeature = feature;
-      
-      //newFeature._id = results[0]._id;
+
       for (var value in newFeature) { 
         console.log(value);
-/*
-        if(value === '_id'){
-          original[value] = newFeature[value];
+
+        if(value === 'kind'){
+          console.log("found kind");
+            original[value] = newFeature[value];
+        } 
+        if(value === 'type'){
+          console.log("found type");
+            original[value] = newFeature[value];
         }   
-*/   
         if(value === 'properties'){
           console.log("found properties");
           for(var attribute in newFeature[value]) {
             console.log(attribute);
-             original[value][attribute] = newFeature[value][attribute];
-          
+            original[value][attribute] = newFeature[value][attribute];
           }
         }
         if(value === 'geometry'){
           console.log("found geometry");
+          if( original["geometry"] === undefined) {
+            original["geometry"] = {};
+            original["geometry"]["type"] = "Point";
+            original["geometry"]["coordinates"] = [];
+          }
+          for(var attribute in newFeature[value]) {
+            console.log(attribute);
+            original[value][attribute] = newFeature[value][attribute];
+          }
         }
 
         if(value === 'coordinates'){
           console.log("found coordinates");
+          for(var attribute in newFeature[value]) {
+            console.log(attribute);
+            original[value][attribute] = newFeature[value][attribute];
+          }
         }
 
       }
@@ -528,7 +549,7 @@ watermapApp.formatXLSforSaving = function(feature) {
   
   obj.id = feature['Application ID'];
     
-  obj.kind = "right_test";  
+  obj.kind = "right";  
   obj.type = "Feature";   
 /*
   obj.coordinates = [
@@ -696,10 +717,10 @@ watermapApp.formatXLSforSaving = function(feature) {
   
 /*
   
-  if(results.kind === 'right_test') {
+  if(results.kind === 'right') {
   
     var resaveObj = results;
-    resaveObj.kind = "right_test";
+    resaveObj.kind = "right";
     resaveObj.coordinates = obj.coordinates;
     resaveObj.geometry = obj.geometry;
     resaveObj.properties = obj.properties;
@@ -721,15 +742,15 @@ watermapApp.formatEWRIMSforSaving = function(feature, results) {
   var obj = {};
   
   obj.id = feature['EWRIMS.Points_of_Diversion.APPL_ID'];
-  obj.kind = "right_test";  
+  obj.kind = "right";  
   obj.type = "Feature";   
   obj.coordinates = [
                 feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
                 feature['EWRIMS.Points_of_Diversion.LATITUDE']
               ];    
   obj.geometry = {
-             "type" : "Point",
-              "coordinates" : [
+            "type" : "Point",
+            "coordinates" : [
                   feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
                   feature['EWRIMS.Points_of_Diversion.LATITUDE']
                 ]
@@ -737,7 +758,7 @@ watermapApp.formatEWRIMSforSaving = function(feature, results) {
 
   obj.properties = {
     "id" : feature['EWRIMS.Points_of_Diversion.APPL_ID'],
-    "kind" : "right_test",
+    "kind" : "right",
     "source": "http://gispublic.waterboards.ca.gov/",
     "name" : feature['EWRIMS.Points_of_Diversion.APPL_ID'],
   /*                 "description" : "Migrated data from old WRIMS system.", */ // missing
@@ -799,19 +820,21 @@ watermapApp.formatEWRIMSforSaving = function(feature, results) {
     "status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS']
   };
   
-  
-  if(results.kind === 'right_test') {
-  
-    var resaveObj = results;
-    resaveObj.kind = "right_test";
-    resaveObj.coordinates = obj.coordinates;
-    resaveObj.geometry = obj.geometry;
-    resaveObj.properties = obj.properties;
-    obj = resaveObj;
-    console.log("resaving");
-    console.log(obj);
+  // If exists in the database, merge old fields with new.
+  // @TODO This won't work, use the new treatment from the other function.
+  if(results !== undefined){
+    if(results.kind === 'right') {
+    
+      var resaveObj = results;
+      resaveObj.kind = "right";
+      resaveObj.coordinates = obj.coordinates;
+      resaveObj.geometry = obj.geometry;
+      resaveObj.properties = obj.properties;
+      obj = resaveObj;
+      console.log("resaving");
+      console.log(obj);
+    }
   }
-  
   
   return obj;
 };
