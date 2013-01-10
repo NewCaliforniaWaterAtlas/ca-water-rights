@@ -5,8 +5,8 @@ water.map = water.map || {};
 water.map_defaults = {};
 water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
-water.map_defaults.boxsize_lat = 0.25; //pretty small box
-water.map_defaults.boxsize_lon = 0.5;
+water.map_defaults.boxsize_lat = 0.1; //pretty small box
+water.map_defaults.boxsize_lon = 0.2;
 water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.terrain_layer = 'chachasikes.map-tv2igp9l';
@@ -276,7 +276,7 @@ water.drawMarkers = function(features, featureDetails) {
     // with the current map extent
     for (var i = 0; i < markers.length; i++) {
       if (extent.containsLocation(markers[i].location)) {
-          inextent.push(markers[i].data.properties.name);
+          inextent.push(markers[i].data.properties.holder_name);
       }
     }
 
