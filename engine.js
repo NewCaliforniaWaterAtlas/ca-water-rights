@@ -13,29 +13,19 @@ EngineProvider = function() {
 };
 
 EngineProvider.prototype.save = function(blob,handler) {
-  console.log("blob----------");
-/*   console.log(this.db); */
+
   var _id =           blob["_id"];
 
-  // debug
-
-/*
   console.log("Server::agent::save got a request to save object id " + _id);
   for(var property in blob) {
     console.log("..Saving property " + property + " " + blob[property] );
   }
-*/
 
   // Search for existing by ID
   var search = 0;
   if(_id) search = {_id: _id.toHexString()};
 
-/*   console.log(this.db.db.bson_serializer.ObjectID.createFromHexString(_id.toHexString())); */
-
   // If no ID yet then save as a new object and return it
-
-  console.log(search);
-
   if(!search) {
     console.log("Server::save got a request to save object id " + _id );
     this.db.save(blob,handler);
@@ -43,7 +33,6 @@ EngineProvider.prototype.save = function(blob,handler) {
   }
 
   // If an ID does exist then recycle it or fail
-
   var mydatabase = this.db;
   this.db.find_one_by(search, function(error, agent) {
     if(error) { handler(error,0); return; }
@@ -68,7 +57,7 @@ EngineProvider.prototype.save = function(blob,handler) {
       return;
     }
 
-
+    // @TODO we wouldn't want to do this, right?
     //mydatabase.save( blob, handler );
   });
 
