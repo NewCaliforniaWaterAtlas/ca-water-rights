@@ -152,16 +152,20 @@ app.get('/data/water_rights/update/db', function(req, res, options){
 
 // Lookup GIS data for sets of records to get Lat/Lon and other extra values. Update in Mongo.
 app.get('/data/water_rights/update/gis', function(req, res, options){
-    var interval = setInterval(function(){
+  var GISinterval = setInterval(function(){
 
     watermapApp.GISGroup = watermapApp.gisFacets[watermapApp.GISCounter];
-      console.log(watermapApp.GISGroup + " " + watermapApp.GISCounter);
-      watermapApp.getGISRights();
-      watermapApp.GISCounter++;
-      if(watermapApp.GISGroup === undefined) {
-        clearInterval(interval);
-      }
-    }, 100);
+    
+    console.log("getting GIS" + watermapApp.GISGroup + " " + watermapApp.GISCounter);
+
+    watermapApp.getGISRights();
+    watermapApp.GISCounter++;
+/*
+    if(watermapApp.GISGroup === undefined) {
+      clearInterval(GISinterval);
+    }
+*/
+  }, 20000);
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -378,7 +382,7 @@ watermapApp.getGISRights = function() {
   
         // See if result is in mongo database.
         
-        console.log(feature['EWRIMS.Points_of_Diversion.POD_ID']);
+        //console.log(feature['EWRIMS.Points_of_Diversion.POD_ID']);
         var lookup =  { 
           $and: [{'kind': 'right'}, {'properties.pod_id': feature['EWRIMS.Points_of_Diversion.POD_ID']}] 
         };
@@ -409,7 +413,7 @@ watermapApp.getGISRights = function() {
       if(watermapApp.GISLoadJSONCounter === obj.features.length) {
         clearInterval(interval);
       }
-      }, 100);
+      }, 50);
 
 // ).pipe(stream);
 };
@@ -433,16 +437,19 @@ watermapApp.parseXLSWaterRights = function() {
  */
 watermapApp.loadXLSfile = function(db_id){
   var obj = {};
-  var currentFile = fs.readFileSync('./water_rights_data/water_right-' + db_id + '.xls' ).toString().split('\r').forEach(function (line) { 
-    var split_line = line.split('\t');
-    split_line.shift(); // pop off first empty value
-    obj[split_line[0]] = split_line[1];
-  });
-
-  // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
-  // @NOTE Does not have geocoded data, that has to come from the GIS server.
-  var formattedObj =  watermapApp.formatXLSforSaving(obj);
-  watermapApp.storeWaterRightFromEWRIMSDatabase(formattedObj);
+  if(fs.existsSync('./water_rights_data/water_right-' + db_id + '.xls')){
+    var currentFile = fs.readFileSync('./water_rights_data/water_right-' + db_id + '.xls').toString().split('\r').forEach(function (line) { 
+      var split_line = line.split('\t');
+      split_line.shift(); // pop off first empty value
+      obj[split_line[0]] = split_line[1];
+    });
+  
+    // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
+    // @NOTE Does not have geocoded data, that has to come from the GIS server.
+    var formattedObj =  watermapApp.formatXLSforSaving(obj);
+    console.log(formattedObj.id);
+    watermapApp.storeWaterRightFromEWRIMSDatabase(formattedObj);
+  }
 };
 
 /**
@@ -2076,9 +2083,8 @@ var app_id_array = [
 
 
 watermapApp.gisFacets = [
-'A0300'/*,
-'A0301',
-
+/*  'A0300',
+  'A0301',
   'A0302',
   'A0303',
   'A0304',
@@ -2117,17 +2123,21 @@ watermapApp.gisFacets = [
   'A0247',
   'A0248',
   'A0249',
-  'A031',
-  'C001',
-  'C002',
-  'C004',
-  'C000',
+  'A031',*/
+ // 'C001',
+ // 'C002',
+ // 'C004',
+ // 'C000',
+  'C005',
+  'C003',
+  'C006',
+
   'S014',
   'S012',
   'A028',
   'S013',
-  'C005',
-  'A017',
+
+  'A017'/*,
   'A020',
   'S001',
   'S011',
@@ -2152,7 +2162,7 @@ watermapApp.gisFacets = [
   'A013',
   'A014',
   'G332',
-  'C003',
+
   'S004',
   'A011',
   'S018',
@@ -2204,7 +2214,7 @@ watermapApp.gisFacets = [
   'X003',
   'F026',
   'T030',
-  'C006',
+
   'X002',
   'G190',
   'F009',

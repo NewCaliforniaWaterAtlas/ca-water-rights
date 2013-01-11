@@ -359,7 +359,8 @@ water.formatTooltipStrings = function(feature) {
     var string = '';
     if (feature.properties.holder_name !== undefined) {
       string +=  
-        "<p>" + "Owner: " + feature.properties.holder_name + "</p>"
+/*
+        "<p>" + "Holder: " + feature.properties.holder_name + "</p>"
       + "<p>" + "Type: " + feature.properties.organization_type + "</p>"
       + "<p>" + "Source: " + feature.properties.source_name + "</p>"
       + "<p>" + "Watershed: " + feature.properties.watershed + "</p>"
@@ -368,6 +369,145 @@ water.formatTooltipStrings = function(feature) {
       + "<p>" + "Right Status: " + feature.properties.status + "</p>"
       + "<p>" + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "</p>"
       + "<p>" + "Storage: " + feature.properties.diversion_storage_amount + "</p>";
+*/
+
+
+        "<p>" + "name " +  feature.properties.name + "</p>"
+      + "<p>" + "source " +  feature.properties.source + "</p>"
+      + "<p>" + "pod_id " +  feature.properties.pod_id + "</p>"
+      + "<p>" + "water_right_id " +  feature.properties.water_right_id + "</p>"
+      + "<p>" + "direct_div_amount" +  feature.properties.direct_div_amount + "</p>"
+      + "<p>" + "diversion_storage_amount" +  feature.properties.diversion_storage_amount + "</p>"
+      + "<p>" + "face_value_amount" +  feature.properties.face_value_amount + "</p>"
+      + "<p>" + "face_value_units" +  feature.properties.face_value_units + "</p>"
++ "<p>" + "date_received" +  feature.properties.date_received + "</p>"
++ "<p>" + "water_right_type" +  feature.properties.water_right_type + "</p>"
+
++ "<p>" + "use_code" +  feature.properties.use_code + "</p>"
++ "<p>" + "use_status_new" +  feature.properties.use_status_new + "</p>"
++ "<p>" + "use_population" +  feature.properties.use_population + "</p>"
++ "<p>" + "use_net_acreage" +  feature.properties.use_net_acreage + "</p>"
++ "<p>" + "use_gross_acreage" +  feature.properties.use_gross_acreage + "</p>"
++ "<p>" + "use_dd_annual" +  feature.properties.use_dd_annual + "</p>"
++ "<p>" + "use_dd_rate" +  feature.properties.use_dd_rate + "</p>"
++ "<p>" + "use_dd_rate_units" +  feature.properties.use_dd_rate_units + "</p>"
++ "<p>" + "use_storage_amount" +  feature.properties.use_storage_amount + "</p>"
+
+/*
+      + "<p>" + "pod_number" +  feature.properties.source + "</p>";
+      + "<p>" + "application_id" +  feature.properties.source + "</p>";
+
+      + "<p>" + "diversion_acre_feet" +  feature.properties.source + "</p>";
+      + "<p>" + "pod_status" +  feature.properties.source + "</p>";
+
+      + "<p>" + "diversion_type" +  feature.properties.source + "</p>";
+      + "<p>" + "source_alt" +  feature.properties.source + "</p>";
+
+
+
+
++ "<p>" + "date_accepted" +  feature.properties.source + "</p>";
++ "<p>" + "date_notice" +  feature.properties.source + "</p>";
++ "<p>" + "protest" +  feature.properties.source + "</p>";
++ "<p>" + "number_protests" +  feature.properties.source + "</p>";
++ "<p>" + "agent_name" +  feature.properties.source + "</p>";
++ "<p>" + "agent_entity_type" +  feature.properties.source + "</p>";
++ "<p>" + "primary_owner" +  feature.properties.source + "</p>";
++ "<p>" + "primary_owner_entity_type" +  feature.properties.source + "</p>";
+
++ "<p>" + "face_value_amount" +  feature.properties.source + "</p>";
+
+
++ "<p>" + "max_dd_appl" +  feature.properties.source + "</p>";
++ "<p>" + "max_dd_units" +  feature.properties.source + "</p>";
++ "<p>" + "max_dd_ann" +  feature.properties.source + "</p>";
++ "<p>" + "max_storage" +  feature.properties.source + "</p>";
++ "<p>" + "max_use_appl" +  feature.properties.source + "</p>";
++ "<p>" + "year_first_use" +  feature.properties.source + "</p>";
+
++ "<p>" + "effective_from_date" +  feature.properties.source + "</p>";
++ "<p>" + "effective_to_date" +  feature.properties.source + "</p>";
+
++ "<p>" + "entity_type" +  feature.properties.source + "</p>";
++ "<p>" + "holder_name" +  feature.properties.source + "</p>";
+
++ "<p>" + "first_name" +  feature.properties.source + "</p>";
+
++ "<p>" + "city" +  feature.properties.source + "</p>";
++ "<p>" + "state" +  feature.properties.source + "</p>";
++ "<p>" + "zipcode" +  feature.properties.source + "</p>";
++ "<p>" + "phone" +  feature.properties.source + "</p>";
++ "<p>" + "status" +  feature.properties.source + "</p>";
+
+
++ "<p>" + "pod_unit": feature['POD Unit'],
++ "<p>" + "pod_status": feature['POD Status'],
++ "<p>" + "pod_id" : feature['POD Number'],    
++ "<p>" + "direct_div_amount": feature['Direct Div Amount'],
++ "<p>" + "diversion_acre_feet": feature['Direct Div Ac Ft'],
++ "<p>" + "diversion_storage_amount": feature['Amount Storage'],
++ "<p>" + "pod_max_dd": feature['POD Max Dd'],
++ "<p>" + "source_max_dd_unit": feature['Source Max Dd Unit'],
++ "<p>" + "pod_max_storage": feature['POD Max Storage'],
++ "<p>" + "source_max_storage_unit": feature['Source Max Storage Unit'],
++ "<p>" + "storage_type": feature['Storage Type'],
++ "<p>" + "pod_gis_maintained_data": feature['POD GIS Maintained Data'],
++ "<p>" + "appl_id": feature['Appl ID'],
++ "<p>" + "water_right_id": feature['Object ID'],
++ "<p>" + "pod_number": feature['POD Number'],
++ "<p>" + "has_opod": feature['Has Opod'],
++ "<p>" + "appl_pod": feature['Appl Pod'],
++ "<p>" + "podid": feature['podId'],
++ "<p>" + "county": feature['County'],
+
+
+
+
+
++ "<p>" + "source_name": feature['Source Name'],
++ "<p>" + "trib_desc": feature['TribDesc'],
++ "<p>" + "watershed": feature['Watershed'],
+
++ "<p>" + "permit_id": feature['Permit ID'],
++ "<p>" + "water_right_description": feature['Water Right Description'],
++ "<p>" + "issue_date": feature['Issue Date'],
++ "<p>" + "construction_completed_by": feature['Construction Completed by'],
++ "<p>" + "planned_project_completion_date": feature['Planned Project Completion Date'],
++ "<p>" + "permit_terms": feature['Permit Terms'],
+
++ "<p>" + "diversion_code_type" : "Diversion point",
++ "<p>" + "water_right_type" : "Stockpond",
++ "<p>" + "water_right_status" : "Certified",
++ "<p>" + "storage_type" : "Point of Diversion",
++ "<p>" + "pod_unit" : "Gallons per Day",
++ "<p>" + "first_name" : null,
++ "<p>" + "holder_name" : "MONTGOMERY-GILL RANCH COMPANY",
++ "<p>" + "organization_type" : "Corporation",
++ "<p>" + "application_pod" : "C001471_01",
+
++ "<p>" + "latitude" : 36.08197336,
++ "<p>" + "longitude" : -118.824282,
++ "<p>" + "trib_desc" : null,
++ "<p>" + "location_method" : "DD_NE",
++ "<p>" + "source_name" : "UNST",
++ "<p>" + "moveable" : "N",
++ "<p>" + "has_opod" : "N",
++ "<p>" + "watershed" : "SOUTHERN SIERRA",
++ "<p>" + "county" : "Tulare",
++ "<p>" + "well_number" : "   ",
++ "<p>" + "quad_map_name" : "GLOBE",
++ "<p>" + "quad_map_num" : "LL073 ",
++ "<p>" + "quad_map_min_ser" : "7.5",
++ "<p>" + "parcel_number" : null,
++ "<p>" + "special_area" : null,
++ "<p>" + "last_update_user_id" : 9,
++ "<p>" + "date_last_updated" : 1191046436000,
++ "<p>" + "status" : "Active"
+*/
+
+
+
+
     }
   
        console.log(feature.properties.station_code);
