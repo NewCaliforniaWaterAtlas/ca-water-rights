@@ -16,7 +16,6 @@ var engine         = new EngineProvider();
 
 var _ = require('underscore')._;
 var request = require('request');
-var url = require('url');
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // configuration
@@ -357,53 +356,10 @@ app.get('/usgs/:station/:pcode', function(req, res) {
     }, function(err,res,body){
 
       var obj = JSON.parse(body);
-      // obj.value.timeSeries.forEach(function (d) {
-
-      //   console.log(d.sourceInfo.siteName);
-      
-      // });
 
   }).pipe(res);
 
 });
-
-// app.get('/usgs/:temp', function(req, res) {
-//   var temp = req.params.temp;
-  
-//   request.get({ 
-//     url: 'http://waterservices.usgs.gov/nwis/dv/?format=json', 
-//     qs: {parameterCd: temp}
-
-//     }, function(err,res,body){
-
-//       var obj = JSON.parse(body);
-//       // obj.value.timeSeries.forEach(function (d) {
-
-//       //   console.log(d.sourceInfo.siteName);
-      
-//       // });
-
-//   }).pipe(res);
-
-// });
-
-
-// app.get('/usgs/:temp', function(req, res) {
-
-//   var temp = req.params.temp;
-
-//   optTemp = {
-//     protocol: 'http:',
-//     host: 'waterservices.usgs.gov',
-//     pathname: '/nwis/dv/?format=json&parameterCd=00010',
-//     query: {parameterCd: temp}
-//   }
-
-//   var tempUrl = url.format(optTemp);
-  
-//   request.get(tempUrl).pipe(res);
-
-// });
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
