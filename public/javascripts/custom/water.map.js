@@ -253,9 +253,9 @@ water.drawMarkers = function(features, featureDetails) {
     water.map.addLayer(water[featureDetails.layer]);
     
     // Generate marker layers.
-    water[featureDetails.layer].features(features).factory(function(f) { 
-      var marker = water.makeMarker(f, featureDetails);
-      return marker;
+    water[featureDetails.layer].features(features).factory(function(f) {
+        var marker = water.makeMarker(f, featureDetails);
+        return marker;      
     });
 
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
@@ -354,44 +354,61 @@ water.makeMarker = function(feature, featureDetails) {
 };
 
 water.formatTooltipStrings = function(feature) {
-    //console.log(feature);
+    console.log(feature);
 
     var string = '';
     if (feature.properties.holder_name !== undefined) {
       string +=  
-/*
-        "<p>" + "Holder: " + feature.properties.holder_name + "</p>"
-      + "<p>" + "Type: " + feature.properties.organization_type + "</p>"
-      + "<p>" + "Source: " + feature.properties.source_name + "</p>"
-      + "<p>" + "Watershed: " + feature.properties.watershed + "</p>"
-      + "<p>" + "County: " + feature.properties.county + "</p>"
-      + "<p>" + "Right Type: " + feature.properties.water_right_type + "</p>"
-      + "<p>" + "Right Status: " + feature.properties.status + "</p>"
-      + "<p>" + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "</p>"
-      + "<p>" + "Storage: " + feature.properties.diversion_storage_amount + "</p>";
-*/
+        "<h4>Water Right</h4>" +
+        "<p>" + "Name: ";
+          if(feature.properties.holder) string += feature.properties.holder;
+          else string += feature.properties.primary_owner
+        string += "</p>"
+      + "<p>" + "Entity Type: " +  feature.properties.entity_type + "</p>"  
+      + "<p>" + "Organization Type: " +  feature.properties.organization_type + "</p>"        
+      + "<p>" + "Water Right Status: " +  feature.properties.water_right_status + "</p>"    
+        
+      + "<p>" + "Since: ";
+          if(feature.properties.date_received) string += feature.date_received;
+          else string += feature.properties.date_accepted    
+        string += "</p>"
+      + "<p>" + "Effective from: " +  feature.properties.effective_from_date + "</p>"        
+      + "<p>" + "Year First Use" +  feature.properties.year_first_use + "</p>"
+      
+      + "<p>" + "Type of Water Right: " +  feature.properties.water_right_type + "</p>"
+      + "<p>" + "Use: " +  feature.properties.use_code + "</p>"
+      + "<p>" + "Direct Diversion Amount: " +  feature.properties.direct_div_amount + "</p>"
+      + "<p>" + "Diversion Storage: " +  feature.properties.diversion_storage_amount + "</p>"
+      + "<p>" + "Face Amount: " +  feature.properties.face_value_amount + " " + feature.properties.face_value_units + "</p>"
+/*       + "<p>" + "face_value_units: " +   + "</p>" */
+
+      
+/*       + "<p>" + "use_status_new: " +  feature.properties.use_status_new + "</p>" */
+      + "<p>" + "Use Population: " +  feature.properties.use_population + "</p>"
+      + "<p>" + "Use Net Acreage: " +  feature.properties.use_net_acreage + "</p>"
+      + "<p>" + "Use Gross Acreage: " +  feature.properties.use_gross_acreage + "</p>"
+      + "<p>" + "Use DD Annual: " +  feature.properties.use_dd_annual + "</p>"
+      + "<p>" + "Use DD Rate: " +  feature.properties.use_dd_rate + " " + feature.properties.use_dd_rate_units + "</p>"
+      + "<p>" + "Use Storage Amount: " +  feature.properties.use_storage_amount + "</p>"
+
+      + "<p>" + "Max Direct Diversion Appl(?)" +  feature.properties.max_dd_appl + " " + feature.properties.max_dd_units + "</p>"
+
+      + "<p>" + "Max Direct Diversion Annual" +  feature.properties.max_dd_ann + "</p>"
+      + "<p>" + "Max Storage" +  feature.properties.max_storage + "</p>"
+      + "<p>" + "Max Use Appl" +  feature.properties.max_use_app + "</p>"
 
 
-        "<p>" + "name " +  feature.properties.name + "</p>"
-      + "<p>" + "source " +  feature.properties.source + "</p>"
-      + "<p>" + "pod_id " +  feature.properties.pod_id + "</p>"
-      + "<p>" + "water_right_id " +  feature.properties.water_right_id + "</p>"
-      + "<p>" + "direct_div_amount" +  feature.properties.direct_div_amount + "</p>"
-      + "<p>" + "diversion_storage_amount" +  feature.properties.diversion_storage_amount + "</p>"
-      + "<p>" + "face_value_amount" +  feature.properties.face_value_amount + "</p>"
-      + "<p>" + "face_value_units" +  feature.properties.face_value_units + "</p>"
-+ "<p>" + "date_received" +  feature.properties.date_received + "</p>"
-+ "<p>" + "water_right_type" +  feature.properties.water_right_type + "</p>"
-
-+ "<p>" + "use_code" +  feature.properties.use_code + "</p>"
-+ "<p>" + "use_status_new" +  feature.properties.use_status_new + "</p>"
-+ "<p>" + "use_population" +  feature.properties.use_population + "</p>"
-+ "<p>" + "use_net_acreage" +  feature.properties.use_net_acreage + "</p>"
-+ "<p>" + "use_gross_acreage" +  feature.properties.use_gross_acreage + "</p>"
-+ "<p>" + "use_dd_annual" +  feature.properties.use_dd_annual + "</p>"
-+ "<p>" + "use_dd_rate" +  feature.properties.use_dd_rate + "</p>"
-+ "<p>" + "use_dd_rate_units" +  feature.properties.use_dd_rate_units + "</p>"
-+ "<p>" + "use_storage_amount" +  feature.properties.use_storage_amount + "</p>"
+      + "<h4>Watershed</h4>"
+      + "<p>" + "Source: " +  feature.properties.source_name + "</p>"    
+      + "<p>" + "Watershed: " +  feature.properties.watershed + "</p>"    
+      + "<p>" + "City: " +  feature.properties.city + "</p>"
+      + "<p>" + "County: " +  feature.properties.county + "</p>"
+      
+      + "<h4>Extra Stuff</h4>"
+      + "<p>" + "pod_id: " +  feature.properties.pod_id + "</p>"
+      + "<p>" + "application_pod: " +  feature.properties.application_pod + "</p>"
+      + "<p>" + "water_right_id: " +  feature.properties.water_right_id + "</p>"
+      + "<p>" + "Source: " +  feature.properties.source + "</p>"
 
 /*
       + "<p>" + "pod_number" +  feature.properties.source + "</p>";
@@ -418,12 +435,7 @@ water.formatTooltipStrings = function(feature) {
 + "<p>" + "face_value_amount" +  feature.properties.source + "</p>";
 
 
-+ "<p>" + "max_dd_appl" +  feature.properties.source + "</p>";
-+ "<p>" + "max_dd_units" +  feature.properties.source + "</p>";
-+ "<p>" + "max_dd_ann" +  feature.properties.source + "</p>";
-+ "<p>" + "max_storage" +  feature.properties.source + "</p>";
-+ "<p>" + "max_use_appl" +  feature.properties.source + "</p>";
-+ "<p>" + "year_first_use" +  feature.properties.source + "</p>";
+
 
 + "<p>" + "effective_from_date" +  feature.properties.source + "</p>";
 + "<p>" + "effective_to_date" +  feature.properties.source + "</p>";
