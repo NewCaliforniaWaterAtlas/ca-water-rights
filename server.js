@@ -155,6 +155,10 @@ app.get('/data/water_rights/reports', function(req, res, options){
   watermapApp.loadWaterRightsReportsXLS();
 });
 
+app.get('/data/water_rights/reports/download', function(req, res, options){
+  watermapApp.loadWaterRightsReportsDownload();
+});
+
 // Once downloaded, parse all XLS files. Convert to object for mongo. Store in database.
 app.get('/data/water_rights/update/db', function(req, res, options){
   watermapApp.parseXLSWaterRights();
@@ -198,7 +202,7 @@ watermapApp.loadWaterRightsReportsXLS = function(){
   // Do a query every 4 seconds -- should be about 8 concurrent queries.
   // Should do 100 in 6 minutes.
   watermapApp.getFile = setInterval(function() {
-    watermapApp.downloadReportFile(watermapApp.dbIDs[watermapApp.loadFileCounter]); 
+    watermapApp.downloadReportForm(watermapApp.dbIDs[watermapApp.loadFileCounter]); 
     watermapApp.loadFileCounter++;
     watermapApp.getBatchCounter++;  
     console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
@@ -238,9 +242,11 @@ watermapApp.parseWaterRightsReportsXLS = function(){
     if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
       clearInterval(watermapApp.getFile);
     }
-  }, 1000);  
+  }, 100);  
 
 };
+
+
 //15035 stopped at
 watermapApp.parseWaterRightReport = function(db_id) {
 
@@ -272,37 +278,28 @@ watermapApp.parseWaterRightReport = function(db_id) {
               return;
             }
             else {
-              output += watermapApp.trim($(this).find('td:first-child').html()) + ",";
-              output += watermapApp.trim($(this).find('td:nth-child(2)').html()) + ",";
-              output += $(this).find('td:last-child a').attr('href') + '\n';          
+              output += db_id + ",";
+              output += $(this).find('td:first-child').html() + ",";
+              output += $(this).find('td:nth-child(2)').html() + ",";
+              output += $(this).find('td:last-child a').attr('href') + '\n';         
             }
   
           });
   
+/*
           console.log('done ' + db_id);
           console.log(output);
+*/
 
     
       
             fs.writeFile('reports/water_right_reports' + db_id + '.txt', output, function (err) {
               if (err) return console.log(err);
   
-                console.log("saved " + db_id);
+/*                 console.log("saved " + db_id); */
             });
-
-
-        
-        
-        }
-
-
-
-
-
-       
-    }});  
-
-    
+        }       
+    }});
 };
  
 /* Scrape all pages to get the ID to get the download link to get the xls files*/
@@ -429,6 +426,44 @@ watermapApp.getXLSByAppIDArray = function(){
 };
 
 
+
+watermapApp.loadWaterRightsReportsDownload = function() {
+  // open csv file
+  // read first line
+  // split
+  // take third value
+
+  // @TODO may have limits on how many to do at once.
+  // @TODO Also, it would take 11 days to download them all individually--- which is probably necessary because the 
+  // XLS file is generated dynamically.
+  // It's 30-seconds to download the data, and 1 minute to download the data from the DB server and the GIS server.
+  // Would be nice if we could do it all in one swoop, and then get a list of updated and new records - especially because the records only change once a year it seems.
+  // The GIS server might be able to tell us which records are new - if the Water Control Board is not able to help.
+
+  fs.readFileSync('./server_data/all_reports-txt.csv').toString().split('\n').forEach(function (line) { 
+      var split_line = line.split(',');
+/*       console.log(split_line); */
+      watermapApp.dbIDs.push(new Array(split_line[0],split_line[4]));
+  });
+/*   console.log(watermapApp.dbIDs); */
+
+
+  // Do a query every 4 seconds -- should be about 8 concurrent queries.
+  // Should do 100 in 6 minutes.
+  watermapApp.getFile = setInterval(function() {
+    watermapApp.downloadReport(watermapApp.dbIDs[watermapApp.loadFileCounter][0],watermapApp.dbIDs[watermapApp.loadFileCounter][1]); 
+    watermapApp.loadFileCounter++;
+    watermapApp.getBatchCounter++;  
+    console.log(watermapApp.dbIDs[watermapApp.loadFileCounter][0] + " " + watermapApp.dbIDs[watermapApp.loadFileCounter][1]);
+
+    if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
+      clearInterval(watermapApp.getFile);
+    }
+  }, 2000);
+
+};
+
+
 /**
  * Download the XLS files for each EWRIMS database record.
  */
@@ -466,7 +501,7 @@ watermapApp.downloadWaterRightDBDataXLS = function() {
 
 };
 
-watermapApp.downloadReportFile = function(db_id) {
+watermapApp.downloadReportForm = function(db_id) {
   console.log(db_id);
 
   // save xls file locally
@@ -475,6 +510,25 @@ watermapApp.downloadReportFile = function(db_id) {
   http.get({ 
     host: "ciwqs.waterboards.ca.gov", 
     path: "/ciwqs/ewrims/listReportsForWaterRight.do?waterRightId=" + db_id },
+    function(res) {
+      var stream = fs.createWriteStream(filename);
+      res.pipe(stream);
+  });
+};
+
+watermapApp.downloadReport = function(db_id,form_id) {
+  console.log(form_id);
+/*
+  var baseURL = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims_online_reporting/licensePrint.do?form_id=' + form_id;
+  console.log(baseURL);
+*/
+
+  // save xls file locally
+  var filename = 'water_rights_full_reports/water_right-' + db_id +'_' + form_id + '.txt';  
+  
+  http.get({ 
+    host: "ciwqs.waterboards.ca.gov", 
+    path: "/ciwqs/ewrims_online_reporting/licensePrint.do?form_id=" + form_id },
     function(res) {
       var stream = fs.createWriteStream(filename);
       res.pipe(stream);
