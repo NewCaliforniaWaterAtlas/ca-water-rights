@@ -188,12 +188,12 @@ watermapApp.parseReportFile = function(db_id){
     watermapApp.parseReportFromHTML(watermapApp.dbIDs[watermapApp.loadFileCounter][0],watermapApp.dbIDs[watermapApp.loadFileCounter][1]); 
     watermapApp.loadFileCounter++;
     watermapApp.getBatchCounter++;  
-    console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
+    //console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
 
     if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
       clearInterval(watermapApp.getFile);
     }
-  }, 1000);
+  }, 100);
   
 };
 
@@ -202,7 +202,7 @@ watermapApp.parseReportFromHTML = function(db_id, form_id){
   var filename = 'water_rights_full_reports/water_right-' + db_id + '_' + form_id +'.txt';
 
   var body = fs.readFileSync(filename,'utf8');
-
+console.log(db_id);
   if(body !== ''){
 
     jsdom.env({
@@ -217,8 +217,26 @@ watermapApp.parseReportFromHTML = function(db_id, form_id){
         var testEmpty =  $('body').html();
         var use = $('table tr th:contains("Purpose of Use")').parent().parent().find('td:first-child').html();
         var quantity = $('table tr th:contains("Purpose of Use")').parent().parent().find('td:last-child').html();
-            console.log(use + quantity);
-        
+
+use = use.replace(/(\r\n|\n|\r)/gm,"");
+quantity = quantity.replace(/(\r\n|\n|\r)/gm,"");
+use = use.replace(/\s+/g," ");
+quantity = quantity.replace(/\s+/g," ");
+console.log(quantity);
+
+ var obj = {};
+ obj.properties = {};
+ obj.properties.usage = use;
+ obj.properties.usage_quantity = quantity;
+ obj.properties.ewrims_db_id = db_id;
+ obj.properties.ewrims_form_id= form_id; //push to array
+
+  
+    // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
+    // @NOTE Does not have geocoded data, that has to come from the GIS server.
+
+    watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
+    
       }
     });
   }
@@ -743,10 +761,11 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
 
   // @TODO - storing in separate collection for testing purposes.
   var lookup =  { 
-    $and: [{'kind': 'right'}, {'properties.application_pod': feature['properties']['application_pod']}] 
+    $and: [{'kind': 'right'}, {$or: [{'properties.application_pod': feature['properties']['application_pod']},{'properties.ewrims_db_id': feature['properties']['ewrims_db_id']}]}] 
   };
   
   engine.find_many_by(lookup,function(error, results) {
+/*     console.log(results); */
     if(!results || error) {
       console.log("agent query error");
       res.send("[]");
