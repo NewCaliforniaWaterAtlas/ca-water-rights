@@ -159,10 +159,72 @@ app.get('/data/water_rights/reports/download', function(req, res, options){
   watermapApp.loadWaterRightsReportsDownload();
 });
 
+app.get('/data/water_rights/reports/parse_full', function(req, res, options){
+  watermapApp.parseReportFile();
+});
+
 // Once downloaded, parse all XLS files. Convert to object for mongo. Store in database.
 app.get('/data/water_rights/update/db', function(req, res, options){
   watermapApp.parseXLSWaterRights();
 });
+
+
+/**
+ * Read and parse each stored XLS file from the eWRIMS database.
+ */
+watermapApp.parseReportFile = function(db_id){
+  var obj = {};
+
+/*   console.log(db_id); */
+  fs.readFileSync('./server_data/all_reports-txt.csv').toString().split('\n').forEach(function (line) { 
+      var split_line = line.split(',');
+/*       console.log(split_line); */
+      watermapApp.dbIDs.push(new Array(split_line[0],split_line[4]));
+  });
+  
+    // Do a query every 4 seconds -- should be about 8 concurrent queries.
+  // Should do 100 in 6 minutes.
+  watermapApp.getReportFile = setInterval(function() {
+    watermapApp.parseReportFromHTML(watermapApp.dbIDs[watermapApp.loadFileCounter][0],watermapApp.dbIDs[watermapApp.loadFileCounter][1]); 
+    watermapApp.loadFileCounter++;
+    watermapApp.getBatchCounter++;  
+    console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
+
+    if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
+      clearInterval(watermapApp.getFile);
+    }
+  }, 1000);
+  
+};
+
+watermapApp.parseReportFromHTML = function(db_id, form_id){
+
+  var filename = 'water_rights_full_reports/water_right-' + db_id + '_' + form_id +'.txt';
+
+  var body = fs.readFileSync(filename,'utf8');
+
+  if(body !== ''){
+
+    jsdom.env({
+      html: body,
+      scripts: [
+        'http://code.jquery.com/jquery-1.8.3.min.js'
+      ],
+    
+      done: function (err, window) {
+        var $ = window.jQuery;      
+        var output = '';
+        var testEmpty =  $('body').html();
+        var use = $('table tr th:contains("Purpose of Use")').parent().parent().find('td:first-child').html();
+        var quantity = $('table tr th:contains("Purpose of Use")').parent().parent().find('td:last-child').html();
+            console.log(use + quantity);
+        
+      }
+    });
+  }
+};
+
+
 
 // Lookup GIS data for sets of records to get Lat/Lon and other extra values. Update in Mongo.
 app.get('/data/water_rights/update/gis', function(req, res, options){
