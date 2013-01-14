@@ -5,8 +5,8 @@ water.map = water.map || {};
 water.map_defaults = {};
 water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
-water.map_defaults.boxsize_lat = 0.1; //pretty small box
-water.map_defaults.boxsize_lon = 0.2;
+water.map_defaults.boxsize_lat = 0.05; //pretty small box
+water.map_defaults.boxsize_lon = 0.1;
 water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.terrain_layer = 'chachasikes.map-tv2igp9l';
@@ -40,10 +40,12 @@ water.setupMap = function() {
   // Add satellite layer.
   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
+/*
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
       water.map.interaction.auto(); 
   });
+*/
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
@@ -377,6 +379,9 @@ water.formatTooltipStrings = function(feature) {
       
       + "<p>" + "Type of Water Right: " +  feature.properties.water_right_type + "</p>"
       + "<p>" + "Use: " +  feature.properties.use_code + "</p>"
+      + "<p>" + "Recent Usage: " +  feature.properties.usage + "</p>"
+      + "<p>" + "Usage Detail: " +  feature.properties.usage_quantity + "</p>"
+      
       + "<p>" + "Direct Diversion Amount: " +  feature.properties.direct_div_amount + "</p>"
       + "<p>" + "Diversion Storage: " +  feature.properties.diversion_storage_amount + "</p>"
       + "<p>" + "Face Amount: " +  feature.properties.face_value_amount + " " + feature.properties.face_value_units + "</p>"
