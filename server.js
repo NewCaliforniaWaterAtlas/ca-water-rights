@@ -88,6 +88,7 @@ app.get('/search/holders', function(req, res, options){
   console.log(req.query);
   var regex = new RegExp('' + req.query.value, "i");
   var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex},{'properties.usage': regex},{'properties.usage_quantity': regex} ]}]};
+  console.log(query);
   engine.find_many_by(query,function(error, results) {
     if(!results || error) {
       console.log("agent query error");
@@ -247,10 +248,16 @@ console.log(quantity);
 
  var obj = {};
  obj.properties = {};
- obj.properties.usage = use;
- obj.properties.usage_quantity = quantity;
- obj.properties.ewrims_db_id = db_id;
- obj.properties.ewrims_form_id= form_id; //push to array
+ obj.properties.reports = [];
+ var thisReport = {};
+ 
+ thisReport.usage = use;
+ thisReport.usage_quantity = quantity;
+ thisReport.ewrims_db_id = db_id;
+ thisReport.ewrims_form_id= form_id; //push to array
+  
+  obj.properties.reports.push(thisReport);
+
 
   
     // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
@@ -520,7 +527,7 @@ watermapApp.loadWaterRightsReportsDownload = function() {
   // Would be nice if we could do it all in one swoop, and then get a list of updated and new records - especially because the records only change once a year it seems.
   // The GIS server might be able to tell us which records are new - if the Water Control Board is not able to help.
 
-  fs.readFileSync('./server_data/all_reports_g3-txt.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/all_reports-txt.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
 /*       console.log(split_line); */
       watermapApp.dbIDs.push(new Array(split_line[0],split_line[4],split_line[3]));
@@ -532,6 +539,10 @@ watermapApp.loadWaterRightsReportsDownload = function() {
   // Should do 100 in 6 minutes.
   watermapApp.getFile = setInterval(function() {
     watermapApp.downloadReport(watermapApp.dbIDs[watermapApp.loadFileCounter][0],watermapApp.dbIDs[watermapApp.loadFileCounter][1], watermapApp.dbIDs[watermapApp.loadFileCounter][2]); 
+    
+
+
+    
     watermapApp.loadFileCounter++;
     watermapApp.getBatchCounter++;  
     console.log(watermapApp.dbIDs[watermapApp.loadFileCounter][0] + " " + watermapApp.dbIDs[watermapApp.loadFileCounter][1]);
@@ -539,7 +550,7 @@ watermapApp.loadWaterRightsReportsDownload = function() {
     if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
       clearInterval(watermapApp.getFile);
     }
-  }, 2000);
+  }, 100);
 
 };
 
@@ -597,8 +608,8 @@ watermapApp.downloadReportForm = function(db_id) {
 };
 
 watermapApp.downloadReport = function(db_id,form_id,path) {
-  console.log(form_id);
-  console.log(path);
+
+
 
 /*
   var baseURL = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims_online_reporting/licensePrint.do?form_id=' + form_id;
@@ -610,8 +621,12 @@ watermapApp.downloadReport = function(db_id,form_id,path) {
   var filename = 'water_rights_full_reports/water_right-' + db_id +'_' + form_id + '.txt';
   
   
-   
+if (fs.existsSync(filename)) {
+
+}
+else{
   console.log(form_id);
+  console.log(path);
   http.get({ 
     host: "ciwqs.waterboards.ca.gov", 
     path: '/ciwqs/' + path },
@@ -619,6 +634,11 @@ watermapApp.downloadReport = function(db_id,form_id,path) {
       var stream = fs.createWriteStream(filename);
       res.pipe(stream);
   });
+
+}
+
+   
+
 };
 
 
@@ -778,14 +798,16 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
   //  console.log("app" + feature['properties']['application_pod']);
   //  console.log("db" + feature['properties']['ewrims_db_id']);
     
+
+    
     var query = [];
     
     if(feature['properties']['application_pod'] !== undefined){
       query.push({'properties.application_pod' : feature['properties']['application_pod']});
     }
 
-    if(feature['properties']['ewrims_db_id'] !== undefined){
-      query.push({'properties.ewrims_db_id' : feature['properties']['ewrims_db_id']});
+    if(feature['properties']['reports'][0]['ewrims_db_id'] !== undefined){
+      query.push({'properties.ewrims_db_id' : feature['properties']['reports'][0]['ewrims_db_id']});
     }
 
   // @TODO - storing in separate collection for testing purposes.
@@ -799,7 +821,7 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
 /*     console.log(results); */
     if(!results || error) {
       console.log("agent query error");
-      res.send("[]");
+/*       results.send("[]"); */
       return;
     }
 
@@ -822,7 +844,7 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
       var newFeature = feature;
 
       for (var value in newFeature) { 
-/*         console.log(value); */
+        console.log(value);
 
         if(value === 'kind'){
 /*           console.log("found kind"); */
@@ -835,8 +857,32 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
         if(value === 'properties'){
 /*           console.log("found properties"); */
           for(var attribute in newFeature[value]) {
-/*             console.log(attribute); */
-            original[value][attribute] = newFeature[value][attribute];
+            console.log(attribute);
+            
+            
+            if(attribute === "reports") {
+              // reports has multiple elements.
+
+              console.log('reports');
+             console.log(attribute);
+             
+              if(original[value][attribute] !== undefined){
+       console.log(original[value][attribute]);
+       
+                var originalArray = original[value][attribute];
+                     
+                var arraysMerged = originalArray.concat(newFeature[value][attribute][0]);
+                original[value][attribute] = arraysMerged;
+              }
+              else {
+               original[value][attribute] = new Array(newFeature[value][attribute][0]);
+              }
+        //      original[value][attribute] = newFeature[value][attribute];
+
+            }
+            else {
+              original[value][attribute] = newFeature[value][attribute];
+            }
           }
         }
         if(value === 'geometry'){
