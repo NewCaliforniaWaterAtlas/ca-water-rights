@@ -363,14 +363,44 @@ water.formatTooltipStrings = function(feature) {
       string +=  
         "<h4>Water Right</h4>" +
         "<p>" + "Name: ";
-          if(feature.properties.holder) string += feature.properties.holder;
-          else string += feature.properties.primary_owner
+          if(feature.properties.first_name){
+            string += feature.properties.first_name + " ";
+          }
+          if(feature.properties.holder){ 
+            string += feature.properties.holder_name;
+          }
+          else {
+            string += feature.properties.name;
+          }
         string += "</p>"
-      + "<p>" + "Entity Type: " +  feature.properties.entity_type + "</p>"  
+        
+        
+        if(feature.properties.face_value_amount !== undefined || feature.properties.diversion_storage_amount){
+          
+          if(feature.properties.face_value_amount !== undefined){
+            string += "<p>" + "Face Amount: " +  feature.properties.face_value_amount;          
+          }
+          if(feature.properties.face_value_amount === undefined && feature.properties.diversion_storage_amount !== undefined){
+            string += "<p>" + "Diversion Amount: " +  feature.properties.diversion_storage_amount;
+          }
+          if(feature.properties.face_value_units){
+            string += " " + feature.properties.face_value_units;
+          }
+          else if(feature.properties.pod_unit) {
+            string += " " + feature.properties.pod_unit + "</p>";
+          }
+          string += "</p>";
+        }
+        
+        
+/*       + "<p>" + "Entity Type: " +  feature.properties.entity_type + "</p>"   */
+/*
       + "<p>" + "Organization Type: " +  feature.properties.organization_type + "</p>"        
       + "<p>" + "Water Right Status: " +  feature.properties.water_right_status + "</p>"    
         
-      + "<p>" + "Since: ";
+*/
+ /*
+     + "<p>" + "Since: ";
           if(feature.properties.date_received) string += feature.date_received;
           else string += feature.properties.date_accepted    
         string += "</p>"
@@ -378,17 +408,27 @@ water.formatTooltipStrings = function(feature) {
       + "<p>" + "Year First Use" +  feature.properties.year_first_use + "</p>"
       
       + "<p>" + "Type of Water Right: " +  feature.properties.water_right_type + "</p>"
-      + "<p>" + "Use: " +  feature.properties.use_code + "</p>"
-      + "<p>" + "Recent Usage: " +  feature.properties.usage + "</p>"
-      + "<p>" + "Usage Detail: " +  feature.properties.usage_quantity + "</p>"
-      
-      + "<p>" + "Direct Diversion Amount: " +  feature.properties.direct_div_amount + "</p>"
+      + "<p>" + "Use: " +  feature.properties.use_code + "</p>";
+*/
+      if(feature.properties.usage) {
+        string += "<p>" + "Recent Usage: ";
+        
+        for(var usage in feature.properties.usage) {
+          string +=  feature.properties.usage[i] + ', ' + feature.properties.usage_quantity[i]
+        }
+        string += "</p>";
+      }
+
+/*
+      string += "<p>" + "Direct Diversion Amount: " +  feature.properties.direct_div_amount + "</p>"
       + "<p>" + "Diversion Storage: " +  feature.properties.diversion_storage_amount + "</p>"
-      + "<p>" + "Face Amount: " +  feature.properties.face_value_amount + " " + feature.properties.face_value_units + "</p>"
+      
+*/
 /*       + "<p>" + "face_value_units: " +   + "</p>" */
 
       
 /*       + "<p>" + "use_status_new: " +  feature.properties.use_status_new + "</p>" */
+/*
       + "<p>" + "Use Population: " +  feature.properties.use_population + "</p>"
       + "<p>" + "Use Net Acreage: " +  feature.properties.use_net_acreage + "</p>"
       + "<p>" + "Use Gross Acreage: " +  feature.properties.use_gross_acreage + "</p>"
@@ -401,19 +441,22 @@ water.formatTooltipStrings = function(feature) {
       + "<p>" + "Max Direct Diversion Annual" +  feature.properties.max_dd_ann + "</p>"
       + "<p>" + "Max Storage" +  feature.properties.max_storage + "</p>"
       + "<p>" + "Max Use Appl" +  feature.properties.max_use_app + "</p>"
+*/
 
+/*
 
       + "<h4>Watershed</h4>"
       + "<p>" + "Source: " +  feature.properties.source_name + "</p>"    
       + "<p>" + "Watershed: " +  feature.properties.watershed + "</p>"    
       + "<p>" + "City: " +  feature.properties.city + "</p>"
       + "<p>" + "County: " +  feature.properties.county + "</p>"
+*/
       
-      + "<h4>Extra Stuff</h4>"
+      string += "<h4>Extra Stuff</h4>"
       + "<p>" + "pod_id: " +  feature.properties.pod_id + "</p>"
       + "<p>" + "application_pod: " +  feature.properties.application_pod + "</p>"
       + "<p>" + "water_right_id: " +  feature.properties.water_right_id + "</p>"
-      + "<p>" + "Source: " +  feature.properties.source + "</p>"
+      + "<p>" + "Source: " +  feature.properties.source + "</p>";
 
 /*
       + "<p>" + "pod_number" +  feature.properties.source + "</p>";
