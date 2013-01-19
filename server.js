@@ -100,6 +100,53 @@ app.get('/search/holders', function(req, res, options){
 });
 
 
+
+app.get('/list/usage', function(req, res, options){
+    var query = [];
+    query.push();
+
+  // @TODO - storing in separate collection for testing purposes.
+  var lookup =  { $and: [{'properties.reports': { $exists: true}}, {'properties.reports': { $gt: {}}}, {'coordinates': {$exists: true} } ]} ;
+
+//    $and: [{'kind': 'right'}, {$or: [{'properties.application_pod': feature['properties']['application_pod']},{'properties.ewrims_db_id': feature['properties']['ewrims_db_id']}]}] 
+  
+  engine.find_many_by(lookup,function(error, results) {
+    if(!results || error) {
+      console.log("agent query error");
+      res.send("[]");
+      return;
+    }
+
+    var output = []
+    var string;
+    for (i in results){
+/*     console.log(results[i].properties.reports); */
+      if(results[i].properties.reports !== undefined){
+
+        var report = results[i].properties.reports;
+        
+          for (j in report ) {
+            if(report[j]['usage'] !== undefined) {
+            string += results[i].properties.name + " | ";
+                if(report[j]['usage'] instanceof Array) {
+              for(k in report[j]['usage']){
+                  string += report[j]['usage'][k] + " | " + report[j]['usage_quantity'][k] + "<br />";
+                }
+              }
+                else{
+                  string += report[j]['usage'] + " | " + report[j]['usage_quantity'] + "<br />";
+                }
+            }
+
+          }
+        string += "<br />";
+      }
+    }
+      res.send(string);    
+  },{}, {'limit': 100});
+});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Update Water Rights Data
 // Load data from eWRIMS database and GIS server.
@@ -165,6 +212,10 @@ app.get('/data/water_rights/reports/parse_full', function(req, res, options){
 });
 
 
+app.get('/data/update/ewrims_db_id', function(req, res, options){
+  watermapApp.updateEWRIMSID();
+});
+
 // Once downloaded, parse all XLS files. Convert to object for mongo. Store in database.
 app.get('/data/water_rights/update/db', function(req, res, options){
   watermapApp.parseXLSWaterRights();
@@ -199,7 +250,7 @@ watermapApp.parseReportFile = function(db_id){
   var obj = {};
 
 /*   console.log(db_id); */
-  fs.readFileSync('./server_data/all_reports-txt_jan18.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/all_reports-txt.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
 /*       console.log(split_line); */
       watermapApp.dbIDs.push(new Array(split_line[0],split_line[4]));
@@ -220,12 +271,78 @@ watermapApp.parseReportFile = function(db_id){
   
 };
 
-watermapApp.parseReportFromHTML = function(db_id, form_id){
+watermapApp.updateEWRIMSID = function(){
 
+  var obj = {};
+
+/*   console.log(db_id); */
+  fs.readFileSync('./server_data/all_ewrims_ids.csv').toString().split('\n').forEach(function (line) { 
+      var split_line = line.split(',');
+/*       console.log(split_line); */
+      watermapApp.dbIDs.push(new Array(split_line[1],split_line[0]));
+  });
+  
+    // Do a query every 4 seconds -- should be about 8 concurrent queries.
+  // Should do 100 in 6 minutes.
+  watermapApp.setEWRIMSID = setInterval(function() {
+    watermapApp.setEWRIMS(watermapApp.dbIDs[watermapApp.loadFileCounter][0],watermapApp.dbIDs[watermapApp.loadFileCounter][1]); 
+    watermapApp.loadFileCounter++;
+    watermapApp.getBatchCounter++;  
+    //console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
+
+    if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
+      clearInterval(watermapApp.setEWRIMSID);
+    }
+  }, 100);
+
+};
+
+watermapApp.setEWRIMS = function(app_pod, ewrims_db_id){
+  console.log(app_pod + " " + ewrims_db_id);
+    var query = [];
+    query.push({'properties.application_pod' : app_pod});
+
+  // @TODO - storing in separate collection for testing purposes.
+  var lookup =  { 
+    $and: [{'kind': 'right'}, {$and: query}]
+  };
+
+//    $and: [{'kind': 'right'}, {$or: [{'properties.application_pod': feature['properties']['application_pod']},{'properties.ewrims_db_id': feature['properties']['ewrims_db_id']}]}] 
+  
+  engine.find_many_by(lookup,function(error, results) {
+/*     console.log(results); */
+    if(!results || error) {
+      console.log("agent query error");
+/*       results.send("[]"); */
+      return;
+    }
+
+    // Create if record does not exist.
+    if(results.length != 0) {
+
+      
+      // merge _id from existing record with new stuff.
+      var original = results[0];
+      
+      original.properties.ewrims_db_id = ewrims_db_id;
+
+      // Save the original version, to which has been added the new items from the feature.
+      engine.save(original,function(error,agent) {
+        if(error) { res.send("Server agent storage error #5",404); return; }
+        if(!agent) { res.send("Server agent storage error #6",404); return; }
+      });    
+    }
+    
+  });
+
+};
+
+watermapApp.parseReportFromHTML = function(db_id, form_id){
+console.log(db_id + " " + form_id);
   var filename = 'water_rights_full_reports/water_right-' + db_id + '_' + form_id +'.txt';
 
   var body = fs.readFileSync(filename,'utf8');
-console.log(db_id);
+
   if(body !== ''){
 
     jsdom.env({
@@ -299,7 +416,7 @@ console.log(db_id);
         // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
         // @NOTE Does not have geocoded data, that has to come from the GIS server.
 
-        //watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
+        watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
     
       }
     });
