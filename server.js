@@ -87,7 +87,7 @@ app.post('/data', function(req, res, options){
 app.get('/search/holders', function(req, res, options){
   console.log(req.query);
   var regex = new RegExp('' + req.query.value, "i");
-  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex},{'properties.usage': regex},{'properties.usage_quantity': regex} ]}]};
+  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex},{'properties.reports': { $in:  {$or: [{'usage': regex},{'usage_quantity': regex}] }} }   ]}]};
   console.log(query);
   engine.find_many_by(query,function(error, results) {
     if(!results || error) {
@@ -113,7 +113,7 @@ watermapApp.current = 80;
 watermapApp.counterXLSParser = 0;
 watermapApp.getBatchCounter = 0;
 watermapApp.GISGroup = 'C0'; // Used for downloading GIS data from server. 
-watermapApp.XLSGroup = 'G3';
+watermapApp.XLSGroup = 'small';
 watermapApp.GISCounter = 0;
 watermapApp.GISLoadJSONCounter = 0;
 watermapApp.EWRIMSReportCurrent = 0;
@@ -148,12 +148,12 @@ app.get('/data/water_rights/download/xls', function(req, res, options){
   watermapApp.downloadWaterRightDBDataXLS();
 });
 
-app.get('/data/water_rights/reports/parse', function(req, res, options){
-  watermapApp.parseWaterRightsReportsXLS();
-});
-
 app.get('/data/water_rights/reports', function(req, res, options){
   watermapApp.loadWaterRightsReportsXLS();
+});
+
+app.get('/data/water_rights/reports/parse', function(req, res, options){
+  watermapApp.parseWaterRightsReportsXLS();
 });
 
 app.get('/data/water_rights/reports/download', function(req, res, options){
@@ -164,6 +164,7 @@ app.get('/data/water_rights/reports/parse_full', function(req, res, options){
   watermapApp.parseReportFile();
 });
 
+
 // Once downloaded, parse all XLS files. Convert to object for mongo. Store in database.
 app.get('/data/water_rights/update/db', function(req, res, options){
   watermapApp.parseXLSWaterRights();
@@ -172,7 +173,7 @@ app.get('/data/water_rights/update/db', function(req, res, options){
 // Lookup GIS data for sets of records to get Lat/Lon and other extra values. Update in Mongo.
 app.get('/data/water_rights/update/gis', function(req, res, options){
   //var GISinterval = setInterval(function(){
-    watermapApp.GISCounter = 21;
+    watermapApp.GISCounter = 65;
     watermapApp.GISGroup = watermapApp.gisFacets[watermapApp.GISCounter]; 
     console.log(watermapApp.GISGroup);
     console.log("getting GIS: " + watermapApp.GISGroup + " " + watermapApp.GISCounter);
@@ -198,7 +199,7 @@ watermapApp.parseReportFile = function(db_id){
   var obj = {};
 
 /*   console.log(db_id); */
-  fs.readFileSync('./server_data/all_reports-txt.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/all_reports-txt_jan18.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
 /*       console.log(split_line); */
       watermapApp.dbIDs.push(new Array(split_line[0],split_line[4]));
@@ -236,34 +237,69 @@ console.log(db_id);
       done: function (err, window) {
         var $ = window.jQuery;      
         var output = '';
+        
+        var obj = {};
+        obj.properties = {};
+        obj.properties.reports = [];
+        var thisReport = {};
+        
+        thisReport.usage = new Array();
+        thisReport.usage_quantity = new Array();
+                
         var testEmpty =  $('body').html();
-        var use = $('table tr th:contains("Purpose of Use")').parent().parent().find('td:first-child').html();
-        var quantity = $('table tr th:contains("Purpose of Use")').parent().parent().find('td:last-child').html();
 
-use = use.replace(/(\r\n|\n|\r)/gm,"");
-quantity = quantity.replace(/(\r\n|\n|\r)/gm,"");
-use = use.replace(/\s+/g," ");
-quantity = quantity.replace(/\s+/g," ");
-console.log(quantity);
 
- var obj = {};
- obj.properties = {};
- obj.properties.reports = [];
- var thisReport = {};
+        var quantityCount = 0;
+        quantity = $('table tr th:contains("Purpose of Use")').parent().parent().find('tr').each(function(){ 
  
- thisReport.usage = use;
- thisReport.usage_quantity = quantity;
- thisReport.ewrims_db_id = db_id;
- thisReport.ewrims_form_id= form_id; //push to array
+          if(quantityCount !== 0) {
+
+            var usage = $(this).find('td:first-child').html();
+            var quantity = $(this).find('td:last-child').html();
+            
+
+        
+            if(usage !== undefined){
+              usage = usage.replace(/(\r\n|\n|\r)/gm,"");
+              usage = usage.replace(/\s+/g," ");            
+              thisReport.usage.push(usage);
+            }
+            else{
+              thisReport.usage.push('');
+            }
+            if(quantity !== undefined){
+              quantity = quantity.replace(/(\r\n|\n|\r)/gm,"");
+              quantity = quantity.replace(/\s+/g," ");
+              thisReport.usage_quantity.push(quantity);
+            }
+            else{
+              thisReport.usage_quantity.push('');            
+            }
+
+          }
+          quantityCount++;
+        });
+        
+ 
+        
+        
+
+       var diversion = $('table tr th:contains("Amount of Water Diverted and Used")').parent().parent();
+/* console.log(diversion); */
+
+
+        
+
+        thisReport.ewrims_db_id = db_id;
+        thisReport.ewrims_form_id= form_id; //push to array
   
-  obj.properties.reports.push(thisReport);
-
-
+        obj.properties.reports.push(thisReport);
+        console.log(thisReport);
   
-    // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
-    // @NOTE Does not have geocoded data, that has to come from the GIS server.
+        // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
+        // @NOTE Does not have geocoded data, that has to come from the GIS server.
 
-    watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
+        //watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
     
       }
     });
@@ -527,7 +563,7 @@ watermapApp.loadWaterRightsReportsDownload = function() {
   // Would be nice if we could do it all in one swoop, and then get a list of updated and new records - especially because the records only change once a year it seems.
   // The GIS server might be able to tell us which records are new - if the Water Control Board is not able to help.
 
-  fs.readFileSync('./server_data/all_reports-txt.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/all_reports-txt_jan18.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
 /*       console.log(split_line); */
       watermapApp.dbIDs.push(new Array(split_line[0],split_line[4],split_line[3]));
@@ -550,7 +586,7 @@ watermapApp.loadWaterRightsReportsDownload = function() {
     if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
       clearInterval(watermapApp.getFile);
     }
-  }, 100);
+  }, 2000);
 
 };
 
@@ -805,9 +841,10 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
     if(feature['properties']['application_pod'] !== undefined){
       query.push({'properties.application_pod' : feature['properties']['application_pod']});
     }
-
-    if(feature['properties']['reports'][0]['ewrims_db_id'] !== undefined){
-      query.push({'properties.ewrims_db_id' : feature['properties']['reports'][0]['ewrims_db_id']});
+    if(feature['properties']['reports'] !== undefined) {
+      if(feature['properties']['reports'][0]['ewrims_db_id'] !== undefined){
+        query.push({'properties.ewrims_db_id' : feature['properties']['reports'][0]['ewrims_db_id']});
+      }
     }
 
   // @TODO - storing in separate collection for testing purposes.
@@ -844,7 +881,7 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
       var newFeature = feature;
 
       for (var value in newFeature) { 
-        console.log(value);
+/*         console.log(value); */
 
         if(value === 'kind'){
 /*           console.log("found kind"); */
@@ -2460,7 +2497,8 @@ var app_id_array = [
 
 
 watermapApp.gisFacets = [
-  'C000',
+ /*
+ 'C000',
   'C001',
   'C002',
   'C003',
@@ -2480,8 +2518,8 @@ watermapApp.gisFacets = [
   'G561',
   'G333',
   'G191',
-  'G190',
-  'A0300',
+  'G190',*/
+ /* 'A0300',
   'A0301',
   'A0302',
   'A0303',
@@ -2522,89 +2560,75 @@ watermapApp.gisFacets = [
   'A0248',
   'A0249',
   'A031',
-
-  'S014',
-  'S012',
-  'A028',
-  'S013',
-
   'A017',
   'A020',
-  'S001',
-  'S011',
-  'A016',
   'A027',
-  'S002',
   'A023',
-  'S010',
-  'S009',
-  'A019',
+  'A019',      
+  'A026',
   'A018',
   'A022',
-  'S015',
-  'F003',
-  'A026',
-  'S000',
-  'S008',
   'A021',
   'A015',
-  'S016',
-
   'A013',
   'A014',
-
-  'S004',
   'A011',
-  'S018',
-  'A012',
-  'S017',
-  'D030',
-
-  'S019',
   'A010',
-
+  'A012',
   'A005',
-  'S020',
   'A009',
   'A004',
-  'S003',
-  'D031',
-  'S005',
   'A006',
   'A003',
   'A002',
   'A008',
   'A000',
   'A001',
-  'S006',
   'A007',
+  'APR1',
+  'S014',
+  'S012',
+  'A028',
+  'S013',*/
+  'S001',
+  'S011',
+  'A016',
+  'S002',
+  'S010',
+  'S009',
+  'S015',
+  'F003',
+  'S000',
+  'S008',
+  'S016',
+  'S004',
+  'S018',
+  'S017',
+  'D030',
+  'S019',
+  'S020',
+  'S003',
+  'D031',
+  'S005',
+  'S006',
   'F006',
   'S007',
   'F005',
   'L031',
-
   'F007',
-
   'UN00',
-
   'F010',
-
   'D029',
-
   'F004',
   'F011',
   'F008',
-
   'S021',
   'XC00',
-
   'NJ00',
   'X003',
   'F026',
   'T030',
-
   'X002',
-
   'F009',
   'X000',
   'E000',
@@ -2624,7 +2648,6 @@ watermapApp.gisFacets = [
   '11',
   '2651',
   '3174',
-  'APR1',
   'D027',
   'NJ19',
   'S172',
