@@ -374,7 +374,13 @@ water.formatTooltipStrings = function(feature) {
           }
         string += "</p>"
         
-        
+        string += "Diversion Type: " + feature.properties.diversion_type + "<br />";
+        string += "Direct Diversion Amount: "  + "<br />";feature.properties.direct_div_amount;
+        string += "Face amount: " + feature.properties.face_amount + " " + feature.properties.face_value_units + "<br />";
+        string += "Diversion Acre Feet" + feature.properties.diversion_acre_feet + "<br />";
+        string += "Storage" + feature.properties.diversion_storage_amount + "<br />";
+        string += "POD unit" + feature.properties.pod_unit + "<br />";
+/*
         if(feature.properties.face_value_amount !== undefined || feature.properties.diversion_storage_amount){
           
           if(feature.properties.face_value_amount !== undefined){
@@ -391,6 +397,7 @@ water.formatTooltipStrings = function(feature) {
           }
           string += "</p>";
         }
+*/
         
         
 /*       + "<p>" + "Entity Type: " +  feature.properties.entity_type + "</p>"   */
@@ -410,6 +417,30 @@ water.formatTooltipStrings = function(feature) {
       + "<p>" + "Type of Water Right: " +  feature.properties.water_right_type + "</p>"
       + "<p>" + "Use: " +  feature.properties.use_code + "</p>";
 */
+
+
+if(feature.properties.reports) {
+  //just do the first year (get the year from the docs)
+  if(feature.properties.reports[0]) {
+
+
+      
+ if (feature.properties.reports[0][i]['usage'] instanceof Array) {
+    for(var i in feature.properties.reports[0][i]['usage']) {
+      string +=  "Usage" + feature.properties.reports[0][i]['usage'][i] + ', ' + feature.properties.reports[0][i]['usage_quantity'][i] + "<br />";
+    }
+} else {
+      string +=  "Usage" + feature.properties.reports[0][i]['usage'] + ', ' + feature.properties.reports[0][i]['usage_quantity'];
+}
+    
+/*     } */
+  
+  }
+
+
+}
+
+/*
       if(feature.properties.usage) {
         string += "<p>" + "Recent Usage: ";
         
@@ -418,6 +449,7 @@ water.formatTooltipStrings = function(feature) {
         }
         string += "</p>";
       }
+*/
 
 /*
       string += "<p>" + "Direct Diversion Amount: " +  feature.properties.direct_div_amount + "</p>"
