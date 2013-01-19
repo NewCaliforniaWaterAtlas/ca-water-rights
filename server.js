@@ -118,7 +118,7 @@ app.get('/list/usage', function(req, res, options){
     }
 
     var output = []
-    var string;
+    var string = '';
     for (i in results){
 /*     console.log(results[i].properties.reports); */
       if(results[i].properties.reports !== undefined){
@@ -128,6 +128,7 @@ app.get('/list/usage', function(req, res, options){
           for (j in report ) {
             if(report[j]['usage'] !== undefined) {
             string += results[i].properties.name + " | ";
+            string += results[i].properties.app_pod + " | ";
                 if(report[j]['usage'] instanceof Array) {
               for(k in report[j]['usage']){
                   string += report[j]['usage'][k] + " | " + report[j]['usage_quantity'][k] + "<br />";
@@ -143,7 +144,7 @@ app.get('/list/usage', function(req, res, options){
       }
     }
       res.send(string);    
-  },{}, {'limit': 100});
+  },{}, {'limit': 50000});
 });
 
 
@@ -262,7 +263,7 @@ watermapApp.parseReportFile = function(db_id){
     watermapApp.parseReportFromHTML(watermapApp.dbIDs[watermapApp.loadFileCounter][0],watermapApp.dbIDs[watermapApp.loadFileCounter][1]); 
     watermapApp.loadFileCounter++;
     watermapApp.getBatchCounter++;  
-    //console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
+    console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
 
     if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
       clearInterval(watermapApp.getFile);
@@ -293,7 +294,7 @@ watermapApp.updateEWRIMSID = function(){
     if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
       clearInterval(watermapApp.setEWRIMSID);
     }
-  }, 100);
+  }, 200);
 
 };
 
@@ -399,13 +400,83 @@ console.log(db_id + " " + form_id);
         
  
         
+        var diversionItemArray = new Array();
+        var diversionUsedArray = new Array();
+        
+      $('table tr th:contains("Amount of Water Diverted and Used")').parent().parent().find('tr').each(function(){
+
+
+        var month = '';
+        if($(this).find('td:nth-child(1)').html() === 'September&nbsp;&nbsp;&nbsp;'){
+          month = 'September';
+        }
+        else {
+          month = $(this).find('td:nth-child(1)').html();
+        }
         
 
-       var diversion = $('table tr th:contains("Amount of Water Diverted and Used")').parent().parent();
-/* console.log(diversion); */
+        var diversion_item = {};
+        diversion_item[month] = $(this).find('td:nth-child(2)').html();
+
+        var diversion_used = {}        
+        diversion_used[month] = $(this).find('td:nth-child(3)').html();
+
+
+        if($(this).find('td:nth-child(1)').html() !== undefined){
+          diversionItemArray.push(diversion_item);
+          diversionUsedArray.push(diversion_used);
+        }
+
+
+        if($(this).find('td:nth-child(1)').html() === 'Total'){
+          thisReport.diversion_total = $(this).find('td:nth-child(2)').html();
+          thisReport.used_total = $(this).find('td:nth-child(2)').html();
+        }
+
+
+        var unit = $(this).find('th:contains("Amount directly diverted or")').html();
+          
+          if(unit !== undefined){
+            unit = unit.split('<br />\r\n')[2];
+            unit = watermapApp.trim(unit);
+            unit = unit.replace("\r\n","");
+            unit = unit.replace("(","");
+            unit = unit.replace(")","");
+            thisReport.diversion_unit = unit;
+          }
 
 
         
+        
+          thisReport.total_diverted = $(this).find('td:nth-child(2)').html();
+          thisReport.total_used = $(this).find('td:nth-child(2)').html();
+
+        });        
+
+
+        thisReport.amount_diverted = diversionItemArray;
+        thisReport.amount_used = diversionUsedArray;
+
+        //thisReport.diversion = watermapApp.trim(diversion);
+
+
+
+      var year = $('h3:contains("[FINAL SUBMITTED VERSION]")').html();
+      console.log(year);
+      if(year !== undefined){
+        thisReport.year = year.split('FOR')[1];
+        thisReport.year.replace('\r\n','');
+        thisReport.year = watermapApp.trim(thisReport.year);
+      }
+
+/*
+
+        thisReport.conservation = $('table tr th:contains("Conservation of Water")').parent().parent().find('tr::nth-child(2) td:last-child');
+        thisReport.conservation = watermapApp.trim(thisReport.conservation);
+        
+          
+*/    
+
 
         thisReport.ewrims_db_id = db_id;
         thisReport.ewrims_form_id= form_id; //push to array
@@ -416,7 +487,7 @@ console.log(db_id + " " + form_id);
         // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
         // @NOTE Does not have geocoded data, that has to come from the GIS server.
 
-        watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
+        //watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
     
       }
     });
