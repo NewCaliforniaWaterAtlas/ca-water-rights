@@ -87,7 +87,7 @@ app.post('/data', function(req, res, options){
 app.get('/search/holders', function(req, res, options){
   console.log(req.query);
   var regex = new RegExp('' + req.query.value, "i");
-  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex},{'properties.reports': { $in:  {$or: [{'usage': regex},{'usage_quantity': regex}] }} }   ]}]};
+  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {'properties.reports': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex},{'properties.reports': { $in:  {$or: [{'usage': regex},{'usage_quantity': regex}] }} }   ]}]};
   console.log(query);
   engine.find_many_by(query,function(error, results) {
     if(!results || error) {
@@ -127,6 +127,7 @@ app.get('/list/usage', function(req, res, options){
         
           for (j in report ) {
             if(report[j]['usage'] !== undefined) {
+
             string += results[i].properties.name + " | ";
             string += results[i].properties.app_pod + " | ";
                 if(report[j]['usage'] instanceof Array) {
@@ -138,6 +139,8 @@ app.get('/list/usage', function(req, res, options){
                   string += report[j]['usage'] + " | " + report[j]['usage_quantity'] + "<br />";
                 }
             }
+            
+            string += " | Year: " + report[j]["year"] + "<br />"; 
 
           }
         string += "<br />";
@@ -403,7 +406,7 @@ console.log(db_id + " " + form_id);
         var diversionItemArray = new Array();
         var diversionUsedArray = new Array();
         
-      $('table tr th:contains("Amount of Water Diverted and Used")').parent().parent().find('tr').each(function(){
+      $('table tr th:contains("Amount directly diverted")').parent().parent().find('tr').each(function(){
 
 
         var month = '';
@@ -450,7 +453,10 @@ console.log(db_id + " " + form_id);
         
           thisReport.total_diverted = $(this).find('td:nth-child(2)').html();
           thisReport.total_used = $(this).find('td:nth-child(2)').html();
-
+          
+          console.log("TOTAL USED" + thisReport.total_used);
+          console.log("TOTAL DIVERTED" + thisReport.total_diverted);
+          
         });        
 
 
@@ -487,7 +493,7 @@ console.log(db_id + " " + form_id);
         // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
         // @NOTE Does not have geocoded data, that has to come from the GIS server.
 
-        //watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
+        watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
     
       }
     });
