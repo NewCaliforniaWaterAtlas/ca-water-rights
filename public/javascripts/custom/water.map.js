@@ -424,17 +424,16 @@ if(feature.properties.reports) {
   if(feature.properties.reports[0]) {
 
 
-      
+ if(feature.properties.reports[0][i] !== undefined){      
  if (feature.properties.reports[0][i]['usage'] instanceof Array) {
+
     for(var i in feature.properties.reports[0][i]['usage']) {
       string +=  "Usage" + feature.properties.reports[0][i]['usage'][i] + ', ' + feature.properties.reports[0][i]['usage_quantity'][i] + "<br />";
+        }
+    } else {
+          string +=  "Usage" + feature.properties.reports[0][i]['usage'] + ', ' + feature.properties.reports[0][i]['usage_quantity'];
     }
-} else {
-      string +=  "Usage" + feature.properties.reports[0][i]['usage'] + ', ' + feature.properties.reports[0][i]['usage_quantity'];
-}
-    
-/*     } */
-  
+    }  
   }
 
 
