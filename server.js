@@ -1807,21 +1807,20 @@ watermap_app.formatEWRIMSforSaving = function(feature, results) {
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-// get USGS test
+// get USGS Data from RESTful API
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get('/usgs/:station', function(req, res) {
+app.get('/usgs/:station/:pcode', function(req, res) {
   var station = req.params.station;
+  var pcode = req.params.pcode;
   
   request.get({ 
     url: 'http://waterservices.usgs.gov/nwis/dv/?format=json', 
-    qs: {site: station}
+    qs: {site: station, parameterCd: pcode}
+
     }, function(err,res,body){
 
       var obj = JSON.parse(body);
-      // obj.value.timeSeries.forEach(function (d) {
-      //   console.log(d.sourceInfo.siteName);
-      // });
 
   }).pipe(res);
 
