@@ -7,129 +7,115 @@
     <meta name="description" content="Real time water brokerage">
     <meta name="author" content="http://watertransfer.org">
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/libraries/bootstrap/docs/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/libraries/bootstrap/docs/assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/libraries/bootstrap/docs/assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="/libraries/bootstrap/docs/assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="/libraries/bootstrap/docs/assets/ico/favicon.ico">
+    
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/libraries/bootstrap/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/libraries/bootstrap/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/libraries/bootstrap/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/libraries/bootstrap/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="/libraries/bootstrap/ico/favicon.ico">
+    
     <link href="/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/libraries/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/css/bootstrap_themes/bootstrap.min.water-transfer.css" rel="stylesheet">
+    <!-- <link href="/css/bootstrap_themes/bootstrap.min.water-transfer.css" rel="stylesheet"> -->
     <link href='/css/mapbox.css' rel='stylesheet' />
     <link href='/css/jquery.qtip.min.css' rel='stylesheet' type='text/css' /> 
     <link rel="stylesheet" href="/css/style.css" />
+    
     <script type="text/javascript" src="/javascripts/libraries/jquery.js"></script>
     <script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script>
     <script src='/javascripts/libraries/mapbox.js'></script>    
   </head>
   <body>    
-    <!-- Page content -->
-    <div class="navbar navbar-fixed-top">
+    <!-- Nav -->
+    <div class="navbar navbar-static-top">
       <div class="navbar-inner">
-<!--
+  <!--
         <div class="container-fluid">
           <div class="row">
--->
+  -->
             <a class="brand">Water Transfer</a>
-            <a class="tagline">Real-time water brokerage</a>
-<!--           </div> -->
-<!--
+  <!--           </div> -->
+  <!--
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#map" data-toggle="tab">Map</a></li>
               <li><a href="#about" data-toggle="tab">About</a></li>
             </ul>
           </div>
--->
-<!--         </div> -->
+  -->
+  <!--         </div> -->
       </div>
     </div>
-  <!-- Main page content -->
-
-  <div class="container-fluid">
-  <div id="page-content" class="tab-content">
-    <!--map-->
-    <div class="tab-pane fade active in" id="map">
-    <div class="container-fluid"> 
-      <div class="row-fluid">
-        <div id="map-outer-container">
-            <div id="map-container">  
+    
+    <!-- Content Wrap -->
+    <div id="content-wrap">
+      
+      <!-- Map Page -->
+      <section id="map-page-wrap">
+        
+        <class="container-fluid"> 
+          <div class="row-fluid">
+            
+            <div id="map-outer-container">
+              <div id="map-container"></div>
             </div>
-          </div>
 
-
-
-
-          <div id="map-panel">
-
-            <div class="alert"> 
+            <div id="map-panel">
+              <div class="alert"> 
                 <div class="content">Loading the map</div>
                 <div class="zoom-level"></div>
-            </div>
-          
-        
-            <div class="filters"> 
+              </div>
+              
+              <div class="filters"> 
                 <div class="inputs">
                   <input class="search-holders" type="text" data-provide="typeahead">
                 </div>
+              </div>
+            
+              <div class="list-content"></div>
+            </div><!-- #map-panel -->
+
+          </div><!-- .row-fluid -->   
+        </div><!-- .container-fluid -->
+  
+      </section><!-- #map-page-wrap -->
+      <br>
+      <br>
+      <section>
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span12">
+              <div class="well">
+                <p>Nullam id tincidunt felis. Pellentesque lorem quam, dictum et fringilla ac, sagittis ut justo. Vivamus nec turpis elit, vel pulvinar dui. Curabitur venenatis hendrerit sem, laoreet cursus mi venenatis vitae. Sed mollis, leo vel volutpat mattis, nibh augue ultrices nunc, vitae commodo ipsum velit sed eros. Quisque metus ante, feugiat eu viverra eget, rhoncus nec neque. Sed et purus enim. Cras molestie consectetur gravida.</p>
+              </div>
             </div>
-          
-            <div class="list-content">
+          </div>
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="well">
+                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+              </div>
             </div>
-         
+            <div class="span6">
+              <div class="well">
+                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+              </div>
+            </div>
           </div>
 
         </div>
-        
-      </div>
-    </div>
+      </section>
+    
+    </div><!-- #content-wrap -->
 
-
-    <div class="tab-pane fade in span8" id="about">
-      <h1>About</h1>
-      <p>about</p>
-    </div><!--/end about-->
-
-    </div><!--/end container-fluid-->
-
-    <footer>
-        <div class="container-fluid">      
-        <div class="row">
-
-
-          <div class="iphone-debug">
-            Debugging
-          </div>
-
-          <div class="span6">
-            <h3>A map of water rights in California.</h3>
-            <p>Lorem ipsum</p>
-          </div>
-          </div>
-        <div class="row">          
-          <div class="span6">
-            <h3>Learn more</h3>
-          </div>
-
-          <div class="span6">
-            <h3>About the project</h3> 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed quam at massa venenatis placerat sit amet at nibh. In eu fermentum dolor. Maecenas quis vestibulum arcu. Proin egestas, leo ut adipiscing ultrices, lectus magna laoreet odio, sed accumsan justo ante nec dui. Nullam lacinia mauris cursus sapien aliquet id imperdiet metus ornare. Nulla lorem tellus, fermentum et sollicitudin sed, laoreet sit amet odio. Nullam tincidunt mauris id felis ultrices ac adipiscing elit venenatis. Donec at elit odio, interdum feugiat dolor. Phasellus enim nibh, euismod vitae mattis eget, dapibus at dolor. In hac habitasse platea dictumst.</p>  
-
-<p>Nullam id tincidunt felis. Pellentesque lorem quam, dictum et fringilla ac, sagittis ut justo. Vivamus nec turpis elit, vel pulvinar dui. Curabitur venenatis hendrerit sem, laoreet cursus mi venenatis vitae. Sed mollis, leo vel volutpat mattis, nibh augue ultrices nunc, vitae commodo ipsum velit sed eros. Quisque metus ante, feugiat eu viverra eget, rhoncus nec neque. Sed et purus enim. Cras molestie consectetur gravida.</p>      
-        
-          </div>
-          
-        </div>
-      </div><!--/end container-fluid-->
-    </footer>
-
-    </div><!--/.fluid-container-->
-    <!-- End page content -->
+      
     <script type="text/javascript" src="/javascripts/libraries/json2.js"></script>
     <script type="text/javascript" src="/javascripts/libraries/underscore-min.js"></script>
     <script src="/libraries/bootstrap/js/bootstrap.min.js"></script>
     <script src="/javascripts/custom/core.js"></script>
     <script src="/javascripts/custom/water.js"></script>
     <script src="/javascripts/custom/water.map.js"></script>
+  
   </body>
 </html>
