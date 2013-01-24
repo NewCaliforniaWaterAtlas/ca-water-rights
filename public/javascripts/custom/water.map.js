@@ -388,70 +388,85 @@ water.formatTooltipStrings = function(feature) {
     }
 
     if (feature.properties.agency_cd !== undefined) {
+      
+      function getUSGS(){ 
 
-      string +=  
-        "<p>" + "Station Name: " + feature.properties.station_nm + "</p>"
-      + "<p>" + "Station ID: " + feature.properties.site_no + "</p>"
-      + "<p>" + "Water Temperature: " + feature.tempValue + " " + feature.tempUnitAbrv + "</p>"
-      + "<p>" + "Physical Discharge: " + "<strong>" + feature.flowValue + "</strong>" +" "+ feature.flowUnitAbrv + "</p>"
-      + "<p>" + "Gage Height: " + feature.gageValue + feature.gageUnitAbrv + "</p>"
-      ;
+        string +=  
+          "<p>" + "Station Name: " + feature.properties.station_nm + "</p>"
+        + "<p>" + "Station ID: " + feature.properties.site_no + "</p>"
+        + "<p>" + "Water Temperature: " + feature.tempValue + " " + feature.tempUnitAbrv + "</p>"
+        // + "<p>" + "Physical Discharge: " + "<strong>" + feature.flowValue + "</strong>" +" "+ feature.flowUnitAbrv + "</p>"
+        // + "<p>" + "Gage Height: " + feature.gageValue + feature.gageUnitAbrv + "</p>"
+        ;
 
-      // &parameterCd=00004,00010,00060,00064,00065
+        // &parameterCd=00004,00010,00060,00064,00065
 
         $.ajax({
           type: "GET",
           url: "/usgs/" + feature.properties.site_no + "/00010",
           dataType: 'json',
           success: function(data) {
-            
-            // feature.siteName = data.value.timeSeries[0].sourceInfo.siteName;
-
             //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
             feature.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
             feature.tempValue = data.value.timeSeries[0].values[0].value[0].value;
-            
-            //00004 Physical Stream width, feet, Instream features, est. stream width ft
-            //00064 Physical Mean depth of stream, feet, Depth ft
-
-            // console.log(data.value.timeSeries[0].values[0].value[0].value);
-
           }
         });
 
-        $.ajax({
-          type: "GET",
-          url: "/usgs/" + feature.properties.site_no + "/00060",
-          dataType: 'json',
-          success: function(data) {
-            
-            //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
-            feature.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-            feature.flowValue = data.value.timeSeries[0].values[0].value[0].value
+      }
 
-          }
-        });
+      $.when( getUSGS() ).done(function(results1) {
+        return results1;
+      });
 
-        $.ajax({
-          type: "GET",
-          url: "/usgs/" + feature.properties.site_no + "/00065",
-          dataType: 'json',
-          success: function(data) {
+      // $.ajax({
+      //   type: "GET",
+      //   url: "/usgs/" + feature.properties.site_no + "/00010",
+      //   dataType: 'json',
+      //   success: function(data) {
+          
+      //     // feature.siteName = data.value.timeSeries[0].sourceInfo.siteName;
 
-            //00065 Physical Gage height, feet, Height, gage ft
-            feature.gageUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-            feature.ageValue = data.value.timeSeries[0].values[0].value[0].value;
+      //     //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
+      //     feature.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+      //     feature.tempValue = data.value.timeSeries[0].values[0].value[0].value;
+          
+      //     //00004 Physical Stream width, feet, Instream features, est. stream width ft
+      //     //00064 Physical Mean depth of stream, feet, Depth ft
 
-          }
-        });
-      
+      //     // console.log(data.value.timeSeries[0].values[0].value[0].value);
 
-      // $.when( getUSGS()).done(function(results1) {
-        
-      //   console.log(results1); 
+      //   }
       // });
+
+      // $.ajax({
+      //   type: "GET",
+      //   url: "/usgs/" + feature.properties.site_no + "/00060",
+      //   dataType: 'json',
+      //   success: function(data) {
+          
+      //     //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
+      //     feature.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+      //     feature.flowValue = data.value.timeSeries[0].values[0].value[0].value
+
+      //   }
+      // });
+
+      // $.ajax({
+      //   type: "GET",
+      //   url: "/usgs/" + feature.properties.site_no + "/00065",
+      //   dataType: 'json',
+      //   success: function(data) {
+
+      //     //00065 Physical Gage height, feet, Height, gage ft
+      //     feature.gageUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+      //     feature.ageValue = data.value.timeSeries[0].values[0].value[0].value;
+
+      //   }
+      // });
+      
     
-    }  
+    }
+
     return string;
 };
 
