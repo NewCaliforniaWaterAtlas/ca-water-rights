@@ -16,39 +16,41 @@ EngineProvider.prototype.save = function(blob,handler) {
 
   var _id =           blob["_id"];
 
-  // debug
-
+/*
   console.log("Server::agent::save got a request to save object id " + _id);
   for(var property in blob) {
     console.log("..Saving property " + property + " " + blob[property] );
   }
+*/
 
-  // Search for existing by ID or FBID
-
+  // Search for existing by ID
   var search = 0;
-  if(_id) search = {_id: c.db.bson_serializer.ObjectID.createFromHexString(id)};
+  if(_id) search = {_id: _id.toHexString()};
 
   // If no ID yet then save as a new object and return it
-
   if(!search) {
-    console.log("Server::save got a request to save object id " + _id );
+/*     console.log("Server::save got a request to save object id " + _id ); */
     this.db.save(blob,handler);
     return;
   }
 
   // If an ID does exist then recycle it or fail
-
   var mydatabase = this.db;
   this.db.find_one_by(search, function(error, agent) {
     if(error) { handler(error,0); return; }
     if(agent) {
       _id = agent._id;
-      console.log("Server::save got a request to update object id " + _id);
+/*       console.log("Server::save got a request to update object id " + _id); */
+
       for(var property in blob) {
+/*       console.log("resaving"); */
+/*       console.log(property); */
+
         if(blob.hasOwnProperty(property) && blob[property]) {
           agent[property] = blob[property];
         }
       }
+            
       mydatabase.update(agent,handler);
       return;
     }
@@ -56,8 +58,9 @@ EngineProvider.prototype.save = function(blob,handler) {
       handler("Could not find specified by id " + _id,0);
       return;
     }
-    // FBID's can be saved as new objects - this is an exception to the general rule
-    mydatabase.save( blob, handler );
+
+    // @TODO we wouldn't want to do this, right?
+    //mydatabase.save( blob, handler );
   });
 
 };
@@ -79,7 +82,7 @@ EngineProvider.prototype.findAll = function(handler) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 EngineProvider.prototype.find_many_by = function(blob,handler,arg1,options) {
-console.log(options);
+/*   console.log(options); */
   this.db.find_many_by(blob,handler,arg1, options);
 };
 

@@ -5,8 +5,8 @@ water.map = water.map || {};
 water.map_defaults = {};
 water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
-water.map_defaults.boxsize_lat = 0.25; //pretty small box
-water.map_defaults.boxsize_lon = 0.5;
+water.map_defaults.boxsize_lat = 0.05; //pretty small box
+water.map_defaults.boxsize_lon = 0.1;
 water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.terrain_layer = 'chachasikes.map-tv2igp9l';
@@ -40,10 +40,12 @@ water.setupMap = function() {
   // Add satellite layer.
   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
+/*
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
       water.map.interaction.auto(); 
   });
+*/
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
@@ -147,9 +149,7 @@ water.zoomWayInButton = function () {
   $('.zoom-way-in').bind("touchstart", function(){
     water.map.zoom(water.map_defaults.close_up_zoom_level);
   });
-  
-  
-}
+};
 
 water.triggerMarkers = function () {
   water.map_interaction.dragtime_override = true;
@@ -253,9 +253,9 @@ water.drawMarkers = function(features, featureDetails) {
     water.map.addLayer(water[featureDetails.layer]);
     
     // Generate marker layers.
-    water[featureDetails.layer].features(features).factory(function(f) { 
-      var marker = water.makeMarker(f, featureDetails);
-      return marker;
+    water[featureDetails.layer].features(features).factory(function(f) {
+        var marker = water.makeMarker(f, featureDetails);
+        return marker;      
     });
 
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
@@ -276,7 +276,7 @@ water.drawMarkers = function(features, featureDetails) {
     // with the current map extent
     for (var i = 0; i < markers.length; i++) {
       if (extent.containsLocation(markers[i].location)) {
-          inextent.push(markers[i].data.properties.name);
+          inextent.push(markers[i].data.properties.holder_name);
       }
     }
 
@@ -354,24 +354,57 @@ water.makeMarker = function(feature, featureDetails) {
 };
 
 water.formatTooltipStrings = function(feature) {
-    //console.log(feature);
+    console.log(feature);
 
     var string = '';
     if (feature.properties.holder_name !== undefined) {
       string +=  
-        "<p>" + "Owner: " + feature.properties.holder_name + "</p>"
-      + "<p>" + "Type: " + feature.properties.organization_type + "</p>"
-      + "<p>" + "Source: " + feature.properties.source_name + "</p>"
-      + "<p>" + "Watershed: " + feature.properties.watershed + "</p>"
-      + "<p>" + "County: " + feature.properties.county + "</p>"
-      + "<p>" + "Right Type: " + feature.properties.water_right_type + "</p>"
-      + "<p>" + "Right Status: " + feature.properties.status + "</p>"
-      + "<p>" + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "</p>"
-      + "<p>" + "Storage: " + feature.properties.diversion_storage_amount + "</p>";
+        "<h4>Water Right</h4>" +
+        "<p>" + "Name: ";
+        if(feature.properties.first_name){
+          string += feature.properties.first_name + " ";
+        }
+        if(feature.properties.holder){ 
+          string += feature.properties.holder_name;
+        }
+        else {
+          string += feature.properties.name;
+        }
+        string += "</p>"
+        
+        string += "Diversion Type: " + feature.properties.diversion_type + "<br />";
+        string += "Direct Diversion Amount: "  + "<br />";feature.properties.direct_div_amount;
+        string += "Face amount: " + feature.properties.face_amount + " " + feature.properties.face_value_units + "<br />";
+        string += "Diversion Acre Feet" + feature.properties.diversion_acre_feet + "<br />";
+        string += "Storage" + feature.properties.diversion_storage_amount + "<br />";
+        string += "POD unit" + feature.properties.pod_unit + "<br />";
+
+        if(feature.properties.reports) {
+        
+          for(r in reports){
+            var report = reports[r];
+            if(report.usage !== undefined){
+             if (report.usage instanceof Array) {
+                for(var i in report['usage']) {
+                string +=  "Usage" + report['usage'][i] + ', ' + report['usage_quantity'][i];
+                }
+             }
+             else{
+                string +=  "Usage" + report['usage'] + ', ' + report['usage_quantity'];
+             }
+           }
+        }
+      
+      string += "<h4>Extra Stuff</h4>"
+      + "<p>" + "pod_id: " +  feature.properties.pod_id + "</p>" 
+      + "<p>" + "application_pod: " +  feature.properties.application_pod + "</p>"
+      + "<p>" + "water_right_id: " +  feature.properties.water_right_id + "</p>"
+      + "<p>" + "Source: " +  feature.properties.source + "</p>";
     }
   
        // console.log(feature.properties.station_code);
 
+/*
     if (feature.properties.station_code !== undefined) {
       string +=  
         "<p>" + "Station Code: " + feature.properties.station_code + "</p>"
@@ -386,87 +419,75 @@ water.formatTooltipStrings = function(feature) {
       + "<p>" + "Real Time Data: <a href=\"http://cdec.water.ca.gov/" + feature.properties.query + "\" target=\"_blank\"> data</a></p>" +
       + "<p>" + "URL Preview: http://cdec.water.ca.gov/" + feature.properties.query + "</p>";
     }
+*/
+/*
 
     if (feature.properties.agency_cd !== undefined) {
-      
-      function getUSGS(){ 
 
-        string +=  
-          "<p>" + "Station Name: " + feature.properties.station_nm + "</p>"
-        + "<p>" + "Station ID: " + feature.properties.site_no + "</p>"
-        + "<p>" + "Water Temperature: " + feature.tempValue + " " + feature.tempUnitAbrv + "</p>"
-        // + "<p>" + "Physical Discharge: " + "<strong>" + feature.flowValue + "</strong>" +" "+ feature.flowUnitAbrv + "</p>"
-        // + "<p>" + "Gage Height: " + feature.gageValue + feature.gageUnitAbrv + "</p>"
-        ;
+      string +=  
+        "<p>" + "Station Name: " + feature.properties.station_nm + "</p>"
+      + "<p>" + "Station ID: " + feature.properties.site_no + "</p>"
+      + "<p>" + "Water Temperature: " + feature.tempValue + " " + feature.tempUnitAbrv + "</p>"
+      + "<p>" + "Physical Discharge: " + "<strong>" + feature.flowValue + "</strong>" +" "+ feature.flowUnitAbrv + "</p>"
+      + "<p>" + "Gage Height: " + feature.gageValue + feature.gageUnitAbrv + "</p>"
+      ;
 
-        // &parameterCd=00004,00010,00060,00064,00065
+      // &parameterCd=00004,00010,00060,00064,00065
 
         $.ajax({
           type: "GET",
           url: "/usgs/" + feature.properties.site_no + "/00010",
           dataType: 'json',
           success: function(data) {
+            
+            // feature.siteName = data.value.timeSeries[0].sourceInfo.siteName;
+
             //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
             feature.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
             feature.tempValue = data.value.timeSeries[0].values[0].value[0].value;
+            
+            //00004 Physical Stream width, feet, Instream features, est. stream width ft
+            //00064 Physical Mean depth of stream, feet, Depth ft
+
+            // console.log(data.value.timeSeries[0].values[0].value[0].value);
+
           }
         });
 
-      }
+        $.ajax({
+          type: "GET",
+          url: "/usgs/" + feature.properties.site_no + "/00060",
+          dataType: 'json',
+          success: function(data) {
+            
+            //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
+            feature.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            feature.flowValue = data.value.timeSeries[0].values[0].value[0].value
 
-      $.when( getUSGS() ).done(function(results1) {
-        return results1;
-      });
+          }
+        });
 
-      // $.ajax({
-      //   type: "GET",
-      //   url: "/usgs/" + feature.properties.site_no + "/00010",
-      //   dataType: 'json',
-      //   success: function(data) {
-          
-      //     // feature.siteName = data.value.timeSeries[0].sourceInfo.siteName;
+        $.ajax({
+          type: "GET",
+          url: "/usgs/" + feature.properties.site_no + "/00065",
+          dataType: 'json',
+          success: function(data) {
 
-      //     //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
-      //     feature.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-      //     feature.tempValue = data.value.timeSeries[0].values[0].value[0].value;
-          
-      //     //00004 Physical Stream width, feet, Instream features, est. stream width ft
-      //     //00064 Physical Mean depth of stream, feet, Depth ft
+            //00065 Physical Gage height, feet, Height, gage ft
+            feature.gageUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            feature.ageValue = data.value.timeSeries[0].values[0].value[0].value;
 
-      //     // console.log(data.value.timeSeries[0].values[0].value[0].value);
-
-      //   }
-      // });
-
-      // $.ajax({
-      //   type: "GET",
-      //   url: "/usgs/" + feature.properties.site_no + "/00060",
-      //   dataType: 'json',
-      //   success: function(data) {
-          
-      //     //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
-      //     feature.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-      //     feature.flowValue = data.value.timeSeries[0].values[0].value[0].value
-
-      //   }
-      // });
-
-      // $.ajax({
-      //   type: "GET",
-      //   url: "/usgs/" + feature.properties.site_no + "/00065",
-      //   dataType: 'json',
-      //   success: function(data) {
-
-      //     //00065 Physical Gage height, feet, Height, gage ft
-      //     feature.gageUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-      //     feature.ageValue = data.value.timeSeries[0].values[0].value[0].value;
-
-      //   }
-      // });
+          }
+        });
+*/
       
-    
-    }
 
+      // $.when( getUSGS()).done(function(results1) {
+        
+      //   console.log(results1); 
+      // });
+    
+    }  
     return string;
 };
 
