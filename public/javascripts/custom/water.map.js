@@ -5,8 +5,8 @@ water.map = water.map || {};
 water.map_defaults = {};
 water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
-water.map_defaults.boxsize_lat = 0.25; //pretty small box
-water.map_defaults.boxsize_lon = 0.5;
+water.map_defaults.boxsize_lat = 0.05; //pretty small box
+water.map_defaults.boxsize_lon = 0.1;
 water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.terrain_layer = 'chachasikes.map-tv2igp9l';
@@ -40,10 +40,12 @@ water.setupMap = function() {
   // Add satellite layer.
   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
+/*
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
       water.map.interaction.auto(); 
   });
+*/
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
@@ -253,9 +255,9 @@ water.drawMarkers = function(features, featureDetails) {
     water.map.addLayer(water[featureDetails.layer]);
     
     // Generate marker layers.
-    water[featureDetails.layer].features(features).factory(function(f) { 
-      var marker = water.makeMarker(f, featureDetails);
-      return marker;
+    water[featureDetails.layer].features(features).factory(function(f) {
+        var marker = water.makeMarker(f, featureDetails);
+        return marker;      
     });
 
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
@@ -276,7 +278,7 @@ water.drawMarkers = function(features, featureDetails) {
     // with the current map extent
     for (var i = 0; i < markers.length; i++) {
       if (extent.containsLocation(markers[i].location)) {
-          inextent.push(markers[i].data.properties.name);
+          inextent.push(markers[i].data.properties.holder_name);
       }
     }
 
@@ -354,20 +356,249 @@ water.makeMarker = function(feature, featureDetails) {
 };
 
 water.formatTooltipStrings = function(feature) {
-    //console.log(feature);
+    console.log(feature);
 
     var string = '';
     if (feature.properties.holder_name !== undefined) {
       string +=  
-        "<p>" + "Owner: " + feature.properties.holder_name + "</p>"
-      + "<p>" + "Type: " + feature.properties.organization_type + "</p>"
-      + "<p>" + "Source: " + feature.properties.source_name + "</p>"
-      + "<p>" + "Watershed: " + feature.properties.watershed + "</p>"
-      + "<p>" + "County: " + feature.properties.county + "</p>"
-      + "<p>" + "Right Type: " + feature.properties.water_right_type + "</p>"
-      + "<p>" + "Right Status: " + feature.properties.status + "</p>"
-      + "<p>" + "Diversion: " + feature.properties.diversion + feature.properties.diversion_units + "</p>"
-      + "<p>" + "Storage: " + feature.properties.diversion_storage_amount + "</p>";
+        "<h4>Water Right</h4>" +
+        "<p>" + "Name: ";
+          if(feature.properties.first_name){
+            string += feature.properties.first_name + " ";
+          }
+          if(feature.properties.holder){ 
+            string += feature.properties.holder_name;
+          }
+          else {
+            string += feature.properties.name;
+          }
+        string += "</p>"
+        
+        string += "Diversion Type: " + feature.properties.diversion_type + "<br />";
+        string += "Direct Diversion Amount: "  + "<br />";feature.properties.direct_div_amount;
+        string += "Face amount: " + feature.properties.face_amount + " " + feature.properties.face_value_units + "<br />";
+        string += "Diversion Acre Feet" + feature.properties.diversion_acre_feet + "<br />";
+        string += "Storage" + feature.properties.diversion_storage_amount + "<br />";
+        string += "POD unit" + feature.properties.pod_unit + "<br />";
+/*
+        if(feature.properties.face_value_amount !== undefined || feature.properties.diversion_storage_amount){
+          
+          if(feature.properties.face_value_amount !== undefined){
+            string += "<p>" + "Face Amount: " +  feature.properties.face_value_amount;          
+          }
+          if(feature.properties.face_value_amount === undefined && feature.properties.diversion_storage_amount !== undefined){
+            string += "<p>" + "Diversion Amount: " +  feature.properties.diversion_storage_amount;
+          }
+          if(feature.properties.face_value_units){
+            string += " " + feature.properties.face_value_units;
+          }
+          else if(feature.properties.pod_unit) {
+            string += " " + feature.properties.pod_unit + "</p>";
+          }
+          string += "</p>";
+        }
+*/
+        
+        
+/*       + "<p>" + "Entity Type: " +  feature.properties.entity_type + "</p>"   */
+/*
+      + "<p>" + "Organization Type: " +  feature.properties.organization_type + "</p>"        
+      + "<p>" + "Water Right Status: " +  feature.properties.water_right_status + "</p>"    
+        
+*/
+ /*
+     + "<p>" + "Since: ";
+          if(feature.properties.date_received) string += feature.date_received;
+          else string += feature.properties.date_accepted    
+        string += "</p>"
+      + "<p>" + "Effective from: " +  feature.properties.effective_from_date + "</p>"        
+      + "<p>" + "Year First Use" +  feature.properties.year_first_use + "</p>"
+      
+      + "<p>" + "Type of Water Right: " +  feature.properties.water_right_type + "</p>"
+      + "<p>" + "Use: " +  feature.properties.use_code + "</p>";
+*/
+
+
+if(feature.properties.reports) {
+  //just do the first year (get the year from the docs)
+  if(feature.properties.reports[0]) {
+
+
+ if(feature.properties.reports[0][i] !== undefined){      
+ if (feature.properties.reports[0][i]['usage'] instanceof Array) {
+
+    for(var i in feature.properties.reports[0][i]['usage']) {
+      string +=  "Usage" + feature.properties.reports[0][i]['usage'][i] + ', ' + feature.properties.reports[0][i]['usage_quantity'][i] + "<br />";
+        }
+    } else {
+          string +=  "Usage" + feature.properties.reports[0][i]['usage'] + ', ' + feature.properties.reports[0][i]['usage_quantity'];
+    }
+    }  
+  }
+
+
+}
+
+/*
+      if(feature.properties.usage) {
+        string += "<p>" + "Recent Usage: ";
+        
+        for(var usage in feature.properties.usage) {
+          string +=  feature.properties.usage[i] + ', ' + feature.properties.usage_quantity[i]
+        }
+        string += "</p>";
+      }
+*/
+
+/*
+      string += "<p>" + "Direct Diversion Amount: " +  feature.properties.direct_div_amount + "</p>"
+      + "<p>" + "Diversion Storage: " +  feature.properties.diversion_storage_amount + "</p>"
+      
+*/
+/*       + "<p>" + "face_value_units: " +   + "</p>" */
+
+      
+/*       + "<p>" + "use_status_new: " +  feature.properties.use_status_new + "</p>" */
+/*
+      + "<p>" + "Use Population: " +  feature.properties.use_population + "</p>"
+      + "<p>" + "Use Net Acreage: " +  feature.properties.use_net_acreage + "</p>"
+      + "<p>" + "Use Gross Acreage: " +  feature.properties.use_gross_acreage + "</p>"
+      + "<p>" + "Use DD Annual: " +  feature.properties.use_dd_annual + "</p>"
+      + "<p>" + "Use DD Rate: " +  feature.properties.use_dd_rate + " " + feature.properties.use_dd_rate_units + "</p>"
+      + "<p>" + "Use Storage Amount: " +  feature.properties.use_storage_amount + "</p>"
+
+      + "<p>" + "Max Direct Diversion Appl(?)" +  feature.properties.max_dd_appl + " " + feature.properties.max_dd_units + "</p>"
+
+      + "<p>" + "Max Direct Diversion Annual" +  feature.properties.max_dd_ann + "</p>"
+      + "<p>" + "Max Storage" +  feature.properties.max_storage + "</p>"
+      + "<p>" + "Max Use Appl" +  feature.properties.max_use_app + "</p>"
+*/
+
+/*
+
+      + "<h4>Watershed</h4>"
+      + "<p>" + "Source: " +  feature.properties.source_name + "</p>"    
+      + "<p>" + "Watershed: " +  feature.properties.watershed + "</p>"    
+      + "<p>" + "City: " +  feature.properties.city + "</p>"
+      + "<p>" + "County: " +  feature.properties.county + "</p>"
+*/
+      
+      string += "<h4>Extra Stuff</h4>"
+      + "<p>" + "pod_id: " +  feature.properties.pod_id + "</p>"
+      + "<p>" + "application_pod: " +  feature.properties.application_pod + "</p>"
+      + "<p>" + "water_right_id: " +  feature.properties.water_right_id + "</p>"
+      + "<p>" + "Source: " +  feature.properties.source + "</p>";
+
+/*
+      + "<p>" + "pod_number" +  feature.properties.source + "</p>";
+      + "<p>" + "application_id" +  feature.properties.source + "</p>";
+
+      + "<p>" + "diversion_acre_feet" +  feature.properties.source + "</p>";
+      + "<p>" + "pod_status" +  feature.properties.source + "</p>";
+
+      + "<p>" + "diversion_type" +  feature.properties.source + "</p>";
+      + "<p>" + "source_alt" +  feature.properties.source + "</p>";
+
+
+
+
++ "<p>" + "date_accepted" +  feature.properties.source + "</p>";
++ "<p>" + "date_notice" +  feature.properties.source + "</p>";
++ "<p>" + "protest" +  feature.properties.source + "</p>";
++ "<p>" + "number_protests" +  feature.properties.source + "</p>";
++ "<p>" + "agent_name" +  feature.properties.source + "</p>";
++ "<p>" + "agent_entity_type" +  feature.properties.source + "</p>";
++ "<p>" + "primary_owner" +  feature.properties.source + "</p>";
++ "<p>" + "primary_owner_entity_type" +  feature.properties.source + "</p>";
+
++ "<p>" + "face_value_amount" +  feature.properties.source + "</p>";
+
+
+
+
++ "<p>" + "effective_from_date" +  feature.properties.source + "</p>";
++ "<p>" + "effective_to_date" +  feature.properties.source + "</p>";
+
++ "<p>" + "entity_type" +  feature.properties.source + "</p>";
++ "<p>" + "holder_name" +  feature.properties.source + "</p>";
+
++ "<p>" + "first_name" +  feature.properties.source + "</p>";
+
++ "<p>" + "city" +  feature.properties.source + "</p>";
++ "<p>" + "state" +  feature.properties.source + "</p>";
++ "<p>" + "zipcode" +  feature.properties.source + "</p>";
++ "<p>" + "phone" +  feature.properties.source + "</p>";
++ "<p>" + "status" +  feature.properties.source + "</p>";
+
+
++ "<p>" + "pod_unit": feature['POD Unit'],
++ "<p>" + "pod_status": feature['POD Status'],
++ "<p>" + "pod_id" : feature['POD Number'],    
++ "<p>" + "direct_div_amount": feature['Direct Div Amount'],
++ "<p>" + "diversion_acre_feet": feature['Direct Div Ac Ft'],
++ "<p>" + "diversion_storage_amount": feature['Amount Storage'],
++ "<p>" + "pod_max_dd": feature['POD Max Dd'],
++ "<p>" + "source_max_dd_unit": feature['Source Max Dd Unit'],
++ "<p>" + "pod_max_storage": feature['POD Max Storage'],
++ "<p>" + "source_max_storage_unit": feature['Source Max Storage Unit'],
++ "<p>" + "storage_type": feature['Storage Type'],
++ "<p>" + "pod_gis_maintained_data": feature['POD GIS Maintained Data'],
++ "<p>" + "appl_id": feature['Appl ID'],
++ "<p>" + "water_right_id": feature['Object ID'],
++ "<p>" + "pod_number": feature['POD Number'],
++ "<p>" + "has_opod": feature['Has Opod'],
++ "<p>" + "appl_pod": feature['Appl Pod'],
++ "<p>" + "podid": feature['podId'],
++ "<p>" + "county": feature['County'],
+
+
+
+
+
++ "<p>" + "source_name": feature['Source Name'],
++ "<p>" + "trib_desc": feature['TribDesc'],
++ "<p>" + "watershed": feature['Watershed'],
+
++ "<p>" + "permit_id": feature['Permit ID'],
++ "<p>" + "water_right_description": feature['Water Right Description'],
++ "<p>" + "issue_date": feature['Issue Date'],
++ "<p>" + "construction_completed_by": feature['Construction Completed by'],
++ "<p>" + "planned_project_completion_date": feature['Planned Project Completion Date'],
++ "<p>" + "permit_terms": feature['Permit Terms'],
+
++ "<p>" + "diversion_code_type" : "Diversion point",
++ "<p>" + "water_right_type" : "Stockpond",
++ "<p>" + "water_right_status" : "Certified",
++ "<p>" + "storage_type" : "Point of Diversion",
++ "<p>" + "pod_unit" : "Gallons per Day",
++ "<p>" + "first_name" : null,
++ "<p>" + "holder_name" : "MONTGOMERY-GILL RANCH COMPANY",
++ "<p>" + "organization_type" : "Corporation",
++ "<p>" + "application_pod" : "C001471_01",
+
++ "<p>" + "latitude" : 36.08197336,
++ "<p>" + "longitude" : -118.824282,
++ "<p>" + "trib_desc" : null,
++ "<p>" + "location_method" : "DD_NE",
++ "<p>" + "source_name" : "UNST",
++ "<p>" + "moveable" : "N",
++ "<p>" + "has_opod" : "N",
++ "<p>" + "watershed" : "SOUTHERN SIERRA",
++ "<p>" + "county" : "Tulare",
++ "<p>" + "well_number" : "   ",
++ "<p>" + "quad_map_name" : "GLOBE",
++ "<p>" + "quad_map_num" : "LL073 ",
++ "<p>" + "quad_map_min_ser" : "7.5",
++ "<p>" + "parcel_number" : null,
++ "<p>" + "special_area" : null,
++ "<p>" + "last_update_user_id" : 9,
++ "<p>" + "date_last_updated" : 1191046436000,
++ "<p>" + "status" : "Active"
+*/
+
+
+
+
     }
   
        // console.log(feature.properties.station_code);

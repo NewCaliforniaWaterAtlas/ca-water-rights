@@ -155,6 +155,21 @@ hr {
   width: 180px;
 }
 
+.marker-tooltip {
+/*   padding: 0px 10px 10px 0px; */
+/*   top: 160px; */
+/*   left: 75%; */
+/*   width: 400px; */
+/*   position: fixed; */
+/*   height: 100%; */
+/*   z-index: 3000; */
+  font-size: 0.75em;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: #F9F0DC;
+}
+
 #map-panel h3 {
   margin: 20px 0 0 0;
 }
@@ -241,10 +256,12 @@ hr {
 }
 
 
-
+@media (max-width: 480px) { 
 .iphone-debug {
   padding: 10px;
   color: #000;
   background: #fff;
   margin: 20px;
+  display: none;
+}
 }
