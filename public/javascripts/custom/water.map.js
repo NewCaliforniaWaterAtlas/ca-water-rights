@@ -419,25 +419,21 @@ water.formatTooltipStrings = function(feature) {
 */
 
 
-if(feature.properties.reports) {
-  //just do the first year (get the year from the docs)
-  if(feature.properties.reports[0]) {
-
-
- if(feature.properties.reports[0][i] !== undefined){      
- if (feature.properties.reports[0][i]['usage'] instanceof Array) {
-
-    for(var i in feature.properties.reports[0][i]['usage']) {
-      string +=  "Usage" + feature.properties.reports[0][i]['usage'][i] + ', ' + feature.properties.reports[0][i]['usage_quantity'][i] + "<br />";
-        }
-    } else {
-          string +=  "Usage" + feature.properties.reports[0][i]['usage'] + ', ' + feature.properties.reports[0][i]['usage_quantity'];
+    if(feature.properties.reports) {
+    
+      for(r in reports){
+        var report = reports[r];
+        if(report.usage !== undefined){
+         if (report.usage instanceof Array) {
+            for(var i in report['usage']) {
+            string +=  "Usage" + report['usage'][i] + ', ' + report['usage_quantity'][i];
+            }
+         }
+         else{
+            string +=  "Usage" + report['usage'] + ', ' + report['usage_quantity'];
+         }
+       }
     }
-    }  
-  }
-
-
-}
 
 /*
       if(feature.properties.usage) {
@@ -484,7 +480,7 @@ if(feature.properties.reports) {
 */
       
       string += "<h4>Extra Stuff</h4>"
-      + "<p>" + "pod_id: " +  feature.properties.pod_id + "</p>"
+      + "<p>" + "pod_id: " +  feature.properties.pod_id + "</p>" 
       + "<p>" + "application_pod: " +  feature.properties.application_pod + "</p>"
       + "<p>" + "water_right_id: " +  feature.properties.water_right_id + "</p>"
       + "<p>" + "Source: " +  feature.properties.source + "</p>";
