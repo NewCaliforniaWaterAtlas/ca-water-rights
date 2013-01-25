@@ -8,6 +8,8 @@
 
 .navbar-inner {
   background: rgba(232,232,232,0.85);
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
 .navbar .brand {
@@ -127,13 +129,11 @@ hr {
   position:absolute;
   top:40px;
   right:0px;
-  height: 570px;
-  /*height: 100%;*/
-  /*min-height: 530px;*/
+  height: 530px;
   width: 33%;
   background: rgba(215,215,233,.85);
   z-index:7;
-  padding: 10px;
+  padding: 30px;
   font-size: 0.8em;
 }
 
