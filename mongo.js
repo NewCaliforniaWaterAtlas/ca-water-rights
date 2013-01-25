@@ -12,9 +12,9 @@ MongoDB = function(credentials) {
   
   this.db= new Db(credentials.mongo_db, new Server(credentials.mongo_host, credentials.mongo_port, {auto_reconnect: true}, {}));
   this.db.open(function(err,db){
-      console.log("mongodb:: got db " + err + " " + db );
+/*       console.log("mongodb:: got db " + err + " " + db ); */
       db.authenticate(credentials.mongo_user, credentials.mongo_password, function(err2,db2) {
-      console.log("mongodb::auth got db " + err2 + " " + db2 );
+/*       console.log("mongodb::auth got db " + err2 + " " + db2 ); */
     });
   });
 };
@@ -38,11 +38,11 @@ MongoDB.prototype.find_many_by = function(arguments,callback, args1, options) {
       if(arguments._id) arguments._id = c.db.bson_serializer.ObjectID.createFromHexString(arguments._id);
       c.find(myarguments, args1, options).toArray(function(error, results) {
         if( error ) {
-          console.log("mongo:: find many by error " + error);
+/*           console.log("mongo:: find many by error " + error); */
           mycallback(error);
           return;
         }
-        console.log("mongo:: find many by got n results " + results.length);
+/*         console.log("mongo:: find many by got n results " + results.length); */
         mycallback(null, results);
       });
     }
@@ -87,15 +87,15 @@ MongoDB.prototype.find_one_by = function(blob, callback) {
   var mycallback = callback;
   this.getCollection(function(error, c) {
     if( error ) {
-      console.log("mongo:: error in find one by");
+/*       console.log("mongo:: error in find one by"); */
       mycallback(error)
     } else {
 
       if(blob._id) blob._id = c.db.bson_serializer.ObjectID.createFromHexString(blob._id);
 
       c.findOne(blob, function(error, result) {
-        console.log(" mongo::find_one_by returning with error: " + error + " and result: ");
-        console.log(result);
+/*         console.log(" mongo::find_one_by returning with error: " + error + " and result: "); */
+/*         console.log(result); */
         if( error ) mycallback(error)
         else mycallback(null, result);
       });
