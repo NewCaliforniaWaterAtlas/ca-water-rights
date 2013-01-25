@@ -11,7 +11,7 @@ water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.terrain_layer = 'chachasikes.map-tv2igp9l';
 
-water.map_defaults.zoomed_out_marker_layer = 'chachasikes.WaterTransfer-Markers';
+water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
 water.map_defaults.div_container = 'map-container';
 water.map_defaults.close_up_zoom_level = 11;
 water.map_defaults.lowest_tilemill_marker_level = 12;
@@ -40,12 +40,10 @@ water.setupMap = function() {
   // Add satellite layer.
   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
-/*
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
       water.map.interaction.auto(); 
   });
-*/
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
