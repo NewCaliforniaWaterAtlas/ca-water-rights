@@ -283,7 +283,7 @@ mapbox.markers.interaction = function(mmg) {
             if (showOnHover === false) return;
             if (!marker.clicked) close_timer = window.setTimeout(function() {
                 mi.hideTooltips();
-            }, 2000);
+            }, 3000);
         };
 
         var show = function(e) {
@@ -335,7 +335,7 @@ mapbox.markers.interaction = function(mmg) {
                 tooltip.onmouseover = function() {
                     if (close_timer) window.clearTimeout(close_timer);
                 };
-                // tooltip.onmouseout = delayed_close;
+                tooltip.onmouseout = delayed_close;
 
                 tooltip.application_pod = $(content).find('.application_pod').html();
 
@@ -794,7 +794,7 @@ water.formatTooltipStrings = function(feature) {
         string += "Storage" + feature.properties.diversion_storage_amount + "<br />";
         string += "POD unit" + feature.properties.pod_unit + "<br />";
 
-        if(feature.properties.reports) {
+        if(feature.properties.reports !== undefined) {
         
           for(r in reports){
             var report = reports[r];
