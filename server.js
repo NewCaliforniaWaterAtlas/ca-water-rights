@@ -87,7 +87,7 @@ app.post('/data', function(req, res, options){
 app.get('/search/holders', function(req, res, options){
   console.log(req.query);
   var regex = new RegExp('' + req.query.value, "i");
-  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {'properties.reports': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex},{'properties.reports': { $in:  {$or: [{'usage': regex},{'usage_quantity': regex}] }} }   ]}]};
+  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {'properties.reports': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex} /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
   console.log(query);
   engine.find_many_by(query,function(error, results) {
     if(!results || error) {

@@ -1,11 +1,11 @@
 var water = {};
 
 window.onload = function() {
-
+  water.navigation();
   water.setupMap();
   water.setupAddress();
   water.setupFilters();
-  water.navigation();
+
 
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
@@ -40,7 +40,6 @@ water.setupAddress = function () {
 };
 
 water.setupFilters = function () {
-
   $(".search-holders").typeahead({
     minLength: 3,
     source: function (query, process) {
