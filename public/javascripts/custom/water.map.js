@@ -323,7 +323,7 @@ water.loadMarkers = function() {
         if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
           mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
             water.map.addLayer(interactive.layer);
-            water.map.interaction.auto(); 
+            water.map.interaction.movetip(); 
           });
         }
       }
@@ -405,7 +405,7 @@ water.markersQuery = function(reloaded) {
     var lat = center.lat;
     var lon = center.lon;    
 
-    $('.iphone-debug').html("lat: " + lat + " lon: " + lon + "<br />");
+    //$('.iphone-debug').html("lat: " + lat + " lon: " + lon + "<br />");
 
     // Clear out old layer data.
     water.clearMarkerLayers();
@@ -447,7 +447,7 @@ water.drawMarkers = function(features, featureDetails) {
     // @TODO This doesn't work on the div, just the object, but it would be nice to name the layers.
     water[featureDetails.layer].named(featureDetails.layer);
   
-    water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
+    water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]).movetip;
 
     water.map.addLayer(water[featureDetails.layer]);
     
