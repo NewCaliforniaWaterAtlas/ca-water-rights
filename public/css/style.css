@@ -185,18 +185,67 @@ hr {
   overflow-y: scroll;
 }*/
 
-/*.map-tooltip {
-  padding: 0px 10px 10px 0px;
-  top: 160px;
-  left: 75%;
-  height: 100%;
-  z-index: 900;
+.map-tooltip {
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
-  background: #F9F0DC;
-}*/
+  background: transparent;
+  padding: 20px;
+}
 
+.map-tooltip .content {
+  background: #ffffff;
+  padding: 10px;
+  display: block;
+  color: #6d6d6d;
+  border: 1px solid #cccccc;
+}
+
+.map-tooltip .content:before{
+  content: "WATER RIGHT";
+  display: block;
+  color: #a8a8a8;
+  font-size: 0.8em;
+}
+
+.map-tooltip span.name {
+  font-size: 1.6em;
+  font-weight: bold;
+  text-transform: capitalize;
+  display: block;
+  float: left;
+  width: 70%;
+  
+}
+.map-tooltip span.diversion {
+  width: 28%;
+  display: inline-block;
+}
+
+.map-tooltip span.diversion-amount {
+ font-size: 1.6em;
+ background: #ffe3ee;
+ color: #333333;
+ text-align: center;
+ padding: 5px 15px 5px 15px;
+ display: block;
+ font-weight: bold;
+ overflow-x: hidden;
+}
+
+.map-tooltip span.diversion-unit {
+ font-size: 0.8em;
+ color: #6d6d6d;
+ text-align: center;
+ padding: 5px 15px;
+ display: block;
+ line-height: 1em
+}
+
+.map-tooltip span.application_pod {
+  display: none;
+  font-size: 0.1em;
+}
 
 .ui-tooltip-content {
   width: 300px;

@@ -5,9 +5,9 @@ water.map = water.map || {};
 water.map_defaults = {};
 water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
-water.map_defaults.boxsize_lat = 0.05; //pretty small box
-water.map_defaults.boxsize_lon = 0.1;
-water.map_defaults.zoom = 6;
+water.map_defaults.boxsize_lat = 0.08; //pretty small box
+water.map_defaults.boxsize_lon = 0.16;
+water.map_defaults.zoom = 8;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.terrain_layer = 'chachasikes.map-tv2igp9l';
 
@@ -34,6 +34,168 @@ water.map_interaction.dragtime_override = false;
 water.map_interaction.wait = null;
 
 
+
+// Override mapbox wax interaction to add movetip function.
+if (typeof mapbox === 'undefined') mapbox = {};
+
+mapbox.interaction = function() {
+
+    var interaction = wax.mm.interaction(),
+        auto = false;
+
+    interaction.refresh = function() {
+        var map = interaction.map();
+        if (!auto || !map) return interaction;
+        for (var i = map.layers.length - 1; i >= 0; i --) {
+            if (map.layers[i].enabled) {
+                var tj = map.layers[i].tilejson && map.layers[i].tilejson();
+                if (tj && tj.template) return interaction.tilejson(tj);
+            }
+        }
+        return interaction.tilejson({});
+    };
+
+    interaction.auto = function() {
+        auto = true;
+        interaction.on(wax.tooltip()
+            .animate(true)
+            .parent(interaction.map().parent)
+            .events()).on(wax.location().events());
+        return interaction.refresh();
+    };
+
+    interaction.movetip = function() {
+        auto = true;
+        interaction.on(wax.movetip()
+            .parent(interaction.map().parent)
+            .events()).on(wax.location().events());
+            
+        // Add lower image (via css)    
+            
+        return interaction.refresh();
+    };
+
+    return interaction;
+};
+
+
+// override move tip
+wax.movetip = function() {
+    var popped = false,
+        t = {},
+        _tooltipOffset,
+        _contextOffset,
+        tooltip,
+        parent;
+
+    function moveTooltip(e) {
+       var eo = wax.u.eventoffset(e);
+       // faux-positioning
+       if ((_tooltipOffset.height + eo.y) >
+           (_contextOffset.top + _contextOffset.height) &&
+           (_contextOffset.height > _tooltipOffset.height)) {
+           eo.y -= _tooltipOffset.height;
+           tooltip.className += ' flip-y';
+       }
+
+       // faux-positioning
+       if ((_tooltipOffset.width + eo.x) >
+           (_contextOffset.left + _contextOffset.width)) {
+           eo.x -= _tooltipOffset.width;
+           tooltip.className += ' flip-x';
+       }
+
+       tooltip.style.left = eo.x + 'px';
+       tooltip.style.top = eo.y + 'px';
+    }
+
+    // Get the active tooltip for a layer or create a new one if no tooltip exists.
+    // Hide any tooltips on layers underneath this one.
+    function getTooltip(feature) {
+        var tooltip = document.createElement('div');
+        tooltip.className = 'map-tooltip map-tooltip-0';
+        console.log(feature);
+        tooltip.innerHTML = feature;
+        return tooltip;
+    }
+
+    // Hide a given tooltip.
+    function hide() {
+        if (tooltip) {
+          tooltip.parentNode.removeChild(tooltip);
+          tooltip = null;
+        }
+    }
+
+    function on(o) {
+        var content;
+        if (popped) return;
+        if ((o.e.type === 'mousemove' || !o.e.type)) {
+            content = o.formatter({ format: 'teaser' }, o.data);
+            if (!content) return;
+            hide();
+            parent.style.cursor = 'pointer';
+            tooltip = document.body.appendChild(getTooltip(content));
+        } else {
+            content = o.formatter({ format: 'teaser' }, o.data);
+            if (!content) return;
+            hide();
+            var tt = document.body.appendChild(getTooltip(content));
+            tt.className += ' map-popup';
+
+            var close = tt.appendChild(document.createElement('a'));
+            close.href = '#close';
+            close.className = 'close';
+            close.innerHTML = 'Close';
+
+            popped = true;
+
+            tooltip = tt;
+
+            _tooltipOffset = wax.u.offset(tooltip);
+            _contextOffset = wax.u.offset(parent);
+            moveTooltip(o.e);
+
+            bean.add(close, 'click touchend', function closeClick(e) {
+                e.stop();
+                hide();
+                popped = false;
+            });
+        }
+        if (tooltip) {
+          _tooltipOffset = wax.u.offset(tooltip);
+          _contextOffset = wax.u.offset(parent);
+          moveTooltip(o.e);
+        }
+
+    }
+
+    function off() {
+        parent.style.cursor = 'default';
+        if (!popped) hide();
+    }
+
+    t.parent = function(x) {
+        if (!arguments.length) return parent;
+        parent = x;
+        return t;
+    };
+
+    t.events = function() {
+        return {
+            on: on,
+            off: off
+        };
+    };
+
+    return t;
+};
+
+
+
+
+
+
 water.setupMap = function() {
   // Create map.
   water.map = mapbox.map(water.map_defaults.div_container);
@@ -42,7 +204,9 @@ water.setupMap = function() {
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
-      water.map.interaction.auto(); 
+      water.map.interaction.movetip(); 
+      
+
   });
 
   // Add map interface elements.
@@ -84,7 +248,7 @@ water.setupMap = function() {
 // Utility function to recenter (and maybe also to reset / reload the map)
 water.centerMap = function() {
   // default values will not load here.
-  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 6);
+  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8);
 };
 
 
