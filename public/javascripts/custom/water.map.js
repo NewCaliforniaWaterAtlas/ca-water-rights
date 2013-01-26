@@ -452,6 +452,8 @@ water.setupMap = function() {
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
+  water.map.ui.hash.add();
+  water.map.ui.zoombox.add();
   
   water.map.setZoomRange(6, 17);  // 17 is the lowest level of satellite layer.
 /*// @TODO see if we can change the increment of the zoomer.

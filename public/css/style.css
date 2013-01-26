@@ -126,6 +126,12 @@ hr {
   z-index:7;
   padding: 30px;
   font-size: 0.8em;
+  visibility: hidden;
+}
+
+.panel {
+  position: absolute;
+  padding: 10px;
 }
 
 #data-panel h3 {

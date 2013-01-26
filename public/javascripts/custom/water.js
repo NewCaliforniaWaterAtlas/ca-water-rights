@@ -52,15 +52,24 @@ water.setupFilters = function () {
 };
 
 water.displayPanel = function(panel){
+  panel.css('left','0px');
+};
+
+water.displayPanelContainer = function(panel){
+  panel.css('visibility','visible');
   panel.css('right','0px');
 };
 
-water.hidePanel = function(panel){
+water.hidePanelContainer = function(panel){
   panel.css('right','-1000px');
 };
 
+water.hidePanel = function(panel){
+  panel.css('left','1000px');
+};
+
 water.navigationHidePanels = function(){
-  water.hidePanel($('#data-panel'));
+  water.hidePanelContainer($('#data-panel'));
   water.hidePanel($('#map-panel'));
   water.hidePanel($('.alert'));
   water.hidePanel($('#search-panel'));
@@ -72,31 +81,31 @@ water.navigation = function(){
   
   $('#button-water-rights').toggle(function(){
     water.navigationHidePanels();
-    water.displayPanel($('#data-panel'));
+    water.displayPanelContainer($('#data-panel'));
     water.displayPanel($('#map-panel'));
   },function(){
     water.navigationHidePanels();
-    water.hidePanel($('#data-panel'));
+    water.hidePanelContainer($('#data-panel'));
     water.hidePanel($('#map-panel'));
   });
   
   $('#button-sensors').toggle(function(){
     water.navigationHidePanels();
-    water.displayPanel($('#data-panel'));
+    water.displayPanelContainer($('#data-panel'));
     water.displayPanel($('#sensor-panel'));
   },function(){
     water.navigationHidePanels();
-    water.hidePanel($('#data-panel'));
+    water.hidePanelContainer($('#data-panel'));
     water.hidePanel($('#sensor-panel')); 
   });
 
   $('#button-search').toggle(function(){
     water.navigationHidePanels();
-    water.displayPanel($('#data-panel'));
+    water.displayPanelContainer($('#data-panel'));
     water.displayPanel($('#search-panel'));
   },function(){
     water.navigationHidePanels();
-    water.hidePanel($('#data-panel'));
+    water.hidePanelContainer($('#data-panel'));
     water.hidePanel($('#search-panel')); 
   });
 
