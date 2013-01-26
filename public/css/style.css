@@ -191,6 +191,7 @@ hr {
   box-shadow: none;
   background: transparent;
   padding: 20px;
+  height: auto;
 }
 
 .map-tooltip .content {
@@ -206,6 +207,18 @@ hr {
   display: block;
   color: #a8a8a8;
   font-size: 0.8em;
+}
+
+.map-tooltip .open {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  cursor: pointer;
+  color: #000;
+}
+
+.map-tooltip .open a {
+  text-decoration: none;
 }
 
 .map-tooltip span.name {

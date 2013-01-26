@@ -78,7 +78,6 @@ mapbox.interaction = function() {
     return interaction;
 };
 
-
 // override move tip
 wax.movetip = function() {
     var popped = false,
@@ -114,7 +113,7 @@ wax.movetip = function() {
     function getTooltip(feature) {
         var tooltip = document.createElement('div');
         tooltip.className = 'map-tooltip map-tooltip-0';
-        console.log(feature);
+
         tooltip.innerHTML = feature;
         return tooltip;
     }
@@ -132,15 +131,23 @@ wax.movetip = function() {
         if (popped) return;
         if ((o.e.type === 'mousemove' || !o.e.type)) {
             content = o.formatter({ format: 'teaser' }, o.data);
+            
             if (!content) return;
             hide();
             parent.style.cursor = 'pointer';
             tooltip = document.body.appendChild(getTooltip(content));
+            tooltip.application_pod = $(content).find('.application_pod').html();
+/*             console.log(tooltip); */
+
+            $(tooltip).bind("click", function() {   	
+              water.loadDataPanel(tooltip.application_pod);
+            });                  
         } else {
             content = o.formatter({ format: 'teaser' }, o.data);
             if (!content) return;
             hide();
             var tt = document.body.appendChild(getTooltip(content));
+
             tt.className += ' map-popup';
 
             var close = tt.appendChild(document.createElement('a'));
@@ -193,6 +200,36 @@ wax.movetip = function() {
 
 
 
+water.loadDataPanel = function(application_pod){
+  console.log(application_pod);
+   Core.query({ 
+     $and: [{'kind': 'right'},{'properties.application_pod': water.trim(application_pod) }
+  ] 
+    }, water.loadDataPanelData, {'limit': 0});
+};
+
+water.loadDataPanelData = function(results){
+  if(results !== undefined){
+    if(results[0] !== undefined){
+      var content = water.formatTooltipStrings(results[0]);
+      console.log(results[0]);
+    
+      $('#map-panel .map-detail').html(content);
+    }
+  }
+};
+
+
+water.trim = function(str){
+    str = str.replace(/^\s+/, '');
+    for (var i = str.length - 1; i >= 0; i--) {
+        if (/\S/.test(str.charAt(i))) {
+            str = str.substring(0, i + 1);
+            break;
+        }
+    }
+    return str;
+}
 
 
 
