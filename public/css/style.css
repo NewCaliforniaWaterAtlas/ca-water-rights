@@ -113,10 +113,10 @@ hr {
 }
 
 .marker-image {
-  width:20px;
-  height:20px;
-  margin-left:-10px;
-  margin-top:-10px;
+  width:10px;
+  height:10px;
+  margin-left:-5px;
+  margin-top:-5px;
   pointer-events: all;
   position:absolute;
 }

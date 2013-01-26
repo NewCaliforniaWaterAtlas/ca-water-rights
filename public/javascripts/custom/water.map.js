@@ -422,7 +422,7 @@ water.markersQuery = function(reloaded) {
  Core.query({ 
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
-    }, water.drawRightsMarkers, {'limit': 0}); 
+    }, water.drawRightsMarkers, {'limit': 0});
   
   // Load CDEC staons.
   Core.query({ 
