@@ -339,8 +339,6 @@ mapbox.markers.interaction = function(mmg) {
 
                 tooltip.application_pod = $(content).find('.application_pod').html();
 
-                console.log(tooltip);
-
                 $(tooltip).find('.content').bind('click',function() {   	
                   water.loadDataPanel(tooltip.application_pod);
                 }); 
@@ -367,6 +365,7 @@ mapbox.markers.interaction = function(mmg) {
 
         marker.element.onmouseover = show;
         marker.element.onmouseout = delayed_close;
+        marker.element.ontouchend = delayed_close;
     };
 
     function bindPanned() {
