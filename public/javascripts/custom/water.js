@@ -5,6 +5,7 @@ window.onload = function() {
   water.setupMap();
   water.setupAddress();
   water.setupFilters();
+  water.navigation();
 
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
@@ -48,4 +49,55 @@ water.setupFilters = function () {
       });
     }
   });
+};
+
+water.displayPanel = function(panel){
+  panel.css('right','0px');
+};
+
+water.hidePanel = function(panel){
+  panel.css('right','-1000px');
+};
+
+water.navigationHidePanels = function(){
+  water.hidePanel($('#data-panel'));
+  water.hidePanel($('#map-panel'));
+  water.hidePanel($('.alert'));
+  water.hidePanel($('#search-panel'));
+  water.hidePanel($('#sensor-panel'));
+};
+
+water.navigation = function(){
+  water.navigationHidePanels();
+  
+  $('#button-water-rights').toggle(function(){
+    water.navigationHidePanels();
+    water.displayPanel($('#data-panel'));
+    water.displayPanel($('#map-panel'));
+  },function(){
+    water.navigationHidePanels();
+    water.hidePanel($('#data-panel'));
+    water.hidePanel($('#map-panel'));
+  });
+  
+  $('#button-sensors').toggle(function(){
+    water.navigationHidePanels();
+    water.displayPanel($('#data-panel'));
+    water.displayPanel($('#sensor-panel'));
+  },function(){
+    water.navigationHidePanels();
+    water.hidePanel($('#data-panel'));
+    water.hidePanel($('#sensor-panel')); 
+  });
+
+  $('#button-search').toggle(function(){
+    water.navigationHidePanels();
+    water.displayPanel($('#data-panel'));
+    water.displayPanel($('#search-panel'));
+  },function(){
+    water.navigationHidePanels();
+    water.hidePanel($('#data-panel'));
+    water.hidePanel($('#search-panel')); 
+  });
+
 };

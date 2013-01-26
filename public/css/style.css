@@ -21,6 +21,9 @@
 }
 
 
+.navbar a.brand {
+  margin-left: 5px;
+}
 
 /*<!-- ============ Global / Content ============ -->*/ 
 
@@ -28,12 +31,6 @@ body {
   background: #2B929B;
   color: #514E48;
 }
-
-/*#map-page-wrap {
-  margin: 0;
-  overflow:auto;
-}*/
-
 
 /* MARKUP */
 
@@ -101,15 +98,9 @@ hr {
 }
 
 #map-container {
-  /*position:absolute; top:0; left:0;*/
   width: 100%;
   height: 100%;
   min-height: 630px;
-}
-
-.marker-popup p {
-  line-height: 1em;
-  margin: 0;
 }
 
 .marker-image {
@@ -125,7 +116,7 @@ hr {
   background:#F9F0DC;
 }
 
-#map-panel {  
+#data-panel {  
   position:absolute;
   top:40px;
   right:0px;
@@ -137,53 +128,9 @@ hr {
   font-size: 0.8em;
 }
 
-/*#map-panel .alert {
-  height: 20px;
-  background: #F9F0DC;
-  color: #514E48;
-}*/
-
-/*#map-panel .inputs {
-  height: 40px;
-  padding-left: 10px;
-}*/
-
-/*#map-panel .search-holders {
-  background: #FFF;
-  color: #514E48;
-  width: 180px;
-}*/
-
-
-.marker-tooltip {
-/*   padding: 0px 10px 10px 0px; */
-/*   top: 160px; */
-/*   left: 75%; */
-/*   width: 400px; */
-/*   position: fixed; */
-/*   height: 100%; */
-/*   z-index: 3000; */
-  font-size: 0.75em;
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  background: #F9F0DC;
-}
-
-#map-panel h3 {
+#data-panel h3 {
   margin: 20px 0 0 0;
 }
-
-/*#map-panel .list-content {
-  color: #514E48;
-  width: 160px;
-  padding: 0px 10px 10px 10px;
-  position: fixed;
-  top: 160px;
-  z-index: 1000;
-  height: 300px;
-  overflow-y: scroll;
-}*/
 
 .map-tooltip {
   border: none;
@@ -260,37 +207,6 @@ hr {
   font-size: 0.1em;
 }
 
-.ui-tooltip-content {
-  width: 300px;
-}
-
-.ui-tooltip-content h2 {
-  font-size: 2em;
-  margin: 5px;
-  padding: 0;
-  line-height: 1em;
-}
-.ui-tooltip-content h3 {
-  font-size: 1.5em;
-  margin: 5px;
-  padding: 0;
-}
-.ui-tooltip-content p {
-  font-size: 1.25em;
-  width: 100%;
-  padding: 0 0 2px 0;
-  margin: 5px;
-}
-
-.ui-tooltip-content a {
-  color: #ffffff;
-}
-
-
-
-
-
-
 /*<!-- ============ Responsive Stuff / Media Queries ============ -->*/ 
 
  /* Landscape phones and down */
@@ -311,11 +227,11 @@ hr {
 
 
 @media (max-width: 480px) { 
-.iphone-debug {
-  padding: 10px;
-  color: #000;
-  background: #fff;
-  margin: 20px;
-  display: none;
-}
+  .iphone-debug {
+    padding: 10px;
+    color: #000;
+    background: #fff;
+    margin: 20px;
+    display: none;
+  }
 }
