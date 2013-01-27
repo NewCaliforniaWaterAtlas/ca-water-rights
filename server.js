@@ -87,7 +87,7 @@ app.post('/data', function(req, res, options){
 app.get('/search/holders', function(req, res, options){
   console.log(req.query);
   var regex = new RegExp('' + req.query.value, "i");
-  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {'properties.reports': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex},{'properties.reports': { $in:  {$or: [{'usage': regex},{'usage_quantity': regex}] }} }   ]}]};
+  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {'properties.reports': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.last_name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex} /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
   console.log(query);
   engine.find_many_by(query,function(error, results) {
     if(!results || error) {
@@ -171,7 +171,7 @@ app.get('/list/usage', function(req, res, options){
 watermapApp.xlsCounter = 604;
 watermapApp.loadFileCounter = 0;
 watermapApp.dbIDs = [];
-watermapApp.current = 80;
+watermapApp.current = 0;
 watermapApp.counterXLSParser = 0;
 watermapApp.getBatchCounter = 0;
 watermapApp.GISGroup = 'C0'; // Used for downloading GIS data from server. 
@@ -199,6 +199,7 @@ app.get('/data/water_rights/scrape/pages', function(req, res, options){
 // @TODO Refactored, test it.
 // @TODO Finish downloading.
 app.get('/data/water_rights/scrape/app_id_array', function(req, res, options){
+  console.log("load");
   watermapApp.getXLSByAppIDArray();
 });
 
@@ -225,7 +226,6 @@ app.get('/data/water_rights/reports/download', function(req, res, options){
 app.get('/data/water_rights/reports/parse_full', function(req, res, options){
   watermapApp.parseReportFile();
 });
-
 
 app.get('/data/update/ewrims_db_id', function(req, res, options){
   watermapApp.updateEWRIMSID();
@@ -783,17 +783,16 @@ watermapApp.getXLSAllPages = function(){
 
 // Scrape all pages to get the ID to get the download link to get the xls files
 watermapApp.getXLSByAppIDArray = function(){
-/*   var max = 976; */
-
+/*   var max = 976; */ 
   setInterval(function(){
     var i = watermapApp.current;
     
     var query = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=' + app_id_array[i] + '&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=';
     
-/*     console.log(query); */
+    console.log(query);
     
     var j = request.jar();
-    var cookie = request.cookie('JSESSIONID=6aa7f14069a9306d2c28f0608416d166033139a6603f39347e2f207c39e76f78');
+    var cookie = request.cookie('JSESSIONID=c795728324aa8f2db0d775555a94ed03ea53eea3bd96cfd78c6add9fd178ba78');
     j.add(cookie);
 
     request.get({ uri:query, jar: j }, function (error, response, body) {
@@ -1611,88 +1610,9 @@ app.listen(port, ipaddr, function() {
                ipaddr, port);
 });
 
-
-  /*
-  "_id" : ObjectId("50d15c61e730dbcccc3546e5"),
-        "id" : "S000550",
-        "kind" : "right",
-        "type" : "Feature",
-        "coordinates" : [
-                -121.8921916,
-                39.33543549
-        ],
-        "geometry" : {
-                "type" : "Point",
-                "coordinates" : [
-                        -121.8921916,
-                        39.33543549
-                ]
-        },
-        "properties" : {
-                "id" : "S000550",
-                "kind" : "right",
-                "name" : "BUTTE SINK WATERFOWL ASSOCIATION",
-                "application_id" : "S000550",
-                "source" : "BUTTE CREEK",
-                "watershed" : "COLUSA BASIN",
-                "county" : "Butte",
-                "face_amt" : 0,
-                "description" : "Migrated data from old WRIMS system.",
-                "date" : "04/12/1967",
-                "organization_type" : "Corporation",
-                "status" : "Claimed",
-                "water_right_type" : "Statement of Div and Use",
-                "license_id" : null,
-                "permit_id" : null,
-                "db_id" : 28012,
-                "holder_name" : "BUTTE SINK WATERFOWL ASSOCIATION",
-                "pod_id" : 7670,
-                "pod_number" : 1,
-                "application_pod" : "S000550_01",
-                "township_number" : 17,
-                "township_direction" : "N",
-                "range_number" : 1,
-                "range_direction" : "E",
-                "section_number" : 7,
-                "section_classifier" : null,
-                "quarter" : "SE",
-                "quarter_quarter" : "SE",
-                "meridian" : 21,
-                "northing" : 2248187.979,
-                "easting" : 6592159.039,
-                "sp_zone" : 2,
-                "latitude" : 39.33543549,
-                "longitude" : -121.8921916,
-                "trib_desc" : null,
-                "location_method" : "DD_NE",
-                "source_name" : "BUTTE CREEK",
-                "moveable" : "N",
-                "has_opod" : "N",
-                "watershed" : "COLUSA BASIN",
-                "county" : "Butte",
-                "well_number" : null,
-                "quad_map_name" : "SANBORN SLOUGH",
-                "quad_map_1,C,50" : "F 049",
-                "quad_map_M,C,3" : 7.5,
-                "parcel_number" : null,
-                "diversion" : null,
-                "last_updated" : "Sun Sep 28 00:00:00 PDT 2003",
-                "last_upd_1,N,10,0" : 9,
-                "special_ar,C,50" : null,
-                "water_right_type2" : "Statement of Div and Use",
-                "water_right_status" : "Claimed",
-                "face_value_(afa)" : 0,
-                "pod_value" : "Active",
-                "annual_direct_diversion" : 0,
-                "diversion_units" : "Cubic Feet per Second",
-                "diversion_storage_amount" : 0
-        }
-*/
-
-
 // Missing values -- in progress.
 var app_id_array = [
-'Z002641',
+/*'Z002641',
 'Z002315',
 'A004566',
 'Z002641',
@@ -2295,7 +2215,7 @@ var app_id_array = [
 'A006418B',
 'A006418A',
 'S010474',
-'A005806',
+'A005806',*/
 'A004308',
 'S010459',
 'A005618',
@@ -2803,243 +2723,3 @@ var app_id_array = [
 'UN000302',
 'UN00246'
 ];
-
-
-watermapApp.gisFacets = [
- /*
- 'C000',
-  'C001',
-  'C002',
-  'C003',
-  'C004',
-  'C005',
-  'C006',
-  'G361',
-  'G560',
-  'G192',
-  'G193',
-  'G332',
-  'G363',
-  'G362',
-  'G331',
-  'G360',
-  'G330',
-  'G561',
-  'G333',
-  'G191',
-  'G190',*/
- /* 'A0300',
-  'A0301',
-  'A0302',
-  'A0303',
-  'A0304',
-  'A0305',
-  'A0306',
-  'A0307',
-  'A0308',
-  'A0309',
-  'A0290',
-  'A0291',
-  'A0292',
-  'A0293',
-  'A0294',
-  'A0295',
-  'A0296',
-  'A0297',
-  'A0298',
-  'A0299',
-  'A0250',
-  'A0251',
-  'A0252',
-  'A0253',
-  'A0254',
-  'A0255',
-  'A0256',
-  'A0257',
-  'A0258',
-  'A0259',
-  'A0240',
-  'A0241',
-  'A0242',
-  'A0243',
-  'A0244',
-  'A0245',
-  'A0246',
-  'A0247',
-  'A0248',
-  'A0249',
-  'A031',
-  'A017',
-  'A020',
-  'A027',
-  'A023',
-  'A019',      
-  'A026',
-  'A018',
-  'A022',
-  'A021',
-  'A015',
-  'A013',
-  'A014',
-  'A011',
-  'A010',
-  'A012',
-  'A005',
-  'A009',
-  'A004',
-  'A006',
-  'A003',
-  'A002',
-  'A008',
-  'A000',
-  'A001',
-  'A007',
-  'APR1',
-  'S014',
-  'S012',
-  'A028',
-  'S013',*/
-  'S001',
-  'S011',
-  'A016',
-  'S002',
-  'S010',
-  'S009',
-  'S015',
-  'F003',
-  'S000',
-  'S008',
-  'S016',
-  'S004',
-  'S018',
-  'S017',
-  'D030',
-  'S019',
-  'S020',
-  'S003',
-  'D031',
-  'S005',
-  'S006',
-  'F006',
-  'S007',
-  'F005',
-  'L031',
-  'F007',
-  'UN00',
-  'F010',
-  'D029',
-  'F004',
-  'F011',
-  'F008',
-  'S021',
-  'XC00',
-  'NJ00',
-  'X003',
-  'F026',
-  'T030',
-  'X002',
-  'F009',
-  'X000',
-  'E000',
-  'F027',
-  'T031',
-  'F013',
-  'F000',
-  'J000',
-  'T029',
-  'CMPL',
-  'Z000',
-  'Z002',
-  'T028',
-  'L318',
-  'NJ18',
-  'Z001',
-  '11',
-  '2651',
-  '3174',
-  'D027',
-  'NJ19',
-  'S172',
-  'UN02',
-  'WW00',
-  'Z003',
-  'Z005'
-];
-
-
-  /*
-  "_id" : ObjectId("50d15c61e730dbcccc3546e5"),
-        "id" : "S000550",
-        "kind" : "right",
-        "type" : "Feature",
-        "coordinates" : [
-                -121.8921916,
-                39.33543549
-        ],
-        "geometry" : {
-                "type" : "Point",
-                "coordinates" : [
-                        -121.8921916,
-                        39.33543549
-                ]
-        },
-        "properties" : {
-                "id" : "S000550",
-                "kind" : "right",
-                "name" : "BUTTE SINK WATERFOWL ASSOCIATION",
-                "application_id" : "S000550",
-                "source" : "BUTTE CREEK",
-                "watershed" : "COLUSA BASIN",
-                "county" : "Butte",
-                "face_amt" : 0,
-                "description" : "Migrated data from old WRIMS system.",
-                "date" : "04/12/1967",
-                "organization_type" : "Corporation",
-                "status" : "Claimed",
-                "water_right_type" : "Statement of Div and Use",
-                "license_id" : null,
-                "permit_id" : null,
-                "db_id" : 28012,
-                "holder_name" : "BUTTE SINK WATERFOWL ASSOCIATION",
-                "pod_id" : 7670,
-                "pod_number" : 1,
-                "application_pod" : "S000550_01",
-                "township_number" : 17,
-                "township_direction" : "N",
-                "range_number" : 1,
-                "range_direction" : "E",
-                "section_number" : 7,
-                "section_classifier" : null,
-                "quarter" : "SE",
-                "quarter_quarter" : "SE",
-                "meridian" : 21,
-                "northing" : 2248187.979,
-                "easting" : 6592159.039,
-                "sp_zone" : 2,
-                "latitude" : 39.33543549,
-                "longitude" : -121.8921916,
-                "trib_desc" : null,
-                "location_method" : "DD_NE",
-                "source_name" : "BUTTE CREEK",
-                "moveable" : "N",
-                "has_opod" : "N",
-                "watershed" : "COLUSA BASIN",
-                "county" : "Butte",
-                "well_number" : null,
-                "quad_map_name" : "SANBORN SLOUGH",
-                "quad_map_1,C,50" : "F 049",
-                "quad_map_M,C,3" : 7.5,
-                "parcel_number" : null,
-                "diversion" : null,
-                "last_updated" : "Sun Sep 28 00:00:00 PDT 2003",
-                "last_upd_1,N,10,0" : 9,
-                "special_ar,C,50" : null,
-                "water_right_type2" : "Statement of Div and Use",
-                "water_right_status" : "Claimed",
-                "face_value_(afa)" : 0,
-                "pod_value" : "Active",
-                "annual_direct_diversion" : 0,
-                "diversion_units" : "Cubic Feet per Second",
-                "diversion_storage_amount" : 0
-        }
-*/

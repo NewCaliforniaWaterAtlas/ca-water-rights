@@ -27,7 +27,7 @@
   </head>
   <body>    
     <!-- Nav -->
-    <div class="navbar navbar-static-top">
+    <div class="navbar navbar-static-top" id="top">
       <div class="navbar-inner">
 
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -44,6 +44,16 @@
             <li ><a href="#" data-toggle="tab">Sensors</a></li>
             <li ><a href="#" data-toggle="tab">Search</a></li>
             <li ><a href="#" data-toggle="tab">About</a></li>
+
+        <a class="brand">California Water Rights</a>
+
+        <div class="nav-collapse">
+          <ul class="nav pull-right">
+            <li><a href="#" id="button-water-rights">Rights</a></li>
+            <li><a href="#" id="button-sensors">Sensors</a></li>
+            <li><a href="#" id="button-search">Search</a></li>
+            <li><a href="#about" id="button-about">About</a></li>
+
           </ul>
         </div>
 
@@ -63,19 +73,31 @@
               <div id="map-container"></div>
             </div>
 
-            <div id="map-panel">
+            <div id="data-panel">
               <div class="alert"> 
                 <div class="content">Loading the map</div>
                 <div class="zoom-level"></div>
               </div>
               
-              <div class="filters"> 
-                <div class="inputs">
-                  <input class="search-holders" type="text" data-provide="typeahead">
+              <div id="search-panel"  class="panel">
+                <h3>Search</h3>
+                <div class="filters"> 
+                  <div class="inputs">
+                    <input class="search-holders" type="text" data-provide="typeahead">
+                  </div>
                 </div>
+                <div class="list-content"></div>
               </div>
-            
-              <div class="list-content"></div>
+              
+              <div id="map-panel" class="panel">
+                <h3>Water Right Details</h3>
+                <div class="map-detail"></div>
+              </div>
+
+              <div id="sensor-panel" class="panel">
+                <h3>Sensor Details</h3>
+              </div>
+
             </div><!-- #map-panel -->
 
           </div><!-- .row-fluid -->   
@@ -87,8 +109,10 @@
       <section>
         <div class="container-fluid">
           <div class="row-fluid">
-            <div class="span12">
+            <div id="about" class="span12">
+              <a href="#top">Back to top</a>
               <div class="well">
+                <p>This map is in progress. More details to follow.</p>
                 <p>Nullam id tincidunt felis. Pellentesque lorem quam, dictum et fringilla ac, sagittis ut justo. Vivamus nec turpis elit, vel pulvinar dui. Curabitur venenatis hendrerit sem, laoreet cursus mi venenatis vitae. Sed mollis, leo vel volutpat mattis, nibh augue ultrices nunc, vitae commodo ipsum velit sed eros. Quisque metus ante, feugiat eu viverra eget, rhoncus nec neque. Sed et purus enim. Cras molestie consectetur gravida.</p>
               </div>
             </div>

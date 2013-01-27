@@ -5,15 +5,15 @@ water.map = water.map || {};
 water.map_defaults = {};
 water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
-water.map_defaults.boxsize_lat = 0.05; //pretty small box
-water.map_defaults.boxsize_lon = 0.1;
-water.map_defaults.zoom = 6;
+water.map_defaults.boxsize_lat = 0.08; //pretty small box
+water.map_defaults.boxsize_lon = 0.16;
+water.map_defaults.zoom = 8;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.terrain_layer = 'chachasikes.map-tv2igp9l';
 
-water.map_defaults.zoomed_out_marker_layer = 'chachasikes.WaterTransfer-Markers';
+water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 11;
+water.map_defaults.close_up_zoom_level = 13;
 water.map_defaults.lowest_tilemill_marker_level = 12;
 
 // Establish empty container for loaded marker features data.
@@ -34,21 +34,425 @@ water.map_interaction.dragtime_override = false;
 water.map_interaction.wait = null;
 
 
+
+// Override mapbox wax interaction to add movetip function.
+if (typeof mapbox === 'undefined') mapbox = {};
+
+mapbox.interaction = function() {
+
+    var interaction = wax.mm.interaction(),
+        auto = false;
+
+    interaction.refresh = function() {
+        var map = interaction.map();
+        if (!auto || !map) return interaction;
+        for (var i = map.layers.length - 1; i >= 0; i --) {
+            if (map.layers[i].enabled) {
+                var tj = map.layers[i].tilejson && map.layers[i].tilejson();
+                if (tj && tj.template) return interaction.tilejson(tj);
+            }
+        }
+        return interaction.tilejson({});
+    };
+
+    interaction.auto = function() {
+        auto = true;
+        interaction.on(wax.tooltip()
+            .animate(true)
+            .parent(interaction.map().parent)
+            .events()).on(wax.location().events());
+        return interaction.refresh();
+    };
+
+    interaction.movetip = function() {
+        auto = true;
+        interaction.on(wax.movetip()
+            .parent(interaction.map().parent)
+            .events()).on(wax.location().events());
+            
+        // Add lower image (via css)    
+            
+        return interaction.refresh();
+    };
+
+    return interaction;
+};
+
+// override move tip
+wax.movetip = function() {
+    var popped = false,
+        t = {},
+        _tooltipOffset,
+        _contextOffset,
+        tooltip,
+        parent;
+
+    function moveTooltip(e) {
+       var eo = wax.u.eventoffset(e);
+       // faux-positioning
+       if ((_tooltipOffset.height + eo.y) >
+           (_contextOffset.top + _contextOffset.height) &&
+           (_contextOffset.height > _tooltipOffset.height)) {
+           eo.y -= _tooltipOffset.height;
+           tooltip.className += ' flip-y';
+       }
+
+       // faux-positioning
+       if ((_tooltipOffset.width + eo.x) >
+           (_contextOffset.left + _contextOffset.width)) {
+           eo.x -= _tooltipOffset.width;
+           tooltip.className += ' flip-x';
+       }
+
+       tooltip.style.left = eo.x + 'px';
+       tooltip.style.top = eo.y + 'px';
+    }
+
+    // Get the active tooltip for a layer or create a new one if no tooltip exists.
+    // Hide any tooltips on layers underneath this one.
+    function getTooltip(feature) {
+        var tooltip = document.createElement('div');
+        tooltip.className = 'map-tooltip map-tooltip-0';
+
+        tooltip.innerHTML = feature;
+        return tooltip;
+    }
+
+    // Hide a given tooltip.
+    function hide() {
+        if (tooltip) {
+          tooltip.parentNode.removeChild(tooltip);
+          tooltip = null;
+        }
+    }
+
+    function on(o) {
+        var content;
+        if (popped) return;
+        if ((o.e.type === 'mousemove' || !o.e.type)) {
+            content = o.formatter({ format: 'teaser' }, o.data);
+            
+            if (!content) return;
+            hide();
+            parent.style.cursor = 'pointer';
+            tooltip = document.body.appendChild(getTooltip(content));
+            tooltip.application_pod = $(content).find('.application_pod').html();
+/*             console.log(tooltip); */
+
+            $(tooltip).bind("click", function() {   	
+              water.loadDataPanel(tooltip.application_pod);
+            });                  
+        } else {
+            content = o.formatter({ format: 'teaser' }, o.data);
+            if (!content) return;
+            hide();
+            var tt = document.body.appendChild(getTooltip(content));
+
+            tt.className += ' map-popup';
+
+            var close = tt.appendChild(document.createElement('a'));
+            close.href = '#close';
+            close.className = 'close';
+            close.innerHTML = 'Close';
+
+            popped = true;
+
+            tooltip = tt;
+
+            _tooltipOffset = wax.u.offset(tooltip);
+            _contextOffset = wax.u.offset(parent);
+            moveTooltip(o.e);
+
+            bean.add(close, 'click touchend', function closeClick(e) {
+                e.stop();
+                hide();
+                popped = false;
+            });
+        }
+        if (tooltip) {
+          _tooltipOffset = wax.u.offset(tooltip);
+          _contextOffset = wax.u.offset(parent);
+          moveTooltip(o.e);
+        }
+
+    }
+
+    function off() {
+        parent.style.cursor = 'default';
+        if (!popped) hide();
+    }
+
+    t.parent = function(x) {
+        if (!arguments.length) return parent;
+        parent = x;
+        return t;
+    };
+
+    t.events = function() {
+        return {
+            on: on,
+            off: off
+        };
+    };
+
+    return t;
+};
+
+// Override markers interaction
+mmg = mapbox.markers.layer; // Backwards compatibility
+mapbox.markers.interaction = function(mmg) {
+    // Make markersLayer.interaction a singleton and this an accessor.
+    if (mmg && mmg.interaction) return mmg.interaction;
+
+    var mi = {},
+        tooltips = [],
+        exclusive = true,
+        hideOnMove = true,
+        showOnHover = true,
+        close_timer = null,
+        on = true,
+        formatter;
+
+    mi.formatter = function(x) {
+        if (!arguments.length) return formatter;
+        formatter = x;
+        return mi;
+    };
+    mi.formatter(function(feature) {
+        var o = '',
+            props = feature.properties;
+
+        // Tolerate markers without properties at all.
+        if (!props) return null;
+
+        if (props.title) {
+            o += '<div class="marker-title">' + props.title + '</div>';
+        }
+        if (props.description) {
+            o += '<div class="marker-description">' + props.description + '</div>';
+        }
+
+        if (typeof html_sanitize !== undefined) {
+            o = html_sanitize(o,
+                function(url) {
+                    if (/^(https?:\/\/|data:image)/.test(url)) return url;
+                },
+                function(x) { return x; });
+        }
+
+        return o;
+    });
+
+    mi.hideOnMove = function(x) {
+        if (!arguments.length) return hideOnMove;
+        hideOnMove = x;
+        return mi;
+    };
+
+    mi.exclusive = function(x) {
+        if (!arguments.length) return exclusive;
+        exclusive = x;
+        return mi;
+    };
+
+    mi.showOnHover = function(x) {
+        if (!arguments.length) return showOnHover;
+        showOnHover = x;
+        return mi;
+    };
+
+    mi.hideTooltips = function() {
+        while (tooltips.length) mmg.remove(tooltips.pop());
+        for (var i = 0; i < markers.length; i++) {
+            delete markers[i].clicked;
+        }
+    };
+
+    mi.add = function() {
+        on = true;
+        return mi;
+    };
+
+    mi.remove = function() {
+        on = false;
+        return mi;
+    };
+
+    mi.bindMarker = function(marker) {
+        var delayed_close = function() {
+            if (showOnHover === false) return;
+            if (!marker.clicked) close_timer = window.setTimeout(function() {
+                mi.hideTooltips();
+            }, 3000);
+        };
+
+        var show = function(e) {
+            if (e && e.type == 'mouseover' && showOnHover === false) return;
+            if (!on) return;
+            var content = formatter(marker.data);
+            // Don't show a popup if the formatter returns an
+            // empty string. This does not do any magic around DOM elements.
+            if (!content) return;
+
+            if (exclusive && tooltips.length > 0) {
+                mi.hideTooltips();
+                // We've hidden all of the tooltips, so let's not close
+                // the one that we're creating as soon as it is created.
+                if (close_timer) window.clearTimeout(close_timer);
+            }
+
+            var tooltip = document.createElement('div');
+            tooltip.className = 'marker-tooltip';
+            tooltip.style.width = '100%';
+
+            var wrapper = tooltip.appendChild(document.createElement('div'));
+            wrapper.style.cssText = 'position: absolute; left: -10px; top: -10px; width: 300px; pointer-events: none;';
+
+            var popup = wrapper.appendChild(document.createElement('div'));
+            popup.className = 'map-tooltip';
+            popup.style.cssText = 'pointer-events: auto;';
+
+            if (typeof content == 'string') {
+                popup.innerHTML = content;
+            } else {
+                popup.appendChild(content);
+            }
+
+            // Align the bottom of the tooltip with the top of its marker
+//            wrapper.style.bottom = marker.element.offsetHeight / 2 + 20 + 'px';
+            wrapper.style.bottom = marker.element.offsetHeight / 2 + 20 + 'px';
+
+            // Block mouse and touch events
+            function stopPropagation(e) {
+                e.cancelBubble = true;
+                if (e.stopPropagation) { e.stopPropagation(); }
+                return false;
+            }
+            MM.addEvent(popup, 'mousedown', stopPropagation);
+            MM.addEvent(popup, 'touchstart', stopPropagation);
+
+            if (showOnHover) {
+                tooltip.onmouseover = function() {
+                    if (close_timer) window.clearTimeout(close_timer);
+                };
+                tooltip.onmouseout = delayed_close;
+
+                tooltip.application_pod = $(content).find('.application_pod').html();
+
+                $(tooltip).find('.content').bind('click',function() {   	
+                  water.loadDataPanel(tooltip.application_pod);
+                }); 
+            }
+
+            var t = {
+                element: tooltip,
+                data: {},
+                interactive: false,
+                location: marker.location.copy()
+            };
+            tooltips.push(t);
+            marker.tooltip = t;
+            mmg.add(t);
+            mmg.draw();
+        };
+
+        marker.showTooltip = show;
+
+        marker.element.onclick = marker.element.ontouchstart = function() {
+            show();
+            marker.clicked = true;
+        };
+
+        marker.element.onmouseover = show;
+        marker.element.onmouseout = delayed_close;
+        marker.element.ontouchend = delayed_close;
+    };
+
+    function bindPanned() {
+        mmg.map.addCallback('panned', function() {
+            if (hideOnMove) {
+                while (tooltips.length) {
+                    mmg.remove(tooltips.pop());
+                }
+            }
+        });
+    }
+
+    if (mmg) {
+        // Remove tooltips on panning
+        mmg.addCallback('drawn', bindPanned);
+
+        // Bind present markers
+        var markers = mmg.markers();
+        for (var i = 0; i < markers.length; i++) {
+            mi.bindMarker(markers[i]);
+        }
+
+        // Bind future markers
+        mmg.addCallback('markeradded', function(_, marker) {
+            // Markers can choose to be not-interactive. The main example
+            // of this currently is marker bubbles, which should not recursively
+            // give marker bubbles.
+            if (marker.interactive !== false) mi.bindMarker(marker);
+        });
+
+        // Save reference to self on the markers instance.
+        mmg.interaction = mi;
+    }
+
+    return mi;
+};
+
+mmg_interaction = mapbox.markers.interaction;
+
+water.loadDataPanel = function(application_pod){
+  console.log(application_pod);
+   Core.query({ 
+     $and: [{'kind': 'right'},{'properties.application_pod': water.trim(application_pod) }
+  ] 
+    }, water.loadDataPanelData, {'limit': 0});
+};
+
+water.loadDataPanelData = function(results){
+  if(results !== undefined){
+    if(results[0] !== undefined){
+      var content = water.formatTooltipStrings(results[0]);
+      console.log(results[0]);
+    
+      $('#map-panel .map-detail').html(content);
+    }
+  }
+};
+
+
+water.trim = function(str){
+    str = str.replace(/^\s+/, '');
+    for (var i = str.length - 1; i >= 0; i--) {
+        if (/\S/.test(str.charAt(i))) {
+            str = str.substring(0, i + 1);
+            break;
+        }
+    }
+    return str;
+}
+
+
+
 water.setupMap = function() {
   // Create map.
   water.map = mapbox.map(water.map_defaults.div_container);
   // Add satellite layer.
   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
-/*
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
-      water.map.interaction.auto(); 
+      water.map.interaction.movetip();
   });
-*/
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
+  water.map.ui.hash.add();
+  water.map.ui.zoombox.add();
   
   water.map.setZoomRange(6, 17);  // 17 is the lowest level of satellite layer.
 /*// @TODO see if we can change the increment of the zoomer.
@@ -86,7 +490,7 @@ water.setupMap = function() {
 // Utility function to recenter (and maybe also to reset / reload the map)
 water.centerMap = function() {
   // default values will not load here.
-  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 6);
+  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8);
 };
 
 
@@ -124,7 +528,7 @@ water.loadMarkers = function() {
         if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
           mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
             water.map.addLayer(interactive.layer);
-            water.map.interaction.auto(); 
+            water.map.interaction.movetip(); 
           });
         }
       }
@@ -206,7 +610,7 @@ water.markersQuery = function(reloaded) {
     var lat = center.lat;
     var lon = center.lon;    
 
-    $('.iphone-debug').html("lat: " + lat + " lon: " + lon + "<br />");
+    //$('.iphone-debug').html("lat: " + lat + " lon: " + lon + "<br />");
 
     // Clear out old layer data.
     water.clearMarkerLayers();
@@ -223,7 +627,7 @@ water.markersQuery = function(reloaded) {
  Core.query({ 
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
-    }, water.drawRightsMarkers, {'limit': 0}); 
+    }, water.drawRightsMarkers, {'limit': 0});
   
   // Load CDEC staons.
   Core.query({ 
@@ -259,9 +663,19 @@ water.drawMarkers = function(features, featureDetails) {
     });
 
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
-      var o = water.formatTooltipStrings(feature);
+/*       = water.formatTooltipStrings(feature); */
+var diversion_amount = "#";
+var diversion_unit = "unit";
+var o ='<span class="content">' 
+      + '<span class="name">' + feature.properties.name+ '</span>'
+      + '<span class="diversion"><span class="diversion-amount">' + diversion_amount + '</span>'
+      + '<span class="diversion-unit"> ' + diversion_unit + '</span></span>'
+      + '<span class="application_pod">' + feature.properties.application_pod + '</span></span>';
+
       return o;
     });
+
+
   }
   
   water.map.addCallback('drawn', function() {
@@ -294,7 +708,7 @@ water.drawMarkers = function(features, featureDetails) {
 };
 
 water.drawRightsMarkers = function(features) {
-  $('.iphone-debug').html($('.iphone-debug').html() + "<br />drawRightsMarkers<br />");
+  //$('.iphone-debug').html($('.iphone-debug').html() + "<br />drawRightsMarkers<br />");
   // right now we aren't using layer, but maybe we would.
   var featureDetails = {
     name: "rights",
@@ -379,7 +793,7 @@ water.formatTooltipStrings = function(feature) {
         string += "Storage" + feature.properties.diversion_storage_amount + "<br />";
         string += "POD unit" + feature.properties.pod_unit + "<br />";
 
-        if(feature.properties.reports) {
+        if(feature.properties.reports !== undefined) {
         
           for(r in reports){
             var report = reports[r];

@@ -1,10 +1,11 @@
 var water = {};
 
 window.onload = function() {
-
+  water.navigation();
   water.setupMap();
   water.setupAddress();
   water.setupFilters();
+
 
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
@@ -39,7 +40,6 @@ water.setupAddress = function () {
 };
 
 water.setupFilters = function () {
-
   $(".search-holders").typeahead({
     minLength: 3,
     source: function (query, process) {
@@ -48,4 +48,64 @@ water.setupFilters = function () {
       });
     }
   });
+};
+
+water.displayPanel = function(panel){
+  panel.css('left','0px');
+};
+
+water.displayPanelContainer = function(panel){
+  panel.css('visibility','visible');
+  panel.css('right','0px');
+};
+
+water.hidePanelContainer = function(panel){
+  panel.css('right','-1000px');
+};
+
+water.hidePanel = function(panel){
+  panel.css('left','1000px');
+};
+
+water.navigationHidePanels = function(){
+  water.hidePanelContainer($('#data-panel'));
+  water.hidePanel($('#map-panel'));
+  water.hidePanel($('.alert'));
+  water.hidePanel($('#search-panel'));
+  water.hidePanel($('#sensor-panel'));
+};
+
+water.navigation = function(){
+  water.navigationHidePanels();
+  
+  $('#button-water-rights').toggle(function(){
+    water.navigationHidePanels();
+    water.displayPanelContainer($('#data-panel'));
+    water.displayPanel($('#map-panel'));
+  },function(){
+    water.navigationHidePanels();
+    water.hidePanelContainer($('#data-panel'));
+    water.hidePanel($('#map-panel'));
+  });
+  
+  $('#button-sensors').toggle(function(){
+    water.navigationHidePanels();
+    water.displayPanelContainer($('#data-panel'));
+    water.displayPanel($('#sensor-panel'));
+  },function(){
+    water.navigationHidePanels();
+    water.hidePanelContainer($('#data-panel'));
+    water.hidePanel($('#sensor-panel')); 
+  });
+
+  $('#button-search').toggle(function(){
+    water.navigationHidePanels();
+    water.displayPanelContainer($('#data-panel'));
+    water.displayPanel($('#search-panel'));
+  },function(){
+    water.navigationHidePanels();
+    water.hidePanelContainer($('#data-panel'));
+    water.hidePanel($('#search-panel')); 
+  });
+
 };
