@@ -20,6 +20,15 @@
   text-shadow: none;
 }
 
+ul.nav {
+  width: 33%;
+}
+
+ul.nav>li {
+  width: 25%;
+  text-align: center;
+}
+
 
 .navbar a.brand {
   margin-left: 5px;
@@ -124,7 +133,7 @@ hr {
   width: 33%;
   background: rgba(215,215,233,.85);
   z-index:7;
-  padding: 30px;
+  /*padding: 30px;*/
   font-size: 0.8em;
   visibility: hidden;
 }
