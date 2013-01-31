@@ -69,7 +69,7 @@ water.hidePanel = function(panel){
 
 water.navigationHidePanels = function(){
   water.hidePanelContainer($('#data-panel'));
-  water.hidePanel($('#map-panel'));
+  water.hidePanel($('#rights-panel'));
   water.hidePanel($('.alert'));
   water.hidePanel($('#search-panel'));
   water.hidePanel($('#sensor-panel'));
@@ -81,11 +81,11 @@ water.navigation = function(){
   $('#button-water-rights').toggle(function(){
     water.navigationHidePanels();
     water.displayPanelContainer($('#data-panel'));
-    water.displayPanel($('#map-panel'));
+    water.displayPanel($('#rights-panel'));
   },function(){
     water.navigationHidePanels();
     water.hidePanelContainer($('#data-panel'));
-    water.hidePanel($('#map-panel'));
+    water.hidePanel($('#rights-panel'));
   });
   
   $('#button-sensors').toggle(function(){

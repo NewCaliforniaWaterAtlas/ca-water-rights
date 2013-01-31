@@ -16,19 +16,37 @@
   font-size: 26px;
   font-weight: bold;
   color: #6d6d6d;
-  /*text-shadow: 0 1px 0 rgba(255,255,255,0,.15);*/
   text-shadow: none;
 }
 
 ul.nav {
   width: 33%;
+  background-color: rgba(215,215,233,.65);
 }
 
 ul.nav>li {
   width: 25%;
   text-align: center;
+  font-size: 1.25em;
+  font-weight: normal;
+  line-height: 10px;
+  padding: 5px 0 5px 0;
 }
 
+.navbar .nav > li > a {
+  color: #8a8a8c;
+  text-shadow: none;
+}
+
+.navbar .nav > li:last-child > a {
+  border-right: none;
+}
+
+.navbar .nav > li > a {
+  color: #8a8a8c;
+  text-shadow: none;
+  border-right: 2px solid #c8c8df;
+}
 
 .navbar a.brand {
   margin-left: 5px;
@@ -37,55 +55,9 @@ ul.nav>li {
 /*<!-- ============ Global / Content ============ -->*/ 
 
 body {
-  background: #2B929B;
+  background: #e5e5f7;
   color: #514E48;
 }
-
-/* MARKUP */
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1em;
-  margin-bottom: 10px;
-  color: #1E5E60;
-}
-
-h1 {
-  font-size: 60px;
-}
-
-h2 {
-  font-size: 38px;  
-}
-
-.label, .label:hover {
-  background-color: inherit;
-  text-shadow: none;
-  color: #1E5E60;
-}
-
-input, textarea {
-  width: 400px;
-}
-
-.form-label,
-.form-detail {
-  padding: 0 10px 0 5px;
-}
-
-.form-image {
-  padding: 0 10px 0 5px;
-}
-
-a {
-  color: #A3936C;
-  font-weight: bold;
-}
-
-hr {
-  border-top: none;
-  border-bottom: 2px solid rgba(256,256,256,0.1);
-}
-
 
 /*<!-- ============ Map Stuff ============ -->*/ 
 
@@ -96,9 +68,12 @@ hr {
 
 #map-outer-container .zoomer {
   margin-top: 40px;
-  margin-left: 10px;
+  margin-left: 16px;
   width: 28px;
   height: 28px;
+  -webkit-border-radius: 0 0 0 0;
+   -moz-border-radius: 0 0 0 0;
+        border-radius: 0 0 0 0;
 }
 
 .zoom-way-in {
@@ -125,27 +100,64 @@ hr {
   background:#F9F0DC;
 }
 
+/*<!-- ============ data panel ============ -->*/ 
+
 #data-panel {  
   position:absolute;
+  overflow-y: scroll;
+  overflow-x: hidden; 
+
   top:40px;
   right:0px;
-  height: 530px;
+  height: 590px;
   width: 33%;
   background: rgba(215,215,233,.85);
   z-index:7;
-  /*padding: 30px;*/
-  font-size: 0.8em;
   visibility: hidden;
 }
 
 .panel {
   position: absolute;
-  padding: 10px;
+  display: inline-table;
+  padding: 30px;
+  width: 100%;
 }
 
-#data-panel h3 {
-  margin: 20px 0 0 0;
+ul.data-boxes, ul.data-list {
+  list-style: none;
+  margin: 0 0 0 0;
 }
+
+ul.data-boxes {
+  position: relative;
+  width: 100%;
+}
+
+ul.data-boxes>li {
+  margin-top: 30px;
+}
+
+ul.data-boxes>li:first-child {
+  margin-top: 0;
+}
+
+div.data-box {
+  background-color: #fff;
+  width: 100%;
+  margin: 0 auto;
+}
+
+ul.data-list {
+  padding: 30px;
+  border: 1px solid #e0e0e0; 
+}
+
+ul.data-list>h4 {
+  line-height: 0px;
+  margin-bottom: 30px;
+}
+
+/*<!-- ============ tooltips ============ -->*/ 
 
 .map-tooltip {
   border: none;

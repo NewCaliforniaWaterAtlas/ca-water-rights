@@ -419,7 +419,7 @@ water.loadDataPanelData = function(results){
       var content = water.formatTooltipStrings(results[0]);
       console.log(results[0]);
     
-      $('#map-panel .map-detail').html(content);
+      $('#rights-panel .map-detail').html(content);
     }
   }
 };
@@ -696,10 +696,10 @@ var o ='<span class="content">'
 
     // display a list of markers.
     if(inextent.length > 0) {
-      $('#map-panel .list-content').html('<h3>Water Rights</h3>' + inextent.join('<br />'));
+      $('#rights-panel .list-content').html('<h3>Water Rights</h3>' + inextent.join('<br />'));
     }
     else {
-      $('#map-panel .list-content').html();
+      $('#rights-panel .list-content').html();
     }
     $('.map-tooltip').close();
     
