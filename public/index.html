@@ -44,7 +44,6 @@
             <li><a href="#" id="button-sensors">Sensors</a></li>
             <li><a href="#" id="button-search">Search</a></li>
             <li><a href="#about" id="button-about">About</a></li>
-
           </ul>
         </div>
 
@@ -65,28 +64,69 @@
             </div>
 
             <div id="data-panel">
-              <div class="alert"> 
+              <!-- <div class="alert"> 
                 <div class="content">Loading the map</div>
                 <div class="zoom-level"></div>
-              </div>
+              </div> -->
               
+              <div id="rights-panel" class="panel">
+
+                <!-- <div class="map-detail"></div> -->
+
+                  <ul class="data-boxes">
+                    <li>
+                      <div class="data-box">
+                        <ul class="data-list">
+                          <h4>holder_name + face_value</h4>
+                          <li>POD id: </li>
+                          <li>Pod Status: </li>
+                          <li>Primary Owner: </li>
+                          <li>Primary Entity Type: </li>
+                          <li>Water Right Type: </li>
+                          <li>Water Right Status: </li>
+                        </ul>
+                      </div>
+                    </li>
+                    
+                    <li>
+                      <div class="data-box">
+                        <ul class="data-list">
+                          <h4>Location</h4>
+                          <li>Source Name: </li>
+                          <li>Watershed: </li>
+                          <li>County: </li>
+                          <li>Quadrant: </li>
+                        </ul>
+                      </div>
+                    </li>
+                    
+                    <li>
+                      <div class="data-box">
+                        <ul class="data-list">
+                          <h4>Details</h4>
+                          <li>Direct Diversion: </li>
+                          <li>Storage: </li>
+                          <li>Used Under: </li>
+                          <li>Has Other: </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul><!-- .data-boxes -->
+              
+              </div><!-- #rights-panel -->
+
+              <div id="sensor-panel" class="panel">
+                <h4>Sensor Details</h4>
+              </div>
+
               <div id="search-panel"  class="panel">
-                <h3>Search</h3>
+                <h4>Search</h4>
                 <div class="filters"> 
                   <div class="inputs">
                     <input class="search-holders" type="text" data-provide="typeahead">
                   </div>
                 </div>
                 <div class="list-content"></div>
-              </div>
-              
-              <div id="map-panel" class="panel">
-                <h3>Water Right Details</h3>
-                <div class="map-detail"></div>
-              </div>
-
-              <div id="sensor-panel" class="panel">
-                <h3>Sensor Details</h3>
               </div>
 
             </div><!-- #map-panel -->

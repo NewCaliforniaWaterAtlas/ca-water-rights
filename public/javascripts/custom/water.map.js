@@ -531,9 +531,13 @@ water.formatTooltipStrings = function(feature) {
         
       //   console.log(results1); 
       // });
-    
-    }  
-    return string;
+
+    //}  
+    //return string;
+
+      $('#rights-panel .map-detail').html(content);
+    }
+  }
 };
 
 water.triggerMapMoveTimeout = function() {
@@ -736,10 +740,27 @@ mapbox.markers.interaction = function(mmg) {
         return mi;
     };
 
+
     mi.remove = function() {
         on = false;
         return mi;
     };
+
+/*
+    // display a list of markers.
+    if(inextent.length > 0) {
+      $('#rights-panel .list-content').html('<h3>Water Rights</h3>' + inextent.join('<br />'));
+    }
+    else {
+      $('#rights-panel .list-content').html();
+    }
+    $('.map-tooltip').close();
+    
+  });
+  
+};
+*/
+
 
     mi.bindMarker = function(marker) {
         var delayed_close = function() {
