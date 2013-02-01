@@ -99,8 +99,6 @@ app.get('/search/holders', function(req, res, options){
   },{}, {'limit': 500});
 });
 
-
-
 app.get('/list/usage', function(req, res, options){
 
   var lookup =  { $and: [{'properties.reports': { $exists: true}}, {'properties.reports': { $gt: {}}}, {'coordinates': {$exists: true} } ]} ;
@@ -161,6 +159,96 @@ app.get('/list/usage', function(req, res, options){
   
 });
 
+watermapApp.tally = {};
+watermapApp.tally.storage = 0;
+watermapApp.tally.diversion = 0;
+
+watermapApp.addCommas = function(nStr) {
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
+}
+
+watermapApp.tallyDiversions = function(feature){
+  var string = feature.properties.application_pod + " ";
+  var currentDiversionAmount = 0;
+  
+  // There are a few fields that might contain the diversion amount, but from how it appears, the values are either equal to each other, or else they are null or zero. We believe that the diversion amount, face value amount and diversion amount in acre feet are all supposed to be the same thing.
+  
+  // Set the current diversion amount
+  if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
+    currentDiversionAmount = feature.properties.diversion_acre_feet;
+    string += "diversion_acre_feet: " + feature.properties.diversion_acre_feet + " AFY<br />";
+  }
+  else if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
+    currentDiversionAmount = feature.properties.face_value_amount;
+    string += "face_value_amount: " + feature.properties.face_value_amount + " AFY<br />";
+  }
+/*
+  else if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
+    currentDiversionAmount = parseFloat(feature.properties.direct_div_amount);
+    string += "direct_div_amount: " + feature.properties.direct_div_amount + " " + feature.properties.pod_unit + "<br />";   
+
+    if(feature.properties.pod_unit === 'Cubic Feet per Second'){
+      currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 723.97; // Convert to CFS to AFY
+      string += "converted direct_div_amount cfs to afy: " + currentDiversionAmount + " AFY<br />";
+    }
+    if(feature.properties.pod_unit === 'Gallons per Day'){
+      currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
+      string += "converted direct_div_amount gpd to afy: " + currentDiversionAmount + " AFY<br />";
+    }
+
+  }
+*/
+
+  
+  
+  // Increment the diversion tally.
+  if(currentDiversionAmount > 0){
+    watermapApp.tally.diversion += parseFloat(currentDiversionAmount);
+    string += "tally total diverted: " + watermapApp.addCommas(watermapApp.tally.diversion) + " AFY<br />";  
+  }
+  if((feature.properties.diversion_storage_amount !== undefined) && (feature.properties.diversion_storage_amount > 0)) {
+    // @TODO check storage units.
+    watermapApp.tally.storage += parseFloat(feature.properties.diversion_storage_amount);
+    //string += "storage: " + parseFloat(feature.properties.diversion_storage_amount) + " AFY<br />";
+    // string += "tally total stored: " + watermapApp.addCommas(watermapApp.tally.storage) + " AFY<br />";
+  }
+
+  return string + "<br />";
+};
+
+
+app.get('/tally', function(req, res, options){
+
+  var lookup =  { $and: [{'kind': 'right'}]} ;
+
+
+  engine.find_many_by(lookup,function(error, results) {
+    if(!results || error) {
+      console.log("agent query error");
+      res.send("[]");
+      return;
+    }
+
+    var obj = [];
+    var string = '';
+    
+    for (i in results){
+
+      string += watermapApp.tallyDiversions(results[i]);    
+
+    }
+     res.send(string);
+  } ,{}, {'limit': 55000});
+  
+});
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Update Water Rights Data
@@ -175,14 +263,20 @@ watermapApp.current = 0;
 watermapApp.counterXLSParser = 0;
 watermapApp.getBatchCounter = 0;
 watermapApp.GISGroup = 'C0'; // Used for downloading GIS data from server. 
-watermapApp.XLSGroup = 'S0';
+watermapApp.XLSGroup = 'all';
 watermapApp.GISCounter = 0;
 watermapApp.GISLoadJSONCounter = 0;
 watermapApp.EWRIMSReportCurrent = 0;
 watermapApp.EWRIMSReportsCounter = 0;
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Data handling callbacks.
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+//http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=
+
+//http://www.waterboards.ca.gov/water_issues/programs/ewrims/statements/docs/
+
 
 /**
  * Get database ID for all records in eWRIMS database.
@@ -196,21 +290,22 @@ app.get('/data/water_rights/scrape/pages', function(req, res, options){
   watermapApp.getXLSAllPages();
 });
 
-// @TODO Refactored, test it.
-// @TODO Finish downloading.
+// Scrape all pages to get the ID to get the download link to get the xls files
 app.get('/data/water_rights/scrape/app_id_array', function(req, res, options){
-  console.log("load");
   watermapApp.getXLSByAppIDArray();
 });
 
-/** Once we have all of the DB ids in a CSV file on the server (manually created)
- *  Download all xls files for water rights. 
+/** Once we have all of the DB ids in a CSV file on the server (manually created),
+ *  download all xls files for water rights. 
  */
-// @TODO Refactored, test it.
 app.get('/data/water_rights/download/xls', function(req, res, options){
   watermapApp.downloadWaterRightDBDataXLS();
 });
 
+/** 
+ * Load view reports pages, and store the results.
+ * Then parse results for form ids and store them
+ */ 
 app.get('/data/water_rights/reports', function(req, res, options){
   watermapApp.loadWaterRightsReportsXLS();
 });
@@ -613,7 +708,7 @@ watermapApp.loadWaterRightsReportsXLS = function(){
   
   fs.readFileSync('./server_data/db_ids_' + watermapApp.XLSGroup + '.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
-      watermapApp.dbIDs.push(split_line[2]);
+      watermapApp.dbIDs.push(split_line[3]);
   });
 
 
@@ -749,7 +844,7 @@ watermapApp.getXLSAllPages = function(){
     
       done: function (err, window) {
         var $ = window.jQuery;      
-/*         console.log(body); */
+
         $('body table.dataentry tr').each(function(){
           var app_id = $(this).find('td:first-child a').html();
           if (app_id === undefined) {
@@ -901,7 +996,7 @@ watermapApp.downloadWaterRightDBDataXLS = function() {
   // Would be nice if we could do it all in one swoop, and then get a list of updated and new records - especially because the records only change once a year it seems.
   // The GIS server might be able to tell us which records are new - if the Water Control Board is not able to help.
 
-  fs.readFileSync('./server_data/db_ids_' + watermapApp.XLSGroup + '.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/last_batch_download_csv.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
       watermapApp.dbIDs.push(split_line[2]);
   });
@@ -926,7 +1021,7 @@ watermapApp.downloadReportForm = function(db_id) {
   console.log(db_id);
 
   // save xls file locally
-  var filename = 'water_rights_reports/water_right-' + db_id +'.txt';  
+  var filename = 'water_rights_reports_all/water_right-' + db_id +'.txt';  
   
   http.get({ 
     host: "ciwqs.waterboards.ca.gov", 
@@ -938,8 +1033,6 @@ watermapApp.downloadReportForm = function(db_id) {
 };
 
 watermapApp.downloadReport = function(db_id,form_id,path) {
-
-
 
 /*
   var baseURL = 'http://ciwqs.waterboards.ca.gov/ciwqs/ewrims_online_reporting/licensePrint.do?form_id=' + form_id;
