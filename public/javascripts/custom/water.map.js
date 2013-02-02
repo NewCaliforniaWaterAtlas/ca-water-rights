@@ -419,14 +419,14 @@ water.formatWaterRightTooltip = function(feature) {
                         + '</span></div></div>' +
                       
                         '<ul class="data-list">' +
-                          '<li>Application ID: ' + id + '</li>' +
 
-                          '<li>POD ID: ' + feature.properties.pod_id + '</li>' +
 /*                           '<li>Pod Status: ' + status + '</li>' + */
                           '<li>Primary Owner: ' + primary_owner + '</li>' +
                           '<li>Primary Entity Type: ' + feature.properties.organization_type + '</li>' +
 
                           '<li>Water Right Status: ' + status + '</li>' +
+                          '<li>Application ID: ' + id + '</li>' +
+                          '<li>POD ID: ' + feature.properties.pod_id + '</li>' +
                           '<li>Registration Status: ' + feature.properties.status + '</li>' +
                           '<li>Date Water Right Application Received: ' + feature.properties.date_received + '</li>' +
                           '<li>Date Water Right Issued: ' + feature.properties.issue_date + '</li>' +
@@ -436,10 +436,10 @@ water.formatWaterRightTooltip = function(feature) {
                       '<div class="data-box">' +
                         '<h4>Location</h4>' +
                         '<ul class="data-list">' +
-                          '<li>Source Name: </li>' +
-                          '<li>Watershed: </li>' +
-                          '<li>County: </li>' +
-                          '<li>Quadrant: </li>' +
+                          '<li>Source Name: ' + feature.properties.source_name + '</li>' +
+                          '<li>Watershed: ' + feature.properties.watershed + '</li>' +
+                          '<li>County: ' + feature.properties.county + '</li>' +
+                          '<li>Quadrant: ' + feature.properties.quad_map_name + '</li>' +
                         '</ul>' +
                       '</div>' +
 

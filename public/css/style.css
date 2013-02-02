@@ -191,7 +191,8 @@ div.data-box h4 {
   max-height:400px;
     width:220px\8; /*< IE 9*/
   width: 360px;
-    overflow:auto;
+  overflow:auto;
+  z-index: 6;
 }
 
 .map-tooltip .content {
