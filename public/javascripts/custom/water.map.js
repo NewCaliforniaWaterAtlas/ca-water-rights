@@ -425,8 +425,11 @@ water.formatWaterRightTooltip = function(feature) {
 /*                           '<li>Pod Status: ' + status + '</li>' + */
                           '<li>Primary Owner: ' + primary_owner + '</li>' +
                           '<li>Primary Entity Type: ' + feature.properties.organization_type + '</li>' +
-                          '<li>Water Right Type: ' + feature.properties.water_right_type + '</li>' +
+
                           '<li>Water Right Status: ' + status + '</li>' +
+                          '<li>Registration Status: ' + feature.properties.status + '</li>' +
+                          '<li>Date Water Right Application Received: ' + feature.properties.date_received + '</li>' +
+                          '<li>Date Water Right Issued: ' + feature.properties.issue_date + '</li>' +
                         '</ul>' +
                       '</div>' +
 
@@ -442,14 +445,66 @@ water.formatWaterRightTooltip = function(feature) {
 
 
                       '<div class="data-box">' +
-                          '<h4>Details</h4>' +
+                        '<h4>Water Diversion</h4>' +
                         '<ul class="data-list">' +
-
-                          '<li>Direct Diversion: </li>' +
+                          '<li>Diversion Type: ' + feature.properties.diversion_type + '</li>' +
+                          '<li>Direct Diversion: ' + diversion.amount + ' ' + diversion.units + '</li>' +
                           '<li>Storage: </li>' +
                           '<li>Used Under: </li>' +
                           '<li>Has Other: </li>' +
                         '</ul>' +
+                      '</div>' +
+
+                      '<div class="data-box">' +
+                        '<h4>Usage</h4>' +
+                        '<ul class="data-list">' +
+                          '<li>Use Code: ' + feature.properties.use_code + '</li>' +
+                          '<li>Water Right Type: ' + feature.properties.water_right_type + '</li>' +
+                        '</ul>' +
+                      '</div>';
+
+                     
+
+
+  var string = '';
+
+
+      if(feature.properties.reports !== undefined) {
+        string += '<div class="data-box">' +
+                        '<h4>Reports</h4>';
+                        
+        var properties = feature.properties;
+        for(var year in feature.properties.reports){
+          var report = feature.properties.reports[year];
+          if(report !== undefined){                
+            if(report.usage !== undefined){
+             if (report.usage instanceof Array) {
+                for(var i in report['usage']) {                
+                  string += "Year: " + year + " Usage:" + report['usage'][i] + '  Details: ' + report['usage_quantity'][i];
+                  string += "<br />";
+                }
+             }
+             else{
+                string +=  "Year: " + year + " Usage:" + report['usage'] + '  Details: ' + report['usage_quantity'];
+                string += "<br />";
+             }
+            } 
+          }
+        }
+      string += "</div>";
+      }
+
+
+
+
+                      output += string;
+
+                      output += '<div class="data-box">' +
+                          '<h4>About this Data</h4>' +
+                          '<p>Data re-published from the Department of Water Resources eWRIMS and ARCGIS servers. If this information is erroneous, please check the eWRIMS database and if the error persists, please contact their department.</p>' +
+                        '<ul class="data-list">' +
+                          '<li>Data Source: ' + feature.properties.source + ' <a href="' + feature.properties.source + '" target="_blank">Link</a></li>' +
+                        
                       '</div>' +
 
                   '</div>';

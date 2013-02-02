@@ -147,11 +147,15 @@ div.data-box .data-title h4 {
   padding: 0;
 }
 
+p {
+  padding: 0 30px 30px 30px;
+}
+
 ul.data-list {
   list-style: none;
   margin: 0 0 0 0;
   padding: 0 30px 30px 30px;
-    clear: both;
+  clear: both;
 }
 
 div.data-boxes {
