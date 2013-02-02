@@ -322,9 +322,9 @@ water.getDiversion = function(feature){
 
   else if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
     diversion.amount = feature.properties.face_value_amount;
-    diversion.units = features.properties.face_value_units;
+    diversion.units = feature.properties.face_value_units;
   }
-/*  if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
+ if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
     diversion.amount = feature.properties.direct_div_amount;
     diversion.units = feature.properties.pod_unit;
   }
@@ -332,7 +332,7 @@ water.getDiversion = function(feature){
     diversion.amount = feature.properties.diversion_storage_amount;
     diversion.units = " acre-ft year stored";
   }
-*/
+console.log(diversion);
 
   return diversion;
 };
@@ -398,56 +398,308 @@ water.makeMarker = function(feature, featureDetails) {
   return img;
 };
 
+water.formatWaterRightTooltip = function(feature) {
+  var output = '';
+  if(feature.properties.name) { var name = feature.properties.name } else{ name = '';}
+  var diversion = water.getDiversion(feature);
+  var id = feature.properties.application_pod;
+  var status = feature.properties.status;
+  var primary_owner = '';
+  if (feature.properties.first_name) {primary_owner += feature.properties.first_name + " ";}
+  if(feature.properties.holder_name) {primary_owner += feature.properties.holder_name;}
+
+    
+  output = '<div class="data-boxes">' +
+                    
+                      '<div class="data-box">' +
+                      '<div class="data-title">' +
+                      '<h4 class="title">' + name + '</h4>' +
+                        '<div class="diversion"><span class="diversion-amount">' 
+                        + diversion.amount + '</span><span class="diversion-unit">' + diversion.units 
+                        + '</span></div></div>' +
+                      
+                        '<ul class="data-list">' +
+                          '<li>Application ID: ' + id + '</li>' +
+
+                          '<li>POD ID: ' + feature.properties.pod_id + '</li>' +
+/*                           '<li>Pod Status: ' + status + '</li>' + */
+                          '<li>Primary Owner: ' + primary_owner + '</li>' +
+                          '<li>Primary Entity Type: ' + feature.properties.organization_type + '</li>' +
+                          '<li>Water Right Type: ' + feature.properties.water_right_type + '</li>' +
+                          '<li>Water Right Status: ' + status + '</li>' +
+                        '</ul>' +
+                      '</div>' +
+
+                      '<div class="data-box">' +
+                        '<h4>Location</h4>' +
+                        '<ul class="data-list">' +
+                          '<li>Source Name: </li>' +
+                          '<li>Watershed: </li>' +
+                          '<li>County: </li>' +
+                          '<li>Quadrant: </li>' +
+                        '</ul>' +
+                      '</div>' +
+
+
+                      '<div class="data-box">' +
+                          '<h4>Details</h4>' +
+                        '<ul class="data-list">' +
+
+                          '<li>Direct Diversion: </li>' +
+                          '<li>Storage: </li>' +
+                          '<li>Used Under: </li>' +
+                          '<li>Has Other: </li>' +
+                        '</ul>' +
+                      '</div>' +
+
+                  '</div>';
+  
+  return output;
+
+
+
+/*
+
+{
+        "id" : "D031760R_01",
+        "kind" : "right",
+        "type" : "Feature",
+        "coordinates" : [
+                -123.06630000000001,
+                40.7684
+        ],
+        "geometry" : {
+                "type" : "Point",
+                "coordinates" : [
+                        -123.06630000000001,
+                        40.7684
+                ]
+        },
+        "properties" : {
+                "id" : "D031760R_01",
+                "kind" : "right",
+                "source" : "http://gispublic.waterboards.ca.gov/",
+                "name" : "Matthew  Menovske",
+                "pod_id" : "01",
+                "water_right_id" : "45445",
+                "pod_number" : "01",
+                "application_id" : "D031760R",
+                "direct_div_amount" : "300.0",
+                "diversion_storage_amount" : "0.0",
+                "diversion_acre_feet" : "0.3",
+                "place_id" : 736071,
+                "pod_status" : "Active",
+                "face_value_amount" : "0.3",
+                "diversion_type" : "Direct Diversion",
+                "diversion_code_type" : "Both diversion and rediversion point",
+                "water_right_type" : "Small Domestic Reg",
+                "water_right_status" : "Registered",
+                "storage_type" : "",
+                "pod_unit" : "Gallons per Day",
+                "first_name" : "Matthew",
+                "holder_name" : "Menovske",
+                "organization_type" : "Individual",
+                "application_pod" : "D031760R_01",
+                "township_number" : "34",
+                "range_direction" : "W",
+                "township_direction" : "N",
+                "range_number" : "11",
+                "section_number" : "25",
+                "section_classifier" : "",
+                "quarter" : "SW",
+                "quarter_quarter" : "SW",
+                "meridian" : "Mount Diablo",
+                "northing" : "2164989",
+                "easting" : "6266329",
+                "sp_zone" : "1",
+                "latitude" : 40.7684,
+                "longitude" : -123.06630000000001,
+                "trib_desc" : "Wheel Gulch",
+                "location_method" : "GIS_CLICK",
+                "source_name" : "Unnamed Spring",
+                "moveable" : "N",
+                "has_opod" : "N",
+                "watershed" : "TRINITY RIVER",
+                "county" : "Trinity",
+                "well_number" : null,
+                "quad_map_name" : "DEDRICK",
+                "quad_map_num" : null,
+                "quad_map_min_ser" : null,
+                "parcel_number" : "009-390-15-00",
+                "special_area" : null,
+                "last_update_user_id" : 438711,
+                "date_last_updated" : 1239196609000,
+                "status" : "Registered",
+                "ewrims_db_id" : "44993",
+                "source_alt" : "http://ciwqs.waterboards.ca.gov/",
+                "date_received" : "04/02/2009",
+                "date_accepted" : "04/02/2009",
+                "date_notice" : "",
+                "protest" : "",
+                "number_protests" : "0",
+                "agent_name" : "",
+                "agent_entity_type" : "",
+                "primary_owner" : "Matthew  Menovske",
+                "primary_owner_entity_type" : "Individual",
+                "face_value_units" : "Acre-feet per Year",
+                "max_dd_appl" : "300.0",
+                "max_dd_units" : "Gallons per Day",
+                "max_dd_ann" : "0.3",
+                "max_storage" : "0.0",
+                "max_use_appl" : "0.3",
+                "year_first_use" : "0.0",
+                "effective_from_date" : "04/02/2009",
+                "effective_to_date" : "",
+                "entity_type" : "Individual",
+                "city" : null,
+                "state" : null,
+                "zipcode" : null,
+                "phone" : null,
+                "use_code" : "Domestic",
+                "use_status_new" : "Requested when filed",
+                "use_population" : "2",
+                "use_net_acreage" : "0.0",
+                "use_gross_acreage" : "0.0",
+                "use_dd_annual" : "0.3",
+                "use_dd_rate" : "300.0",
+                "use_dd_rate_units" : "Gallons per Day",
+                "use_storage_amount" : "0.0",
+                "pod_max_dd" : "0.0",
+                "source_max_dd_unit" : "",
+                "pod_max_storage" : "0.0",
+                "source_max_storage_unit" : "",
+                "pod_gis_maintained_data" : null,
+                "appl_id" : "D031760R",
+                "podid" : "49471",
+                "permit_id" : null,
+                "water_right_description" : null,
+                "issue_date" : "2009-04-16",
+                "construction_completed_by" : null,
+                "planned_project_completion_date" : null,
+                "permit_terms" : null,
+                "term_id" : null,
+                "version_number" : null,
+                "reports" : {
+                        "2008" : {
+                                "usage" : [
+                                        "Irrigation",
+                                        "Stockwatering",
+                                        "Domestic",
+                                        "Other"
+                                ],
+                                "usage_quantity" : [
+                                        "18 Acres",
+                                        "NONE",
+                                        "NONE",
+                                        "NONE"
+                                ],
+                                "total_diverted" : NaN,
+                                "total_used" : 3,
+                                "diversion_unit" : "Acre-Feet",
+                                "diversion_total" : "",
+                                "used_total" : "",
+                                "amount_diverted" : [
+                                        {
+                                                "January" : ""
+                                        },
+                                        {
+                                                "February" : ""
+                                        },
+                                        {
+                                                "March" : ""
+                                        },
+                                        {
+                                                "April" : ""
+                                        },
+                                        {
+                                                "May" : ""
+                                        },
+                                        {
+                                                "June" : ""
+                                        },
+                                        {
+                                                "July" : ""
+                                        },
+                                        {
+                                                "August" : ""
+                                        },
+                                        {
+                                                "September" : ""
+                                        },
+                                        {
+                                                "October" : ""
+                                        },
+                                        {
+                                                "November" : ""
+                                        },
+                                        {
+                                                "December" : ""
+                                        },
+                                        {
+                                                "Total" : ""
+                                        }
+                                ],
+                                "amount_used" : [
+                                        {
+                                                "January" : "0"
+                                        },
+                                        {
+                                                "February" : "0"
+                                        },
+                                        {
+                                                "March" : "0"
+                                        },
+                                        {
+                                                "April" : "0"
+                                        },
+                                        {
+                                                "May" : "0.44"
+                                        },
+                                        {
+                                                "June" : "0.47"
+                                        },
+                                        {
+                                                "July" : "1.1"
+                                        },
+                                        {
+                                                "August" : "1.58"
+                                        },
+                                        {
+                                                "September" : "1.3"
+                                        },
+                                        {
+                                                "October" : "0.62"
+                                        },
+                                        {
+                                                "November" : "0"
+                                        },
+                                        {
+                                                "December" : "0"
+                                        },
+                                        {
+                                                "Total" : "5.51"
+                                        }
+                                ],
+                                "year" : "2008",
+                                "ewrims_db_id" : "44993",
+                                "ewrims_form_id" : "78649"
+                        }
+                }
+        },
+        "_id" : ObjectId("50f978a54fbf1a000000011a")
+}
+*/
+
+
+}
+
+
 water.formatTooltipStrings = function(feature) {
     console.log(feature);
 
-    var string = '';
-    if (feature.properties.holder_name !== undefined) {
-      string +=  
-        "<h4>Water Right</h4>" +
-        "<p>" + "Name: ";
-        if(feature.properties.first_name){
-          string += feature.properties.first_name + " ";
-        }
-        if(feature.properties.holder){ 
-          string += feature.properties.holder_name;
-        }
-        else {
-          string += feature.properties.name;
-        }
-        string += "</p>"
-        
-        string += "Diversion Type: " + feature.properties.diversion_type + "<br />";
-        string += "Direct Diversion Amount: "  + "<br />";feature.properties.direct_div_amount;
-        string += "Face amount: " + feature.properties.face_amount + " " + feature.properties.face_value_units + "<br />";
-        string += "Diversion Acre Feet" + feature.properties.diversion_acre_feet + "<br />";
-        string += "Storage" + feature.properties.diversion_storage_amount + "<br />";
-        string += "POD unit" + feature.properties.pod_unit + "<br />";
-
-        if(feature.properties.reports !== undefined) {
-        
-          for(r in reports){
-            var report = reports[r];
-            if(report.usage !== undefined){
-             if (report.usage instanceof Array) {
-                for(var i in report['usage']) {
-                string +=  "Usage" + report['usage'][i] + ', ' + report['usage_quantity'][i];
-                }
-             }
-             else{
-                string +=  "Usage" + report['usage'] + ', ' + report['usage_quantity'];
-             }
-           }
-        }
-      
-      string += "<h4>Extra Stuff</h4>"
-      + "<p>" + "pod_id: " +  feature.properties.pod_id + "</p>" 
-      + "<p>" + "application_pod: " +  feature.properties.application_pod + "</p>"
-      + "<p>" + "water_right_id: " +  feature.properties.water_right_id + "</p>"
-      + "<p>" + "Source: " +  feature.properties.source + "</p>";
-    }
-  
-       // console.log(feature.properties.station_code);
+    var output = '';
+    
+    output = water.formatWaterRightTooltip(feature);
 
 /*
     if (feature.properties.station_code !== undefined) {
@@ -532,12 +784,8 @@ water.formatTooltipStrings = function(feature) {
       //   console.log(results1); 
       // });
 
-    //}  
-    //return string;
 
-      $('#rights-panel .map-detail').html(content);
-    }
-  }
+    return output;
 };
 
 water.triggerMapMoveTimeout = function() {
@@ -949,9 +1197,12 @@ water.loadDataPanelData = function(results){
   if(results !== undefined){
     if(results[0] !== undefined){
       var content = water.formatTooltipStrings(results[0]);
-      console.log(results[0]);
-    
-      $('#map-panel .map-detail').html(content);
+
+    water.displayPanelContainer($('#data-panel'));
+    water.displayPanel($('#rights-panel'));
+
+      $('#rights-panel').html(content);
+      
     }
   }
 };
@@ -967,238 +1218,3 @@ water.trim = function(str){
     }
     return str;
 };
-
-
-
-/*
-
-{
-        "id" : "D031760R_01",
-        "kind" : "right",
-        "type" : "Feature",
-        "coordinates" : [
-                -123.06630000000001,
-                40.7684
-        ],
-        "geometry" : {
-                "type" : "Point",
-                "coordinates" : [
-                        -123.06630000000001,
-                        40.7684
-                ]
-        },
-        "properties" : {
-                "id" : "D031760R_01",
-                "kind" : "right",
-                "source" : "http://gispublic.waterboards.ca.gov/",
-                "name" : "Matthew  Menovske",
-                "pod_id" : "01",
-                "water_right_id" : "45445",
-                "pod_number" : "01",
-                "application_id" : "D031760R",
-                "direct_div_amount" : "300.0",
-                "diversion_storage_amount" : "0.0",
-                "diversion_acre_feet" : "0.3",
-                "place_id" : 736071,
-                "pod_status" : "Active",
-                "face_value_amount" : "0.3",
-                "diversion_type" : "Direct Diversion",
-                "diversion_code_type" : "Both diversion and rediversion point",
-                "water_right_type" : "Small Domestic Reg",
-                "water_right_status" : "Registered",
-                "storage_type" : "",
-                "pod_unit" : "Gallons per Day",
-                "first_name" : "Matthew",
-                "holder_name" : "Menovske",
-                "organization_type" : "Individual",
-                "application_pod" : "D031760R_01",
-                "township_number" : "34",
-                "range_direction" : "W",
-                "township_direction" : "N",
-                "range_number" : "11",
-                "section_number" : "25",
-                "section_classifier" : "",
-                "quarter" : "SW",
-                "quarter_quarter" : "SW",
-                "meridian" : "Mount Diablo",
-                "northing" : "2164989",
-                "easting" : "6266329",
-                "sp_zone" : "1",
-                "latitude" : 40.7684,
-                "longitude" : -123.06630000000001,
-                "trib_desc" : "Wheel Gulch",
-                "location_method" : "GIS_CLICK",
-                "source_name" : "Unnamed Spring",
-                "moveable" : "N",
-                "has_opod" : "N",
-                "watershed" : "TRINITY RIVER",
-                "county" : "Trinity",
-                "well_number" : null,
-                "quad_map_name" : "DEDRICK",
-                "quad_map_num" : null,
-                "quad_map_min_ser" : null,
-                "parcel_number" : "009-390-15-00",
-                "special_area" : null,
-                "last_update_user_id" : 438711,
-                "date_last_updated" : 1239196609000,
-                "status" : "Registered",
-                "ewrims_db_id" : "44993",
-                "source_alt" : "http://ciwqs.waterboards.ca.gov/",
-                "date_received" : "04/02/2009",
-                "date_accepted" : "04/02/2009",
-                "date_notice" : "",
-                "protest" : "",
-                "number_protests" : "0",
-                "agent_name" : "",
-                "agent_entity_type" : "",
-                "primary_owner" : "Matthew  Menovske",
-                "primary_owner_entity_type" : "Individual",
-                "face_value_units" : "Acre-feet per Year",
-                "max_dd_appl" : "300.0",
-                "max_dd_units" : "Gallons per Day",
-                "max_dd_ann" : "0.3",
-                "max_storage" : "0.0",
-                "max_use_appl" : "0.3",
-                "year_first_use" : "0.0",
-                "effective_from_date" : "04/02/2009",
-                "effective_to_date" : "",
-                "entity_type" : "Individual",
-                "city" : null,
-                "state" : null,
-                "zipcode" : null,
-                "phone" : null,
-                "use_code" : "Domestic",
-                "use_status_new" : "Requested when filed",
-                "use_population" : "2",
-                "use_net_acreage" : "0.0",
-                "use_gross_acreage" : "0.0",
-                "use_dd_annual" : "0.3",
-                "use_dd_rate" : "300.0",
-                "use_dd_rate_units" : "Gallons per Day",
-                "use_storage_amount" : "0.0",
-                "pod_max_dd" : "0.0",
-                "source_max_dd_unit" : "",
-                "pod_max_storage" : "0.0",
-                "source_max_storage_unit" : "",
-                "pod_gis_maintained_data" : null,
-                "appl_id" : "D031760R",
-                "podid" : "49471",
-                "permit_id" : null,
-                "water_right_description" : null,
-                "issue_date" : "2009-04-16",
-                "construction_completed_by" : null,
-                "planned_project_completion_date" : null,
-                "permit_terms" : null,
-                "term_id" : null,
-                "version_number" : null,
-                "reports" : {
-                        "2008" : {
-                                "usage" : [
-                                        "Irrigation",
-                                        "Stockwatering",
-                                        "Domestic",
-                                        "Other"
-                                ],
-                                "usage_quantity" : [
-                                        "18 Acres",
-                                        "NONE",
-                                        "NONE",
-                                        "NONE"
-                                ],
-                                "total_diverted" : NaN,
-                                "total_used" : 3,
-                                "diversion_unit" : "Acre-Feet",
-                                "diversion_total" : "",
-                                "used_total" : "",
-                                "amount_diverted" : [
-                                        {
-                                                "January" : ""
-                                        },
-                                        {
-                                                "February" : ""
-                                        },
-                                        {
-                                                "March" : ""
-                                        },
-                                        {
-                                                "April" : ""
-                                        },
-                                        {
-                                                "May" : ""
-                                        },
-                                        {
-                                                "June" : ""
-                                        },
-                                        {
-                                                "July" : ""
-                                        },
-                                        {
-                                                "August" : ""
-                                        },
-                                        {
-                                                "September" : ""
-                                        },
-                                        {
-                                                "October" : ""
-                                        },
-                                        {
-                                                "November" : ""
-                                        },
-                                        {
-                                                "December" : ""
-                                        },
-                                        {
-                                                "Total" : ""
-                                        }
-                                ],
-                                "amount_used" : [
-                                        {
-                                                "January" : "0"
-                                        },
-                                        {
-                                                "February" : "0"
-                                        },
-                                        {
-                                                "March" : "0"
-                                        },
-                                        {
-                                                "April" : "0"
-                                        },
-                                        {
-                                                "May" : "0.44"
-                                        },
-                                        {
-                                                "June" : "0.47"
-                                        },
-                                        {
-                                                "July" : "1.1"
-                                        },
-                                        {
-                                                "August" : "1.58"
-                                        },
-                                        {
-                                                "September" : "1.3"
-                                        },
-                                        {
-                                                "October" : "0.62"
-                                        },
-                                        {
-                                                "November" : "0"
-                                        },
-                                        {
-                                                "December" : "0"
-                                        },
-                                        {
-                                                "Total" : "5.51"
-                                        }
-                                ],
-                                "year" : "2008",
-                                "ewrims_db_id" : "44993",
-                                "ewrims_form_id" : "78649"
-                        }
-                }
-        },
-        "_id" : ObjectId("50f978a54fbf1a000000011a")
-}
-*/
-
