@@ -352,6 +352,7 @@ water.drawRightsMarkers = function(features) {
   // right now we aren't using layer, but maybe we would.
   var featureDetails = {
     name: "rights",
+    class: "right",
     icon: "/images/icons/water_right_icon.png",
     layer: "markers_rights"
   };
@@ -367,6 +368,7 @@ water.drawSearchRightsMarkers = function(features) {
   // right now we aren't using layer, but maybe we would.
   var featureDetails = {
     name: "rights",
+    class: "search",
     icon: "/images/icons/search_icon.png",
     layer: "markers_rights"
   };
@@ -380,6 +382,7 @@ water.drawStationCDECMarkers = function(features) {
   
   var featureDetails = {
     name: "station",
+    class: "sensor_cdec",
     icon: "/images/icons/icon_orange.png",
     layer: "markers_station_cdec"
   };
@@ -391,6 +394,7 @@ water.drawStationUSGSMarkers = function(features) {
 
   var featureDetails = {
     name: "station_usgs",
+    class: "sensor_usgs",
     icon: "/images/icons/icon_brown.png",
     layer: "markers_station_usgs"
   };
@@ -399,9 +403,8 @@ water.drawStationUSGSMarkers = function(features) {
 };
 
 water.makeMarker = function(feature, featureDetails) {
-
   var img = document.createElement('img');
-  img.className = 'marker-image';
+  img.className = 'marker-image ' + featureDetails.class;
   img.setAttribute('src', featureDetails.icon);
   img.feature = feature;
   return img;
@@ -1104,7 +1107,7 @@ mapbox.markers.interaction = function(mmg) {
             tooltip.style.width = '100%';
 
             var wrapper = tooltip.appendChild(document.createElement('div'));
-            wrapper.style.cssText = 'position: absolute; left: -10px; top: -10px; width: 300px; pointer-events: none;';
+            wrapper.style.cssText = 'position: absolute; left: -10px; top: -10px; width: 340px; pointer-events: none;';
 
             var popup = wrapper.appendChild(document.createElement('div'));
             popup.className = 'map-tooltip';

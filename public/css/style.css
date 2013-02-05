@@ -109,6 +109,11 @@ body {
   position:absolute;
 }
 
+.marker-image.search {
+  width:20px;
+  height:20px;
+}
+
 .map-attribution {
   background:#F9F0DC;
 }
