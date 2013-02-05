@@ -1690,6 +1690,7 @@ watermapApp.formatEWRIMSforSaving = function(feature, results) {
 // get USGS Data from RESTful API
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
 app.get('/usgs/:station/:pcode', function(req, res) {
   var station = req.params.station;
   var pcode = req.params.pcode;
@@ -1705,21 +1706,94 @@ app.get('/usgs/:station/:pcode', function(req, res) {
   }).pipe(res);
 
 });
+*/
 
 app.get('/usgs/load/today', function(req, res) {
+
+
+/*
+  var filename = '/usgs_realtime/stream_gages.xml';
+  var file = fs.createWriteStream(filename);
   
+  var request = http.get("http://waterwatch.usgs.gov/download/?gt=map&mt=real&st=18&dt=site&ht=&fmt=xml", function(response) {
+    response.pipe(file);
+  });
+*/
+
+
+/*     require('datejs'); */
+  
+/*     var timestamp = Date.today().toString(); */
+/*     console.log(timestamp); */
+/*
+    var filename = '/usgs_realtime/stream_gages.xml';
+    http.get({ 
+    host: "waterwatch.usgs.gov", 
+    path: 'download/?gt=map&mt=real&st=18&dt=site&ht=&fmt=xml' },
+    function(res) {
+      var stream = fs.createWriteStream(filename);
+      res.pipe(stream);
+    });
+*/
+
+/*
+  var filename = '/usgs_realtime/stream_gages.tsv';
+  http.get({ 
+    host: "waterwatch.usgs.gov", 
+    path: "?gt=map&mt=real&st=18&dt=site&ht=&fmt=rdb"},
+    function(res) {
+    console.log(res);
+     // var stream = fs.writeFileSync(filename);
+      //res.pipe(stream);
+  });
+*/
+
+
   request.get({ 
-    url: 'http://waterwatch.usgs.gov/download/?gt=map&mt=real&st=18&dt=site&ht=&fmt=xml'
-    }, function(err,res,xml){
+    url: 'http://waterwatch.usgs.gov/download/?gt=map&mt=real&st=18&dt=site&ht=&fmt=rdb'
+    }, function(err,res,body){
+
+        console.log(body);
+        var filename = './usgs_realtime/stream_gages.tsv';
+        var stream = fs.createWriteStream(filename);
+        stream.write(body);
+        
+
+        
+
+        body.toString().split('\n').forEach(function (line) { 
 
 
-      var parseString = require('xml2js').parseString;
+          var split_line = line.split('\t');
+          //name	lat	lng	class	flowinfo	url
+          var obj = {};
+          obj.kind = "usgs_gage_data";
+          if(split_line[4] !== undefined){}          obj.name = split_line[0];
+          obj.lat = split_line[1];
+          obj.lon = split_line[2];
+          obj.class = split_line[3];
+          obj.flowinfo = split_line[4];
+          if(obj.flowinfo !== undefined){
+            obj.flowinfo = obj.flowinfo.replace(/"/g, '');
+            var flowinfo = obj.flowinfo.split(';');
+            for (i in flowinfo){
+              var flowinfoLine = flowinfo[i].split(':');
+              if(watermapApp.trim(flowinfoLine[0]) !== ''){
+                obj[watermapApp.trim(flowinfoLine[0])] = watermapApp.trim(flowinfoLine[1]);
+              }
+            }
+          }
+          obj.url = split_line[5];
 
-      parseString(xml, function (err, result) {
-         // console.dir(result);
-      });
+          engine.save(obj,function(error,agent) {
+            if(error) { res.send("Server agent storage error #5",404); return; }
+            if(!agent) { res.send("Server agent storage error #6",404); return; }
+          });
+         
+        });
+    });
 
-  }).pipe(res);
+
 
 });
 
@@ -1734,7 +1808,7 @@ app.get('/usgs/load/today/tab', function(req, res) {
 
 
 
-        xml.toString().split('\n').forEach(function (line) { 
+        body.toString().split('\n').forEach(function (line) { 
 
         // skip comments
         if(line.charAt(0) === "#") {
@@ -1742,7 +1816,37 @@ app.get('/usgs/load/today/tab', function(req, res) {
         }
         else {
           var split_line = line.split('\t');
-          console.log(split_line);
+/*           console.log(split_line); */
+          var obj = {};
+          obj.kind = "sensor";
+          obj.agency_cd = split_line[0];
+          obj.site_no = split_line[1];
+          obj.station_name = split_line[2];
+          obj.dd_nu = split_line[3];
+          obj.parameter_cd = split_line[4];
+          obj.result_dt = split_line[5];
+          obj.result_timezone_cd = split_line[6];
+          obj.result_value = split_line[7];
+          obj.result_cd = split_line[8];
+          obj.result_md = split_line[9];
+      engine.save(obj,function(error,agent) {
+        if(error) { res.send("Server agent storage error #5",404); return; }
+        if(!agent) { res.send("Server agent storage error #6",404); return; }
+      });
+/*
+          agency_cd	site_no	station_nm	dd_nu	parameter_cd	result_dt	result_tz_cd	result_va	result_cd	result_md
+          [ 'USGS',
+  '375735121184903',
+  '001N006E04J005M',
+  '01',
+  '72019',
+  '2011-01-22 03:00:00',
+  'PST',
+  '14.33',
+  '',
+  '2013-02-03 07:17:02' ]
+*/
+          
          // watermapApp.usgsData.push(new Array(split_line[1],split_line[0]));
         }
 

@@ -232,10 +232,12 @@ water.markersQuery = function(reloaded) {
     }, water.drawStationCDECMarkers); 
   
   // Load USGS stations
+/*
   Core.query({ 
-     $and: [{'kind': 'station_usgs'}, {'properties.data_type': 'discharge'},  {$where: "this.properties.dec_lat_va < " + (lat + boxsize_lat)},{$where: "this.properties.dec_lat_va > " + (lat - boxsize_lat)},{$where: "this.properties.dec_long_va < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
+     $and: [{'kind': 'sensor'},  {$where: "this.lat < " + (lat + boxsize_lat)},{$where: "this.properties.lat > " + (lat - boxsize_lat)},{$where: "this.properties.lon < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
   ] 
     }, water.drawStationUSGSMarkers); 
+*/
 };
 
 // Draw interactive markers.
