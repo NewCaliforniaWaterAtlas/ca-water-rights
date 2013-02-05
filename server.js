@@ -1706,6 +1706,55 @@ app.get('/usgs/:station/:pcode', function(req, res) {
 
 });
 
+app.get('/usgs/load/today', function(req, res) {
+  
+  request.get({ 
+    url: 'http://waterwatch.usgs.gov/download/?gt=map&mt=real&st=18&dt=site&ht=&fmt=xml'
+    }, function(err,res,xml){
+
+
+      var parseString = require('xml2js').parseString;
+
+      parseString(xml, function (err, result) {
+         // console.dir(result);
+      });
+
+  }).pipe(res);
+
+});
+
+app.get('/usgs/load/today/tab', function(req, res) {
+  watermapApp.usgsData = [];
+
+  request.get({ 
+    url: 'http://waterdata.usgs.gov/ca/nwis/current?index_pmcode_STATION_NM=1&index_pmcode_DATETIME=2&sort_key=site_no&group_key=NONE&sitefile_output_format=html_table&column_name=agency_cd&column_name=site_no&column_name=station_nm&sort_key_2=site_no&html_table_group_key=NONE&format=rdb&rdb_compression=value&list_of_search_criteria=realtime_parameter_selection'
+    }, function(err,res,xml){
+
+
+
+
+
+        xml.toString().split('\n').forEach(function (line) { 
+
+        // skip comments
+        if(line.charAt(0) === "#") {
+        
+        }
+        else {
+          var split_line = line.split('\t');
+          console.log(split_line);
+         // watermapApp.usgsData.push(new Array(split_line[1],split_line[0]));
+        }
+
+        });
+
+
+  }).pipe(res);
+
+
+});
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // openshift internal routes
