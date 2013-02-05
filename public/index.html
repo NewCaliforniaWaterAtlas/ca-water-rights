@@ -60,67 +60,26 @@
           <div class="row-fluid">
             
             <div id="map-outer-container">
+              <div id="map-screen"></div>
               <div id="map-container"></div>
             </div>
 
             <div id="data-panel">
-              <!-- <div class="alert"> 
+              <div class="alert"> 
                 <div class="content">Loading the map</div>
                 <div class="zoom-level"></div>
-              </div> -->
+              </div>
               
-              <div id="rights-panel" class="panel">
-
-                <!-- <div class="map-detail"></div> -->
-
-                  <div class="data-boxes">
-                    <div>
-                      <div class="data-box">
-                        <ul class="data-list">
-                          <h4>holder_name + face_value</h4>
-                          <li>POD id: </li>
-                          <li>Pod Status: </li>
-                          <li>Primary Owner: </li>
-                          <li>Primary Entity Type: </li>
-                          <li>Water Right Type: </li>
-                          <li>Water Right Status: </li>
-                        </ul>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <div class="data-box">
-                        <ul class="data-list">
-                          <h4>Location</h4>
-                          <li>Source Name: </li>
-                          <li>Watershed: </li>
-                          <li>County: </li>
-                          <li>Quadrant: </li>
-                        </ul>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <div class="data-box">
-                        <ul class="data-list">
-                          <h4>Details</h4>
-                          <li>Direct Diversion: </li>
-                          <li>Storage: </li>
-                          <li>Used Under: </li>
-                          <li>Has Other: </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </ul><!-- .data-boxes -->
-              
-              </div><!-- #rights-panel -->
+              <div id="rights-panel" class="panel"></div><!-- #rights-panel -->
 
               <div id="sensor-panel" class="panel">
-                <h4>Sensor Details</h4>
+                <h4 class="title">Sensor Details</h4>
               </div>
 
               <div id="search-panel"  class="panel">
-                <h4>Search</h4>
+                <h4 class="title">Search</h4>
+                <p>You may search water rights records by name, application id, and with keywords related to usage.</p>
+                <p>Example: "East Bay Municipal Utility District", "grapes", </p>
                 <div class="filters"> 
                   <div class="inputs">
                     <input class="search-holders" type="text" data-provide="typeahead">

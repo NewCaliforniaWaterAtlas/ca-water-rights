@@ -262,8 +262,8 @@ watermapApp.dbIDs = [];
 watermapApp.current = 0;
 watermapApp.counterXLSParser = 0;
 watermapApp.getBatchCounter = 0;
-watermapApp.GISGroup = 'C0'; // Used for downloading GIS data from server. 
-watermapApp.XLSGroup = 'all';
+watermapApp.GISGroup = 'S014'; // Used for downloading GIS data from server. 
+watermapApp.XLSGroup = 'S0';
 watermapApp.GISCounter = 0;
 watermapApp.GISLoadJSONCounter = 0;
 watermapApp.EWRIMSReportCurrent = 0;
@@ -338,22 +338,22 @@ app.get('/consolidate/reports', function(req, res, options){
 
 // Lookup GIS data for sets of records to get Lat/Lon and other extra values. Update in Mongo.
 app.get('/data/water_rights/update/gis', function(req, res, options){
-  //var GISinterval = setInterval(function(){
-    watermapApp.GISCounter = 65;
-    watermapApp.GISGroup = watermapApp.gisFacets[watermapApp.GISCounter]; 
+/*   var GISinterval = setInterval(function(){ */
+    watermapApp.GISCounter = 0;
+    //watermapApp.GISGroup = watermapApp.gisFacets[watermapApp.GISCounter]; 
     console.log(watermapApp.GISGroup);
     console.log("getting GIS: " + watermapApp.GISGroup + " " + watermapApp.GISCounter);
 
     watermapApp.getGISRights();
     watermapApp.GISCounter++;
 
-/*
+
     if(watermapApp.GISGroup === undefined) {
       clearInterval(GISinterval);
     }
 
-  }, 60000);
-*/
+/*   },1000); */
+
 });
 
 
@@ -365,12 +365,13 @@ watermapApp.parseReportFile = function(db_id){
   var obj = {};
 
 /*   console.log(db_id); */
-  fs.readFileSync('./server_data/all_reports-txt.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/allreports2011.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
 /*       console.log(split_line); */
       watermapApp.dbIDs.push(new Array(split_line[0],split_line[4]));
   });
   
+  console.log(watermapApp.dbIDs);
     // Do a query every 4 seconds -- should be about 8 concurrent queries.
   // Should do 100 in 6 minutes.
   watermapApp.getReportFile = setInterval(function() {
@@ -382,7 +383,7 @@ watermapApp.parseReportFile = function(db_id){
     if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
       clearInterval(watermapApp.getFile);
     }
-  }, 100);
+  }, 2000);
   
 };
 
@@ -538,8 +539,8 @@ watermapApp.setEWRIMS = function(app_pod, ewrims_db_id){
 };
 
 watermapApp.parseReportFromHTML = function(db_id, form_id){
-console.log(db_id + " " + form_id);
-  var filename = 'water_rights_full_reports/water_right-' + db_id + '_' + form_id +'.txt';
+  console.log("parse: " + db_id + " " + form_id);
+  var filename = 'water_rights_full_reports_all/water_right-' + db_id + '_' + form_id +'.txt';
 
   var body = fs.readFileSync(filename,'utf8');
 
@@ -554,7 +555,7 @@ console.log(db_id + " " + form_id);
       done: function (err, window) {
         var $ = window.jQuery;      
         var output = '';
-        
+
         var obj = {};
         obj.properties = {};
         obj.properties.reports = [];
@@ -597,7 +598,7 @@ console.log(db_id + " " + form_id);
           quantityCount++;
         });
         
- 
+
         
         var diversionItemArray = new Array();
         var diversionUsedArray = new Array();
@@ -684,7 +685,7 @@ console.log(db_id + " " + form_id);
         thisReport.ewrims_form_id= form_id; //push to array
   
         obj.properties.reports.push(thisReport);
-        console.log(thisReport);
+        console.log(obj);
   
         // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
         // @NOTE Does not have geocoded data, that has to come from the GIS server.
@@ -729,6 +730,7 @@ watermapApp.loadWaterRightsReportsXLS = function(){
 };
 
 watermapApp.trim = function(str){
+  if(str !== undefined){
     str = str.replace(/^\s+/, '');
     for (var i = str.length - 1; i >= 0; i--) {
         if (/\S/.test(str.charAt(i))) {
@@ -737,13 +739,17 @@ watermapApp.trim = function(str){
         }
     }
     return str;
+    }
+    else {
+      return '';
+  }
 }
 
 watermapApp.parseWaterRightsReportsXLS = function(){
   
   fs.readFileSync('./server_data/db_ids_' + watermapApp.XLSGroup + '.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
-      watermapApp.dbIDs.push(split_line[2]);
+      watermapApp.dbIDs.push(split_line[3]);
   });
   
   watermapApp.getFile = setInterval(function() {
@@ -763,7 +769,7 @@ watermapApp.parseWaterRightsReportsXLS = function(){
 //15035 stopped at
 watermapApp.parseWaterRightReport = function(db_id) {
 
-    var filename = 'water_rights_reports/water_right-' + db_id +'.txt';
+    var filename = 'water_rights_reports_all/water_right-' + db_id +'.txt';
     var body = fs.readFileSync(filename,'utf8');
 
 
@@ -777,7 +783,7 @@ watermapApp.parseWaterRightReport = function(db_id) {
         var $ = window.jQuery;      
         var output = '';
         var testEmpty =  $('body #content form table tr td').html();
-        
+        if(testEmpty !== undefined){
         if(testEmpty.indexOf('No reports submitted') === -1){
 
 
@@ -806,12 +812,13 @@ watermapApp.parseWaterRightReport = function(db_id) {
 
     
       
-            fs.writeFile('reports/water_right_reports' + db_id + '.txt', output, function (err) {
+            fs.writeFile('reports_all/water_right_reports' + db_id + '.txt', output, function (err) {
               if (err) return console.log(err);
   
 /*                 console.log("saved " + db_id); */
             });
-        }       
+        }
+      }       
     }});
 };
  
@@ -952,7 +959,7 @@ watermapApp.loadWaterRightsReportsDownload = function() {
   // Would be nice if we could do it all in one swoop, and then get a list of updated and new records - especially because the records only change once a year it seems.
   // The GIS server might be able to tell us which records are new - if the Water Control Board is not able to help.
 
-  fs.readFileSync('./server_data/all_reports-txt_jan18.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/allreports2011.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
 /*       console.log(split_line); */
       watermapApp.dbIDs.push(new Array(split_line[0],split_line[4],split_line[3]));
@@ -1041,7 +1048,7 @@ watermapApp.downloadReport = function(db_id,form_id,path) {
 
 
   // save xls file locally
-  var filename = 'water_rights_full_reports/water_right-' + db_id +'_' + form_id + '.txt';
+  var filename = 'water_rights_full_reports_all/water_right-' + db_id +'_' + form_id + '.txt';
   
   
 if (fs.existsSync(filename)) {
@@ -1166,7 +1173,7 @@ watermapApp.getGISRights = function() {
       if(watermapApp.GISLoadJSONCounter === obj.features.length) {
         clearInterval(interval);
       }
-      }, 50);
+      }, 100);
 
 // ).pipe(stream);
 };
@@ -1175,15 +1182,35 @@ watermapApp.getGISRights = function() {
 // cat all files, google refine
 //skip #79
 
-// @TODO STATUS 1/10/2012 -- stopped at 4422 db_id - downloading XLS. (have to get about 1000 missing db_ids)
+// @TODO STATUS 1/10/2012 -- stopped at 4422 db_id - downloading XLS
 watermapApp.parseXLSWaterRights = function() {
 /*   console.log(watermapApp.XLSGroup); */
   fs.readFileSync('./server_data/db_ids_' + watermapApp.XLSGroup + '.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
       var db_id = split_line[2];
       watermapApp.dbIDs.push(db_id);
-      watermapApp.loadXLSfile(db_id);
+
   });
+  
+  
+
+
+
+
+  // Do a query every 4 seconds -- should be about 8 concurrent queries.
+  // Should do 100 in 6 minutes.
+  watermapApp.XLStoDB = setInterval(function() {
+    watermapApp.loadXLSfile(watermapApp.dbIDs[watermapApp.loadFileCounter]);
+
+    watermapApp.loadFileCounter++;
+    watermapApp.getBatchCounter++;  
+    console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
+
+    if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
+      clearInterval(watermapApp.XLStoDB);
+    }
+  }, 500);
+  
 };
 
 /**
@@ -1197,7 +1224,23 @@ watermapApp.loadXLSfile = function(db_id){
     var currentFile = fs.readFileSync('./water_rights_data/water_right-' + db_id + '.xls').toString().split('\r').forEach(function (line) { 
       var split_line = line.split('\t');
       split_line.shift(); // pop off first empty value
-      obj[split_line[0]] = split_line[1];
+      
+      //var permits = {};
+      
+      if(split_line[0] == 'Use Code'){
+        obj[split_line[0]] = watermapApp.trim(split_line[1]);      
+      }
+      else if(split_line[0] == 'Last Name'){
+        if(split_line[2] !== undefined){
+          obj[split_line[0]] = watermapApp.trim(split_line[1]) + " " + watermapApp.trim(split_line[2]);
+        }
+        else {
+          obj[split_line[0]] = watermapApp.trim(split_line[1]);
+        }
+      }
+      else {
+        obj[split_line[0]] = watermapApp.trim(split_line[1]);
+      }   
     });
   
     // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
@@ -1207,7 +1250,7 @@ watermapApp.loadXLSfile = function(db_id){
 /*   console.log(obj); */
 
     var formattedObj =  watermapApp.formatXLSforSaving(obj);
-/*     console.log(formattedObj.id); */
+    console.log(formattedObj.id);
     watermapApp.storeWaterRightFromEWRIMSDatabase(formattedObj);
   }
 };
@@ -1228,6 +1271,7 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
     if(feature['properties']['application_pod'] !== undefined){
       query.push({'properties.application_pod' : feature['properties']['application_pod']});
     }
+/*
     if(feature['properties']['reports'] !== undefined) {
       for(var r in feature['properties']['reports']) {
         if(r === 0) {
@@ -1237,10 +1281,13 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
         }
       }
     }
+*/
+    
+  console.log(query);
 
   // @TODO - storing in separate collection for testing purposes.
   var lookup =  { 
-    $and: [{'kind': 'right'}, {$or: query}]
+    $and: [{$or: query}]
   };
 
   console.log(lookup);
@@ -1378,7 +1425,7 @@ watermapApp.formatXLSforSaving = function(feature) {
     "name" : feature['Primary Owner'],
 
     "application_id" : feature['Application ID'],
-    "date_received": feature['Appliation Rec\'d Date'],
+    "date_received": feature["Appliation Rec'd Date"],
     "date_accepted": feature['Application Acceptance Date'],
     "date_notice": feature['Notice Date'],
     "protest": feature['Protest'],
@@ -1412,29 +1459,23 @@ watermapApp.formatXLSforSaving = function(feature) {
     "effective_to_date": feature['Effective To Date'],
 /*     'Salutation', */
     "entity_type": feature['Entity Type'],
+    "name_type": feature['Name Type'],
     "holder_name": feature['Last Name'],
 /*     'Middle Name', */
     "first_name": feature['First Name'],
-/*
-    'Mailing Street Number',
-    'Mailing Street Name',
-    'Mailing Address Line2',
-*/
-    "city": feature['Mailing City'],
-    "state": feature['Mailing State'],
-    "zipcode": feature['Mailing Zip'],
-/*
-    'Mailing Country',
-    'Mailing Foreign Code',
-    'Billing Street Number',
-    'Billing Street Name',
-    'Billing Address Line2',
-    'Billing City',
-    'Billing State',
-    'Billing Zip',
-    'Billing Country',
-    'Billing Foreign Code',
-*/
+    "mailing_street_number": feature['Mailing Street Number'],
+    "mailing_street_name": feature['Mailing Street Name'],
+    "mailing_address_line2": feature['Mailing Address Line2'],
+    "mailing_city": feature['Mailing City'],
+    "mailing_state": feature['Mailing State'],
+    "mailing_country": feature['Mailing Country'],
+    "mailing_zipcode": feature['Mailing Zip'],
+    "billing_street_number": feature['Billing Street Number'],
+    "billing_street_name": feature['Billing Street Name'],
+    "billing_city": feature['Billing City'],
+    "billing_state": feature['Billing State'],
+    "billing_country": feature['Billing Country'],
+    "billing_zipcode": feature['Billing Zip'],
     "phone": feature['Phone'],
     "status": feature['Current Status'],
     "use_code": feature['Use Code'],
@@ -1446,6 +1487,16 @@ watermapApp.formatXLSforSaving = function(feature) {
     "use_dd_rate": feature['Use Direct Diversion Rate (New)'],
     "use_dd_rate_units": feature['Use Direct Diversion Rate Units'],
     "use_storage_amount": feature['Use Storage Amount (New) (AFA)'],
+    "use_seasons": feature['Use Seasons'],
+    "direct_div_season_begin_date": feature['Direct Div Season Begin Date'],
+    "direct_div_season_end_date": feature['Direct Div Season End Date'],
+    "direct_div_season_div_rate": feature['Season Direct Div Rate (New)'],
+    "direct_div_season_div_rate_units": feature['Season Direct Div Rate Units'],
+    "direct_div_season_annual_amount": feature['Season Direct Div Annual Amount (New) (AFA)'],
+    "storage_season_begin_date": feature['Storage Season Begin Date'],
+    "storage_season_end_date": feature['Storage Season End Date'],
+    "storage_season_amount": feature['Season Storage Amount (AFA)'],
+
     
     "pod_unit": feature['POD Unit'],
     "pod_status": feature['POD Status'],

@@ -246,6 +246,7 @@ water.drawMarkers = function(features, featureDetails) {
   if(water[featureDetails.layer] === 0) {
     water[featureDetails.layer] = mapbox.markers.layer();
     // @TODO This doesn't work on the div, just the object, but it would be nice to name the layers.
+
     water[featureDetails.layer].named(featureDetails.layer);
   
     water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
@@ -260,7 +261,7 @@ water.drawMarkers = function(features, featureDetails) {
 
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
 /*       = water.formatTooltipStrings(feature); */
-var diversion_amount = "#";
+var diversion_amount = "###";
 var diversion_unit = "unit";
 var o ='<span class="content">' 
       + '<span class="name">' + feature.properties.name+ '</span>'
@@ -296,7 +297,7 @@ var o ='<span class="content">'
       list +='<table>';
       for(f in inextent){
         var diversion = water.getDiversion(inextent[f]);
-        list += '<tr><td>' + inextent[f].properties.name + '</td><td>' + diversion.amount + ' ' + diversion.units + '</td></tr>';
+        list += '<tr><td><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td>' + diversion.amount + ' ' + diversion.units + '</td></tr>';
       }
       list +='</table>';
       
@@ -306,9 +307,19 @@ var o ='<span class="content">'
       $('#search-panel .list-content').html();
     }
     $('.map-tooltip').close();
-    
+
+    water.processHighlights();
   });
 };
+
+water.processHighlights = function() {
+
+  $('#search-panel .list-content table tr').each(function() {
+    var id = $(this).find('td span.highlight').attr('target_id');
+    console.log(id);
+  });
+
+}
 
 water.getDiversion = function(feature){
   var diversion = {};
@@ -319,12 +330,11 @@ water.getDiversion = function(feature){
     diversion.amount = feature.properties.diversion_acre_feet;
     diversion.units = " acre-ft year";
   }
-
   else if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
     diversion.amount = feature.properties.face_value_amount;
     diversion.units = feature.properties.face_value_units;
   }
- if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
+  if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
     diversion.amount = feature.properties.direct_div_amount;
     diversion.units = feature.properties.pod_unit;
   }
@@ -332,7 +342,6 @@ water.getDiversion = function(feature){
     diversion.amount = feature.properties.diversion_storage_amount;
     diversion.units = " acre-ft year stored";
   }
-console.log(diversion);
 
   return diversion;
 };
@@ -364,7 +373,7 @@ water.drawSearchRightsMarkers = function(features) {
   
   water.drawMarkers(features, featureDetails);
   
-  $(".alert .content").html("Found " + features.length + " of 43,000+ water rights.");  
+  $(".alert .content").html("Found " + features.length + " of 49,000+ water rights.");  
 };
 
 water.drawStationCDECMarkers = function(features) {
@@ -409,8 +418,7 @@ water.formatWaterRightTooltip = function(feature) {
   if(feature.properties.holder_name) {primary_owner += feature.properties.holder_name;}
 
     
-  output = '<div class="data-boxes">' +
-                    
+  output = '<div class="data-boxes">' +           
                       '<div class="data-box">' +
                       '<div class="data-title">' +
                       '<h4 class="title">' + name + '</h4>' +
@@ -467,11 +475,11 @@ water.formatWaterRightTooltip = function(feature) {
 
 
   var string = '';
-
-
-      if(feature.properties.reports !== undefined) {
         string += '<div class="data-box">' +
                         '<h4>Reports</h4>';
+
+      if(feature.properties.reports !== undefined) {
+
                         
         var properties = feature.properties;
         for(var year in feature.properties.reports){
@@ -491,9 +499,12 @@ water.formatWaterRightTooltip = function(feature) {
             } 
           }
         }
-      string += "</div>";
-      }
 
+      }
+      else {
+      string += "<p>No reports available. The reports were either not submitted, have not been digitized.</p>";
+      }
+      string += "</div>";
 
 
 
@@ -1126,10 +1137,7 @@ mapbox.markers.interaction = function(mmg) {
 
                 tooltip.application_pod = $(content).find('.application_pod').html();
 
-                $(tooltip).find('.content').bind('click',function() {   	
-                  water.navigationHidePanels();
-                  water.displayPanelContainer($('#data-panel'));
-                  water.displayPanel($('#map-panel'));
+                $(tooltip).find('.content').bind('click',function() {   
                   water.loadDataPanel(tooltip.application_pod);
                 }); 
             }
@@ -1252,12 +1260,10 @@ water.loadDataPanelData = function(results){
   if(results !== undefined){
     if(results[0] !== undefined){
       var content = water.formatTooltipStrings(results[0]);
-
-    water.displayPanelContainer($('#data-panel'));
-    water.displayPanel($('#rights-panel'));
-
+      water.navigationHidePanels();
+      water.displayPanelContainer($('#data-panel'));
+      water.displayPanel($('#rights-panel'));
       $('#rights-panel').html(content);
-      
     }
   }
 };
