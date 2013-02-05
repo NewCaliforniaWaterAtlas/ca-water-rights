@@ -44,6 +44,8 @@ water.setupMap = function() {
       water.map.addLayer(interactive.layer);
       water.map.interaction.movetip();
   });
+  
+
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
@@ -80,6 +82,9 @@ water.setupMap = function() {
   
   $(".alert .content").html("Showing all 45K+ water rights.");
   water.zoomWayInButton();
+  
+  
+    water.loadSensorLayer();
 
 };
 
@@ -226,18 +231,23 @@ water.markersQuery = function(reloaded) {
     }, water.drawRightsMarkers, {'limit': 0});
   
   // Load CDEC staons.
+/*
   Core.query({ 
      $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
     }, water.drawStationCDECMarkers); 
-  
-  // Load USGS stations
-/*
-  Core.query({ 
-     $and: [{'kind': 'sensor'},  {$where: "this.lat < " + (lat + boxsize_lat)},{$where: "this.properties.lat > " + (lat - boxsize_lat)},{$where: "this.properties.lon < " + (lon + boxsize_lon)},{$where: "this.properties.dec_long_va > " + (lon - boxsize_lon)}
-  ] 
-    }, water.drawStationUSGSMarkers); 
 */
+  
+
+};
+
+water.loadSensorLayer = function(){
+
+  // Load USGS stations
+  Core.query({ 
+     $and: [{'kind': 'usgs_gage_data'}] 
+    }, water.drawStationUSGSMarkers); 
+
 };
 
 // Draw interactive markers.
@@ -397,7 +407,7 @@ water.drawStationUSGSMarkers = function(features) {
   var featureDetails = {
     name: "station_usgs",
     class: "sensor_usgs",
-    icon: "/images/icons/icon_brown.png",
+    icon: "/images/icons/icon_orange.png",
     layer: "markers_station_usgs"
   };
   
