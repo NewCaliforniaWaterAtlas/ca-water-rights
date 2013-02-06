@@ -273,13 +273,14 @@ div.data-box h4 {
   height: auto;
   
 }
-
+#sensor-panel span.diversion,
 #rights-panel span.diversion,
 .map-tooltip span.diversion {
   width: 28%;
   display: inline-block;
 }
 
+#sensor-panel span.diversion-amount,
 #rights-panel span.diversion-amount,
 .map-tooltip span.diversion-amount {
  font-size: 1.6em;
@@ -290,6 +291,10 @@ div.data-box h4 {
  display: block;
  font-weight: bold;
  overflow-x: hidden;
+}
+
+#sensor-panel span.diversion-amount {
+ background: #efefef;
 }
 
 #rights-panel span.diversion-unit,
