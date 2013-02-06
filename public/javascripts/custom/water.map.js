@@ -9,7 +9,7 @@ water.map_defaults.boxsize_lat = 0.08; //pretty small box
 water.map_defaults.boxsize_lon = 0.16;
 water.map_defaults.zoom = 8;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
-water.map_defaults.terrain_layer = 'chachasikes.map-tv2igp9l';
+water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
 water.map_defaults.div_container = 'map-container';
@@ -39,6 +39,7 @@ water.setupMap = function() {
   water.map = mapbox.map(water.map_defaults.div_container);
   // Add satellite layer.
   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
+  water.map.addLayer(mapbox.layer().id(water.map_defaults.water_layer));
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
