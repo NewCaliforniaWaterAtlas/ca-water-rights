@@ -276,14 +276,13 @@ water.drawRightsMarkers = function(features, featureDetails) {
     });
 
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
-/*       = water.formatTooltipStrings(feature); */
-var diversion_amount = "###";
-var diversion_unit = "unit";
-var o ='<span class="content">' 
-      + '<span class="name">' + feature.properties.name+ '</span>'
-      + '<span class="diversion"><span class="diversion-amount">' + diversion_amount + '</span>'
-      + '<span class="diversion-unit"> ' + diversion_unit + '</span></span>'
-      + '<span class="application_pod">' + feature.properties.application_pod + '</span></span>';
+      var diversion_amount = "###";
+      var diversion_unit = "unit";
+      var o ='<span class="content">' 
+            + '<span class="name">' + feature.properties.name+ '</span>'
+            + '<span class="diversion"><span class="diversion-amount">' + diversion_amount + '</span>'
+            + '<span class="diversion-unit"> ' + diversion_unit + '</span></span>'
+            + '<span class="load_id">' + feature.properties.id + '</span></span>';
 
       return o;
     });
@@ -340,25 +339,25 @@ water.setSensorColor = function(value,string) {
       color = '#892e19'; // red
       name = "red";
     }
-    if(value > 20){
+    if(value > 10){
       color = '#cbb031'; // yellow
       name = "yellow";
     }
-    if(value > 50){
+    if(value > 24){
       color = '#6ba739'; // green
       name = "green";
     }
-    if(value > 80){
+    if(value > 75){
       color = '#3b6ba5'; // blue
       name = "blue";
     }
-    if(value > 100){
+    if(value > 90){
       color = '#990099'; // purple
       name = "purple";
     }
     if (value === undefined || value == NaN){
-      color = '#000000'; // purple
-      name = "black";  
+      color = '#FFFFFF'; // purple
+      name = "white";  
     }
   
     if(string){
@@ -401,22 +400,22 @@ water.drawSensorMarkers = function(features, featureDetails) {
       color_name = water.setSensorColor(feature.properties['percentile)'], true);
     }
     else {
-      color = "#000000";
-      color_name = "black";
+      color = "#FFFFFF";
+      color_name = "white";
     }
 
 
 /*       = water.formatTooltipStrings(feature); */
 
       var o ='<span class="content sensor" style="background-color:' + color + '">' 
-      
-              + '<span class="name">' + feature.properties.name+ '</span>';
+             + '<span class="name">' + feature.properties.name+ '</span>';
+
       if (feature.properties['percentile'] !== undefined) {
         o += '<span class="diversion"><span class="diversion-amount">' + feature.properties['percentile'] + '</span></span>'
+           
       }
-      
-      
-      + '</span>';
+      o += '<span class="load_id">' + feature.properties.id + '</span>';
+      o += '</span>';
 
       return o;
     });
@@ -505,7 +504,7 @@ water.drawStationUSGSMarkers = function(features) {
   var featureDetails = {
     name: "station_usgs",
     class: "sensor_usgs",
-    icon: "/images/icons/sensor_black.png",
+    icon: "/images/icons/sensor_white.png",
     layer: "markers_sensor_usgs"
   };
   
@@ -888,100 +887,6 @@ water.formatWaterRightTooltip = function(feature) {
 }
 
 
-water.formatTooltipStrings = function(feature) {
-    console.log(feature);
-
-    var output = '';
-    
-    output = water.formatWaterRightTooltip(feature);
-
-/*
-    if (feature.properties.station_code !== undefined) {
-      string +=  
-        "<p>" + "Station Code: " + feature.properties.station_code + "</p>"
-      + "<p>" + "Station Name: " + feature.properties.station_name + "</p>"
-      + "<p>" + "Station Data Type: " + feature.properties.station_type + "</p>"
-      + "<p>" + "Altitude: " + feature.properties.altitude + "</p>"
-      + "<p>" + "County: " + feature.properties.county + "</p>"
-      + "<p>" + "River Basin: " + feature.properties.river_basin + "</p>"
-      + "<p>" + "Sensors: " + feature.properties.sensors + "</p>"
-      + "<p>" + "Flow Data: " + feature.properties.flow_data + "</p>"
-      + "<p>" + "Data Source: " + feature.properties.data_source + "</p>"
-      + "<p>" + "Real Time Data: <a href=\"http://cdec.water.ca.gov/" + feature.properties.query + "\" target=\"_blank\"> data</a></p>" +
-      + "<p>" + "URL Preview: http://cdec.water.ca.gov/" + feature.properties.query + "</p>";
-    }
-*/
-/*
-
-    if (feature.properties.agency_cd !== undefined) {
-
-      string +=  
-        "<p>" + "Station Name: " + feature.properties.station_nm + "</p>"
-      + "<p>" + "Station ID: " + feature.properties.site_no + "</p>"
-      + "<p>" + "Water Temperature: " + feature.tempValue + " " + feature.tempUnitAbrv + "</p>"
-      + "<p>" + "Physical Discharge: " + "<strong>" + feature.flowValue + "</strong>" +" "+ feature.flowUnitAbrv + "</p>"
-      + "<p>" + "Gage Height: " + feature.gageValue + feature.gageUnitAbrv + "</p>"
-      ;
-
-      // &parameterCd=00004,00010,00060,00064,00065
-
-        $.ajax({
-          type: "GET",
-          url: "/usgs/" + feature.properties.site_no + "/00010",
-          dataType: 'json',
-          success: function(data) {
-            
-            // feature.siteName = data.value.timeSeries[0].sourceInfo.siteName;
-
-            //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
-            feature.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-            feature.tempValue = data.value.timeSeries[0].values[0].value[0].value;
-            
-            //00004 Physical Stream width, feet, Instream features, est. stream width ft
-            //00064 Physical Mean depth of stream, feet, Depth ft
-
-            // console.log(data.value.timeSeries[0].values[0].value[0].value);
-
-          }
-        });
-
-        $.ajax({
-          type: "GET",
-          url: "/usgs/" + feature.properties.site_no + "/00060",
-          dataType: 'json',
-          success: function(data) {
-            
-            //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
-            feature.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-            feature.flowValue = data.value.timeSeries[0].values[0].value[0].value
-
-          }
-        });
-
-        $.ajax({
-          type: "GET",
-          url: "/usgs/" + feature.properties.site_no + "/00065",
-          dataType: 'json',
-          success: function(data) {
-
-            //00065 Physical Gage height, feet, Height, gage ft
-            feature.gageUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-            feature.ageValue = data.value.timeSeries[0].values[0].value[0].value;
-
-          }
-        });
-*/
-      
-
-      // $.when( getUSGS()).done(function(results1) {
-        
-      //   console.log(results1); 
-      // });
-
-
-    return output;
-};
-
 water.triggerMapMoveTimeout = function() {
   return setTimeout(water.markersQuery, 1000);
 };
@@ -1045,11 +950,19 @@ wax.movetip = function() {
             hide();
             parent.style.cursor = 'pointer';
             tooltip = document.body.appendChild(getTooltip(content));
-            tooltip.application_pod = $(content).find('.application_pod').html();
-/*             console.log(tooltip); */
+            
+            tooltip.load_id = $(content).find('span.load_id').html();
+
+            console.log(tooltip);
+            
+            
+            if(tooltip.load_id === ''){
+              tooltip.load_id = $(content).find('span.application_pod').html(); // Tilemill still has old markup
+            }
+
 
             $(tooltip).bind("click", function() {   	
-              water.loadDataPanel(tooltip.application_pod);
+              water.loadDataPanel(tooltip.load_id);
             });                  
         } else {
             content = o.formatter({ format: 'teaser' }, o.data);
@@ -1263,10 +1176,10 @@ mapbox.markers.interaction = function(mmg) {
                 };
                 tooltip.onmouseout = delayed_close;
 
-                tooltip.application_pod = $(content).find('.application_pod').html();
+                tooltip.id = $(content).find('span.load_id').html();
 
                 $(tooltip).find('.content').bind('click',function() {   
-                  water.loadDataPanel(tooltip.application_pod);
+                  water.loadDataPanel(tooltip.id);
                 }); 
             }
 
@@ -1376,22 +1289,23 @@ mapbox.interaction = function() {
 };
 
 
-water.loadDataPanel = function(application_pod){
-  console.log(application_pod);
+water.loadDataPanel = function(id){
+  console.log(id);
    Core.query({ 
-     $and: [{'kind': 'right'},{'properties.application_pod': water.trim(application_pod) }
-  ] 
+     $and: [{'id': water.trim(id) }] 
     }, water.loadDataPanelData, {'limit': 0});
 };
 
 water.loadDataPanelData = function(results){
   if(results !== undefined){
     if(results[0] !== undefined){
-      var content = water.formatTooltipStrings(results[0]);
-      water.navigationHidePanels();
-      water.displayPanelContainer($('#data-panel'));
-      water.displayPanel($('#rights-panel'));
-      $('#rights-panel').html(content);
+      if(result[0]['kind'] == "right"){    
+        var content = water.formatWaterRightTooltip(results[0]);
+        water.navigationHidePanels();
+        water.displayPanelContainer($('#data-panel'));
+        water.displayPanel($('#rights-panel'));
+        $('#rights-panel').html(content);
+      }
     }
   }
 };

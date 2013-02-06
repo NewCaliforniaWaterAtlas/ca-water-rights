@@ -240,6 +240,15 @@ div.data-box h4 {
   font-size: 0.8em;
 }
 
+
+.map-tooltip .content.sensor:before{
+  content: "STREAM GAGE";
+  display: block;
+  color: #a8a8a8;
+  font-size: 0.8em;
+}
+
+
 .map-tooltip .open {
   position: absolute;
   top: 20px;
@@ -293,8 +302,9 @@ div.data-box h4 {
  line-height: 1em
 }
 
-.map-tooltip span.application_pod {
-  display: none;
+.map-tooltip span.application_pod, 
+.map-tooltip span.load_id {
+/*   display: none; */
   font-size: 0.1em;
 }
 
