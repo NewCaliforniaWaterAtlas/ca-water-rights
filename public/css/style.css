@@ -108,7 +108,11 @@ body {
   pointer-events: all;
   position:absolute;
 }
+.marker-image.sensor_usgs{
 
+  width:15px;
+  height:15px;
+}
 .marker-image.search {
   width:20px;
   height:20px;

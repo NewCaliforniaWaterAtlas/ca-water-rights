@@ -78,13 +78,11 @@ water.setupMap = function() {
   water.centerMap();
   
   // Load special data layers for more zoomed in levels.
-  water.loadMarkers();
+   water.loadMarkers();
+   water.loadSensorLayer();
   
   $(".alert .content").html("Showing all 45K+ water rights.");
   water.zoomWayInButton();
-  
-  
-    water.loadSensorLayer();
 
 };
 
@@ -94,6 +92,22 @@ water.centerMap = function() {
   water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8);
 };
 
+water.displaySensors = function(){
+
+        water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
+        water.map.interaction.refresh(); 
+};
+
+water.hideSensors = function(){
+
+        if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
+          mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
+            water.map.addLayer(interactive.layer);
+            water.map.interaction.movetip(); 
+          });
+        }
+
+};
 
 water.loadMarkers = function() {
   
@@ -229,16 +243,6 @@ water.markersQuery = function(reloaded) {
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
     }, water.drawRightsMarkers, {'limit': 0});
-  
-  // Load CDEC staons.
-/*
-  Core.query({ 
-     $and: [{'kind': 'station'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
-  ] 
-    }, water.drawStationCDECMarkers); 
-*/
-  
-
 };
 
 water.loadSensorLayer = function(){
@@ -251,7 +255,7 @@ water.loadSensorLayer = function(){
 };
 
 // Draw interactive markers.
-water.drawMarkers = function(features, featureDetails) {
+water.drawRightsMarkers = function(features, featureDetails) {
   var features = features;
   
   // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
@@ -324,6 +328,102 @@ var o ='<span class="content">'
   });
 };
 
+water.setSensorColor = function(value,string) {
+  if(value !== undefined){
+    console.log(value);
+    value = value.replace('%','');
+    value = water.trim(value);
+    value = parseFloat(value);
+    
+    var color = '';
+    if(value > 0){
+      color = '#892e19'; // red
+      name = "red";
+    }
+    if(value > 20){
+      color = '#cbb031'; // yellow
+      name = "yellow";
+    }
+    if(value > 50){
+      color = '#6ba739'; // green
+      name = "green";
+    }
+    if(value > 80){
+      color = '#3b6ba5'; // blue
+      name = "blue";
+    }
+    if(value > 100){
+      color = '#990099'; // purple
+      name = "purple";
+    }
+    if (value === undefined || value == NaN){
+      color = '#000000'; // purple
+      name = "black";  
+    }
+  
+    if(string){
+      return name;
+    }
+    else {
+      return color;
+    }
+  }
+  else {return;}
+  
+};
+
+// Draw interactive markers.
+water.drawSensorMarkers = function(features, featureDetails) {
+  var features = features;
+  
+  // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
+  if(water[featureDetails.layer] !== 0) {
+    water[featureDetails.layer] = mapbox.markers.layer();
+    // @TODO This doesn't work on the div, just the object, but it would be nice to name the layers.
+
+    water[featureDetails.layer].named(featureDetails.layer);
+  
+    water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
+
+    water.map.addLayer(water[featureDetails.layer]);
+    
+    // Generate marker layers.
+    water[featureDetails.layer].features(features).factory(function(f) {
+        var marker = water.makeMarker(f, featureDetails);
+        return marker;      
+    });
+
+   water[featureDetails.layer + "_interaction"].formatter(function(feature) {
+      var color = '';
+      var color_name = '';
+    if(feature.properties['percentile'] !== undefined){
+      color = water.setSensorColor(feature.properties['percentile)']);
+      color_name = water.setSensorColor(feature.properties['percentile)'], true);
+    }
+    else {
+      color = "#000000";
+      color_name = "black";
+    }
+
+
+/*       = water.formatTooltipStrings(feature); */
+
+      var o ='<span class="content sensor" style="background-color:' + color + '">' 
+      
+              + '<span class="name">' + feature.properties.name+ '</span>';
+      if (feature.properties['percentile'] !== undefined) {
+        o += '<span class="diversion"><span class="diversion-amount">' + feature.properties['percentile'] + '</span></span>'
+      }
+      
+      
+      + '</span>';
+
+      return o;
+    });
+  }
+
+};
+
 water.processHighlights = function() {
 
   $('#search-panel .list-content table tr').each(function() {
@@ -360,8 +460,6 @@ water.getDiversion = function(feature){
 
 
 water.drawRightsMarkers = function(features) {
-  //$('.iphone-debug').html($('.iphone-debug').html() + "<br />drawRightsMarkers<br />");
-  // right now we aren't using layer, but maybe we would.
   var featureDetails = {
     name: "rights",
     class: "right",
@@ -371,7 +469,7 @@ water.drawRightsMarkers = function(features) {
   
   water.drawMarkers(features, featureDetails);
   
-  $(".alert .content").html("Showing " + features.length + " of 43,000+ water rights.");  
+  $(".alert .content").html("Showing " + features.length + " of 49,000+ water rights.");  
 };
 
 water.drawSearchRightsMarkers = function(features) {
@@ -385,7 +483,7 @@ water.drawSearchRightsMarkers = function(features) {
     layer: "markers_rights"
   };
   
-  water.drawMarkers(features, featureDetails);
+  water.drawRightsMarkers(features, featureDetails);
   
   $(".alert .content").html("Found " + features.length + " of 49,000+ water rights.");  
 };
@@ -407,17 +505,28 @@ water.drawStationUSGSMarkers = function(features) {
   var featureDetails = {
     name: "station_usgs",
     class: "sensor_usgs",
-    icon: "/images/icons/icon_orange.png",
-    layer: "markers_station_usgs"
+    icon: "/images/icons/sensor_black.png",
+    layer: "markers_sensor_usgs"
   };
   
-  water.drawMarkers(features, featureDetails);
+  water.drawSensorMarkers(features, featureDetails);
 };
+
+
 
 water.makeMarker = function(feature, featureDetails) {
   var img = document.createElement('img');
+  if(feature.properties['percentile'] !== undefined){
+    var color = water.setSensorColor(feature.properties['percentile']);
+    var color_name = water.setSensorColor(feature.properties['percentile'], true);
+    console.log(color);
+  }
+      
   img.className = 'marker-image ' + featureDetails.class;
   img.setAttribute('src', featureDetails.icon);
+  if(color_name !== undefined){
+    img.setAttribute('src', '/images/icons/sensor_' + color_name + '.png');
+  }
   img.feature = feature;
   return img;
 };
@@ -432,6 +541,10 @@ water.formatWaterRightTooltip = function(feature) {
   if (feature.properties.first_name) {primary_owner += feature.properties.first_name + " ";}
   if(feature.properties.holder_name) {primary_owner += feature.properties.holder_name;}
 
+  if(feature.properties['percentile'] !== undefined){
+    var color = water.setSensorColor(parseFloat(feature.properties['% normal(mean)'].replace('%','')));
+    var color_name = water.setSensorColor(parseFloat(feature.properties['% normal(mean)'].replace('%','')), true);
+  }
     
   output = '<div class="data-boxes">' +           
                       '<div class="data-box">' +

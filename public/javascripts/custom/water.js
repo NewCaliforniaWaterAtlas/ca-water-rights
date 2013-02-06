@@ -92,10 +92,12 @@ water.navigation = function(){
     water.navigationHidePanels();
     water.displayPanelContainer($('#data-panel'));
     water.displayPanel($('#sensor-panel'));
+    water.displaySensors();
   },function(){
     water.navigationHidePanels();
     water.hidePanelContainer($('#data-panel'));
     water.hidePanel($('#sensor-panel')); 
+    water.hideSensors();
   });
 
   $('#button-search').toggle(function(){

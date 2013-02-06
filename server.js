@@ -1707,8 +1707,27 @@ app.get('/usgs/load/today', function(req, res) {
           if(split_line[4] !== undefined){
             var obj = {}; 
             obj.kind = "usgs_gage_data";
+            obj.properties = {};
+
+
+
+
+
+            var id_split = split_line[0].split("NR");
+
+            obj.properties.city = id_split[1];
+            
+            var id_split_ids = id_split[0].split(" ");
+            obj.properties.service_cd = id_split_ids[0];
+            obj.properties.station_id = id_split_ids[1];
+            
+            id_split_ids.shift();
+            id_split_ids.shift();
+            
+            obj.properties.station_name = id_split_ids.join(" ");
+
               
-            obj.id = split_line[0];
+            obj.id = obj.properties.station_id;
     
             obj.type = "Feature";   
             obj.coordinates = [
@@ -1723,8 +1742,8 @@ app.get('/usgs/load/today', function(req, res) {
                   ]
             };
   
-            obj.properties = {};
-            obj.properties.name = split_line[0];
+            obj.properties.id = obj.id;
+            obj.properties.name = obj.properties.station_name;
             obj.properties.lat = parseFloat(split_line[1]);
             obj.properties.lon = parseFloat(split_line[2]);
             obj.properties.class = split_line[3];
@@ -1735,17 +1754,39 @@ app.get('/usgs/load/today', function(req, res) {
               for (i in flowinfo){
                 var flowinfoLine = flowinfo[i].split(':');
                 if(watermapApp.trim(flowinfoLine[0]) !== ''){
-                  obj.properties[watermapApp.trim(flowinfoLine[0])] = watermapApp.trim(flowinfoLine[1]);
+                
+                  if(watermapApp.trim(flowinfoLine[0]) === "Discharge") {
+                    var discharge = watermapApp.trim(flowinfoLine[1]).split(" ");
+                    obj.properties.discharge_value = discharge[0];               
+                    obj.properties.discharge_unit = discharge[1];              
+                  }
+                  if(watermapApp.trim(flowinfoLine[0]) === "Stage") {
+                    obj.properties.stage = watermapApp.trim(flowinfoLine[1]);
+                  }
+                  if(watermapApp.trim(flowinfoLine[0]) === "Date") {
+                    obj.properties.date = watermapApp.trim(flowinfoLine[1]);
+                  }                    
+                  if(watermapApp.trim(flowinfoLine[0]) === "Percentile") {
+                    obj.properties.percentile = watermapApp.trim(flowinfoLine[1]);
+                  } 
+                  if(watermapApp.trim(flowinfoLine[0]) === "Class") {
+                     obj.properties.class = watermapApp.trim(flowinfoLine[1]);
+                  }
+                  if(watermapApp.trim(flowinfoLine[0]) === "% normal(median)") {
+                    obj.properties.normal_median = watermapApp.trim(flowinfoLine[1]);
+                  }
+                  if(watermapApp.trim(flowinfoLine[0]) === "% normal(mean)") {
+                    obj.properties.normal_mean = watermapApp.trim(flowinfoLine[1]);
+                  }
                 }
               }
             }
             obj.properties.url = split_line[5];
-  console.log(obj);
-          engine.save(obj,function(error,agent) {
-            if(error) { res.send("Server agent storage error #5",404); return; }
-            if(!agent) { res.send("Server agent storage error #6",404); return; }
-          });
-         
+            console.log(obj);
+            engine.save(obj,function(error,agent) {
+              if(error) { res.send("Server agent storage error #5",404); return; }
+              if(!agent) { res.send("Server agent storage error #6",404); return; }
+            });
          }
         });
     });
