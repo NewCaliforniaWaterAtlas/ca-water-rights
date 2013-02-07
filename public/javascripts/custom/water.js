@@ -111,3 +111,17 @@ water.navigation = function(){
   });
 
 };
+
+!function ($) {
+  
+  $(function(){
+    // modal
+    $('#myModal').modal({
+      backdrop: true,
+      show: true
+    })
+  
+  })
+
+}(window.jQuery)
+

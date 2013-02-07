@@ -52,10 +52,23 @@ ul.nav>li {
   margin-left: 5px;
 }
 
+.img-polaroid-override {
+  width: 96%;
+  padding: 30px;
+  background-color: none;
+  border: none;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+
 /*<!-- ============ Global / Content ============ -->*/ 
 
 body {
-  background: #e5e5f7;
+  /*background: #e5e5f7;*/
+  background-color: #fff;
   color: #514E48;
 }
 
@@ -121,6 +134,13 @@ body {
 .map-attribution {
   background:#F9F0DC;
 }
+
+/*#banner1 {
+  background-color: #fff;
+  background: url(../images/contours.png);
+  height: 135px;
+  padding: 40px;
+}*/
 
 /*<!-- ============ data panel ============ -->*/ 
 

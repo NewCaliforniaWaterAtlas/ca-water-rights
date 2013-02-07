@@ -26,6 +26,16 @@
     <script src='/javascripts/libraries/mapbox.js'></script>    
   </head>
   <body>    
+    
+
+    <!-- ============ Modal ============ --> 
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <div class="modal-body">
+        <h1>Welcome</h1>
+      </div>
+    </div>
+
     <!-- Nav -->
     <div class="navbar navbar-static-top" id="top">
       <div class="navbar-inner">
@@ -65,18 +75,16 @@
             </div>
 
             <div id="data-panel">
-              <div class="alert"> 
+              <!-- <div class="alert"> 
                 <div class="content">Loading the map</div>
                 <div class="zoom-level"></div>
-              </div>
+              </div> -->
               
               <div id="rights-panel" class="panel"></div><!-- #rights-panel -->
 
-              <div id="sensor-panel" class="panel">
-                <h4 class="title">Sensor Details</h4>
-              </div>
+              <div id="sensor-panel" class="panel"></div><!-- #sensor-panel -->
 
-              <div id="search-panel"  class="panel">
+              <div id="search-panel"  class="panel"><!-- #search-panel -->
                 <h4 class="title">Search</h4>
                 <p>You may search water rights records by name, application id, and with keywords related to usage.</p>
                 <p>Example: "East Bay Municipal Utility District", "grapes", </p>
@@ -86,6 +94,18 @@
                   </div>
                 </div>
                 <div class="list-content"></div>
+
+                <div class="data-boxes">
+                  <div class="data-box">
+                    <div class="data-title">
+                      <h4 class="title">A Title</h4>
+                    </div>
+                    <ul class="data-list">
+                      <li>Test Field: Testing</li>
+                    </ul>
+                  </div>
+                </div>
+
               </div>
 
             </div><!-- #map-panel -->
@@ -94,8 +114,11 @@
         </div><!-- .container-fluid -->
   
       </section><!-- #map-page-wrap -->
-      <br>
-      <br>
+
+
+        <img src="../images/contours.png" class="img-polaroid-override" alt="">
+
+      
       <section>
         <div class="container-fluid">
           <div class="row-fluid">
