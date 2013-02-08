@@ -99,7 +99,7 @@ water.displaySensors = function(){
 
 water.hideSensors = function(){
   water.map.removeLayer(water['markers_sensor_usgs']);
-  
+  water.loadMarkers();  
   if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
     mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
