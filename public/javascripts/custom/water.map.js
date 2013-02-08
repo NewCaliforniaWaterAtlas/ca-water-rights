@@ -69,6 +69,19 @@ water.setupMap = function() {
         };
 */
 
+
+    // Round zoom so that numbers in the bar look presentable.
+    water.map.addCallback('zoomed', function() {
+        var z = Math.round(map.zoom());
+        zoom_bar.setValue(0, z/16);
+        handle.innerHTML = z;
+    });
+
+    document.getElementById('left').onclick = function() { water.map.panLeft(); }
+    document.getElementById('right').onclick = function() { water.map.panRight(); }
+    document.getElementById('down').onclick = function() { water.map.panDown(); }
+    document.getElementById('up').onclick = function() { water.map.panUp(); }
+
   // Attribute map.
   water.map.ui.attribution.add()
     .content('<a href="http://mapbox.com/about/maps">Terms &amp; Feedback</a>');
@@ -90,24 +103,7 @@ water.centerMap = function() {
 };
 
 
-water.displaySensors = function(){
 
-  water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
-  water.loadSensorLayer();
-  water.map.interaction.refresh(); 
-};
-
-water.hideSensors = function(){
-  water.map.removeLayer(water['markers_sensor_usgs']);
-  
-  if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
-    mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
-      water.map.addLayer(interactive.layer);
-      water.map.interaction.movetip(); 
-    });
-  }
-
-};
 
 water.loadMarkers = function() {
   
@@ -242,7 +238,7 @@ water.markersQuery = function(reloaded) {
  Core.query({ 
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
-    }, water.drawRightsMarkers, {'limit': 0});
+    }, water.drawRightsMarkersLayer, {'limit': 0});
 };
 
 water.loadSensorLayer = function(){
@@ -250,7 +246,7 @@ water.loadSensorLayer = function(){
   // Load USGS stations
   Core.query({ 
      $and: [{'kind': 'usgs_gage_data'}] 
-    }, water.drawStationUSGSMarkers); 
+    }, water.drawStationUSGSMarkersLayer); 
 
 };
 
@@ -435,7 +431,7 @@ water.getDiversion = function(feature){
   var diversion = {};
   diversion.amount = '';
   diversion.units = '';
-//  console.log(feature);
+
   if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
     diversion.amount = feature.properties.diversion_acre_feet;
     diversion.units = " acre-ft year";
@@ -457,7 +453,9 @@ water.getDiversion = function(feature){
 };
 
 
-water.drawRightsMarkers = function(features) {
+water.drawRightsMarkersLayer = function(features) {
+  water.clearMarkerLayers();
+
   var featureDetails = {
     name: "rights",
     class: "right",
@@ -465,12 +463,12 @@ water.drawRightsMarkers = function(features) {
     layer: "markers_rights"
   };
   
-  //water.drawRightsMarkers(features, featureDetails);
+  water.drawRightsMarkers(features, featureDetails);
   
   $(".alert .content").html("Showing " + features.length + " of 49,000+ water rights.");  
 };
 
-water.drawSearchRightsMarkers = function(features) {
+water.drawSearchRightsMarkersLayer = function(features) {
   water.clearMarkerLayers();
 
   // right now we aren't using layer, but maybe we would.
@@ -486,21 +484,7 @@ water.drawSearchRightsMarkers = function(features) {
   $(".alert .content").html("Found " + features.length + " of 49,000+ water rights.");  
 };
 
-/*
-water.drawStationCDECMarkers = function(features) {
-  
-  var featureDetails = {
-    name: "station",
-    class: "sensor_cdec",
-    icon: "/images/icons/icon_orange.png",
-    layer: "markers_station_cdec"
-  };
-  
-  water.drawMarkers(features, featureDetails);
-};
-*/
-
-water.drawStationUSGSMarkers = function(features) {
+water.drawStationUSGSMarkersLayer = function(features) {
 
   var featureDetails = {
     name: "station_usgs",

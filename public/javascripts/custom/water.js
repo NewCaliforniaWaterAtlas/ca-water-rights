@@ -44,7 +44,7 @@ water.setupFilters = function () {
     minLength: 3,
     source: function (query, process) {
       return $.get('/search/holders?value=' + query, function (data) {
-        water.drawSearchRightsMarkers(data);
+        water.drawSearchRightsMarkersLayer(data);
       });
     }
   });
@@ -73,18 +73,23 @@ water.navigationHidePanels = function(){
   water.hidePanel($('.alert'));
   water.hidePanel($('#search-panel'));
   water.hidePanel($('#sensor-panel'));
+  $('#legend').hide();
 };
 
 water.navigation = function(){
   water.navigationHidePanels();
   
+  
   $('#button-water-rights').toggle(function(){
     water.navigationHidePanels();
     water.displayPanelContainer($('#data-panel'));
     water.displayPanel($('#rights-panel'));
-    water.map.removeLayer(water.map_defaults['markers_sensor_usgs']);
-    water.loadMarkers();
-  },function(){
+
+    water.hideSearch();
+    water.hideSensors();
+    water.displayRights();
+    
+    },function(){
     water.navigationHidePanels();
     water.hidePanelContainer($('#data-panel'));
     water.hidePanel($('#rights-panel'));
@@ -94,18 +99,25 @@ water.navigation = function(){
     water.navigationHidePanels();
     water.displayPanelContainer($('#data-panel'));
     water.displayPanel($('#sensor-panel'));
+
+    water.hideRights();
+    water.hideSearch();
     water.displaySensors();
   },function(){
     water.navigationHidePanels();
     water.hidePanelContainer($('#data-panel'));
     water.hidePanel($('#sensor-panel')); 
-    water.hideSensors();
   });
 
   $('#button-search').toggle(function(){
     water.navigationHidePanels();
     water.displayPanelContainer($('#data-panel'));
     water.displayPanel($('#search-panel'));
+
+    water.displaySearch();
+    water.hideRights();
+    water.hideSensors();
+    
   },function(){
     water.navigationHidePanels();
     water.hidePanelContainer($('#data-panel'));
@@ -113,6 +125,56 @@ water.navigation = function(){
   });
 
 };
+
+water.displaySearch = function(){
+  water.updateNavState();
+  $('#button-search').addClass('active');
+};
+
+water.hideSearch = function(){
+  water.clearMarkerLayers();
+};
+
+water.updateNavState = function(){
+  $('#button-water-rights').removeClass('active');
+  $('#button-search').removeClass('active');
+  $('#button-sensors').removeClass('active');
+  $('.navbar .nav li.active').removeClass('active');
+};
+
+water.displayRights = function(){
+  water.updateNavState();
+  $('#button-water-rights').addClass('active');
+  
+/*   water.loadMarkers(); */
+  if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
+    mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
+      water.map.addLayer(interactive.layer);
+      water.map.interaction.movetip(); 
+    });
+  }
+};
+
+water.hideRights = function(){
+  water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
+  // other rights layers?
+};
+
+water.displaySensors = function(){
+  water.updateNavState();
+  $('#button-sensors').addClass('active');
+  water.loadSensorLayer();
+  water.map.interaction.refresh(); 
+  $('#legend').show();
+  $('#legend .sensors').show();
+};
+
+water.hideSensors = function(){
+  $('#legend .sensors').hide();
+  $('#legend').hide();
+  water.map.removeLayer(water['markers_sensor_usgs']);
+};
+
 
 $(function(){
   // modal
