@@ -77,7 +77,7 @@ water.setupMap = function() {
   water.centerMap();
   
   // Load special data layers for more zoomed in levels.
-   water.loadMarkers();
+  water.loadMarkers();
   
   $(".alert .content").html("Showing all 45K+ water rights.");
   water.zoomWayInButton();
@@ -89,14 +89,17 @@ water.centerMap = function() {
   water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8);
 };
 
+
 water.displaySensors = function(){
-  water.loadSensorLayer();
+
   water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
+  water.loadSensorLayer();
   water.map.interaction.refresh(); 
 };
 
 water.hideSensors = function(){
-  water.map.removeLayer(water.map_defaults['markers_sensor_usgs']);
+  water.map.removeLayer(water['markers_sensor_usgs']);
+  
   if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
     mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
