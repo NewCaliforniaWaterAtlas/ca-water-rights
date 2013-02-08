@@ -72,6 +72,17 @@ body {
   color: #514E48;
 }
 
+.modal {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  /*border: 1px solid #e0e0e0;*/
+}
+
+button.close {
+  padding: 0 6px;
+}
+
 /*<!-- ============ Map Stuff ============ -->*/ 
 
 #map-outer-container {
@@ -331,6 +342,17 @@ div.data-box h4 {
 .map-tooltip span.load_id {
 /*   display: none; */
   font-size: 0.1em;
+}
+
+span.diversion-highlight {
+ font-size: 1.6em;
+  background: #ffe3ee;
+  color: #333333;
+  text-align: center;
+  padding: 5px 5px 5px 5px;
+  display: inline-block;
+  font-weight: bold;
+  overflow-x: hidden;
 }
 
 /*<!-- ============ Responsive Stuff / Media Queries ============ -->*/ 
