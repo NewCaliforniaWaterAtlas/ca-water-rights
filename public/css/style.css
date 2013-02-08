@@ -253,6 +253,7 @@ div.data-box h4 {
   width: 360px;
   overflow:auto;
   z-index: 6;
+  cursor: pointer;
 }
 
 .map-tooltip .content {
@@ -302,8 +303,9 @@ div.data-box h4 {
   width: 68%;
   margin-right: 5px;
   height: auto;
-  
+  cursor: pointer;
 }
+
 #sensor-panel span.diversion,
 #rights-panel span.diversion,
 .map-tooltip span.diversion {

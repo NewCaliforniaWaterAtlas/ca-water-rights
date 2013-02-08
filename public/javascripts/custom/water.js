@@ -82,6 +82,8 @@ water.navigation = function(){
     water.navigationHidePanels();
     water.displayPanelContainer($('#data-panel'));
     water.displayPanel($('#rights-panel'));
+    water.map.removeLayer(water.map_defaults['markers_sensor_usgs']);
+    water.loadMarkers();
   },function(){
     water.navigationHidePanels();
     water.hidePanelContainer($('#data-panel'));

@@ -38,15 +38,13 @@ water.setupMap = function() {
   // Create map.
   water.map = mapbox.map(water.map_defaults.div_container);
   // Add satellite layer.
-  water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
+/*   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer)); */
   water.map.addLayer(mapbox.layer().id(water.map_defaults.water_layer));
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
       water.map.interaction.movetip();
   });
-  
-
 
   // Add map interface elements.
   water.map.ui.zoomer.add();
@@ -79,12 +77,10 @@ water.setupMap = function() {
   water.centerMap();
   
   // Load special data layers for more zoomed in levels.
-   water.loadMarkers();
-   water.loadSensorLayer();
+  water.loadMarkers();
   
   $(".alert .content").html("Showing all 45K+ water rights.");
   water.zoomWayInButton();
-
 };
 
 // Utility function to recenter (and maybe also to reset / reload the map)
@@ -93,20 +89,23 @@ water.centerMap = function() {
   water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8);
 };
 
+
 water.displaySensors = function(){
 
-        water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
-        water.map.interaction.refresh(); 
+  water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
+  water.loadSensorLayer();
+  water.map.interaction.refresh(); 
 };
 
 water.hideSensors = function(){
-
-        if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
-          mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
-            water.map.addLayer(interactive.layer);
-            water.map.interaction.movetip(); 
-          });
-        }
+  water.map.removeLayer(water['markers_sensor_usgs']);
+  
+  if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
+    mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
+      water.map.addLayer(interactive.layer);
+      water.map.interaction.movetip(); 
+    });
+  }
 
 };
 
@@ -466,7 +465,7 @@ water.drawRightsMarkers = function(features) {
     layer: "markers_rights"
   };
   
-  water.drawMarkers(features, featureDetails);
+  //water.drawRightsMarkers(features, featureDetails);
   
   $(".alert .content").html("Showing " + features.length + " of 49,000+ water rights.");  
 };

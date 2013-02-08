@@ -959,7 +959,7 @@ watermapApp.loadWaterRightsReportsDownload = function() {
   // Would be nice if we could do it all in one swoop, and then get a list of updated and new records - especially because the records only change once a year it seems.
   // The GIS server might be able to tell us which records are new - if the Water Control Board is not able to help.
 
-  fs.readFileSync('./server_data/allreports2011.csv').toString().split('\n').forEach(function (line) { 
+  fs.readFileSync('./server_data/allreports-txt-2010.csv').toString().split('\n').forEach(function (line) { 
       var split_line = line.split(',');
 /*       console.log(split_line); */
       watermapApp.dbIDs.push(new Array(split_line[0],split_line[4],split_line[3]));
