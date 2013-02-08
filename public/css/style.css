@@ -72,6 +72,32 @@ body {
   color: #514E48;
 }
 
+.modal {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  /*border: 1px solid #e0e0e0;*/
+}
+
+.modal-body {
+  padding: 30px 0px 30px 30px;
+}
+
+.modal-body-inner {
+  /*display: table;*/
+  /*height: 300px;*/
+}
+
+.modal-body-inner>p.lead {
+  /*display: table-cell;*/ 
+  /*vertical-align: middle;*/
+  padding: 0 0px 30px 0px;
+}
+
+button.close {
+  padding: 8px 16px;
+}
+
 /*<!-- ============ Map Stuff ============ -->*/ 
 
 #map-outer-container {
@@ -333,6 +359,17 @@ div.data-box h4 {
 .map-tooltip span.load_id {
 /*   display: none; */
   font-size: 0.1em;
+}
+
+span.diversion-highlight {
+  font-size: 1.2em;
+  background: #ffe3ee;
+  color: #333333;
+  text-align: center;
+  padding: 5px 5px 5px 5px;
+  display: inline-block;
+  font-weight: bold;
+  overflow-x: hidden;
 }
 
 /*<!-- ============ Responsive Stuff / Media Queries ============ -->*/ 
