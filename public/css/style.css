@@ -400,3 +400,65 @@ span.diversion-highlight {
     display: none;
   }
 }
+
+
+
+#legend {
+  position:absolute;
+  top:360px;
+  height: 130px;
+  width: 100px;
+  left:0px;
+  z-index:999;
+  background: rgba(215,215,233,.85);
+  font-size: 0.8em;
+  line-height: 1em;
+  padding: 4px;
+  
+}
+
+#legend dt {
+float: left;
+width: 80px;
+}
+#legend dd {
+
+}
+
+#pan {
+  position:absolute;
+  top:100px;
+  left:10px;
+  z-index:999;
+  }
+.wrapper {
+  position:relative;
+  }
+#pan .wrapper .panner {
+  background:#fff;
+  top:0;
+  position:absolute;
+  left:0;
+  padding:5px;
+  width:20px;
+  height:20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-align:center;
+  -webkit-user-select:none;
+  }
+#pan .panner#left { top:35px; }
+#pan .panner#right { top:35px; left:60px; }
+#pan .panner#down { top:70px; left:30px; }
+#pan .panner#up { top:0px; left:30px; }
+
+.navbar .nav > li a.active,
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+  color: #555;
+  text-decoration: none;
+  background-color: inherit;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: #000;
+}

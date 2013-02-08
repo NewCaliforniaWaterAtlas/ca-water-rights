@@ -74,6 +74,30 @@
           <div class="row-fluid">
             
             <div id="map-outer-container">
+
+            <div id='pan' class='pan'>
+              <div class='wrapper'>
+                <a id='left' class='panner'>&larr;</a>
+                <a id='right' class='panner'>&rarr;</a>
+                <a id='down' class='panner'>&darr;</a>
+                <a id='up' class='panner'>&uarr;</a>
+              </div>
+            </div>
+
+
+            <div id='legend'>
+              <div class="sensors">
+              <dl>
+                <dt>Very Low</dt><dd><span class="icon"><img src="/images/icons/sensor_red.png" ></span></dd>
+                <dt>Low</dt><dd><span class="icon"><img src="/images/icons/sensor_yellow.png" ></span></dd>
+                <dt>Normal</dt><dd><span class="icon"><img src="/images/icons/sensor_green.png" ></span></dd>
+                <dt>High</dt><dd><dd><span class="icon"><img src="/images/icons/sensor_blue.png" ></span></dd>
+                <dt>Very High</dt><dd><span class="icon"><img src="/images/icons/sensor_purple.png" ></span></dd>
+                <dt>Not Ranked</dt><dd><span class="icon"><img src="/images/icons/sensor_white.png" ></span></dd>
+              </dl>
+              </div>
+            </div>
+
               <div id="map-screen"></div>
               <div id="map-container"></div>
             </div>
@@ -135,9 +159,6 @@
   
       </section><!-- #map-page-wrap -->
 
-
-        <img src="../images/contours.png" class="img-polaroid-override" alt="">
-
       
       <section>
         <div class="container-fluid">
@@ -166,12 +187,18 @@
 
         </div>
       </section>
+
+
+
+        <img src="../images/contours.png" class="img-polaroid-override" alt="">
+
     
     </div><!-- #content-wrap -->
 
       
     <script type="text/javascript" src="/javascripts/libraries/json2.js"></script>
     <script type="text/javascript" src="/javascripts/libraries/underscore-min.js"></script>
+    <script type="text/javascript" src="/javascripts/libraries/dragdealer.js"></script>
     <script src="/libraries/bootstrap/js/bootstrap.min.js"></script>
     <script src="/javascripts/custom/core.js"></script>
     <script src="/javascripts/custom/water.js"></script>
