@@ -44,6 +44,7 @@ water.setupFilters = function () {
     minLength: 3,
     source: function (query, process) {
       return $.get('/search/holders?value=' + query, function (data) {
+        $('.alert').show();
         $('#search-panel .list-content').show();
         water.drawSearchRightsMarkersLayer(data);
       });
@@ -129,6 +130,7 @@ water.navigation = function(){
 
 water.displaySearch = function(){
   water.updateNavState();
+  $('.alert').hide();
   $('#button-search').addClass('active');
 };
 
@@ -146,8 +148,10 @@ water.updateNavState = function(){
 water.displayRights = function(){
   water.updateNavState();
   $('#button-water-rights').addClass('active');
-  
+  $('.alert').show();
+
 /*   water.loadMarkers(); */
+
   if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
     mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
@@ -165,7 +169,7 @@ water.hideRights = function(){
 water.displaySensors = function(){
   water.updateNavState();
   $('#button-sensors').addClass('active');
-
+  $('.alert').hide();
   water.loadSensorLayer();
   water.map.interaction.refresh(); 
 

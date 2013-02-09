@@ -13,8 +13,8 @@ water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 17;
-water.map_defaults.lowest_tilemill_marker_level = 17;
+water.map_defaults.close_up_zoom_level = 12;
+water.map_defaults.lowest_tilemill_marker_level = 13;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -69,14 +69,6 @@ water.setupMap = function() {
         };
 */
 
-
-    // Round zoom so that numbers in the bar look presentable.
-    water.map.addCallback('zoomed', function() {
-        var z = Math.round(map.zoom());
-        zoom_bar.setValue(0, z/16);
-        handle.innerHTML = z;
-    });
-
     document.getElementById('left').onclick = function() { water.map.panLeft(); }
     document.getElementById('right').onclick = function() { water.map.panRight(); }
     document.getElementById('down').onclick = function() { water.map.panDown(); }
@@ -92,7 +84,7 @@ water.setupMap = function() {
   // Load special data layers for more zoomed in levels.
   water.loadMarkers();
   
-  $(".alert .content").html("Showing all 45K+ water rights.");
+  $(".alert .content").html("Showing all 49K+ water rights.");
   water.zoomWayInButton();
 };
 
