@@ -13,8 +13,8 @@ water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 13;
-water.map_defaults.lowest_tilemill_marker_level = 12;
+water.map_defaults.close_up_zoom_level = 17;
+water.map_defaults.lowest_tilemill_marker_level = 17;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -481,7 +481,8 @@ water.drawSearchRightsMarkersLayer = function(features) {
   
   water.drawRightsMarkers(features, featureDetails);
   
-  $(".alert .content").html("Found " + features.length + " of 49,000+ water rights.");  
+  $(".alert .content").html("Found " + features.length + " of 49,000+ water rights."); 
+   
 };
 
 water.drawStationUSGSMarkersLayer = function(features) {
@@ -638,12 +639,12 @@ water.formatWaterRightTooltip = function(feature) {
                      
 
 
-  var string = '';
+      var string = '';
         string += '<div class="data-box">' +
                         '<h4>Reports</h4>';
 
       if(feature.properties.reports !== undefined) {
-
+        console.log(feature.properties.reports);
                         
         var properties = feature.properties;
         for(var year in feature.properties.reports){

@@ -44,6 +44,7 @@ water.setupFilters = function () {
     minLength: 3,
     source: function (query, process) {
       return $.get('/search/holders?value=' + query, function (data) {
+        $('#search-panel .list-content').hide();
         water.drawSearchRightsMarkersLayer(data);
       });
     }
@@ -150,7 +151,8 @@ water.displayRights = function(){
   if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
     mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
-      water.map.interaction.movetip(); 
+      water.map.interaction.movetip();
+      water.map.interaction.refresh(); 
     });
   }
 };
@@ -163,8 +165,10 @@ water.hideRights = function(){
 water.displaySensors = function(){
   water.updateNavState();
   $('#button-sensors').addClass('active');
+
   water.loadSensorLayer();
   water.map.interaction.refresh(); 
+
   $('#legend').show();
   $('#legend .sensors').show();
 };
@@ -173,8 +177,10 @@ water.hideSensors = function(){
   $('#legend .sensors').hide();
   $('#legend').hide();
   water.map.removeLayer(water['markers_sensor_usgs']);
+  water.map.interaction.refresh();
 };
 
+/*
 
 $(function(){
   // modal
@@ -187,3 +193,4 @@ $(function(){
 
 
 
+*/

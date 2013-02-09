@@ -185,7 +185,7 @@ button.close {
 }
 
 #search-panel input.search-holders {
-  margin: 0 30px;
+  margin: 0 10px 0 30px;
 }
 
 #search-panel .list-content{
@@ -193,8 +193,9 @@ button.close {
   padding: 10px 10px 20px 10px;
   font-size: 1.2em;
   max-height: 350px;
-  background: #fff;
+  background: rgba(256,256,256,0.5);
   margin: 20px 30px;
+  display: none;
 }
 
 .panel {
@@ -461,4 +462,14 @@ width: 80px;
   -moz-box-shadow: none;
   box-shadow: none;
   color: #000;
+}
+
+.alert {
+  margin: 10px 30px;
+  background: rgba(256,256,256,0.3);
+  text-shadow: none;
+  border: none;
+  -webkit-border-radius: none;
+  border-radius: 0;
+  color: #514E48;
 }

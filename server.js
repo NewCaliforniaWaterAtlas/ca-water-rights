@@ -86,8 +86,15 @@ app.post('/data', function(req, res, options){
  */
 app.get('/search/holders', function(req, res, options){
   console.log(req.query);
-  var regex = new RegExp('' + req.query.value, "i");
+  //var regex = new RegExp('' + req.query.value, "i");
+/*   db.database.find({ 'properties.reports.2011.usage_quantity' : {$regex: 'grape', $options: 'i'}}); */
+
+  var regex = {$regex: req.query.value, $options: 'i'};
+
   var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex} /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
+
+
+
   console.log(query);
   engine.find_many_by(query,function(error, results) {
     if(!results || error) {
@@ -96,6 +103,7 @@ app.get('/search/holders', function(req, res, options){
       return;
     }
     res.send(results);
+    console.log(results.id);
   },{}, {'limit': 500});
 });
 
