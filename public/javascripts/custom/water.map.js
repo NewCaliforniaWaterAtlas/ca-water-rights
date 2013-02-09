@@ -217,6 +217,7 @@ water.markersQuery = function(reloaded) {
 
     // Clear out old layer data.
     water.clearMarkerLayers();
+    water.map.interaction.refresh();
   }
   else {
     var lat = water.map_defaults.lat;
@@ -444,6 +445,8 @@ water.getDiversion = function(feature){
     diversion.amount = feature.properties.diversion_storage_amount;
     diversion.units = " acre-ft year stored";
   }
+
+  diversion.amount = diversion.amount.toFixed(2);
 
   return diversion;
 };
