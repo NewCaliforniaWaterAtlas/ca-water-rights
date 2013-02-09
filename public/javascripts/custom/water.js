@@ -44,7 +44,7 @@ water.setupFilters = function () {
     minLength: 3,
     source: function (query, process) {
       return $.get('/search/holders?value=' + query, function (data) {
-        $('#search-panel .list-content').hide();
+        $('#search-panel .list-content').show();
         water.drawSearchRightsMarkersLayer(data);
       });
     }
