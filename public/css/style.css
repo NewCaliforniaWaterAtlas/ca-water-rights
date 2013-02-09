@@ -4,10 +4,14 @@
   border-width: 0px;
   position: relative;
   z-index: 7;
+  -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0);
+  -moz-box-shadow: 0 0px 0px rgba(0,0,0,0);
+  box-shadow: 0 0px 0px rgba(0,0,0,0);
 }
 
 .navbar-inner {
-  background: rgba(232,232,232,0.85);
+  /*background: rgba(232,232,232,0.85);*/
+  background: rgba(232,232,232,1);
   padding-right: 0px;
   padding-left: 0px;
 }
@@ -21,7 +25,8 @@
 
 ul.nav {
   width: 33%;
-  background-color: rgba(215,215,233,.65);
+  /*background-color: rgba(215,215,233,.65);*/
+  background-color: rgba(215,215,233,1);
 }
 
 ul.nav>li {
@@ -52,17 +57,6 @@ ul.nav>li {
   margin-left: 5px;
 }
 
-.img-polaroid-override {
-  width: 96%;
-  padding: 30px;
-  background-color: none;
-  border: none;
-  border: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-
 
 /*<!-- ============ Global / Content ============ -->*/ 
 
@@ -88,15 +82,68 @@ body {
   /*height: 300px;*/
 }
 
-.modal-body-inner>p.lead {
-  /*display: table-cell;*/ 
-  /*vertical-align: middle;*/
+.modal-body-inner>p.modal-text {
   padding: 0 0px 30px 0px;
 }
 
-button.close {
-  padding: 8px 16px;
+.modal-body-inner>p.modal-text:last-child {
+  padding: 0 0px 0px 0px;
 }
+
+p.modal-text {
+  padding: 0 0px 20px 0px;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 30px;
+}
+
+button.close {
+  font-size: 2em; 
+  padding: 12px 16px;
+}
+
+#frame-color {
+  background-color: #d7d7e9;
+  /*background-color: #fff;*/
+  /*padding-left: 0px;
+  padding-right: 0px;*/
+}
+
+.frame-wrap {
+  padding: 30px 10px 30px 10px;
+}
+
+.img-polaroid-override {
+  /*padding: 20px 0px 20px 0px;*/
+  background-color: none;
+  border: none;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+section#about {
+  height: 200px;
+  /*background: #e8e8e8;*/
+  background: #f3f3f3;
+  padding: 125px 0;
+}
+
+#about #about-inner-wrap {
+  width: 880px;
+  margin: 0 auto;
+  color: #6d6d6d;
+
+}
+
+#logo-text h1 {
+ font-size: 4.5em;
+ line-height: 60px;
+ text-transform: uppercase;
+ /*text-align: right;*/
+}
+
 
 /*<!-- ============ Map Stuff ============ -->*/ 
 
@@ -123,7 +170,7 @@ button.close {
 #map-container {
   width: 100%;
   height: 100%;
-  min-height: 630px;
+  min-height: 720px;
   background: #e5e5f7;
 }
 
@@ -161,13 +208,6 @@ button.close {
   background:#F9F0DC;
 }
 
-/*#banner1 {
-  background-color: #fff;
-  background: url(../images/contours.png);
-  height: 135px;
-  padding: 40px;
-}*/
-
 /*<!-- ============ data panel ============ -->*/ 
 
 #data-panel {  
@@ -177,7 +217,7 @@ button.close {
 
   top:40px;
   right:0px;
-  height: 590px;
+  height: 680px;
   width: 33%;
   background: rgba(215,215,233,.85);
   z-index:7;
