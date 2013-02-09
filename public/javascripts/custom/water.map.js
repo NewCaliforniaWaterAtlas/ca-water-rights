@@ -257,6 +257,8 @@ water.drawRightsMarkers = function(features, featureDetails) {
 
     water.map.addLayer(water[featureDetails.layer]);
     
+    water.map.interaction.refresh();
+    
     // Generate marker layers.
     water[featureDetails.layer].features(features).factory(function(f) {
         var marker = water.makeMarker(f, featureDetails);
@@ -264,17 +266,19 @@ water.drawRightsMarkers = function(features, featureDetails) {
     });
 
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
-      var diversion_amount = "###";
-      var diversion_unit = "unit";
+      
+      
+      var diversion = water.getDiversion(feature);
+      
+console.log(diversion);
       var o ='<span class="content">' 
             + '<span class="name">' + feature.properties.name+ '</span>'
-            + '<span class="diversion"><span class="diversion-amount">' + diversion_amount + '</span>'
-            + '<span class="diversion-unit"> ' + diversion_unit + '</span></span>'
+            + '<span class="diversion"><span class="diversion-amount">' + diversion.amount + '</span>'
+            + '<span class="diversion-unit"> ' + diversion.units + '</span></span>'
             + '<span class="load_id">' + feature.properties.id + '</span></span>';
 
       return o;
     });
-
 
   }
   
@@ -395,10 +399,10 @@ water.drawSensorMarkers = function(features, featureDetails) {
     }
 
       var o ='<span class="content sensor" style="background-color:' + color + '">' 
-             + '<span class="name">' + feature.properties.name+ '</span>';
+             + '<span class="name">' + feature.properties.name + '</span>';
 
-      if (feature.properties['percentile'] !== undefined) {
-        o += '<span class="diversion"><span class="diversion-amount">' + feature.properties['percentile'] + '</span></span>'
+      if (feature.properties['discharge_value'] !== undefined) {
+        o += '<span class="diversion"><span class="diversion-amount">' + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</span></span>'
            
       }
       o += '<span class="load_id">' + feature.properties.id + '</span>';
@@ -526,7 +530,7 @@ water.formatSensorTooltip = function(feature) {
                       '<div class="data-title">' +
                       '<h4 class="title">' + name + '</h4>' +
                         '<div class="diversion"><span class="diversion-amount" style="background-color:' + color + '">' 
-                        + percentile + '</span></div></div>' +
+                        + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</span></div></div>' +
                       
                         '<ul class="data-list">' +
                           '<li>Station Name: ' + feature.properties['station_name'] + '</li>' +

@@ -350,7 +350,9 @@ div.data-box h4 {
 }
 
 #rights-panel h4.title,
+#sensor-panel h4.title,
 .map-tooltip span.name {
+  margin-top: 0;
   font-size: 1.6em;
   font-weight: bold;
   text-transform: capitalize;
@@ -382,6 +384,7 @@ div.data-box h4 {
  overflow-x: hidden;
 }
 
+.map-tooltip .sensor span.diversion-amount,
 #sensor-panel span.diversion-amount {
  background: #efefef;
 }
