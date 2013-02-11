@@ -128,10 +128,12 @@ water.loadMarkers = function() {
         water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
       }
       else {
-        if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
+
+       if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
           mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
             water.map.addLayer(interactive.layer);
-            water.map.interaction.movetip(); 
+            water.map.interaction.movetip();
+            water.map.interaction.refresh();
           });
         }
       }
