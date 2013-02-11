@@ -15,11 +15,11 @@
     <link rel="shortcut icon" href="/libraries/bootstrap/ico/favicon.ico">
     
     <link href="/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/libraries/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <!-- <link href="/css/bootstrap_themes/bootstrap.min.water-transfer.css" rel="stylesheet"> -->
-    <link href='/css/mapbox.css' rel='stylesheet' />
-    <link href='/css/jquery.qtip.min.css' rel='stylesheet' type='text/css' /> 
-    <link rel="stylesheet" href="/css/style.css" />
+    <link href="/libraries/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/libraries/FontAwesome/css/font-awesome.css" rel="stylesheet">
+    <link href='/css/mapbox.css' rel='stylesheet'>
+    <link href='/css/jquery.qtip.min.css' rel='stylesheet' type='text/css'> 
+    <link href="/css/style.css" rel="stylesheet">
     
     <script type="text/javascript" src="/javascripts/libraries/jquery.js"></script>
     <script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script>
@@ -129,29 +129,16 @@
               </div><!-- #sensor-panel -->
 
               <div id="search-panel"  class="panel"><!-- #search-panel -->
-                <h4 class="title">Search</h4>
-                <p>You may search water rights records by name, application id, and with keywords related to usage.</p>
-                <p>Example: <em> "East Bay Municipal Utility District", "grapes", "cattle." </em></p>
+                <!-- <h4 class="title">Search</h4> -->
                 <div class="filters"> 
-                  <div class="inputs">
-                    <input class="search-holders" type="text" data-provide="typeahead"><i class="icon-large icon-search"></i>
+                  <div class="input-append">
+                    <input class="search-holders" type="text" data-provide="typeahead" placeholder="What do you want to find?">
+                    <button id="search-button" type="submit"><i class="icon-search icon-2x icon-override"></i></button>
                   </div>
+                  <span id="search-help" class="help-block">Find water rights records by name, application id, or with keywords related to usage. Example: <em> "East Bay Municipal Utility District", "grapes", "cattle." </em></span>
                 </div>
+
                 <div class="list-content"></div>
-
-<!--
-                <div class="data-boxes">
-                  <div class="data-box">
-                    <div class="data-title">
-                      <h4 class="title">A Title</h4>
-                    </div>
-                    <ul class="data-list">
-                      <li>Test Field: Testing</li>
-                    </ul>
-                  </div>
-                </div>
--->
-
               </div>
 
             </div><!-- #map-panel -->
@@ -163,12 +150,12 @@
 
       <section id="about">
         <div id="about-inner-wrap" class="row-fluid">
-          <div id="logo-text" class="span6">
-            <h1>California Water Rights</h1>
+          <div id="logo-text" class="span5">
+            <h1>California <span id="kern1">Water</span> Rights</h1>
           </div>
-          <!-- <div id="logo-wrap" class="span6">
-            <i id="logo" class="icon-search"></i>
-          </div> -->
+          <div id="summary-wrap" class="lead span6">
+            <p><span class="highlight-blue">publicwatermap.org</span> is an intiative to provide citizens with better tools for understanding how water is being used in their state.</p>
+          </div>
         </div>
       </section>
 
