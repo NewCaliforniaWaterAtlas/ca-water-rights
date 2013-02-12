@@ -582,8 +582,10 @@ width: 80px;
   color: #000;
 }
 
+.search-alert,
 .alert {
   margin: 10px 30px;
+  padding: 10px;
   background: rgba(256,256,256,0.3);
   text-shadow: none;
   border: none;
@@ -602,4 +604,16 @@ width: 80px;
 .sponsors ul {
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+
+.pager {
+  margin: 0;
+}
+
+.pager a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #514E48;
+  cursor: pointer;
 }

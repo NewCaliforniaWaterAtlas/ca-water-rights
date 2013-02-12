@@ -248,7 +248,6 @@ water.loadSensorLayer = function(){
 // Draw interactive markers.
 water.drawRightsMarkers = function(features, featureDetails) {
   var features = features;
-  
 
   // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
   if(water[featureDetails.layer] === 0) {
@@ -261,7 +260,7 @@ water.drawRightsMarkers = function(features, featureDetails) {
 
     water.map.addLayer(water[featureDetails.layer]);
 
-
+    $('#search-panel .searching').hide();
     
     // Generate marker layers.
     water[featureDetails.layer].features(features).factory(function(f) {
@@ -310,7 +309,7 @@ water.drawRightsMarkers = function(features, featureDetails) {
       }
       list +='</table>';
       
-      $('#search-panel .list-content').html('<h3>Water Rights</h3>' + list);
+      $('#search-panel .list-content').html('<h4>Water Rights</h4>' + list);
     }
     else {
       $('#search-panel .list-content').html();
@@ -420,7 +419,7 @@ water.drawSensorMarkers = function(features, featureDetails) {
 };
 
 water.processHighlights = function() {
-
+  console.log('processing');
   $('#search-panel .list-content table tr').each(function() {
     var id = $(this).find('td span.highlight').attr('target_id');
     console.log(id);
@@ -489,36 +488,21 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
   water.pagerLimit = 250;
 
   water.searchNumberPages = Math.ceil(featuresAll.length / water.pagerLimit);
-  console.log(water.searchNumberPages);
   features = featuresAll.slice(water.searchPager, water.pagerLimit * water.searchPagerPage);
     
   water.drawRightsMarkers(features, featureDetails);
   
-  $(".alert .content").html("Found " + featuresAll.length + " of 49,000+ water rights containing <em>" + query + "</em> <br />Showing " + features.length + "<span class=\"back-button\">Back</span> <span class=\"next-button\">Next</span>");
+  $(".search-alert .content").html("Showing " + features.length + " of " + featuresAll.length + " water rights matching <em><strong>" + query + "</strong></em> <br />" +
+  "<div class=\"pager\"><a class=\"back-button\">Back</a> | <a class=\"next-button\">Next</a></div>");
   
 
-  $(".alert .content .next-button").click(function(){
-
-
-    console.log("next");
-    console.log("water.searchPager"  + water.searchPager);    
-    console.log("water.searchPagerPage"  + water.searchPagerPage);
-    console.log("water.searchNumberPages" + water.searchNumberPages);
-    
+  $(".pager .next-button").click(function(){
+ 
     if (water.searchPagerPage < water.searchNumberPages) {
       water.searchPager = water.searchPager + water.pagerLimit; // add items to search pager
       water.searchPagerPage = water.searchPagerPage + 1; // increment search pager
 
-      features = featuresAll.slice(water.searchPager, water.pagerLimit * water.searchPagerPage);
-
-
-      
-      console.log("water.searchPager"  + water.searchPager);
-      console.log("water.searchPagerPage"  + water.searchPagerPage);
-      
-      console.log(water.pagerLimit );
-      console.log(water.pagerLimit * water.searchPagerPage);
-      
+      features = featuresAll.slice(water.searchPager, water.pagerLimit * water.searchPagerPage); 
       water.clearMarkerLayers();
 
       water.drawRightsMarkers(features, featureDetails);
@@ -526,10 +510,7 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
   });
 
 
-  $(".alert .content .back-button").click(function(){
-    console.log("back");
-
-
+  $(".pager .back-button").click(function(){
     if (water.searchPagerPage > 1) {  
       water.searchPager = water.searchPager - water.pagerLimit; // remove items from search pager
       water.searchPagerPage = water.searchPagerPage - 1; // decrement search pager

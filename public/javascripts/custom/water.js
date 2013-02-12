@@ -40,10 +40,45 @@ water.setupAddress = function () {
 };
 
 water.setupFilters = function () {
+  $('.search-alert').hide();
 
-/*   water.performSearch =  */
+  // @TODO add touchstart so this works on mobile.
+
+  // on button click
+  $('div.filters #search-button i').click(function(){
+    water.search();
+  });
+  
+  // on return
+  $('div.filters .search-holders').keyup(function(event){
+    if(event.keyCode == 13){
+      water.search();
+    }
+  });
+
+  
+
+};
+
+water.search = function() {
+  var query = $('.search-holders').val();
+
+    $('.search-alert').show();
+    $('.search-alert .content').html('Searching for <em><strong>' + query + '</strong></em>');
+    $('.search-alert .searching').show();
+
+   $.get('/search/holders?value=' + query, function (data) {
+      water.drawSearchRightsMarkersLayer(data, query);
+      $('#search-panel .list-content').show();
+      $('#search-panel .list-content').html('');
+    });
+
+
+
+/*
+  disabled typeahead… it's not really necessary to do autocomplete.
   $(".search-holders").typeahead({
-    minLength: 4,
+    minLength: 3,
     source: function (query, process) {
       return $.get('/search/holders?value=' + query, function (data) {
         $('.alert').show();
@@ -52,10 +87,7 @@ water.setupFilters = function () {
       });
     }
   });
-  
-  
-  //var debounced_seach = _.debounce(water.performSearch, 250, false);
-  
+*/
 };
 
 water.displayPanel = function(panel){
