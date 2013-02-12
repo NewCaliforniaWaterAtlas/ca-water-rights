@@ -607,6 +607,10 @@ width: 80px;
 }
 
 
+.search-alert {
+  display: none;
+}
+
 .pager {
   margin: 0;
 }
@@ -616,4 +620,8 @@ width: 80px;
   font-weight: bold;
   color: #514E48;
   cursor: pointer;
+}
+
+.pager a.inactive {
+  color: #dedede;
 }

@@ -492,9 +492,17 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
     
   water.drawRightsMarkers(features, featureDetails);
   
-  $(".search-alert .content").html("Showing " + features.length + " of " + featuresAll.length + " water rights matching <em><strong>" + query + "</strong></em> <br />" +
-  "<div class=\"pager\"><a class=\"back-button\">Back</a> | <a class=\"next-button\">Next</a></div>");
+  var string = "Showing " + features.length + " of " + featuresAll.length + " water rights matching <em><strong>" + query + "</strong></em> <br />";
   
+  if(water.searchNumberPages > 1){
+    string += "<div class=\"pager\"><a class=\"back-button inactive\">Back</a> | <a class=\"next-button\">Next</a></div>";
+  }
+  
+
+  $(".search-alert .content").html(string);
+  water.pagerActiveButtons();
+
+
 
   $(".pager .next-button").click(function(){
  
@@ -523,6 +531,17 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
   });
    
 };
+
+water.pagerActiveButtons = function(){
+  $('.pager .back-button').removeClass('inactive');
+  if(water.searchPagerPage === water.searchNumberPages) {
+    $('.pager .back-button').addClass('inactive');  
+  }
+
+  else if(water.searchPagerPage === water.searchNumberPages) {
+    $('.pager .next-button').addClass('inactive');    
+  }
+}
 
 water.drawStationUSGSMarkersLayer = function(features) {
 
