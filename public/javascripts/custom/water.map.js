@@ -9,6 +9,8 @@ water.map_defaults.boxsize_lat = 0.08; //pretty small box
 water.map_defaults.boxsize_lon = 0.16;
 water.map_defaults.zoom = 8;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
+water.map_defaults.tinted_layer = 'chachasikes.map-j07fy3iy';
+water.map_defaults.terrain_layer = 'chachasikes.map-p6mnio4p';
 water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
@@ -33,17 +35,32 @@ water.map_interaction.dragtime_diff = null;
 water.map_interaction.dragtime_override = false;
 water.map_interaction.wait = null;
 
+water.disableTileLayers = function(){
+  console.log("disable");
+  console.log(mapbox.layer().id(water.map_defaults.tinted_layer));
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name); 
+};
 
 water.setupMap = function() {
   // Create map.
   water.map = mapbox.map(water.map_defaults.div_container);
-  // Add satellite layer.
-/*   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer)); */
+
+  // Add layers.
+  water.map.addLayer(mapbox.layer().id(water.map_defaults.tinted_layer));
   water.map.addLayer(mapbox.layer().id(water.map_defaults.water_layer));
+  water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
+  water.map.addLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
+  
+  water.disableTileLayers();
+  water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
+
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
-      water.map.addLayer(interactive.layer);
-      water.map.interaction.movetip();
+    water.map.addLayer(interactive.layer);
+    water.map.interaction.movetip();
   });
 
   // Add map interface elements.
@@ -69,10 +86,38 @@ water.setupMap = function() {
         };
 */
 
-    document.getElementById('left').onclick = function() { water.map.panLeft(); }
-    document.getElementById('right').onclick = function() { water.map.panRight(); }
-    document.getElementById('down').onclick = function() { water.map.panDown(); }
-    document.getElementById('up').onclick = function() { water.map.panUp(); }
+  // Pan controls  // @TODO make mobile friendly (touchstart?)
+  document.getElementById('left').onclick = function() { water.map.panLeft(); }
+  document.getElementById('right').onclick = function() { water.map.panRight(); }
+  document.getElementById('down').onclick = function() { water.map.panDown(); }
+  document.getElementById('up').onclick = function() { water.map.panUp(); }
+
+
+  // Toggle background layers of map.
+  $('#tile-switcher li.tinted').click(function(){
+    console.log("tinted");
+    water.disableTileLayers();
+
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
+  });
+
+  $('#tile-switcher li.water').click(function(){
+    console.log("water");
+    water.disableTileLayers();
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
+  });
+
+  $('#tile-switcher li.satellite').click(function(){
+    console.log("satellite");
+    water.disableTileLayers();
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
+  });
+
+  $('#tile-switcher li.terrain').click(function(){
+    console.log("terrain");
+    water.disableTileLayers();
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
+  });
 
   // Attribute map.
   water.map.ui.attribution.add()
@@ -424,7 +469,7 @@ water.alterMarker = function(marker){
   marker.css('width', '30px');
   marker.css('height', '30px');
   marker.css('z-index', '1000');
-  //marker.attr('src', '/images/icons/right_highlight.png');
+  marker.attr('src', '/images/icons/search_icon_highlight.png');
 };
 
 water.processHighlights = function() {
@@ -438,7 +483,8 @@ water.processHighlights = function() {
 
       var id = $(this).attr('target_id');
 
-      water.alterMarker($('.marker-image[data=' + id + ']'));
+      water.alterMarker($('.marker-image.search[data=' + id + ']'));
+/*       water.alterMarker($('.marker-image.search[data=' + id + ']')); */ // @TODO alter right marker appearance
       
       var markerPosition = $('.marker-image[data=' + id + ']').css("-webkit-transform");
 //      "matrix(1, 0, 0, 1, 543, 211)"
