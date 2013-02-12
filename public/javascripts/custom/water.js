@@ -40,16 +40,22 @@ water.setupAddress = function () {
 };
 
 water.setupFilters = function () {
+
+/*   water.performSearch =  */
   $(".search-holders").typeahead({
-    minLength: 3,
+    minLength: 4,
     source: function (query, process) {
       return $.get('/search/holders?value=' + query, function (data) {
         $('.alert').show();
         $('#search-panel .list-content').show();
-        water.drawSearchRightsMarkersLayer(data);
+        water.drawSearchRightsMarkersLayer(data, query);
       });
     }
   });
+  
+  
+  //var debounced_seach = _.debounce(water.performSearch, 250, false);
+  
 };
 
 water.displayPanel = function(panel){

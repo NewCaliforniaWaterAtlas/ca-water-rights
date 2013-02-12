@@ -249,6 +249,7 @@ water.loadSensorLayer = function(){
 water.drawRightsMarkers = function(features, featureDetails) {
   var features = features;
   
+
   // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
   if(water[featureDetails.layer] === 0) {
     water[featureDetails.layer] = mapbox.markers.layer();
@@ -259,8 +260,8 @@ water.drawRightsMarkers = function(features, featureDetails) {
     water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
 
     water.map.addLayer(water[featureDetails.layer]);
-    
-    water.map.interaction.refresh();
+
+
     
     // Generate marker layers.
     water[featureDetails.layer].features(features).factory(function(f) {
@@ -269,11 +270,9 @@ water.drawRightsMarkers = function(features, featureDetails) {
     });
 
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
-      
-      
+
       var diversion = water.getDiversion(feature);
       
-console.log(diversion);
       var o ='<span class="content">' 
             + '<span class="name">' + feature.properties.name+ '</span>'
             + '<span class="diversion"><span class="diversion-amount">' + diversion.amount + '</span>'
@@ -316,10 +315,13 @@ console.log(diversion);
     else {
       $('#search-panel .list-content').html();
     }
+    
     $('.map-tooltip').close();
 
     water.processHighlights();
   });
+  
+  water.map.interaction.refresh();  
 };
 
 water.setSensorColor = function(value,string) {
@@ -448,7 +450,7 @@ water.getDiversion = function(feature){
     diversion.units = " acre-ft year stored";
   }
 
-  diversion.amount = diversion.amount.toFixed(2);
+  //diversion.amount = diversion.amount.toFixed(2);
 
   return diversion;
 };
@@ -469,7 +471,9 @@ water.drawRightsMarkersLayer = function(features) {
   $(".alert .content").html("Showing " + features.length + " of 49,000+ water rights.");  
 };
 
-water.drawSearchRightsMarkersLayer = function(features) {
+water.drawSearchRightsMarkersLayer = function(features, query) {
+
+  var featuresAll = features;
   water.clearMarkerLayers();
 
   // right now we aren't using layer, but maybe we would.
@@ -480,9 +484,62 @@ water.drawSearchRightsMarkersLayer = function(features) {
     layer: "markers_rights"
   };
   
+  water.searchPager = 0;  
+  water.searchPagerPage = 1; 
+  water.pagerLimit = 250;
+
+  water.searchNumberPages = Math.ceil(featuresAll.length / water.pagerLimit);
+  console.log(water.searchNumberPages);
+  features = featuresAll.slice(water.searchPager, water.pagerLimit * water.searchPagerPage);
+    
   water.drawRightsMarkers(features, featureDetails);
   
-  $(".alert .content").html("Found " + features.length + " of 49,000+ water rights."); 
+  $(".alert .content").html("Found " + featuresAll.length + " of 49,000+ water rights containing <em>" + query + "</em> <br />Showing " + features.length + "<span class=\"back-button\">Back</span> <span class=\"next-button\">Next</span>");
+  
+
+  $(".alert .content .next-button").click(function(){
+
+
+    console.log("next");
+    console.log("water.searchPager"  + water.searchPager);    
+    console.log("water.searchPagerPage"  + water.searchPagerPage);
+    console.log("water.searchNumberPages" + water.searchNumberPages);
+    
+    if (water.searchPagerPage < water.searchNumberPages) {
+      water.searchPager = water.searchPager + water.pagerLimit; // add items to search pager
+      water.searchPagerPage = water.searchPagerPage + 1; // increment search pager
+
+      features = featuresAll.slice(water.searchPager, water.pagerLimit * water.searchPagerPage);
+
+
+      
+      console.log("water.searchPager"  + water.searchPager);
+      console.log("water.searchPagerPage"  + water.searchPagerPage);
+      
+      console.log(water.pagerLimit );
+      console.log(water.pagerLimit * water.searchPagerPage);
+      
+      water.clearMarkerLayers();
+
+      water.drawRightsMarkers(features, featureDetails);
+    }
+  });
+
+
+  $(".alert .content .back-button").click(function(){
+    console.log("back");
+
+
+    if (water.searchPagerPage > 1) {  
+      water.searchPager = water.searchPager - water.pagerLimit; // remove items from search pager
+      water.searchPagerPage = water.searchPagerPage - 1; // decrement search pager
+    
+      features = featuresAll.slice(water.searchPager, water.pagerLimit * water.searchPagerPage);
+ 
+      water.clearMarkerLayers();
+      water.drawRightsMarkers(features, featureDetails);
+    }
+  });
    
 };
 
@@ -654,13 +711,13 @@ water.formatWaterRightTooltip = function(feature) {
             if(report.usage !== undefined){
              if (report.usage instanceof Array) {
                 for(var i in report['usage']) {                
-                  string += "Year: " + year + " Usage:" + report['usage'][i] + '  Details: ' + report['usage_quantity'][i];
-                  string += "<br />";
+                  string += "<p>Year: " + year + '<br />' + " Usage:" + report['usage'][i] + '<br />' + '  Details: ' + report['usage_quantity'][i] + '<br />';
+                  string += "</p>";
                 }
              }
              else{
-                string +=  "Year: " + year + " Usage:" + report['usage'] + '  Details: ' + report['usage_quantity'];
-                string += "<br />";
+                string +=  "<p>Year: " + year + '<br />' + "Usage:" + report['usage'] + '<br />' + '  Details: ' + report['usage_quantity'] + '<br />';
+                string += "</p>";
              }
             } 
           }
