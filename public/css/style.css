@@ -7,7 +7,7 @@
   -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0);
   -moz-box-shadow: 0 0px 0px rgba(0,0,0,0);
   box-shadow: 0 0px 0px rgba(0,0,0,0);
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid #dcdcdc;
 }
 
 .navbar-inner {
@@ -18,7 +18,7 @@
 }
 
 .navbar .brand {
-  font-size: 26px;
+  font-size: 25px;
   font-weight: bold;
   color: #6d6d6d;
   text-shadow: none;
@@ -103,6 +103,11 @@ button.close {
   padding: 12px 16px;
 }
 
+.well h3,
+.well h4 {
+  margin: 10px 30px;
+}
+
 #frame-color {
   /*background-color: #d7d7e9;*/
   background-color: #fff;
@@ -125,7 +130,7 @@ button.close {
 }
 
 section#about {
-  border-top: 2px solid #fff;
+  border-top: 2px solid #dcdcdc;
   height: 200px;
   /*background: #e8e8e8;*/
   background: #f3f3f3;
@@ -247,10 +252,10 @@ span#kern1 {
 }
 
 input[type="text"], input {
-  width: 330px;
+  width: 280px;
   border: 1px solid #e0e0e0;
   font-size: 20px;
-  padding: 10px 6px 11px 6px;
+  padding: 10px 6px 10px 6px;
   line-height: 1.1;
 
   -webkit-border-radius: 0px;
@@ -279,9 +284,8 @@ i.icon-override {
 }
 
 #search-help {
-  color: #6d8ac4;
-  text-transform: uppercase;
-  font-size: 11px;
+  color: ##555;
+  font-size: 1em;
 }
 
 #search-panel .list-content{
@@ -527,8 +531,8 @@ width: 80px;
 
 #pan {
   position:absolute;
-  top:100px;
-  left:10px;
+  top:110px;
+  left:12px;
   z-index:999;
   }
 .wrapper {
@@ -540,17 +544,32 @@ width: 80px;
   position:absolute;
   left:0;
   padding:5px;
-  width:20px;
-  height:20px;
+  width:28px;
+  height:29px;
   border: 1px solid #ccc;
   border-radius: 3px;
   text-align:center;
   -webkit-user-select:none;
-  }
-#pan .panner#left { top:35px; }
-#pan .panner#right { top:35px; left:60px; }
-#pan .panner#down { top:70px; left:30px; }
-#pan .panner#up { top:0px; left:30px; }
+  border: 2px solid #bbb;
+  box-sizing: border-box;
+  background: #fff;
+  overflow: hidden;
+  display: block;
+}
+
+#pan .panner#left { top:28px; }
+#pan .panner#right { top:28px; left:56px; }
+#pan .panner#down { top:56px; left:28px; }
+#pan .panner#up { top:0px; left:28px; }
+
+#pan a.panner {
+  text-decoration: none;
+  font-weight: bold;
+  color: #6d6d6d;
+  cursor: pointer;
+  line-height: 0.9em;
+  font-size: 1.1em;
+}
 
 .navbar .nav > li a.active,
 .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
@@ -571,4 +590,16 @@ width: 80px;
   -webkit-border-radius: none;
   border-radius: 0;
   color: #514E48;
+}
+
+.sponsors ul li {
+  list-style: none;
+  padding-bottom: 60px;
+  display: inline-block;
+  margin-right: 60px;
+}
+
+.sponsors ul {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }

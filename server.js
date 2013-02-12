@@ -271,7 +271,7 @@ watermapApp.current = 0;
 watermapApp.counterXLSParser = 0;
 watermapApp.getBatchCounter = 0;
 watermapApp.GISGroup = 'S014'; // Used for downloading GIS data from server. 
-watermapApp.XLSGroup = 'S0';
+watermapApp.XLSGroup = 'no_dups';
 watermapApp.GISCounter = 0;
 watermapApp.GISLoadJSONCounter = 0;
 watermapApp.EWRIMSReportCurrent = 0;
@@ -1275,10 +1275,16 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
 
     
     var query = [];
-    
+    /*
+
     if(feature['properties']['application_pod'] !== undefined){
       query.push({'properties.application_pod' : feature['properties']['application_pod']});
     }
+*/
+    if(feature['properties']['application_id'] !== undefined){
+      query.push({'properties.application_id' : feature['properties']['application_id']});
+    }
+
 /*
     if(feature['properties']['reports'] !== undefined) {
       for(var r in feature['properties']['reports']) {
@@ -1320,93 +1326,96 @@ watermapApp.storeWaterRightFromEWRIMSDatabase = function(formattedObject){
     }
     else {
      // console.log('exists, updating fields');
-      
-      // merge _id from existing record with new stuff.
-      var original = results[0];
-      var newFeature = feature;
+      // There may be multiple results for an application, store results to all PODs.
 
-      for (var value in newFeature) { 
-/*         console.log(value); */
-
-        if(value === 'kind'){
-/*           console.log("found kind"); */
-            original[value] = newFeature[value];
-        } 
-        if(value === 'type'){
-/*           console.log("found type"); */
-            original[value] = newFeature[value];
-        }   
-        if(value === 'properties'){
-/*           console.log("found properties"); */
-          for(var attribute in newFeature[value]) {
-/*             console.log(attribute); */
-            
-            
-/*
-            if(attribute === "reports") {
-              // reports has multiple elements.
-
-              console.log('reports');
-              console.log(attribute);
-             
-              if(original[value][attribute] !== undefined){
-                console.log(original[value][attribute]);
-       
-                var originalArray = original[value][attribute];
-                     
-                var arraysMerged = originalArray.concat(newFeature[value][attribute][0]);
-                original[value][attribute] = arraysMerged;
+      for(i in results){
+        // merge _id from existing record with new stuff.
+        var original = results[i];
+        var newFeature = feature;
+  
+        for (var value in newFeature) { 
+  /*         console.log(value); */
+  
+          if(value === 'kind'){
+  /*           console.log("found kind"); */
+              original[value] = newFeature[value];
+          } 
+          if(value === 'type'){
+  /*           console.log("found type"); */
+              original[value] = newFeature[value];
+          }   
+          if(value === 'properties'){
+  /*           console.log("found properties"); */
+            for(var attribute in newFeature[value]) {
+  /*             console.log(attribute); */
+              
+              
+  /*
+              if(attribute === "reports") {
+                // reports has multiple elements.
+  
+                console.log('reports');
+                console.log(attribute);
+               
+                if(original[value][attribute] !== undefined){
+                  console.log(original[value][attribute]);
+         
+                  var originalArray = original[value][attribute];
+                       
+                  var arraysMerged = originalArray.concat(newFeature[value][attribute][0]);
+                  original[value][attribute] = arraysMerged;
+                }
+                else {
+                 //original[value][attribute] = new Array(newFeature[value][attribute][0]);
+                }
+          //      original[value][attribute] = newFeature[value][attribute];
+  
               }
               else {
-               //original[value][attribute] = new Array(newFeature[value][attribute][0]);
+                original[value][attribute] = newFeature[value][attribute];
               }
-        //      original[value][attribute] = newFeature[value][attribute];
-
+  */
+              
+              original[value][attribute] = newFeature[value][attribute];
+                
+  /*
+                  if(attribute === "reports") {
+                  console.log( original[value][attribute]);
+                  }
+  */
             }
-            else {
+          }
+          if(value === 'geometry'){
+  /*           console.log("found geometry"); */
+            if( original["geometry"] === undefined) {
+              original["geometry"] = {};
+              original["geometry"]["type"] = "Point";
+              original["geometry"]["coordinates"] = [];
+            }
+            for(var attribute in newFeature[value]) {
+  /*             console.log(attribute); */
               original[value][attribute] = newFeature[value][attribute];
             }
-*/
-            
-            original[value][attribute] = newFeature[value][attribute];
-              
-/*
-                if(attribute === "reports") {
-                console.log( original[value][attribute]);
-                }
-*/
           }
-        }
-        if(value === 'geometry'){
-/*           console.log("found geometry"); */
-          if( original["geometry"] === undefined) {
-            original["geometry"] = {};
-            original["geometry"]["type"] = "Point";
-            original["geometry"]["coordinates"] = [];
+  
+          if(value === 'coordinates'){
+  /*           console.log("found coordinates"); */
+  /*           for(var attribute in newFeature[value]) { */
+  /*             console.log(attribute); */
+              original[value] = newFeature[value];
+  /*           } */
           }
-          for(var attribute in newFeature[value]) {
-/*             console.log(attribute); */
-            original[value][attribute] = newFeature[value][attribute];
-          }
+  
         }
-
-        if(value === 'coordinates'){
-/*           console.log("found coordinates"); */
-/*           for(var attribute in newFeature[value]) { */
-/*             console.log(attribute); */
-            original[value] = newFeature[value];
-/*           } */
-        }
-
-      }
-      
-     // console.log(feature);
-
-      // Save the original version, to which has been added the new items from the feature.
-      engine.save(original,function(error,agent) {
-        if(error) { res.send("Server agent storage error #5",404); return; }
-        if(!agent) { res.send("Server agent storage error #6",404); return; }
-      });    
+        
+       // console.log(feature);
+  
+        // Save the original version, to which has been added the new items from the feature.
+        engine.save(original,function(error,agent) {
+          if(error) { res.send("Server agent storage error #5",404); return; }
+          if(!agent) { res.send("Server agent storage error #6",404); return; }
+        }); 
+      }   
     }
     
   },{}, {'limit': 1});
