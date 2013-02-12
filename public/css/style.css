@@ -276,7 +276,7 @@ i.icon-override {
 #search-button {
   background-color: #6d8ac4;
   border: none;
-  float: right;
+/*   float: right; */
 }
 
 #search-button:hover {
@@ -624,4 +624,12 @@ width: 80px;
 
 .pager a.inactive {
   color: #dedede;
+}
+
+.highlight {
+  cursor: pointer;
+}
+
+.highlight:hover {
+  color: #000;
 }

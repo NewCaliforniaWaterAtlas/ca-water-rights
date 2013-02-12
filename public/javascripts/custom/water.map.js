@@ -309,15 +309,17 @@ water.drawRightsMarkers = function(features, featureDetails) {
       }
       list +='</table>';
       
-      $('#search-panel .list-content').html('<h4>Water Rights</h4>' + list);
+      $('#search-panel .list-content').html(list);
+      water.processHighlights();
+
     }
     else {
-      $('#search-panel .list-content').html();
+      $('#search-panel .list-content').html('');
     }
     
     $('.map-tooltip').close();
 
-    water.processHighlights();
+
   });
   
   water.map.interaction.refresh();  
@@ -418,14 +420,40 @@ water.drawSensorMarkers = function(features, featureDetails) {
 
 };
 
+water.alterMarker = function(marker){
+  marker.css('width', '30px');
+  marker.css('height', '30px');
+  marker.css('z-index', '1000');
+  //marker.attr('src', '/images/icons/right_highlight.png');
+};
+
 water.processHighlights = function() {
   console.log('processing');
   $('#search-panel .list-content table tr').each(function() {
-    var id = $(this).find('td span.highlight').attr('target_id');
-    console.log(id);
-  });
+  
+    $(this).find('td span.highlight').bind('click', function(){
+      // Undo marker transformation.
+      $('.marker-image').css('width', '20px');
+      $('.marker-image').css('height', '20px');
 
-}
+      var id = $(this).attr('target_id');
+
+      water.alterMarker($('.marker-image[data=' + id + ']'));
+      
+      var markerPosition = $('.marker-image[data=' + id + ']').css("-webkit-transform");
+//      "matrix(1, 0, 0, 1, 543, 211)"
+      var position = markerPosition.replace(')','').split(',');
+      console.log(position);
+       var point = {
+        x: position[4],
+        y: position[5]
+      };
+      var markerCoordinate = water.map.pointLocation(point);
+      water.map.ease.location(markerCoordinate).zoom(water.map.zoom()).optimal();
+      });
+
+    });
+};
 
 water.getDiversion = function(feature){
   var diversion = {};
@@ -561,9 +589,15 @@ water.makeMarker = function(feature, featureDetails) {
     var color = water.setSensorColor(feature.properties['percentile']);
     var color_name = water.setSensorColor(feature.properties['percentile'], true);
   }
+  if(feature.kind == 'right'){
+    var data = feature.id;
+  }
       
   img.className = 'marker-image ' + featureDetails.class;
   img.setAttribute('src', featureDetails.icon);
+
+  img.setAttribute('data', data);
+
   if(color_name !== undefined){
     img.setAttribute('src', '/images/icons/sensor_' + color_name + '.png');
   }
