@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/libraries/bootstrap/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/libraries/bootstrap/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/libraries/bootstrap/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="/libraries/bootstrap/ico/favicon.ico">
+    <link rel="shortcut icon" href="/images/favicon.ico">
     
     <link href="/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/libraries/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -175,18 +175,38 @@
             <div class="span6">
               <div class="well">
                 <h4>What is this project?</h4>
-                <p></p>
+                <p>This is an interactive data visualization of who is allowed to take water out of the water system in California.     
+                 </p>
+
+                
+                </p>
 
                 <h4>What does this map show?</h4>
-                <p></p>
+                <p>
+                Right now, the map shows all organizations, corporations, municipalities and individuals who hold a water right. A layer of sensors shows current stream flow data for approximately 450 USGS sensors. A search interface allows for quick searching for water rights.</p>
+                
+                <h4>Domestic water usage</h4>                
+                <p>After an initial exploratory period while in a private alpha phase to verify, with water experts,  that the data has transferred accurately, we will most likely remove or obscure the individuals who have a domestic usage of water for privacy reasons, since their usage is quite limited. However, before we do that we need to understand how much usage that would account for, decide how to represent their absence, and double check that we have sufficient means to filter them out of the dataset. 
+                
+                </p>
+
+                <h4>What <em>doesn't</em> this map show?</h4>
+                <p>This does not show unlicensed diversions, or transfers between water rights holders and their neighbors.</p>
 
                 <h4>What does it mean?</h4>
                 <p></p>
 
                 <h4>Where does the data come from?</h4>
-                <p></p>              
+                <p>We have gathered data from the California Department of Water Resources <a href="http://www.waterboards.ca.gov/ewrims/">eWRIMS</a> database, put it in a rapidly searchable database, and mapped the water rights with a web-optimized interactive map.</p>
+                
+                <p>As of February 2012, we have downloaded 50K water rights, and 50K water rights reports. We are merging all of the data into a single document database (Mongo) and plan to create an API so that others may access the compiled dataset</p>             
+                <p>The process to download the records is extremely slow, and fortunately water rights do not change hands that quickly. We plan to update the database every few months, and to help get the data into California's state data portal, <a href="http://data.ca.gov/">data.ca.gov</a></p>
 
                 <h4>What are Water Rights?</h4>
+
+                <p>Put simply, a water right in California refers to the right to take water from streams and other bodies of water.</p>
+                
+                
                 <p>"A <strong>water right</strong> is a legal entitlement authorizing water to be diverted from a specified source and put to beneficial, nonwasteful use. Water rights are property rights, but their holders do not own the water itself. They possess the right to use it. The exercise of some water rights requires a permit or license from the State Water Resources Control Board (State Water Board), whose objective is to ensure that the State’s waters are put to the best possible use, and that the public interest is served." &mdash; <a href="http://www.waterboards.ca.gov/waterrights/board_info/water_rights_process.shtml">State Water Resources Control Board</a></p>
 
                 <h4>Who made this map?</h4>
