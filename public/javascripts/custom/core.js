@@ -1,6 +1,6 @@
 function Core() { };
 
-Core.query = function(filter,callback) {
+Core.query = function(filter,callback, options) {
 
   if(!filter || !callback) {
    // console.log("Kernel::query called with bad arguments");
@@ -10,15 +10,12 @@ Core.query = function(filter,callback) {
   //console.log("Kernel::query called with this filter: ");
   //console.log(filter);
   var jsonblob = JSON.stringify(filter);
-  
-  $('.iphone-debug').html($('.iphone-debug').html() + jsonblob);
-  
-  console.log(jsonblob);
-
   var mycallback = callback;
   var myurl = "/data";
 
-  $.post(myurl, filter , function(results) { Core.query_callback(results,mycallback); } );
+  console.log(filter);
+
+  $.post(myurl, filter, function(results) { Core.query_callback(results,mycallback); });
 
   return;
 

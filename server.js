@@ -71,6 +71,13 @@ app.get('/', function(req, res){
 app.post('/data', function(req, res, options){
   var blob = req.body;
 
+  if(!blob.options.limit){
+    var limit = {'limit': 0};
+  }
+  else {
+    var limit = blob.options.limit;
+  }
+  console.log(limit);
   engine.find_many_by(blob,function(error, results) {
     if(!results || error) {
       console.log("agent query error");
@@ -78,7 +85,7 @@ app.post('/data', function(req, res, options){
       return;
     }
     res.send(results);
-  },{}, {'limit': 0});
+  },{}, limit);
 });
 
 /** 
@@ -96,7 +103,7 @@ app.get('/search/holders', function(req, res, options){
 
 
   console.log(query);
-  engine.find_many_by(query,function(error, results) {
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
     if(!results || error) {
       console.log("agent query error");
       res.send("[]");
@@ -104,7 +111,7 @@ app.get('/search/holders', function(req, res, options){
     }
     res.send(results);
     console.log(results.id);
-  },{}, {'limit': 0});
+  },{});
 });
 
 app.get('/list/usage', function(req, res, options){
@@ -112,7 +119,7 @@ app.get('/list/usage', function(req, res, options){
   var lookup =  { $and: [{'properties.reports': { $exists: true}}, {'properties.reports': { $gt: {}}}, {'coordinates': {$exists: true} } ]} ;
 
 
-  engine.find_many_by(lookup,function(error, results) {
+  engine.find_many_by({query: lookup, options: options},function(error, results) {
     if(!results || error) {
       console.log("agent query error");
       res.send("[]");
@@ -1765,13 +1772,15 @@ app.get('/usgs/load/today', function(req, res) {
             obj.properties.lon = parseFloat(split_line[2]);
             obj.properties.class = split_line[3];
             obj.properties.flowinfo = split_line[4];
+            obj.date_created = new Date();
+            
             if(obj.properties.flowinfo !== undefined){
               obj.properties.flowinfo = obj.properties.flowinfo.replace(/"/g, '');
               var flowinfo = obj.properties.flowinfo.split(';');
               for (i in flowinfo){
                 var flowinfoLine = flowinfo[i].split(':');
                 if(watermapApp.trim(flowinfoLine[0]) !== ''){
-                
+
                   if(watermapApp.trim(flowinfoLine[0]) === "Discharge") {
                     var discharge = watermapApp.trim(flowinfoLine[1]).split(" ");
                     obj.properties.discharge_value = discharge[0];               
@@ -1780,9 +1789,15 @@ app.get('/usgs/load/today', function(req, res) {
                   if(watermapApp.trim(flowinfoLine[0]) === "Stage") {
                     obj.properties.stage = watermapApp.trim(flowinfoLine[1]);
                   }
-                  if(watermapApp.trim(flowinfoLine[0]) === "Date") {
+                  if(watermapApp.trim(flowinfoLine[0]) === "Date (stage)") {
+                  console.log("date stage");
                     obj.properties.date = watermapApp.trim(flowinfoLine[1]);
                   }                    
+                  if(watermapApp.trim(flowinfoLine[0]) === "Date") {
+
+                    obj.properties.date = watermapApp.trim(flowinfoLine[1]);
+
+                  }  
                   if(watermapApp.trim(flowinfoLine[0]) === "Percentile") {
                     obj.properties.percentile = watermapApp.trim(flowinfoLine[1]);
                   } 
@@ -1799,7 +1814,7 @@ app.get('/usgs/load/today', function(req, res) {
               }
             }
             obj.properties.url = split_line[5];
-            console.log(obj);
+           // console.log(obj);
             engine.save(obj,function(error,agent) {
               if(error) { res.send("Server agent storage error #5",404); return; }
               if(!agent) { res.send("Server agent storage error #6",404); return; }

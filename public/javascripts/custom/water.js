@@ -10,7 +10,6 @@ window.onload = function() {
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
         // force redraw by rezooming to the current zoom level - since map does not load when page loads if the tab is hidden. most of the map is set up, it just needs to be redrawn. can't find a redraw function in modest maps.
-      
         water.centerMap();
     }
   });
