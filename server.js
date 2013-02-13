@@ -71,14 +71,21 @@ app.get('/', function(req, res){
 app.post('/data', function(req, res, options){
   var blob = req.body;
 
-  engine.find_many_by(blob,function(error, results) {
+  if(!blob.options.limit){
+    var limit = {'limit': 0};
+  }
+  else {
+    var limit = blob.options.limit;
+  }
+  console.log(limit);
+  engine.find_many_by(blob.query,function(error, results) {
     if(!results || error) {
       console.log("agent query error");
       res.send("[]");
       return;
     }
     res.send(results);
-  },{}, {'limit': 0});
+  },{}, limit);
 });
 
 /** 
@@ -1765,6 +1772,8 @@ app.get('/usgs/load/today', function(req, res) {
             obj.properties.lon = parseFloat(split_line[2]);
             obj.properties.class = split_line[3];
             obj.properties.flowinfo = split_line[4];
+            obj.date_created = new Date();
+            
             if(obj.properties.flowinfo !== undefined){
               obj.properties.flowinfo = obj.properties.flowinfo.replace(/"/g, '');
               var flowinfo = obj.properties.flowinfo.split(';');
@@ -1780,7 +1789,7 @@ app.get('/usgs/load/today', function(req, res) {
                   if(watermapApp.trim(flowinfoLine[0]) === "Stage") {
                     obj.properties.stage = watermapApp.trim(flowinfoLine[1]);
                   }
-                  if(watermapApp.trim(flowinfoLine[0]) === "Date") {
+                  if(watermapApp.trim(flowinfoLine[0]) === "Date (stage)") {
                     obj.properties.date = watermapApp.trim(flowinfoLine[1]);
                   }                    
                   if(watermapApp.trim(flowinfoLine[0]) === "Percentile") {
