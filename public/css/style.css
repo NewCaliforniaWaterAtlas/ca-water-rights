@@ -129,12 +129,21 @@ button.close {
   box-shadow: none;
 }
 
+section#footer,
 section#about {
   border-top: 2px solid #dcdcdc;
   height: 200px;
   /*background: #e8e8e8;*/
   background: #f3f3f3;
   padding: 90px 0;
+}
+
+#explanation{
+  margin-top: 40px;
+}
+
+section#footer {
+  padding: 40px;
 }
 
 #about #about-inner-wrap {
@@ -156,11 +165,15 @@ span#kern1 {
 }
 
 #summary-wrap {
-  margin-top: 25px;
+  margin-top: 40px;
 }
 
 .highlight-blue {
   color: #5eaeb2;
+}
+
+p.primary {
+  font-size: 1.25em;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
@@ -188,6 +201,7 @@ span#kern1 {
 #map-container {
   width: 100%;
   height: 100%;
+  margin: 0;
   min-height: 720px;
   background: #e5e5f7;
 }
@@ -235,7 +249,7 @@ span#kern1 {
 
   top:40px;
   right:0px;
-  height: 680px;
+  height: 682px;
   width: 33%;
   background: rgba(215,215,233,.85);
   z-index:7;
@@ -561,12 +575,14 @@ a.diversion-highlight {
 #pan {
   position:absolute;
   top:110px;
-  left:12px;
+  left:32px;
   z-index:999;
-  }
+}
+
 .wrapper {
   position:relative;
-  }
+}
+
 #pan .wrapper .panner {
   background:#fff;
   top:0;

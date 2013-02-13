@@ -37,7 +37,6 @@ water.map_interaction.wait = null;
 
 water.disableTileLayers = function(){
   console.log("disable");
-  console.log(mapbox.layer().id(water.map_defaults.tinted_layer));
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
@@ -50,10 +49,10 @@ water.setupMap = function() {
   water.map = mapbox.map(water.map_defaults.div_container);
 
   // Add layers.
-  water.map.addLayer(mapbox.layer().id(water.map_defaults.tinted_layer));
-  water.map.addLayer(mapbox.layer().id(water.map_defaults.water_layer));
-  water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
-  water.map.addLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.tinted_layer));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
   
   water.disableTileLayers();
   water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
@@ -105,7 +104,8 @@ water.setupMap = function() {
   $('#tile-switcher li.water').click(function(){
     console.log("water");
     water.disableTileLayers();
-  $(this).addClass('active');
+    $(this).addClass('active');
+  
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
   });
 
