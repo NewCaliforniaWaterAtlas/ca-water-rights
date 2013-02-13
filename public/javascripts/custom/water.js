@@ -6,7 +6,7 @@ window.onload = function() {
   water.setupMap();
   water.setupAddress();
   water.setupFilters();
- 
+
 
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
