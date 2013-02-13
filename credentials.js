@@ -7,7 +7,7 @@ var credentials = {
   mongo_host: host,
   mongo_port: port,
   mongo_db: 'watertransfer',
-  mongo_collection: 'rights',
+  mongo_collection: 'database',
 };
 
 module.exports = credentials;
