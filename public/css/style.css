@@ -465,7 +465,11 @@ div.data-box h4 {
   font-size: 0.1em;
 }
 
-span.diversion-highlight {
+.modal {
+  z-index: 9999;
+}
+
+a.diversion-highlight {
   font-size: 1.2em;
   background: #ffe3ee;
   color: #333333;
@@ -474,6 +478,7 @@ span.diversion-highlight {
   display: inline-block;
   font-weight: bold;
   overflow-x: hidden;
+  text-decoration: none;
 }
 
 /*<!-- ============ Responsive Stuff / Media Queries ============ -->*/ 
@@ -656,4 +661,18 @@ span.diversion-highlight {
 
 .highlight:hover {
   color: #000;
+}
+
+.citation .asterisk {
+  font-size: 2em;
+  width: 60px;
+  display: inline-block;
+  line-height: 1em;
+}
+.citation a,
+.citation {
+  color: #bababa;
+  font-size: 1em;
+  text-decoration: none;
+  line-height: 1em;
 }

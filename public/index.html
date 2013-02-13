@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>WaterTransfer</title>
+    <title>California Water Rights</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Real time water brokerage">
-    <meta name="author" content="http://watertransfer.org">
+    <meta name="description" content="Providing citizens with better tools for understanding how water is being used in our state.">
+    <meta name="author" content="http://publicwatermap.org">
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/libraries/bootstrap/ico/apple-touch-icon-144-precomposed.png">
@@ -29,16 +29,28 @@
     
 
     <!-- ============ Modal ============ --> 
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="start" class="modal" tabindex="-1" role="dialog" aria-labelledby="startLabel" aria-hidden="true">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <div class="modal-body">
         <div class="modal-body-inner">
-          <p class="modal-text">Annually, California receives <span class="diversion-highlight">71</span> million acre feet of precipitated run-off.</p>
-          <p class="modal-text">Currently, water rights holders claim they divert in aggregate <span class="diversion-highlight">500</span> million acre feet of water.</p>
-          <p class="modal-text">We have a <span class="diversion-highlight">problem</span>.</p>
+          <p class="modal-text">Annually, California receives <a href="#precipitation" class="modal-link diversion-highlight">71</a> million acre feet of precipitated run-off.*</p>
+          <p class="modal-text">Currently, water rights holders claim they divert in aggregate <a href="#calculation" class="diversion-highlight modal-link ">500</a> million acre feet of water.</p>
+          <p class="modal-text">We have a <a href="#problem" class="diversion-highlight modal-link ">problem</a>.</p>
+          
+          <!--
+<p class="citation"><span class="asterisk">*</span> <a href="http://www.amazon.com/Introduction-Water-California-Updated-Preface/dp/0520260163">Introduction to Water in California</a><br />
+          <span class="asterisk">**</span> Estimated, will soon be calculated on this site.</p>
+-->
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
 
     <!-- Nav -->
     <div class="navbar navbar-static-top" id="top">
@@ -180,15 +192,43 @@
           <div class="row-fluid">
             <div id="about" class="span12">
               <a href="#top">Back to top</a>
-              <div class="well">
+          
                 <p><em>Map is in progress.</em></p>
-                
+              
+              <div class="span8">
+                <div id="precipitation">
+                  <h3>How much water exists in California?</h3>
+                  <p>In general, the main sources of water in California are precipitation, as well as some water from rivers from neighboring states.</p>
+                  
+                  <p>Annually, California receives <a class="diversion-highlight">71</a> million acre feet of precipitated run-off.</p>
+                  <p>The water system of California has been engineered to be almost completely managed and abstracted from nature. Here is a Schematic Diagram of the water system of California.</p>
+                  
+                  
+  
+                  <p class="citation">Source: <a href="http://www.amazon.com/Introduction-Water-California-Updated-Preface/dp/0520260163">Introduction to Water in California</a></p>
+                </div>  
 
-            </div>
+                <div id="calculation">
+                  <p>The State of California holds paper records for how much water Californias extract from our water system. If you add up how many diversions are allowed, it comes to <a class="diversion-highlight">~500</a> million acre feet per year that are claimed. This only includes values for which there are records, and the accuracy of this is effected by administrative and data handling errors. </p>
+                  <h4>Water Usage Reports</h4>
+                  <p>Additionally, Californians are expected to report how much water they actually use each year. This became a more strict law in 2009, where there is a penalty if you do not show how you use water. The California State Constitution requires water users to demonstrate that the use of their water is beneficial. This includes using water for irrigation of farmland, fire protection, cattle watering, municipal water use, fire protection and much more. <a href="/list/usage"> See all uses.</a></p>
+                  <p>However, not all water usage has been reported, and some of the records have not been entired into the eWRIMS database, so we do not have all of the data for this. But for now, you can get a more clear idea about water usage in California.</p>
+                  <p>Also, water users are not incentivized to accurately report their water usage, because of the Constitutional 'Use it or Lose it' rule. And it is possible that water usage may appear to be the same from year to year. So in some cases you can find that what has been reported for the yearly water usage statements is actually obviously cut & pasted, and not really measured. </p>
+                  
+                </div>
+
+                <div id="problem">
+                  <p>So you may wonder, what happens when Californians claim about 5 times more need for water??!</p>
+                  <p>Historically, Californians have had <a href="http://en.wikipedia.org/wiki/California_Water_Wars">wars</a>, and blown up aqueducts. The movie Chinatown is a popular rendition of these historical water wars.</p>
+                  <p>At a smaller scale, there are ongoing legal battles about the water usage. We would like to highlight some of these cases where wars is contentious. You can see from the Stream Gage Sensors where water is low, which may or may not show places that are likely to be in conflict.</p>
+                  <p>For the State, the Department of Water Resources, the State Water Control Board, The Department of Fish and Game (and maybe one more?) handle the larger water issues that expand beyond the state. The Sacramento Delta is of particular importance because the water from the Northern part of the state travels to the urbanized areas through the Delta… making it a large water hub. The larger deals of water are handled by larger corportations and "Water Districts." There are also Regional Water Control Boards.</p>
+                </div>
+
+      
           </div>
 
-          <div class="row-fluid">
-            <div class="span6">
+          <div class="row">
+            
               <div class="well">
                 <h4>What is this project?</h4>
                 <p>This is an interactive data visualization of who is allowed to take water out of the water system in California.     
@@ -236,8 +276,8 @@
                 <h4>What's Next?</h4>
                 <p></p>
 
-
               </div>
+            
             </div>
 
             <div class="span6">

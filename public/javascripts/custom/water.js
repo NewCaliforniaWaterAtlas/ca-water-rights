@@ -1,6 +1,7 @@
 var water = {};
 
 window.onload = function() {
+  water.loadModal();
   water.navigation();
   water.setupMap();
   water.setupAddress();
@@ -15,7 +16,21 @@ window.onload = function() {
   });
 };
 
+water.loadModal = function() {
+$('#start .close').bind('click', function(){
+    $('#start').hide();
+  
+  });
 
+  $('.modal-link').bind('click', function(){
+    $('#start').hide();
+  
+  });
+
+ // $('#start a[href="#precipitation"]').modal('show'); 
+ // $('#start a[href="#calculation"]').modal('show'); 
+ // $('#start a[href="#problem"]').modal('show'); 
+};
 
 //
 // Address handling (a back button) for twitter bootstrap
@@ -221,17 +236,5 @@ water.hideSensors = function(){
   water.map.interaction.refresh();
 };
 
-/*
-
-$(function(){
-  // modal
-  $('#myModal').modal({
-    backdrop: false,
-    show: true
-  })
-
-})
 
 
-
-*/
