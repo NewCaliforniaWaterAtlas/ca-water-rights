@@ -156,11 +156,15 @@ span#kern1 {
 }
 
 #summary-wrap {
-  margin-top: 25px;
+  margin-top: 40px;
 }
 
 .highlight-blue {
   color: #6d8ac4;
+}
+
+p.primary {
+  font-size: 1.25em;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
@@ -235,7 +239,7 @@ span#kern1 {
 
   top:40px;
   right:0px;
-  height: 680px;
+  height: 682px;
   width: 33%;
   background: rgba(215,215,233,.85);
   z-index:7;

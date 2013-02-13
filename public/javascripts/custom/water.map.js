@@ -38,7 +38,7 @@ water.setupMap = function() {
   // Create map.
   water.map = mapbox.map(water.map_defaults.div_container);
   // Add satellite layer.
-/*   water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer)); */
+  water.map.addLayer(mapbox.layer().id(water.map_defaults.satellite_layer)); 
   water.map.addLayer(mapbox.layer().id(water.map_defaults.water_layer));
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
