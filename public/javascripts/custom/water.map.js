@@ -41,7 +41,8 @@ water.disableTileLayers = function(){
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
-  water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name); 
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
+  $('#tile-switcher li').removeClass('active');
 };
 
 water.setupMap = function() {
@@ -97,25 +98,28 @@ water.setupMap = function() {
   $('#tile-switcher li.tinted').click(function(){
     console.log("tinted");
     water.disableTileLayers();
-
+  $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
   });
 
   $('#tile-switcher li.water').click(function(){
     console.log("water");
     water.disableTileLayers();
+  $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
   });
 
   $('#tile-switcher li.satellite').click(function(){
     console.log("satellite");
     water.disableTileLayers();
+  $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
   });
 
   $('#tile-switcher li.terrain').click(function(){
     console.log("terrain");
     water.disableTileLayers();
+  $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
   });
 
@@ -275,19 +279,15 @@ water.markersQuery = function(reloaded) {
   var zoom = water.map_defaults.zoom;
 
  // This is where real-time water rights data would go.
- Core.query({ 
+ Core.query({query: { 
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
-    }, water.drawRightsMarkersLayer, {'limit': 0});
+    }, options: {'limit': 0}}, water.drawRightsMarkersLayer);
 };
 
 water.loadSensorLayer = function(){
-
-  // Load USGS stations
-  Core.query({ 
-     $and: [{'kind': 'usgs_gage_data'}] 
-    }, water.drawStationUSGSMarkersLayer); 
-
+  // Load USGS stations    
+  Core.query({query: {$and: [{'kind': 'usgs_gage_data'}]},options: {'limit': 488}}, water.drawStationUSGSMarkersLayer);  
 };
 
 // Draw interactive markers.
@@ -1463,9 +1463,9 @@ mapbox.interaction = function() {
 
 water.loadDataPanel = function(id){
   console.log(id);
-   Core.query( 
-     {'id': water.trim(id) }
-    , water.loadDataPanelData, {'limit': 0});
+   Core.query({query: 
+     {'id': water.trim(id) }, options: {'limit': 0}}
+    , water.loadDataPanelData);
 };
 
 water.loadDataPanelData = function(results){
