@@ -36,7 +36,8 @@ MongoDB.prototype.find_many_by = function(arguments,callback, args1, options) {
     if( error ) mycallback(error)
     else {
       if(arguments._id) arguments._id = c.db.bson_serializer.ObjectID.createFromHexString(arguments._id);
-      c.find(myarguments, args1, options).toArray(function(error, results) {
+
+      c.find(myarguments.query, args1, myarguments.options).toArray(function(error, results) {
         if( error ) {
 /*           console.log("mongo:: find many by error " + error); */
           mycallback(error);
