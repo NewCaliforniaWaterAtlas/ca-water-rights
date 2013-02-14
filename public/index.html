@@ -26,6 +26,22 @@
     <script src='/javascripts/libraries/mapbox.js'></script>    
   </head>
   <body>    
+    
+    <!-- ============ Modal ============ --> 
+    <div id="start" class="modal" tabindex="-1" role="dialog" aria-labelledby="startLabel" aria-hidden="true">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <div class="modal-body">
+        <div class="modal-body-inner">
+          <p class="modal-text">Annually, California receives <a href="#precipitation" class="modal-link diversion-highlight">71</a> million acre feet of precipitated run-off.*</p>
+          <p class="modal-text">Currently, water rights holders claim they divert in aggregate <a href="#calculation" class="diversion-highlight modal-link ">500</a> million acre feet of water.</p>
+          <p class="modal-text">We have a <a href="#problem" class="diversion-highlight modal-link ">problem</a>.</p>
+          <!-- <p class="citation"><span class="asterisk">*</span> <a href="http://www.amazon.com/Introduction-Water-California-Updated-Preface/dp/0520260163">Introduction to Water in California</a>
+          <br />
+          <span class="asterisk">**</span> Estimated, will soon be calculated on this site.</p> -->
+        </div>
+      </div>
+    </div>
+
     <!-- Nav -->
     <div class="navbar navbar-static-top" id="top">
       <div class="navbar-inner">
@@ -49,14 +65,14 @@
       </div>
     </div>
     
-    <!-- Content Wrap -->
-    <div id="content-wrap">
+    <!-- Page Wrap -->
+    <div id="page-wrap">
       
       <!-- Map -->        
-        <div id="map-page-wrap" class="container-fluid"> 
-          <div class="row-fluid">
-            
-            <div id="map-outer-container" class="span12">
+      <div id="map-page-wrap" class="container-fluid"> 
+        <div class="row-fluid">
+          
+          <div id="map-outer-container" class="span12">
 
             <div id='pan' class='pan'>
               <div class='wrapper'>
@@ -66,7 +82,6 @@
                 <a id='up' class='panner'>&uarr;</a>
               </div>
             </div>
-
 
             <div id='tile-switcher'>
               <ul>
@@ -79,200 +94,110 @@
 
             <div id='legend'>
               <div class="sensors">
-              <dl>
-                <dt>Very Low</dt><dd><span class="icon"><img src="/images/icons/sensor_red.png" ></span></dd>
-                <dt>Low</dt><dd><span class="icon"><img src="/images/icons/sensor_yellow.png" ></span></dd>
-                <dt>Normal</dt><dd><span class="icon"><img src="/images/icons/sensor_green.png" ></span></dd>
-                <dt>High</dt><dd><dd><span class="icon"><img src="/images/icons/sensor_blue.png" ></span></dd>
-                <dt>Very High</dt><dd><span class="icon"><img src="/images/icons/sensor_purple.png" ></span></dd>
-                <dt>Not Ranked</dt><dd><span class="icon"><img src="/images/icons/sensor_white.png" ></span></dd>
-              </dl>
+                <dl>
+                  <dt>Very Low</dt><dd><span class="icon"><img src="/images/icons/sensor_red.png" ></span></dd>
+                  <dt>Low</dt><dd><span class="icon"><img src="/images/icons/sensor_yellow.png" ></span></dd>
+                  <dt>Normal</dt><dd><span class="icon"><img src="/images/icons/sensor_green.png" ></span></dd>
+                  <dt>High</dt><dd><dd><span class="icon"><img src="/images/icons/sensor_blue.png" ></span></dd>
+                  <dt>Very High</dt><dd><span class="icon"><img src="/images/icons/sensor_purple.png" ></span></dd>
+                  <dt>Not Ranked</dt><dd><span class="icon"><img src="/images/icons/sensor_white.png" ></span></dd>
+                </dl>
               </div>
             </div>
 
-              <div id="map-screen"></div>
-              <div id="map-container"></div>
-            </div>
+            <div id="map-screen"></div>
+            <div id="map-container"></div>
+          </div><!-- #map-outer-container -->
 
-            <div id="data-panel">
-              <div class="alert"> 
-                <div class="content">Loading the map</div>
-                <div class="zoom-level"></div>
+          <div id="data-panel">
+            <div class="alert"> 
+              <div class="content">Loading the map</div>
+              <div class="zoom-level"></div>
+            </div>
+            
+            <div id="rights-panel" class="panel">
+              <div class="data-boxes">
+              <div class="data-box">
+                <h4>These are Water Rights.</h4>
+                <p>Showing water rights held by individuals, organizations and other entities in the state of California.</p>
+                <p>Select a water right to learn more about it.</p>
+                </div>
               </div>
-              
-              <div id="rights-panel" class="panel">
-                <div class="data-boxes">
+            </div><!-- #rights-panel -->
+
+            <div id="sensor-panel" class="panel">
+              <div class="data-boxes">
                 <div class="data-box">
-                  <h4>These are Water Rights.</h4>
-                  <p>Showing water rights held by individuals, organizations and other entities in the state of California.</p>
-                  <p>Select a water right to learn more about it.</p>
-                  </div>
+                  <h4>These are Stream Gage Sensors.</h4>
+                  <p>Showing Stream Gage sensors from USGS data.</p>
+                  <p>Select a sensor to see if the water is flowing normally.</p>
                 </div>
-                </div><!-- #rights-panel -->
+              </div>
+            </div><!-- #sensor-panel -->
 
-              <div id="sensor-panel" class="panel">
-                <div class="data-boxes">
-                  <div class="data-box">
-                    <h4>These are Stream Gage Sensors.</h4>
-                    <p>Showing Stream Gage sensors from USGS data.</p>
-                    <p>Select a sensor to see if the water is flowing normally.</p>
-                  </div>
+            <div id="search-panel"  class="panel"><!-- #search-panel -->
+              <!-- <h4 class="title">Search</h4> -->
+
+              <div class="filters"> 
+                <div class="input-append">
+                  <input class="search-holders" type="text" data-provide="typeahead" placeholder="What do you want to find?">
+                  <button id="search-button" type="submit"><i class="icon-search icon-2x icon-override"></i></button>
                 </div>
-              </div><!-- #sensor-panel -->
-
-              <div id="search-panel"  class="panel"><!-- #search-panel -->
-                <!-- <h4 class="title">Search</h4> -->
-
-                <div class="filters"> 
-                  <div class="input-append">
-                    <input class="search-holders" type="text" data-provide="typeahead" placeholder="What do you want to find?">
-                    <button id="search-button" type="submit"><i class="icon-search icon-2x icon-override"></i></button>
-                  </div>
-                  <span id="search-help" class="help-block">Find water rights records by name, application id, or with keywords related to usage. Example: <em> "East Bay Municipal Utility District", "grapes", "cattle." </em>
-                  </span>
-                </div>
-
-                <div class="search-alert"> 
-                  <div class="searching"><img src="/images/searching.gif" width="20" height="20" alt="Searching" /></div>
-                  <div class="content"></div>
-                </div>
-
-                <div class="list-content"></div>
+                <span id="search-help" class="help-block">Find water rights records by name, application id, or with keywords related to usage. Example: <em> "East Bay Municipal Utility District", "grapes", "cattle." </em>
+                </span>
               </div>
 
-            </div><!-- #map-panel -->
+              <div class="search-alert"> 
+                <div class="searching"><img src="/images/searching.gif" width="20" height="20" alt="Searching" /></div>
+                <div class="content"></div>
+              </div>
 
-          </div><!-- .row-fluid -->   
-      </div><!-- .container-fluid -->
+              <div class="list-content"></div>
+            </div><!-- #data-panel -->
+
+          </div><!-- #map-panel -->
+
+        </div><!-- .row-fluid -->   
+      </div><!-- #map-page-wrap --><!-- .container-fluid -->
 
 
       <section id="about">
-        <div id="about-inner-wrap" class="row-fluid">
-          <div id="logo-text" class="span5">
-            <h1>California <span id="kern1">Water</span> Rights</h1>
-          </div>
-          <div id="summary-wrap" class="lead span6">
-            <p>Providing citizens with better tools for understanding how water is used in our state.</p>
+        <div id="about-inner-wrap" class="container-fluid container-narrow">
+          <div class="row-fluid">
+            <div id="logo-text" class="span5">
+              <h1>California <span id="kern1">Water</span> Rights</h1>
+            </div>
+            <div id="summary-wrap" class="lead span6">
+              <p>Providing citizens with better tools for understanding how water is used in our state.</p>
+            </div>
           </div>
         </div>
       </section>
-  
-    <!-- ============ Modals ============ --> 
-    <div id="start" class="modal" tabindex="-1" role="dialog" aria-labelledby="startLabel" aria-hidden="true">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <div class="modal-body">
-        <div class="modal-body-inner">
-          <p class="modal-text">Annually, California receives <a href="#precipitation" class="modal-link diversion-highlight">71</a> million acre feet of precipitated run-off.*</p>
-          <p class="modal-text">Currently, water rights holders claim they divert in aggregate <a href="#calculation" class="diversion-highlight modal-link ">500</a> million acre feet of water.</p>
-          <p class="modal-text">We have a <a href="#problem" class="diversion-highlight modal-link ">problem</a>.</p>
-          
-          <!--
-<p class="citation"><span class="asterisk">*</span> <a href="http://www.amazon.com/Introduction-Water-California-Updated-Preface/dp/0520260163">Introduction to Water in California</a><br />
-          <span class="asterisk">**</span> Estimated, will soon be calculated on this site.</p>
--->
+ 
+
+      <!-- ============ Content ============ --> 
+      <section id="content">
+        <div id="info" class="container-fluid container-narrow">
+          <h2>The Right To Bear Knowledge</h2>
+
+          <blockquote>
+            <p>“If you can't measure it, you can't manage it.”</p>
+            <small>Peter Drucker <cite title="Source Title">Source Title</cite></small>
+          </blockquote>
+
+          <p class="primary">The primary challenge with water in California is not its scarcity, but rather how we manage it.  Many experts have mutually concluded, that a major first step to improving our management of water is by reforming how we account for it.  Whether a lack of adequate statements of diversion for surface and subsurface waters, or the existence of a fine grained environmental monitoring network, it is clear that we could do better job recording and measuring.  New instruments and institutions are necessary to accomplish this. It is not a question of technology, but one of techniques.  The technology is available and affordable, but the institutions and practices of how we govern water resources are not.  We must get control of our understanding of what is in the system at any given point.  We owe it to ourselves, our economy,  and our ecosystem.  This effort benefits all stakeholders.</p>
         </div>
-      </div>
-    </div>  
-  
+      </section>
 
-    <!-- ============ Content ============ --> 
-    <div class="container-fluid">
-      <a href="#top" class="pull-right">Back to top</a>
-      <div id="explanation" class="row-fluid"> 
-
-        <div class="span6">
-          <p>
-            The primary challenge with water in California is not its scarcity, but rather how we manage it.  Many experts have mutually concluded, that a major first step to improving our management of water is by reforming how we account for it.  Whether a lack of adequate statements of diversion for surface and subsurface waters, or the existence of a fine grained environmental monitoring network, it is clear that we could do better job recording and measuring.  New instruments and institutions are necessary to accomplish this. It is not a question of technology, but one of techniques.  The technology is available and affordable, but the institutions and practices of how we govern water resources are not.  We must get control of our understanding of what is in the system at any given point.  We owe it to ourselves, our economy,  and our ecosystem.  This effort benefits all stakeholders.
-          </p>
-
- <h4>What is this project?</h4>
-              <p>This is an interactive data visualization of who is allowed to take water out of the water system in California.     
-               </p>
-  
-              <h4>What does this map show?</h4>
-              <p>
-              Right now, the map shows all organizations, corporations, municipalities and individuals who hold a water right. A layer of sensors shows current stream flow data for approximately 450 USGS sensors. A search interface allows for quick searching for water rights.</p>
-              
-              <h4>Domestic water usage</h4>                
-              <p>After an initial exploratory period while in a private alpha phase to verify, with water experts,  that the data has transferred accurately, we will most likely remove or obscure the individuals who have a domestic usage of water for privacy reasons, since their usage is quite limited. However, before we do that we need to understand how much usage that would account for, decide how to represent their absence, and double check that we have sufficient means to filter them out of the dataset. 
-              
-              </p>
-  
-              <h4>What <em>doesn't</em> this map show?</h4>
-              <p>This does not show unlicensed diversions, or transfers between water rights holders and their neighbors.</p>
-  
-              <h4>What does it mean?</h4>
-              <p></p>
-  
-              <h4>Where does the data come from?</h4>
-              <p>We have gathered data from the California Department of Water Resources <a href="http://www.waterboards.ca.gov/ewrims/">eWRIMS</a> database, put it in a rapidly searchable database, and mapped the water rights with a web-optimized interactive map.</p>
-              
-              <p>As of February 2012, we have downloaded 50K water rights, and 50K water rights reports. We are merging all of the data into a single document database (Mongo) and plan to create an API so that others may access the compiled dataset</p>             
-              <p>The process to download the records is extremely slow, and fortunately water rights do not change hands that quickly. We plan to update the database every few months, and to help get the data into California's state data portal, <a href="http://data.ca.gov/">data.ca.gov</a></p>
-  
-              <h4>What are Water Rights?</h4>
-  
-              <p>Put simply, a water right in California refers to the right to take water from streams and other bodies of water.</p>
-              
-              
-              <p>"A <strong>water right</strong> is a legal entitlement authorizing water to be diverted from a specified source and put to beneficial, nonwasteful use. Water rights are property rights, but their holders do not own the water itself. They possess the right to use it. The exercise of some water rights requires a permit or license from the State Water Resources Control Board (State Water Board), whose objective is to ensure that the State’s waters are put to the best possible use, and that the public interest is served." &mdash; <a href="http://www.waterboards.ca.gov/waterrights/board_info/water_rights_process.shtml">State Water Resources Control Board</a></p>
-  
-              <h4>Who made this map?</h4>
-              <p></p>
-  
-  <!--                 <h3>Who can I talk to about this?</h3> -->
-  
-              <h4>How can I help?</h4>
-              <p></p>
-  
-              <h4>What's Next?</h4>
-              <p></p>
-
-
-        </div>
-        
-        <div class="span6">
-        <div id="precipitation">
-              <h4>How much water exists in California?</h4>
-              <p>In general, the main sources of water in California are precipitation, as well as some water from rivers from neighboring states.</p>
-              
-              <p>Annually, California receives <a class="diversion-highlight">71</a> million acre feet of precipitated run-off.</p>
-              <p>The water system of California has been engineered to be almost completely managed and abstracted from nature. Here is a Schematic Diagram of the water system of California.</p>
-
-              <p class="citation">Source: <a href="http://www.amazon.com/Introduction-Water-California-Updated-Preface/dp/0520260163">Introduction to Water in California</a></p>
-            </div>  
-
-            <div id="calculation">
-              <h4>How much water do we say we need?</h4>
-              <p>The State of California holds paper records for how much water Californias extract from our water system. If you add up how many diversions are allowed, it comes to <a class="diversion-highlight">~500</a> million acre feet per year that are claimed. This only includes values for which there are records, and the accuracy of this is effected by administrative and data handling errors. </p>
-              <h4>Water Usage Reports</h4>
-              <p>Additionally, Californians are expected to report how much water they actually use each year. This became a more strict law in 2009, where there is a penalty if you do not show how you use water. The California State Constitution requires water users to demonstrate that the use of their water is beneficial. This includes using water for irrigation of farmland, fire protection, cattle watering, municipal water use, fire protection and much more. <a href="/list/usage"> See all uses.</a></p>
-              <p>However, not all water usage has been reported, and some of the records have not been entired into the eWRIMS database, so we do not have all of the data for this. But for now, you can get a more clear idea about water usage in California.</p>
-              <p>Also, water users are not incentivized to accurately report their water usage, because of the Constitutional 'Use it or Lose it' rule. And it is possible that water usage may appear to be the same from year to year. So in some cases you can find that what has been reported for the yearly water usage statements is actually obviously cut & pasted, and not really measured. </p>
-              
-            </div>
-
-            <div id="problem">
-              <p>So you may wonder, what happens when Californians claim about 5 times more need for water??!</p>
-              <p>Historically, Californians have had <a href="http://en.wikipedia.org/wiki/California_Water_Wars">wars</a>, and blown up aqueducts. The movie Chinatown is a popular rendition of these historical water wars.</p>
-              <p>At a smaller scale, there are ongoing legal battles about the water usage. We would like to highlight some of these cases where wars is contentious. You can see from the Stream Gage Sensors where water is low, which may or may not show places that are likely to be in conflict.</p>
-              <p>For the State, the Department of Water Resources, the State Water Control Board, The Department of Fish and Game (and maybe one more?) handle the larger water issues that expand beyond the state. The Sacramento Delta is of particular importance because the water from the Northern part of the state travels to the urbanized areas through the Delta… making it a large water hub. The larger deals of water are handled by larger corportations and "Water Districts." There are also Regional Water Control Boards.</p>
-            </div>
-
-            </div>  
-          </div>
-        </div>
-      </div>    
-    </div><!-- #content-wrap -->
-
-          <section id="footer" class="sponsors">
-            <h4>Supported by</h4>
-            <ul>
-              <li><a href="http://rri.org" alt="RRI"><img src="/images/rri-logo-top.png" /></a></li>
-              <li><a href="http://patagonia.com" alt="Patagonia"><img src="/images/patagonia_logo_small.png" /></a></li>
-            </ul>
-          </section>
-  
+      <section id="footer" class="sponsors">
+        <h4>Supported by</h4>
+        <ul>
+          <li><a href="http://rri.org" alt="RRI"><img src="/images/rri-logo-top.png" /></a></li>
+          <li><a href="http://patagonia.com" alt="Patagonia"><img src="/images/patagonia_logo_small.png" /></a></li>
+        </ul>
+      </section>
+    
+    </div><!-- #page-wrap -->
   
       
     <script type="text/javascript" src="/javascripts/libraries/json2.js"></script>

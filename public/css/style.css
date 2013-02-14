@@ -67,6 +67,11 @@ body {
   color: #514E48;
 }
 
+.container-narrow {
+  margin: 0 auto;
+  max-width: 880px;
+}
+
 .modal {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -138,26 +143,16 @@ section#about {
   padding: 90px 0;
 }
 
-#explanation{
-  margin-top: 40px;
-}
-
-section#footer {
-  padding: 40px;
-}
-
-#about #about-inner-wrap {
-  width: 880px;
-  margin: 0 auto;
-  color: #6d6d6d;
-}
-
 #logo-text h1 {
  font-size: 3.5em;
  line-height: 50px;
  color: #5eaeb2;
  text-transform: uppercase;
  text-align: right;
+}
+
+#about #about-inner-wrap {
+  color: #6d6d6d;
 }
 
 span#kern1 {
@@ -172,8 +167,36 @@ span#kern1 {
   color: #5eaeb2;
 }
 
+#info {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+blockquote p {
+  padding: 0;
+}
+
+#info>h2 {
+  /*color: #5eaeb2;*/
+  display: block;
+  /*font-family: 'Libre Baskerville', serif;*/
+  font-weight: normal;
+  margin: 0 0 20px;
+}
+
 p.primary {
   font-size: 1.25em;
+  padding: 0;
+  line-height: 1.8em;
+  margin-bottom: 40px;
+}
+
+#explanation{
+  margin-top: 40px;
+}
+
+section#footer {
+  padding: 40px;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
