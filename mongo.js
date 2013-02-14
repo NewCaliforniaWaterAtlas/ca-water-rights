@@ -11,6 +11,11 @@ MongoDB = function(credentials) {
   var credentials = credentials;
   
   this.db= new Db(credentials.mongo_db, new Server(credentials.mongo_host, credentials.mongo_port, {auto_reconnect: true}, {}));
+  
+  console.log(credentials.mongo_db);
+    console.log(credentials.mongo_host);
+        console.log(credentials.mongo_port);
+            console.log(credentials.mongo_password);
   this.db.open(function(err,db){
 /*       console.log("mongodb:: got db " + err + " " + db ); */
       db.authenticate(credentials.mongo_user, credentials.mongo_password, function(err2,db2) {
