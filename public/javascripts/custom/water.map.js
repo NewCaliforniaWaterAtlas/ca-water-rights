@@ -12,6 +12,9 @@ water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.tinted_layer = 'chachasikes.map-j07fy3iy';
 water.map_defaults.terrain_layer = 'chachasikes.map-p6mnio4p';
 water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
+water.map_defaults.water_layer_course = 'chachasikes.waterscape-course-vectors';
+water.map_defaults.water_layer_fine_lines = 'chachasikes.WaterTest';
+water.map_defaults.water_layer_polys = 'chachasikes.waterscape-polys';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
 water.map_defaults.div_container = 'map-container';
@@ -40,6 +43,11 @@ water.disableTileLayers = function(){
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
+
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
+
   $('#tile-switcher li').removeClass('active');
 };
 
@@ -52,6 +60,10 @@ water.setupMap = function() {
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
+
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_course));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_polys));
   
   water.disableTileLayers();
   water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
@@ -104,8 +116,12 @@ water.setupMap = function() {
     console.log("water");
     water.disableTileLayers();
     $(this).addClass('active');
-  
-    water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
+
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);  
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines).name);
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
+
   });
 
   $('#tile-switcher li.satellite').click(function(){
