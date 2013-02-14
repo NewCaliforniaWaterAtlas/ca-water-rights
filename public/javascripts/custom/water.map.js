@@ -18,8 +18,8 @@ water.map_defaults.water_layer_polys = 'chachasikes.waterscape-polys';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 12;
-water.map_defaults.lowest_tilemill_marker_level = 13;
+water.map_defaults.close_up_zoom_level = 11;
+water.map_defaults.lowest_tilemill_marker_level = 12;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -47,10 +47,6 @@ water.disableTileLayers = function(){
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
 
-
-
-
-
   $('#tile-switcher li').removeClass('active');
 };
 
@@ -75,6 +71,7 @@ water.setupMap = function() {
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
     water.map.addLayer(interactive.layer);
     water.map.interaction.movetip();
+    water.map.interaction.refresh();
   });
 
   // Add map interface elements.
@@ -187,7 +184,7 @@ water.loadMarkers = function() {
       water.map.addCallback('panned', water.markersPanned);
       // @TODO Add alert to pan to load more up to date info
       
-      if(zoom == water.map_defaults.close_up_zoom_level) {
+      if(zoom >= water.map_defaults.close_up_zoom_level) {
         console.log('dispatching');
         //@TODO not working yet...
         water.triggerMarkers();
@@ -199,8 +196,8 @@ water.loadMarkers = function() {
         water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
       }
       else {
-
-       if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
+        // add marker tiles back 
+        if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
           mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
             water.map.addLayer(interactive.layer);
             water.map.interaction.movetip();
@@ -213,10 +210,18 @@ water.loadMarkers = function() {
     else {
       console.log('zoomed out - removing pan');
       water.map.removeCallback('panned', water.markersPanned);
+      water.clearMarkerLayers();
+      if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
+        mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
+          water.map.addLayer(interactive.layer);
+          water.map.interaction.movetip();
+          water.map.interaction.refresh();
+        });
+      }
+
       water.zoomWayInButton();
     }
-    
-/*     $('.zoom-level').html(water.map.zoom()); */
+
   });
 };
 
@@ -300,6 +305,9 @@ water.markersQuery = function(reloaded) {
   var boxsize_lon = water.map_defaults.boxsize_lon;
   var zoom = water.map_defaults.zoom;
 
+  $('#map-screen').show();
+  $('#map-screen #loading-markers').show();
+
  // This is where real-time water rights data would go.
  Core.query({query: { 
      $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
@@ -347,6 +355,9 @@ water.drawRightsMarkers = function(features, featureDetails) {
 
       return o;
     });
+
+  $('#map-screen').hide();
+  $('#map-screen #loading-markers').hide();
 
   }
   
