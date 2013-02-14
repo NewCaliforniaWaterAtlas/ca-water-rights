@@ -44,8 +44,8 @@ water.disableTileLayers = function(){
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
 
-  water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
 
   $('#tile-switcher li').removeClass('active');
@@ -60,7 +60,6 @@ water.setupMap = function() {
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
-
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_course));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_polys));
@@ -108,7 +107,7 @@ water.setupMap = function() {
   $('#tile-switcher li.tinted').click(function(){
     console.log("tinted");
     water.disableTileLayers();
-  $(this).addClass('active');
+    $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
   });
 
@@ -121,6 +120,7 @@ water.setupMap = function() {
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines).name);
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
+    water.map.interaction.refresh();
 
   });
 
