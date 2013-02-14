@@ -36,7 +36,6 @@ water.map_interaction.dragtime_override = false;
 water.map_interaction.wait = null;
 
 water.disableTileLayers = function(){
-  console.log("disable");
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
