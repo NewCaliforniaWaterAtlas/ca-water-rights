@@ -496,6 +496,7 @@ water.drawSensorMarkers = function(features, featureDetails) {
     });
   }
 
+  water.map.interaction.refresh(); 
 };
 
 water.alterMarker = function(marker){
