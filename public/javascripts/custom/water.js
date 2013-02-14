@@ -78,7 +78,7 @@ water.search = function() {
   var query = $('.search-holders').val();
 
     $('.search-alert').show();
-    $('.search-alert .content').html('Searching for <em><strong>' + query + '</strong></em>');
+    $('.search-alert .content').html('Searching all records for <em><strong>' + query + '</strong></em>');
     $('.search-alert .searching').show();
 
    $.get('/search/holders?value=' + query, function (data) {

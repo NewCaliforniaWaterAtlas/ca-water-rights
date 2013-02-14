@@ -41,12 +41,15 @@ water.map_interaction.wait = null;
 water.disableTileLayers = function(){
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
-  water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
-  water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
-
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
+
+
+
+
 
   $('#tile-switcher li').removeClass('active');
 };
@@ -58,11 +61,12 @@ water.setupMap = function() {
   // Add layers.
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.tinted_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer));
-  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
-  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_course));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_polys));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
+
   
   water.disableTileLayers();
   water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
@@ -109,6 +113,7 @@ water.setupMap = function() {
     water.disableTileLayers();
     $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
+    water.map.interaction.refresh();
   });
 
   $('#tile-switcher li.water').click(function(){
@@ -127,15 +132,17 @@ water.setupMap = function() {
   $('#tile-switcher li.satellite').click(function(){
     console.log("satellite");
     water.disableTileLayers();
-  $(this).addClass('active');
+    $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
+    water.map.interaction.refresh();
   });
 
   $('#tile-switcher li.terrain').click(function(){
     console.log("terrain");
     water.disableTileLayers();
-  $(this).addClass('active');
+    $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
+    water.map.interaction.refresh();
   });
 
   // Attribute map.
