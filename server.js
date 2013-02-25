@@ -17,6 +17,8 @@ var engine         = new EngineProvider();
 var _ = require('underscore')._;
 var request = require('request');
 
+var async = require('async');
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 // configuration
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,6 +103,9 @@ app.get('/search/holders', function(req, res, options){
   var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},/* {'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
 
 
+// index
+
+/*  {'kind':1, 'properties.holder_name':1, 'properties.name':1, 'properties.primary_owner':1, 'properties.application_pod':1, 'properties.use_code':1,  'properties.reports.2011.usage':1, 'properties.reports.2011.usage_quantity':1, 'properties.reports.2010.usage':1, 'properties.reports.2010.usage_quantity':1} */
 
   console.log(query);
   engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
@@ -375,31 +380,31 @@ app.get('/data/water_rights/update/gis', function(req, res, options){
 
 /**
  * Read and parse each stored XLS file from the eWRIMS database.
- */
+ */ 
 watermapApp.parseReportFile = function(db_id){
-  var obj = {};
 
-/*   console.log(db_id); */
-  fs.readFileSync('./server_data/allreports2011.csv').toString().split('\n').forEach(function (line) { 
-      var split_line = line.split(',');
-/*       console.log(split_line); */
-      watermapApp.dbIDs.push(new Array(split_line[0],split_line[4]));
-  });
-  
-  console.log(watermapApp.dbIDs);
-    // Do a query every 4 seconds -- should be about 8 concurrent queries.
-  // Should do 100 in 6 minutes.
-  watermapApp.getReportFile = setInterval(function() {
-    watermapApp.parseReportFromHTML(watermapApp.dbIDs[watermapApp.loadFileCounter][0],watermapApp.dbIDs[watermapApp.loadFileCounter][1]); 
-    watermapApp.loadFileCounter++;
+  var q = async.queue(function (task, callback) {
+    console.log(task.db + " " + task.form);
+
+
+    var parsed = watermapApp.parseReportFromHTML(task.db, task.form);
     watermapApp.getBatchCounter++;  
-    console.log(watermapApp.dbIDs[watermapApp.loadFileCounter]);
+    callback();
+  }, 2);
+ 
+  // assign a callback
+  q.drain = function() {
+    console.log('all items have been processed');
+  };
 
-    if(watermapApp.dbIDs[watermapApp.loadFileCounter] === undefined) {
-      clearInterval(watermapApp.getFile);
-    }
-  }, 2000);
-  
+  // add some items to the queue
+
+  fs.readFileSync('./server_data/allreports2011.csv').toString().split('\n').forEach(function (line) { 
+    var split_line = line.split(',');    
+    q.push({db: split_line[0], form: split_line[4]}, function (err) {
+      console.log('finished processing foo');
+    });
+  });
 };
 
 watermapApp.updateEWRIMSID = function(){
@@ -578,8 +583,10 @@ watermapApp.parseReportFromHTML = function(db_id, form_id){
         
         thisReport.usage = new Array();
         thisReport.usage_quantity = new Array();
-                
-        var testEmpty =  $('body').html();
+        
+        if($ !== undefined){
+          var testEmpty =  $('body').html();
+        }
 
 
         var quantityCount = 0;
@@ -705,8 +712,8 @@ watermapApp.parseReportFromHTML = function(db_id, form_id){
         // The XLS file has an odd output from eWRIMS, so to extract the data we read each line and map fields to the fields we are storing in Mongo.
         // @NOTE Does not have geocoded data, that has to come from the GIS server.
 
-        watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
-    
+        var done = watermapApp.storeWaterRightFromEWRIMSDatabase(obj);
+        return true;
       }
     });
   }

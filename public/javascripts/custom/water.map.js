@@ -12,9 +12,8 @@ water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.tinted_layer = 'chachasikes.map-j07fy3iy';
 water.map_defaults.terrain_layer = 'chachasikes.map-p6mnio4p';
 water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
-water.map_defaults.water_layer_course = 'chachasikes.waterscape-course-vectors';
-water.map_defaults.water_layer_fine_lines = 'chachasikes.WaterTest';
-water.map_defaults.water_layer_polys = 'chachasikes.waterscape-polys';
+water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
+
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
 water.map_defaults.div_container = 'map-container';
@@ -120,8 +119,8 @@ water.setupMap = function() {
 
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);  
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines).name);
-    water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
-    water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
+    //water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
+    //water.map.enableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
     water.map.interaction.refresh();
 
   });
