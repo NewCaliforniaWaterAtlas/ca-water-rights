@@ -3,7 +3,9 @@ var water = {};
 window.onload = function() {
   water.loadModal();
   water.navigation();
-  water.setupMap();
+  if(typeof water.setupMap == 'function') {
+    water.setupMap();
+  }
   water.setupAddress();
   water.setupFilters();
  

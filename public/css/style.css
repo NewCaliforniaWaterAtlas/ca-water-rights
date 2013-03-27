@@ -744,3 +744,25 @@ table#tally th,table#tally td {
 table#tally #holder {
   width: 400px;
 }
+
+.large {
+  font-size: 2em;
+  line-height: 1.2em;
+  font-weight: bold;
+  display: block;
+  margin: 10px;
+}
+
+#data-panel.tally-content {  
+  position:absolute;
+  overflow-y: scroll;
+  overflow-x: hidden; 
+
+  top:660px;
+  right:0px;
+  height: 682px;
+  width: 33%;
+  background: rgba(215,215,233,.85);
+  z-index:7;
+  visibility: hidden;
+}
