@@ -729,3 +729,18 @@ div.data-box h4 {
   text-decoration: none;
   line-height: 1em;
 }
+
+
+table#tally {
+  margin: 5px;
+}
+
+table#tally th,table#tally td {
+  text-align: left;
+  padding: 3px;
+  width: 200px;
+} 
+
+table#tally #holder {
+  width: 400px;
+}

@@ -123,7 +123,6 @@ app.get('/list/usage', function(req, res, options){
 
   var lookup =  { $and: [{'properties.reports': { $exists: true}}, {'properties.reports': { $gt: {}}}, {'coordinates': {$exists: true} } ]} ;
 
-
   engine.find_many_by({query: lookup, options: options},function(error, results) {
     if(!results || error) {
       console.log("agent query error");
@@ -142,8 +141,6 @@ app.get('/list/usage', function(req, res, options){
           var report = results[i].properties.reports[year];
           
           if(report !== undefined){
-          
-
                 
             if(report.usage !== undefined){
              if (report.usage instanceof Array) {
@@ -187,7 +184,11 @@ watermapApp.addCommas = function(nStr) {
 	nStr += '';
 	x = nStr.split('.');
 	x1 = x[0];
-	x2 = x.length > 1 ? '.' + x[1] : '';
+	tail = x[1];
+	if(tail !== undefined){
+	 tail = tail.substring(0, 2);
+	}
+	x2 = x.length > 1 ? '.' + tail : '';
 	var rgx = /(\d+)(\d{3})/;
 	while (rgx.test(x1)) {
 		x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -196,61 +197,94 @@ watermapApp.addCommas = function(nStr) {
 }
 
 watermapApp.tallyDiversions = function(feature){
-  var string = feature.properties.application_pod + " ";
-  var currentDiversionAmount = 0;
-  
-  // There are a few fields that might contain the diversion amount, but from how it appears, the values are either equal to each other, or else they are null or zero. We believe that the diversion amount, face value amount and diversion amount in acre feet are all supposed to be the same thing.
-  
-  // Set the current diversion amount
-  if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
-    currentDiversionAmount = feature.properties.diversion_acre_feet;
-    string += "diversion_acre_feet: " + feature.properties.diversion_acre_feet + " AFY<br />";
-  }
-  else if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
-    currentDiversionAmount = feature.properties.face_value_amount;
-    string += "face_value_amount: " + feature.properties.face_value_amount + " AFY<br />";
-  }
+  if(feature !== undefined){
+    if(feature.properties !== undefined){
+      var string = "";
+      var currentDiversionAmount = 0;
+      
+
+      // There are a few fields that might contain the diversion amount, but from how it appears, the values are either equal to each other, or else they are null or zero. We believe that the diversion amount, face value amount and diversion amount in acre feet are all supposed to be the same thing.
+      
+      // Set the current diversion amount
 /*
-  else if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
-    currentDiversionAmount = parseFloat(feature.properties.direct_div_amount);
-    string += "direct_div_amount: " + feature.properties.direct_div_amount + " " + feature.properties.pod_unit + "<br />";   
+      if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
+        currentDiversionAmount = feature.properties.diversion_acre_feet;
+      }
+      else 
+*/    if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
+        currentDiversionAmount = feature.properties.face_value_amount;
+      }
+/*
+      else if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
+        currentDiversionAmount = parseFloat(feature.properties.direct_div_amount);
+    
+        if(feature.properties.pod_unit === 'Cubic Feet per Second'){
+          currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 723.97; // Convert to CFS to AFY
+        }
+        if(feature.properties.pod_unit === 'Gallons per Day'){
+          currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
 
-    if(feature.properties.pod_unit === 'Cubic Feet per Second'){
-      currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 723.97; // Convert to CFS to AFY
-      string += "converted direct_div_amount cfs to afy: " + currentDiversionAmount + " AFY<br />";
-    }
-    if(feature.properties.pod_unit === 'Gallons per Day'){
-      currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
-      string += "converted direct_div_amount gpd to afy: " + currentDiversionAmount + " AFY<br />";
-    }
-
-  }
+        }    
+      }
 */
 
-  
-  
-  // Increment the diversion tally.
-  if(currentDiversionAmount > 0){
-    watermapApp.tally.diversion += parseFloat(currentDiversionAmount);
-    string += "tally total diverted: " + watermapApp.addCommas(watermapApp.tally.diversion) + " AFY<br />";  
-  }
-  if((feature.properties.diversion_storage_amount !== undefined) && (feature.properties.diversion_storage_amount > 0)) {
-    // @TODO check storage units.
-    watermapApp.tally.storage += parseFloat(feature.properties.diversion_storage_amount);
-    //string += "storage: " + parseFloat(feature.properties.diversion_storage_amount) + " AFY<br />";
-    // string += "tally total stored: " + watermapApp.addCommas(watermapApp.tally.storage) + " AFY<br />";
-  }
+      // Increment the diversion tally.
+      if(currentDiversionAmount > 0){
+        watermapApp.tally.diversion += parseFloat(currentDiversionAmount);
+/*         string += "tally total diverted: " + watermapApp.addCommas(watermapApp.tally.diversion) + " AFY<br />";   */
+        string += '<tr>';
+        string += '<td><a href="#' + feature.properties.id + '" data="' + feature.properties.id + '">' + feature.properties.name + '</a></td>';
 
-  return string + "<br />";
+        string += '<td>' + watermapApp.addCommas(currentDiversionAmount) + '</td>';
+        string += '<td>Diverted</td>';
+/*         string += '<td>' + watermapApp.addCommas(watermapApp.tally.diversion) + '</td>'; */
+/*         string += '<td></td>'; */
+        string += '</tr>';
+      }
+      
+      if((feature.properties.diversion_storage_amount !== undefined) && (feature.properties.diversion_storage_amount > 0)) {
+        // @TODO check storage units.
+    
+/*
+        if(feature.properties.pod_unit === 'Cubic Feet per Second'){
+          currentStorageAmount = parseFloat(feature.properties.diversion_storage_amount) * 723.97; // Convert to CFS to AFY
+
+        }
+        if(feature.properties.pod_unit === 'Gallons per Day'){
+          currentStorageAmount = parseFloat(feature.properties.diversion_storage_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
+
+        }
+*/
+        
+        currentStorageAmount = parseFloat(feature.properties.diversion_storage_amount);
+            
+        if(currentStorageAmount > 0) {
+          watermapApp.tally.storage += currentStorageAmount;
+        }    
+            
+/*         string += "storage: " + parseFloat(feature.properties.diversion_storage_amount) + " AFY<br />"; */
+/*         string += "tally total stored: " + watermapApp.addCommas(watermapApp.tally.storage) + " AFY<br />"; */
+        string += '<tr>';
+        string += '<td><a href="#' + feature.properties.id + '" data="' + feature.properties.id + '">' + feature.properties.name + '</a></td>';
+        string += '<td>' + watermapApp.addCommas(currentStorageAmount) + '</td>';
+        string += '<td>Stored</td>';
+/*         string += '<td></td>'; */
+/*         string += '<td>' + watermapApp.addCommas(watermapApp.tally.storage) + '</td>'; */
+        string += '</tr>';       
+      }
+  
+      return string;
+    }
+  }
 };
 
 
 app.get('/tally', function(req, res, options){
 
-  var lookup =  { $and: [{'kind': 'right'}]} ;
+  var regex = {$regex: '.*._01$', $options: 'i'};
+  var lookup =  { $and: [{'kind': 'right'},{'id':regex}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'}]}   ]} ;
 
-
-  engine.find_many_by(lookup,function(error, results) {
+  engine.find_many_by({query: lookup, options: {'limit': 0}},function(error, results) {
     if(!results || error) {
       console.log("agent query error");
       res.send("[]");
@@ -259,12 +293,43 @@ app.get('/tally', function(req, res, options){
 
     var obj = [];
     var string = '';
-    
+    var count = 0;
+
+    string += '<!DOCTYPE html><html lang="en">  <head>    <meta charset="utf-8">    <title>California Water Rights: Tally</title>    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="description" content="Providing citizens with better tools for understanding how water is being used in our state.">    <meta name="author" content="http://publicwatermap.org">    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/libraries/bootstrap/ico/apple-touch-icon-144-precomposed.png">    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/libraries/bootstrap/ico/apple-touch-icon-114-precomposed.png"><link rel="apple-touch-icon-precomposed" sizes="72x72" href="/libraries/bootstrap/ico/apple-touch-icon-72-precomposed.png"><link rel="apple-touch-icon-precomposed" href="/libraries/bootstrap/ico/apple-touch-icon-57-precomposed.png"><link rel="shortcut icon" href="/images/favicon.ico"><link href="/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="/libraries/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"><link href="/libraries/FontAwesome/css/font-awesome.css" rel="stylesheet"><link href="/css/jquery.qtip.min.css" rel="stylesheet" type="text/css"> <link href="/css/style.css" rel="stylesheet"><script type="text/javascript" src="/javascripts/libraries/jquery.js"></script><script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script></head><body>   ';
+
+    string += '<table id="tally">';
+    string += '<tr><th id="holder" class="sortable">Water Right Holder</th><th id="amount" class="sortable sortable-numeric reverseSort">Amount (AFY)</th><th id="type">Type</th></tr>';
+    content = "";
     for (i in results){
+    
+      count++;
+      content += watermapApp.tallyDiversions(results[i]);
 
-      string += watermapApp.tallyDiversions(results[i]);    
 
+
+/*       string += "<br />" + count; */
     }
+    
+      string += "<h3>Total Number Active Water Rights: " +  count + "</h3>";
+      string += "<h3>Total Diverted: " +  watermapApp.addCommas(watermapApp.tally.diversion) + "AFY</h3>";
+      string += "<p>This is the amount that Californians say they will use in a given year.</p>";
+      string += "<h3>Total Stored: " +  watermapApp.addCommas(watermapApp.tally.storage) + "AFY</h3>";
+      string += "<p>This is the amount that Californians say they will store in a given year.</p>";
+      
+      string += "<h3>Total amount precipitation: ~200,000,000 AFY</h3>";
+      string += "<h3>Total amount precipitation dedicated for water supply: ~70,000,000 AFY</h3>";
+      string += "<p>This is the amount precipitation that will fall on California as rain or snow in (2013).</p>";
+      
+      var overallocation = Math.round((watermapApp.tally.diversion + watermapApp.tally.storage) / 70000000 * 100) + "%";
+      
+      string += "<h3>Over Allocated water percentage: " + overallocation + "</h3>";
+      
+      string += content;
+
+    
+    string += '</table>';
+    string += '<script type="text/javascript" src="/javascripts/libraries/json2.js"></script><script type="text/javascript" src="/javascripts/libraries/underscore-min.js"></script><script src="/libraries/bootstrap/js/bootstrap.min.js"></script><script src="/javascripts/custom/core.js"></script><script src="/javascripts/libraries/tablesort.js"></script><script src="/javascripts/custom/tally.js"></script></body></html>';
+
      res.send(string);
   } ,{}, {'limit': 55000});
   
