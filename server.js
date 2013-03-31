@@ -293,48 +293,28 @@ app.get('/tally', function(req, res, options){
     }
 
     var obj = [];
-    var string = '';
+    var table = "";
     var count = 0;
 
-
-    string += '<!DOCTYPE html><html lang="en">  <head>    <meta charset="utf-8">    <title>California Water Rights: Tally</title>    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="description" content="Providing citizens with better tools for understanding how water is being used in our state.">    <meta name="author" content="http://publicwatermap.org">    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/libraries/bootstrap/ico/apple-touch-icon-144-precomposed.png">    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/libraries/bootstrap/ico/apple-touch-icon-114-precomposed.png"><link rel="apple-touch-icon-precomposed" sizes="72x72" href="/libraries/bootstrap/ico/apple-touch-icon-72-precomposed.png"><link rel="apple-touch-icon-precomposed" href="/libraries/bootstrap/ico/apple-touch-icon-57-precomposed.png"><link rel="shortcut icon" href="/images/favicon.ico"><link href="/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="/libraries/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"><link href="/libraries/FontAwesome/css/font-awesome.css" rel="stylesheet"><link href="/css/jquery.qtip.min.css" rel="stylesheet" type="text/css"> <link href="/css/style.css" rel="stylesheet"><script type="text/javascript" src="/javascripts/libraries/jquery.js"></script><script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script></head><body>   ';
-
-    string += '<div class="container-fluid"><div class="content row">';
-    
-
-    content = "";
-   
     for (i in results){
       count++;
-      content += watermapApp.tallyDiversions(results[i]);
+      table += watermapApp.tallyDiversions(results[i]);
+      
     }
+
     var overallocation = Math.round((watermapApp.tally.diversion + watermapApp.tally.storage) / 70000000 * 100) + "%";
-  
-    string += "<div class='span12'>";
-    string += "<h2>Tally of Water Rights in California</h2>";
-    string += "<div class='span3'><span class='large'>Total Number Active Water Rights: " +  count + "</span><p>Does not include riparian or pre-1914 rights</p></div>";
-    string += "<div class='span3'><span class='large'>Total Diverted: " +  watermapApp.addCommas(watermapApp.tally.diversion) + "AFY</span>";
-    string += "<p>This is the amount that Californians say they will use in a given year. A <a href='http://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/docs/comments111312/tim_stroshane.pdf'>similar value</a> was submitted as a public comment for the Bay Delta plan in October 2012. Value differences are from minor data errors (duplicates, miscategorized entries, etc.)</p></div>";
-    
-    string += "<div class='span3'><span class='large'>Total Stored: " +  watermapApp.addCommas(watermapApp.tally.storage) + "AFY</span>";
-    string += "<p>This is the amount that Californians say they will store in a given year.</p></div>";
-    
-    string += "<div class='span3'><span class='large'>Total amount precipitation: ~200,000,000 AFY</span>";
-    string += "<p>This is the amount precipitation that will fall on California as rain or snow in (2013).</p></div>";
-    string += "<div class='span3'><span class='large'>Total amount precipitation dedicated for water supply: ~70,000,000 AFY</span></div>";
 
-    string += "<div class='span3'><span class='large'>Over Allocated water percentage: " + overallocation + "</span></div></div>";
+    res.render("tally.ejs", {
+      layout:false,
+      locals: { 
+        overallocation: overallocation,
+        table: table,
+        count: count,
+        watermapApp: watermapApp
+      }
+    });
 
-    string += '<div class="span12"><table id="tally"><tr><th id="holder" class="sortable">Water Right Holder</th><th id="amount" class="sortable sortable-numeric reverseSort">Amount (AFY)</th><th id="type">Type</th></tr>';
-    string += content;
-    string += '</table></div></div></div>';
-    
-    string += '<div id="data-panel" class="tally-content"><div id="rights-panel" class="panel"><div class="data-boxes"><div class="data-box"><h4>Water Rights</h4><p>Showing water rights held by individuals, organizations and other entities in the state of California.</p><p>Select a water right to learn more about it.</p></div></div></div></div>';
-    
-    
-    string += '<script type="text/javascript" src="/javascripts/libraries/json2.js"></script><script type="text/javascript" src="/javascripts/libraries/underscore-min.js"></script><script src="/libraries/bootstrap/js/bootstrap.min.js"></script><script src="/javascripts/custom/core.js"></script><script src="/javascripts/libraries/tablesort.js"></script><script src="/javascripts/custom/core.js"><script src="/javascripts/custom/water.js"></script><script src="/javascripts/custom/tally.js"></script></body></html>';
 
-     res.send(string);
   } ,{}, {'limit': 55000});
   
 });
