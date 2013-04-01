@@ -338,6 +338,24 @@ water.drawRightsMarkers = function(features, featureDetails) {
     
     // Generate marker layers.
     water[featureDetails.layer].features(features).factory(function(f) {
+        var diversion = water.getDiversion(f);
+        console.log(diversion);
+
+        if(diversion.amount >= 100 || diversion.amount_stored >= 100 || diversion.converted >= 100) {
+          featureDetails.icon = "/images/icons/water_right_icon_6.png";
+        }
+
+        if(diversion.converted >= 10000 || diversion.amount_stored >= 10000 || diversion.converted >= 10000) {
+            featureDetails.icon = "/images/icons/water_right_icon_10.png";
+        }
+  
+        if(diversion.amount >= 500000 || diversion.amount_stored >= 500000 || diversion.converted >= 500000) {
+            featureDetails.icon = "/images/icons/water_right_icon_20.png";
+        }
+        
+
+        
+        // @TODO see which ones are storage and change the color      
         var marker = water.makeMarker(f, featureDetails);
         return marker;      
     });
@@ -345,12 +363,20 @@ water.drawRightsMarkers = function(features, featureDetails) {
     water[featureDetails.layer + "_interaction"].formatter(function(feature) {
 
       var diversion = water.getDiversion(feature);
+
       
       var o ='<span class="content">' 
-            + '<span class="name">' + feature.properties.name+ '</span>'
-            + '<span class="diversion"><span class="diversion-amount">' + diversion.amount + '</span>'
-            + '<span class="diversion-unit"> ' + diversion.units + '</span></span>'
-            + '<span class="load_id">' + feature.properties.id + '</span></span>';
+            + '<span class="name">' + feature.properties.name+ '</span>';
+            if(diversion.converted === undefined){
+              o += '<span class="diversion"><span class="diversion-amount">' + diversion.amount + '</span>'
+                    + '<span class="diversion-unit"> ' + diversion.units + '</span><span class="diversion-amount">' + diversion.amount_stored + '</span>'
+                    + '<span class="diversion-unit"> ' + diversion.units_stored + '</span></span>';
+            }
+            else {
+              o += '<span class="diversion"><span class="diversion-amount">' + diversion.converted + '</span><span class="diversion-amount">' + diversion.amount_stored + '</span>'
+                    + '<span class="diversion-unit"> AFY</span></span>';            
+            }
+            o += '<span class="load_id">' + feature.properties.id + '</span></span>';
 
       return o;
     });
@@ -382,7 +408,7 @@ water.drawRightsMarkers = function(features, featureDetails) {
       list +='<table>';
       for(f in inextent){
         var diversion = water.getDiversion(inextent[f]);
-        list += '<tr><td><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td>' + diversion.amount + ' ' + diversion.units + '</td></tr>';
+        list += '<tr><td><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td>' + diversion.amount + ' ' + diversion.units + ', ' + diversion.amount_stored + ' ' + diversion.units_stored + '</td></tr>';
       }
       list +='</table>';
       
@@ -536,7 +562,8 @@ water.processHighlights = function() {
 
 water.getDiversion = function(feature){
   var diversion = {};
-  diversion.amount = '';
+  diversion.amount = '0';
+  diversion.amount_stored = '0' 
   diversion.units = '';
 
   if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
@@ -550,12 +577,27 @@ water.getDiversion = function(feature){
   if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
     diversion.amount = feature.properties.direct_div_amount;
     diversion.units = feature.properties.pod_unit;
+    var currentDiversionAmount;
+      if(feature.properties.pod_unit === 'Cubic Feet per Second'){
+        currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 723.97; // Convert to CFS to AFY
+      }
+      if(feature.properties.pod_unit === 'Gallons per Day'){
+        currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
+    
+      }
+    
   }
   if((feature.properties.diversion_storage_amount !== undefined) && (feature.properties.diversion_storage_amount > 0)) {
-    diversion.amount = feature.properties.diversion_storage_amount;
-    diversion.units = " acre-ft year stored";
+    diversion.amount_stored = feature.properties.diversion_storage_amount;
+    diversion.units_stored = " acre-ft year stored";
   }
+  
+  
+    
 
+  if(currentDiversionAmount !== undefined) {
+    diversion.converted = currentDiversionAmount;
+  }
   //diversion.amount = diversion.amount.toFixed(2);
 
   return diversion;
@@ -568,7 +610,7 @@ water.drawRightsMarkersLayer = function(features) {
   var featureDetails = {
     name: "rights",
     class: "right",
-    icon: "/images/icons/water_right_icon.png",
+    icon: "/images/icons/water_right_icon_6_transparent.png",
     layer: "markers_rights"
   };
   
@@ -757,10 +799,20 @@ water.formatWaterRightTooltip = function(feature) {
   output = '<div class="data-boxes">' +           
                       '<div class="data-box">' +
                       '<div class="data-title">' +
-                      '<h4 class="title">' + name + '</h4>' +
-                        '<div class="diversion"><span class="diversion-amount">' 
-                        + diversion.amount + '</span><span class="diversion-unit">' + diversion.units 
-                        + '</span></div></div>' +
+                      '<h4 class="title">' + name + '</h4>';
+                      
+            if(diversion.converted === undefined){
+               output += '<div class="diversion"><span class="diversion-amount">' 
+                        + diversion.amount + '</span><span class="diversion-unit">' + diversion.units + '</span><span class="diversion-amount">' 
+                        + diversion.amount_stored + '</span><span class="diversion-unit">' + diversion.units + '</span>' ; 
+            }
+            else {
+               output += '<div class="diversion"><span class="diversion-amount">' 
+                        + diversion.converted + '</span><span class="diversion-unit">' + diversion.units + '</span><span class="diversion-amount">' 
+                        + diversion.amount_stored + '</span><span class="diversion-unit">' + diversion.units + '</span>' ;        
+            }                      
+                   
+                        output += '</div></div>' +
                       
                         '<ul class="data-list">' +
 
