@@ -15,7 +15,7 @@ water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
 water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 
 
-water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_markers';
+water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water-rights';
 water.map_defaults.div_container = 'map-container';
 water.map_defaults.close_up_zoom_level = 11;
 water.map_defaults.lowest_tilemill_marker_level = 12;
@@ -309,7 +309,7 @@ water.markersQuery = function(reloaded) {
 
  // This is where real-time water rights data would go.
  Core.query({query: { 
-     $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+     $and: [{'kind': 'right'}, {'properties.status': 'Active'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
     }, options: {'limit': 0}}, water.drawRightsMarkersLayer);
 };

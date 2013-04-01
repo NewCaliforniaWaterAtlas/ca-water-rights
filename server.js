@@ -23,9 +23,9 @@ var async = require('async');
 // configuration
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-var zcache = { 'index.html': '' };
+var zcache = { 'index.html': '' , 'home.html':''};
 zcache['index.html'] = fs.readFileSync('./public/index.html');
-
+zcache['home.html'] = fs.readFileSync('./public/home.html');
 var app = module.exports = express.createServer();
 
 app.configure(function(){
@@ -63,9 +63,14 @@ app.dynamicHelpers({
 /**
  * Provide webpage.
  */
-app.get('/', function(req, res){
+app.get('/water-rights', function(req, res){
     res.send(zcache['index.html'], {'Content-Type': 'text/html'});
 });
+
+app.get('/', function(req, res){
+    res.send(zcache['home.html'], {'Content-Type': 'text/html'});
+});
+
 
 /**
  * Search database by passing it a mongo search object.
@@ -100,7 +105,7 @@ app.get('/search/holders', function(req, res, options){
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
-  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},/* {'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
+  var query = { $and: [ {'kind': 'right'}, {'properties.status': 'Active'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},/* {'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
 
 
 // index
