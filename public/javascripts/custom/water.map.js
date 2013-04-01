@@ -41,10 +41,10 @@ water.disableTileLayers = function(){
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines).name);
-  water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
-  water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
+  //water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
+  //water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
-  water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
+  //water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
 
   $('#tile-switcher li').removeClass('active');
 };
@@ -57,10 +57,10 @@ water.setupMap = function() {
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.tinted_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines));
-  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_course));
-  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_polys));
+  //water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_course));
+  //water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_polys));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
-  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
+  //water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
 
   
   water.disableTileLayers();
@@ -78,7 +78,7 @@ water.setupMap = function() {
   //water.map.ui.hash.add();
   water.map.ui.zoombox.add();
   
-  water.map.setZoomRange(6, 17);  // 17 is the lowest level of satellite layer.
+  water.map.setZoomRange(6, 12);  // 17 is the lowest level of satellite layer.
 /*// @TODO see if we can change the increment of the zoomer.
   // This doesn't seem to work though. Maybe make new zoomer? Maybe override easey?
   // Needs more research.
@@ -597,6 +597,7 @@ water.getDiversion = function(feature){
 
   if(currentDiversionAmount !== undefined) {
     diversion.converted = currentDiversionAmount;
+    diversion.units = " acre-ft year diverted";
   }
   //diversion.amount = diversion.amount.toFixed(2);
 
