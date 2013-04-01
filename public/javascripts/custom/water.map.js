@@ -562,31 +562,59 @@ water.processHighlights = function() {
 
 water.getDiversion = function(feature){
   var diversion = {};
+  diversion.face_amount = '0';
+  diversion.units_face_amount = '';
+
   diversion.amount = '0';
-  diversion.amount_stored = '0' 
   diversion.units = '';
+
+  diversion.amount_stored = '0';
+  diversion.units_stored = "";
+
+  diversion.diverted = '0';
+  diversion.units_diverted = "";
+  
+
+  // Face amount is the total value
+  if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
+    diversion.face_amount = feature.properties.face_value_amount;
+
+    if(feature.properties.face_value_units !== undefined) {
+      diversion.units_face_amount = feature.properties.face_value_units;
+    }
+    else {
+      diversion.units_face_amount = " acre-feet per year";
+    }
+  }
+  
 
   if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
     diversion.amount = feature.properties.diversion_acre_feet;
     diversion.units = " acre-ft year";
   }
-  else if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
-    diversion.amount = feature.properties.face_value_amount;
-    diversion.units = feature.properties.face_value_units;
-  }
+
+  //@TODO this needs to account for seasonal water flow… face value should include this.
   if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
     diversion.amount = feature.properties.direct_div_amount;
     diversion.units = feature.properties.pod_unit;
     var currentDiversionAmount;
+
+    diversion.diverted = feature.properties.direct_div_amount;
+    diversion.units_diverted = feature.properties.pod_unit;
+
+/*
       if(feature.properties.pod_unit === 'Cubic Feet per Second'){
-        currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 723.97; // Convert to CFS to AFY
+        diversion.converted = currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 723.97; // Convert to CFS to AFY
+        diversion.units = " acre-ft year diverted"; 
       }
       if(feature.properties.pod_unit === 'Gallons per Day'){
-        currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
-    
+        diversion.converted = currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
+        diversion.units = " acre-ft year diverted";    
       }
-    
+*/
   }
+  
+  
   if((feature.properties.diversion_storage_amount !== undefined) && (feature.properties.diversion_storage_amount > 0)) {
     diversion.amount_stored = feature.properties.diversion_storage_amount;
     diversion.units_stored = " acre-ft year stored";
@@ -595,10 +623,6 @@ water.getDiversion = function(feature){
   
     
 
-  if(currentDiversionAmount !== undefined) {
-    diversion.converted = currentDiversionAmount;
-    diversion.units = " acre-ft year diverted";
-  }
   //diversion.amount = diversion.amount.toFixed(2);
 
   return diversion;
@@ -802,18 +826,9 @@ water.formatWaterRightTooltip = function(feature) {
                       '<div class="data-title">' +
                       '<h4 class="title">' + name + '</h4>';
                       
-            if(diversion.converted === undefined){
+
                output += '<div class="diversion"><span class="diversion-amount">' 
-                        + diversion.amount + '</span><span class="diversion-unit">' + diversion.units + '</span><span class="diversion-amount">' 
-                        + diversion.amount_stored + '</span><span class="diversion-unit">' + diversion.units + '</span>' ; 
-            }
-            else {
-               output += '<div class="diversion"><span class="diversion-amount">' 
-                        + diversion.converted + '</span><span class="diversion-unit">' + diversion.units + '</span><span class="diversion-amount">' 
-                        + diversion.amount_stored + '</span><span class="diversion-unit">' + diversion.units + '</span>' ;        
-            }                      
-                   
-                        output += '</div></div>' +
+                        + diversion.face_amount + '</span><span class="diversion-unit">' + diversion.units_face_amount + '</span></div></div>' +
                       
                         '<ul class="data-list">' +
 
@@ -844,11 +859,20 @@ water.formatWaterRightTooltip = function(feature) {
                       '<div class="data-box">' +
                         '<h4>Water Diversion</h4>' +
                         '<ul class="data-list">' +
+                          '<li>Total Water (Face Amount): ' + diversion.face_amount + ' ' + diversion.units_face_amount  + '</li>' +
+
                           '<li>Diversion Type: ' + feature.properties.diversion_type + '</li>' +
-                          '<li>Direct Diversion: ' + diversion.amount + ' ' + diversion.units + '</li>' +
-                          '<li>Storage: </li>' +
+                          
+                          '<li>Direct Diversion: ' + diversion.diverted + ' ' + diversion.units_diverted + '</li>' +
+                          
+                          '<li>Direct Diversion Amount: ' + diversion.amount + ' ' + diversion.units + '</li>' +
+
+                          
+                          '<li>Storage: ' + diversion.amount_stored + ' ' + diversion.units_stored + '</li>' +
+/*
                           '<li>Used Under: </li>' +
                           '<li>Has Other: </li>' +
+*/
                         '</ul>' +
                       '</div>' +
 

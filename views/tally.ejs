@@ -25,12 +25,15 @@
       <h2>Tally of Water Rights in California</h2>
     
       <div class='span3'>
-        <span class='large'>Total Number Active Water Rights: <%= count %></span>
-        <p>Does not include riparian or pre-1914 rights</p>
+        <span class='large'>Total Number Active Water Rights: <%= watermapApp.tally.count_active %></span>
+        <p>May include some riparian and pre-1914 rights.</p>
+        <span class='large'>Total Number Water Rights: <%= count %></span>
+        <p>Includes Active, Adjudicated, Certified, Licensed, Pending, Permitted and Registered water Rights</p>
       </div>
     
       <div class='span3'>
-        <span class='large'>Total Diverted: <%=  watermapApp.addCommas(watermapApp.tally.diversion) %> AFY</span>
+        <span class='large'>Total Water: Active & Permitted Water rights: <%= watermapApp.tally.total_face_amount_active %> AFY, All:
+        <%=  watermapApp.addCommas(watermapApp.tally.total_face_amount) %> AFY</span>
         <p>This is the amount that Californians say they will use in a given year. A <a href='http://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/docs/comments111312/tim_stroshane.pdf'>similar value</a> was submitted as a public comment for the Bay Delta plan in October 2012. Value differences are from minor data errors (duplicates, miscategorized entries, etc.)</p>
       </div>
           
