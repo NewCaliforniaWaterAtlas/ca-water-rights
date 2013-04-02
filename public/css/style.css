@@ -600,12 +600,16 @@ div.data-box h4 {
 
 }
 
-
+#tile-switcher h4 {
+  font-size: 1.2em;
+  padding-left: 20px;
+  margin: 4px;
+}
 
 #tile-switcher {
   position:absolute;
   top:280px;
-  height: 80px;
+  height: 120px;
   width: 100px;
   left:0px;
   z-index:999;

@@ -1815,10 +1815,6 @@ app.get('/usgs/load/today', function(req, res) {
             obj.kind = "usgs_gage_data";
             obj.properties = {};
 
-
-
-
-
             var id_split = split_line[0].split("NR");
 
             obj.properties.city = id_split[1];
@@ -1872,14 +1868,12 @@ app.get('/usgs/load/today', function(req, res) {
                     obj.properties.stage = watermapApp.trim(flowinfoLine[1]);
                   }
                   if(watermapApp.trim(flowinfoLine[0]) === "Date (stage)") {
-                  console.log("date stage");
+                    console.log("date stage");
                     obj.properties.date = watermapApp.trim(flowinfoLine[1]);
                   }                    
                   if(watermapApp.trim(flowinfoLine[0]) === "Date") {
-
                     obj.properties.date = watermapApp.trim(flowinfoLine[1]);
-
-                  }  
+                  }
                   if(watermapApp.trim(flowinfoLine[0]) === "Percentile") {
                     obj.properties.percentile = watermapApp.trim(flowinfoLine[1]);
                   } 

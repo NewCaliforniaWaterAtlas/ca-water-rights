@@ -323,7 +323,7 @@ water.markersQuery = function(reloaded) {
 
 water.loadSensorLayer = function(){
   // Load USGS stations    
-  Core.query({query: {$and: [{'kind': 'usgs_gage_data'}]},options: {'limit': 488}}, water.drawStationUSGSMarkersLayer);  
+  Core.query({query: {$and: [{'kind': 'usgs_gage_data'}]},options: {'limit': 488, _id:1}}, water.drawStationUSGSMarkersLayer);
 };
 
 // Draw interactive markers.
