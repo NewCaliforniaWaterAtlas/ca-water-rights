@@ -82,7 +82,11 @@ ul.nav>li {
 
 .navbar a.brand {
   margin-left: 5px;
-  font-family: 'Rosario', sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  font-family: 'Muli', sans-serif;
+  text-transform: uppercase;
+  
 }
 
 
@@ -620,7 +624,7 @@ div.data-box h4 {
   width: 100px;
   left:0px;
   z-index:999;
-  background: rgba(209,231,231,.75);
+  background: rgba(209,231,231,.9);
   font-size: 0.8em;
   line-height: 1em;
   padding: 4px 4px 4px 30px;
@@ -650,7 +654,7 @@ div.data-box h4 {
   width: 100px;
   left:0px;
   z-index:999;
-  background: rgba(209,231,231,.75);
+  background: rgba(209,231,231,.9);
   font-size: 0.8em;
   line-height: 1em;
   padding: 4px;
@@ -844,4 +848,22 @@ table#tally #holder {
   text-align: center;
   font-weight: bold;
   font-family: 'Questrial', sans-serif;
+}
+
+.map-symbols {
+  margin: 10px 30px;
+}
+
+h4.map-symbols {
+  margin: 0px;
+  padding: 0;
+}
+
+ul.map-symbols {
+  padding: 0;
+}
+ul.map-symbols li {
+  padding: 0px 10px;
+  list-style: square;
+  list-style-position: inside;
 }
