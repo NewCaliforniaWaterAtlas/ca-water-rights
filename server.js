@@ -112,39 +112,62 @@ app.get('/search/watershed', function(req, res, options){
   },{});
 });
 
-
-app.get('/search/watershed', function(req, res, options){
-
-  var regex = {$regex: req.query.value, $options: 'i'};
-
-  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.watershed': regex}]}]};
-
-  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
-    if(!results || error) {
-      console.log("agent query error");
-      res.send("[]");
-      return;
-    }
-    res.send(results);
-
-  },{});
-});
-
 /** 
  * Search function for typeahead
  */
 app.get('/list/watersheds', function(req, res, options){
-  var regex = {$regex: req.query.value, $options: 'i'};
-  var query = { $and: [ {'kind': 'right'}, {'properties.watershed': regex}]};
 
-  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {'coordinates': {$exists: true}}]};
+
+  engine.find_many_by({query: query, options: {'limit': 0/* , 'sort': {'properties.watershed':1 } */}},function(error, results) {
     if(!results || error) {
 /*       console.log("agent query error"); */
+
+
+      
+
       res.send("[]");
       return;
     }
     
+    var array = [];
+    var i;
+    for (i in results){
+      if(results[i]['properties']['watershed'] !== null && results[i]['properties']['watershed'] !== "")
+      array.push(results[i]['properties']['watershed']);
+    }
+    console.log(array);
+    var list = _.uniq(array).sort();
+    
+    console.log(list);
 
+    res.send(list);
+
+  },{'properties.watershed': 1});
+});
+
+
+/** 
+ * Search function for typeahead
+ */
+app.get('/search/holders', function(req, res, options){
+
+  var regex = {$regex: req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.watershed': regex}, {'properties.source_name': regex}/* {'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
+
+
+// index
+
+/*  {'kind':1, 'properties.holder_name':1, 'properties.name':1, 'properties.primary_owner':1, 'properties.application_pod':1, 'properties.use_code':1,  'properties.reports.2011.usage':1, 'properties.reports.2011.usage_quantity':1, 'properties.reports.2010.usage':1, 'properties.reports.2010.usage_quantity':1} */
+
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
     res.send(results);
 
   },{});
