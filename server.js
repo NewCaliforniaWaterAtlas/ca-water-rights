@@ -135,7 +135,7 @@ app.get('/search/watershed', function(req, res, options){
  */
 app.get('/list/watersheds', function(req, res, options){
   var regex = {$regex: req.query.value, $options: 'i'};
-  var query = { $and: [ {'kind': 'right'}, {'properties.watershed': regex}]}]};
+  var query = { $and: [ {'kind': 'right'}, {'properties.watershed': regex}]};
 
   engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
     if(!results || error) {
