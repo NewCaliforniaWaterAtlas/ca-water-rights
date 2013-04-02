@@ -20,7 +20,8 @@
     <link href='/css/mapbox.css' rel='stylesheet'>
     <link href='/css/jquery.qtip.min.css' rel='stylesheet' type='text/css'> 
     <link href="/css/style.css" rel="stylesheet">
-    
+ 
+    <link href='http://fonts.googleapis.com/css?family=Questrial|Muli:300,400,400italic,300italic|Rosario:400,700,400italic,700italic' rel='stylesheet' type='text/css'>    
     <script type="text/javascript" src="/javascripts/libraries/jquery.js"></script>
     <script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script>
     <script src='/javascripts/libraries/mapbox.js'></script>
@@ -35,17 +36,17 @@
         <div class="modal-body-inner">
 
           <div class="row-fluid">
-            <img class="span5" src="/images/sluicing.png" alt="">
-            
-            <div class="span7 intro-modal">
-              <p class="modal-text">A water right is a granted permission to withdraw water from a river, stream, or ground water source for a "reasonable" and "beneficial" use.</p>
-              <p class="modal-text">Currently, water rights holders claim they divert in aggregate <span class="diversion-highlight modal-link "><a href="/tally">250</a></span> million acre feet of water.</p>
-             <p class="modal-text">Annually, California receives only <span class="diversion-highlight modal-link ">71</span> million acre feet of precipitated run-off.</p>
+
+            <div class="span5 intro-modal">
+              <img src="/images/sluicing.png" alt="Sluicing" />
+              <span class="credit">Photo credit</span>
             </div>
 
-            <!-- <p class="citation"><span class="asterisk">*</span> <a href="http://www.amazon.com/Introduction-Water-California-Updated-Preface/dp/0520260163">Introduction to Water in California</a>
-            <br />
-            <span class="asterisk">**</span> Estimated, will soon be calculated on this site.</p> -->
+            <div class="span7 intro-modal">
+              <p class="modal-text">A water right is a granted permission to withdraw water from a river, stream, or ground water source for a "reasonable" and "beneficial" use.</p>
+              <p class="modal-text">Currently, water rights holders claim they divert in aggregate <span class="diversion-highlight modal-link "><a href="/tally">250</a></span> million acre feet of water each year.</p>
+             <p class="modal-text">California receives <span class="diversion-highlight modal-link "><a href="http://cal-adapt.org/precip/decadal/">71</a></span> million acre feet of usable water from annual preciptiation.</p>
+            </div>
           </div>
 
         </div> <!-- .modal-body-inner -->
@@ -105,6 +106,7 @@
 
             <div id='legend'>
               <div class="sensors">
+                <h4>Stream Gage Percentiles</h4>
                 <dl>
                   <dt>Very Low</dt><dd><span class="icon"><img src="/images/icons/sensor_red.png" ></span></dd>
                   <dt>Low</dt><dd><span class="icon"><img src="/images/icons/sensor_yellow.png" ></span></dd>
@@ -147,8 +149,6 @@
             </div><!-- #sensor-panel -->
 
             <div id="search-panel"  class="panel"><!-- #search-panel -->
-              <!-- <h4 class="title">Search</h4> -->
-
               <div class="filters"> 
                 <div class="input-append">
                   <input class="search-holders" type="text" data-provide="typeahead" placeholder="What do you want to find?">
@@ -206,7 +206,15 @@
           <li><a href="http://rri.org" alt="RRI"><img src="/images/rri-logo-top.png" /></a></li>
           <li><a href="http://patagonia.com" alt="Patagonia"><img src="/images/patagonia_logo_small.png" /></a></li>
         </ul>
+        
+        <ul>
+          <li>Map developed by <a href="http://twitter.com/videmsky">Laci Videmsky</a> (Project Director & Research) and <a href="http://twitter.com/chachasikes">Chach Sikes</a> (Design & Lead Engineer). Launched April 2013. <a href="https://github.com/nerdsfornature/watertransfers">Code and Data</a> on Github.<br/ >
+          Special thanks for Huey Johnson, Tom Hicks, Tim Stroshane, Elizabeth Baker, Hilary Soldati, Anselm Hook, <a href="http://mapbox.com">Mapbox</a>, <a href="http://openshift.com">OpenShift</a>, <a href="http://nerdsfornature.org">Nerds for Nature</a>, <a href="http://ecohacksf.com">EcoHack SF</a> for helping us to develop this project as part of the <a href="/">New California Water Atlas</a></li>
+          <li>Please direct questions and feedback to info (at) sparkleforce.com</li>
+        </ul>
       </section>
+    
+  
     
     </div><!-- #page-wrap -->
   
