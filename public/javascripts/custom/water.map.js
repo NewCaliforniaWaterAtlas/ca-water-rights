@@ -97,10 +97,12 @@ water.setupMap = function() {
 */
 
   // Pan controls  // @TODO make mobile friendly (touchstart?)
+/*
   document.getElementById('left').onclick = function() { water.map.panLeft(); }
   document.getElementById('right').onclick = function() { water.map.panRight(); }
   document.getElementById('down').onclick = function() { water.map.panDown(); }
   document.getElementById('up').onclick = function() { water.map.panUp(); }
+*/
 
 
   // Toggle background layers of map.
