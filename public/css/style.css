@@ -546,37 +546,6 @@ div.data-box h4 {
   text-decoration: none;
 }
 
-/*<!-- ============ Responsive Stuff / Media Queries ============ -->*/ 
-
- /* Landscape phones and down */
-@media (max-width: 480px) { 
-}
-
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) { 
-}
-
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) { 
-}
-
-/* Large desktop */
-@media (min-width: 1200px) { 
-}
-
-
-@media (max-width: 480px) { 
-  .iphone-debug {
-    padding: 10px;
-    color: #000;
-    background: #fff;
-    margin: 20px;
-    display: none;
-  }
-}
-
-
-
 #legend {
   position:absolute;
   top:370px;
@@ -669,7 +638,6 @@ div.data-box h4 {
   line-height: 0.9em;
   font-size: 1.1em;
 }
-
 
 .navbar .nav > li a.active,
 .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
@@ -783,4 +751,43 @@ table#tally #holder {
   background: rgba(215,215,233,.85);
   z-index:7;
   visibility: hidden;
+}
+
+.carousel-caption {
+  background: -moz-linear-gradient(bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(0,0,0,0.85)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a8000000',GradientType=0 ); /* IE6-9 */
+}
+
+/*<!-- ============ Responsive Stuff / Media Queries ============ -->*/ 
+
+ /* Landscape phones and down */
+@media (max-width: 480px) { 
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
+}
+
+/* Large desktop */
+@media (min-width: 1200px) { 
+}
+
+
+@media (max-width: 480px) { 
+  .iphone-debug {
+    padding: 10px;
+    color: #000;
+    background: #fff;
+    margin: 20px;
+    display: none;
+  }
 }
