@@ -306,6 +306,38 @@ watermapApp.tallyDiversions = function(feature){
         
           watermapApp.tally.total_face_amount_active += parseFloat(faceAmount);
       }
+      
+      
+      switch(feature.properties.status){
+        case 'Active':
+          watermapApp.tally.active += parseFloat(faceAmount);
+          break;
+        case 'Permitted':
+          watermapApp.tally.permitted += parseFloat(faceAmount);
+          break;
+        case 'Licensed':
+          watermapApp.tally.licensed  += parseFloat(faceAmount);
+          break;
+        case 'Adjudicated':
+          watermapApp.tally.adjudicated  += parseFloat(faceAmount);
+          break;
+        case 'Certified':
+          watermapApp.tally.certified  += parseFloat(faceAmount);
+          break;
+        case 'Pending':
+          watermapApp.tally.pending  += parseFloat(faceAmount);
+          break;
+        case 'Registered':
+          watermapApp.tally.registered  += parseFloat(faceAmount);
+          break;
+      }
+      
+      
+      
+      
+      
+      
+      
 /*         string += "tally total diverted: " + watermapApp.addCommas(watermapApp.tally.diversion) + " AFY<br />";   */
         string += '<tr>';
         string += '<td><a href="#' + feature.properties.id + '" class="water-right"  data="' + feature.properties.id + '">' + feature.properties.name + '</a></td>';
@@ -352,11 +384,19 @@ watermapApp.tallyDiversions = function(feature){
 };
 
 
-app.get('/tally', function(req, res, options){
+app.get('/summary', function(req, res, options){
   watermapApp.tally.diversion = 0;
   watermapApp.tally.storage = 0;
   watermapApp.tally.total_face_amount = 0; 
   watermapApp.tally.total_face_amount_active = 0; 
+  
+  watermapApp.tally.active = 0;
+  watermapApp.tally.permitted = 0;
+  watermapApp.tally.licensed = 0;
+  watermapApp.tally.adjudicated = 0;
+  watermapApp.tally.certified = 0;
+  watermapApp.tally.pending = 0;
+  watermapApp.tally.registered = 0;
   var regex = {$regex: '.*._01$', $options: 'i'};
   var lookup =  { $and: [{'kind': 'right'},{'id':regex}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} ]}   ]} ;
 
@@ -376,6 +416,9 @@ app.get('/tally', function(req, res, options){
       table += watermapApp.tallyDiversions(results[i]);
       
     }
+
+
+
     watermapApp.tally.total_face_amount_active = watermapApp.addCommas(watermapApp.tally.total_face_amount_active);
     var overallocation = Math.round((watermapApp.tally.total_face_amount) / 71000000 * 100) + "%";
 

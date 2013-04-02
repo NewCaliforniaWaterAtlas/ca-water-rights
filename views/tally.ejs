@@ -30,14 +30,18 @@
     <div class="container-fluid">
       <div class="content row">      
         <div class='span12'>
-          <h2>Tally of Water Rights in California</h2>
+          <h2>Summary of California Water Rights</h2>
+          <p></p>          
+
         
-          <div class='span3'>
-            <span class='large'>Total Number Active Water Rights: <%= count %></span>
-            <p>Does not include riparian or pre-1914 rights</p>
+          <div class='span3 block observation'>
+            <span class='large'>Total Number Current Water Rights: <%= count %></span>
+
+            <p>Includes: Active, Adjudicated, Certified, Licensed, Pending, Permitted and Registered water Rights.</p>
+            <p>Does not include: Riparian, Pre-1914, Inactive or Claimed rights.</p>
           </div>
         
-          <div class='span3'>
+          <div class='span6 block observation'>
 
     
 
@@ -56,34 +60,85 @@
       </div>
 -->
 
-            <span class='large'>Total Water: <%=  watermapApp.addCommas(watermapApp.tally.total_face_amount_active) %> AFY</span>
+            <span class='large'>Total Water used in Current Water Rights</span>
+            
+    
+<table id="tally-summary">
+  <tr>
+    <th>Water Right Status</th>
+    <th>Face Value Amount (AFY)</th>
+  </tr>
 
+  <tr>
+    <td>Active</td>
+    <td><%= watermapApp.addCommas(watermapApp.tally.active) %></td>
+  </tr>
 
-            <p>This is the amount that Californians say they will use in a given year. A <a href='http://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/docs/comments111312/tim_stroshane.pdf'>similar value</a> was submitted as a public comment for the Bay Delta plan in October 2012. Value differences are from minor data errors (duplicates, miscategorized entries, etc.)</p>
+  <tr>
+    <td>Permitted</td>
+    <td><%= watermapApp.addCommas(watermapApp.tally.permitted) %></td>
+  </tr>
+
+  <tr>
+    <td>Licensed</td>
+    <td><%= watermapApp.addCommas(watermapApp.tally.licensed) %></td>
+  </tr>
+
+  <tr>
+    <td>Adjudicated</td>
+    <td><%= watermapApp.addCommas(watermapApp.tally.adjudicated) %></td>
+  </tr>
+
+  <tr>
+    <td>Certified</td>
+    <td><%= watermapApp.addCommas(watermapApp.tally.certified) %></td>
+  </tr>
+
+  <tr>
+    <td>Pending</td>
+    <td><%= watermapApp.addCommas(watermapApp.tally.pending) %></td>
+  </tr>
+
+  <tr>
+    <td>Registered</td>
+    <td><%= watermapApp.tally.registered %></td>
+  </tr>
+
+  <tr>
+    <td>Total</td>
+    <td><%= watermapApp.addCommas(watermapApp.tally.total_face_amount) %></td>
+  </tr>
+    
+</table>
+
+            <p>This is the amount that Californians are permitted to use in a given year. A <a href='http://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/docs/comments111312/tim_stroshane.pdf'>similar value</a> was submitted as a public comment for the Bay Delta plan in October 2012. Value differences are from minor data errors (duplicates, miscategorized entries, etc.)</p>
           </div>
               
-          <div class='span3'>
+          <div class='span3 block observation'>
             <span class='large'>Total Stored: <%=  watermapApp.addCommas(watermapApp.tally.storage) %>AFY</span>
             <p>This is the amount that Californians say they will store in a given year.</p>
           </div>    
 
           
-          <div class='span3'>
+          <div class='span3 block claim'>
             <span class='large'>Total amount precipitation: ~200,000,000 AFY</span>
             <p>This is the amount precipitation that will fall on California as rain or snow in (2013).</p>
           </div>
           
-          <div class='span3'>
-            <span class='large'>Total amount precipitation dedicated for water supply: ~70,000,000 AFY</span>
+          <div class='span3 block claim'>
+            <span class='large'>Total amount precipitation dedicated for water supply: ~71,000,000 AFY</span>
           </div>
         
-          <div class='span3'>
-            <span class='large'>Over Allocated water percentage: <%= overallocation %> </span>
+          <div class='span3 block observation'>
+            <span class='large'>Over-allocated water percentage: <%= overallocation %> </span>
+            <h3>What does this mean?</h3>
+            <p>This is a rough estimate of how much more water is allocated than comes into the natural water system.</p>
+            <p>Some water is reused downstream, some water is over-estimated, and some water is slated for future development.</p>
           </div>
         </div>
         
         
-        <div class="span12">
+        <div class="span12 block">
           <table id="tally">
             <tr>
               <th id="holder" class="sortable">Water Right Holder</th>

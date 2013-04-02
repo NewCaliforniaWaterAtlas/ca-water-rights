@@ -178,7 +178,7 @@ button.close {
 section#footer,
 section#about {
   border-top: 2px solid #dcdcdc;
-  height: 350px;
+  height: 400px;
   /*background: #e8e8e8;*/
   background: #f3f3f3;
   padding: 90px 0;
@@ -866,4 +866,19 @@ ul.map-symbols li {
   padding: 0px 10px;
   list-style: square;
   list-style-position: inside;
+}
+
+span.disclaimer {
+  font-size: 0.7em;
+  
+}
+
+table#tally-summary {
+  border: 1;
+  padding: 5px;
+}
+
+.block {
+  padding: 10px;
+
 }
