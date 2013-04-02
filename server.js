@@ -105,7 +105,7 @@ app.get('/search/holders', function(req, res, options){
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
-  var query = { $and: [ {'kind': 'right'}, {'properties.status': 'Active'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},/* {'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
+  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},/* {'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
 
 
 // index
@@ -204,44 +204,65 @@ watermapApp.addCommas = function(nStr) {
 watermapApp.tallyDiversions = function(feature){
   if(feature !== undefined){
     if(feature.properties !== undefined){
+      if(feature.properties.status == 'Active' || feature.properties.status == 'Permitted') {
+        watermapApp.tally.count_active++;
+      }
+    
       var string = "";
+      var faceAmount = 0;
+      var faceAmountActive = 0;
+      var totalFaceAmount = 0;
+      var totalFaceAmountActive = 0;
       var currentDiversionAmount = 0;
-      
+    
 
       // There are a few fields that might contain the diversion amount, but from how it appears, the values are either equal to each other, or else they are null or zero. We believe that the diversion amount, face value amount and diversion amount in acre feet are all supposed to be the same thing.
       
       // Set the current diversion amount
-/*
+
+       if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
+        faceAmount = feature.properties.face_value_amount;
+
+/* {'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} */
+        
+        if(feature.properties.status == 'Active') {
+          faceAmountActive = feature.properties.face_value_amount;
+        }
+           
+      }
       if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
         currentDiversionAmount = feature.properties.diversion_acre_feet;
       }
-      else 
-*/    if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
-        currentDiversionAmount = feature.properties.face_value_amount;
-      }
-/*
-      else if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
+      if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
         currentDiversionAmount = parseFloat(feature.properties.direct_div_amount);
     
+/*
         if(feature.properties.pod_unit === 'Cubic Feet per Second'){
           currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 723.97; // Convert to CFS to AFY
         }
         if(feature.properties.pod_unit === 'Gallons per Day'){
           currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
 
-        }    
+        }   
+*/ 
       }
-*/
 
       // Increment the diversion tally.
-      if(currentDiversionAmount > 0){
-        watermapApp.tally.diversion += parseFloat(currentDiversionAmount);
+      if(faceAmount > 0){
+        watermapApp.tally.total_face_amount += parseFloat(faceAmount);
+
+/* {'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} */
+        
+      if(feature.properties.status == 'Active' || feature.properties.status == 'Permitted') {
+        
+          watermapApp.tally.total_face_amount_active += parseFloat(faceAmount);
+      }
 /*         string += "tally total diverted: " + watermapApp.addCommas(watermapApp.tally.diversion) + " AFY<br />";   */
         string += '<tr>';
         string += '<td><a href="#' + feature.properties.id + '" class="water-right"  data="' + feature.properties.id + '">' + feature.properties.name + '</a></td>';
 
-        string += '<td>' + watermapApp.addCommas(currentDiversionAmount) + '</td>';
-        string += '<td>Diverted</td>';
+        string += '<td>' + watermapApp.addCommas(faceAmount) + '</td>';
+/*         string += '<td>AFY</td>'; */
 /*         string += '<td>' + watermapApp.addCommas(watermapApp.tally.diversion) + '</td>'; */
 /*         string += '<td></td>'; */
         string += '</tr>';
@@ -266,16 +287,14 @@ watermapApp.tallyDiversions = function(feature){
         if(currentStorageAmount > 0) {
           watermapApp.tally.storage += currentStorageAmount;
         }    
-            
-/*         string += "storage: " + parseFloat(feature.properties.diversion_storage_amount) + " AFY<br />"; */
-/*         string += "tally total stored: " + watermapApp.addCommas(watermapApp.tally.storage) + " AFY<br />"; */
+
+/*
         string += '<tr>';
         string += '<td><a href="#' + feature.properties.id + '" class="water-right" data="' + feature.properties.id + '">' + feature.properties.name + '</a></td>';
         string += '<td>' + watermapApp.addCommas(currentStorageAmount) + '</td>';
         string += '<td>Stored</td>';
-/*         string += '<td></td>'; */
-/*         string += '<td>' + watermapApp.addCommas(watermapApp.tally.storage) + '</td>'; */
-        string += '</tr>';       
+        string += '</tr>';   
+*/    
       }
   
       return string;
@@ -287,8 +306,10 @@ watermapApp.tallyDiversions = function(feature){
 app.get('/tally', function(req, res, options){
   watermapApp.tally.diversion = 0;
   watermapApp.tally.storage = 0;
+  watermapApp.tally.total_face_amount = 0; 
+  watermapApp.tally.total_face_amount_active = 0; 
   var regex = {$regex: '.*._01$', $options: 'i'};
-  var lookup =  { $and: [{'kind': 'right'},{'id':regex}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'}]}   ]} ;
+  var lookup =  { $and: [{'kind': 'right'},{'id':regex}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} ]}   ]} ;
 
   engine.find_many_by({query: lookup, options: {'limit': 0}},function(error, results) {
     if(!results || error) {
@@ -300,14 +321,14 @@ app.get('/tally', function(req, res, options){
     var obj = [];
     var table = "";
     var count = 0;
-
+    watermapApp.tally.count_active = 0;
     for (i in results){
       count++;
       table += watermapApp.tallyDiversions(results[i]);
       
     }
-
-    var overallocation = Math.round((watermapApp.tally.diversion + watermapApp.tally.storage) / 70000000 * 100) + "%";
+    watermapApp.tally.total_face_amount_active = watermapApp.addCommas(watermapApp.tally.total_face_amount_active);
+    var overallocation = Math.round((watermapApp.tally.total_face_amount) / 71000000 * 100) + "%";
 
     res.render("tally.ejs", {
       layout:false,

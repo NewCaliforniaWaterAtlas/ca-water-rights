@@ -10,7 +10,7 @@ water.map_defaults.boxsize_lon = 0.16;
 water.map_defaults.zoom = 8;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.tinted_layer = 'chachasikes.map-j07fy3iy';
-water.map_defaults.terrain_layer = 'chachasikes.map-p6mnio4p';
+water.map_defaults.terrain_layer = 'chachasikes.map-mdxztd9c';
 water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
 water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 
@@ -18,7 +18,7 @@ water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water-rights';
 water.map_defaults.div_container = 'map-container';
 water.map_defaults.close_up_zoom_level = 11;
-water.map_defaults.lowest_tilemill_marker_level = 12;
+water.map_defaults.lowest_tilemill_marker_level = 11;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -44,7 +44,7 @@ water.disableTileLayers = function(){
   //water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
   //water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
-  //water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
 
   $('#tile-switcher li').removeClass('active');
 };
@@ -60,7 +60,7 @@ water.setupMap = function() {
   //water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_course));
   //water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_polys));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
-  //water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.terrain_layer));
 
   
   water.disableTileLayers();
@@ -151,7 +151,7 @@ water.setupMap = function() {
   // Load special data layers for more zoomed in levels.
   water.loadMarkers();
   
-  $(".alert .content").html("Showing all 49K+ water rights.");
+  $(".alert .content").html("Showing 20,000+ current water rights.");
   water.zoomWayInButton();
 };
 
@@ -209,15 +209,19 @@ water.loadMarkers = function() {
     else {
       console.log('zoomed out - removing pan');
       water.map.removeCallback('panned', water.markersPanned);
-      water.clearMarkerLayers();
-      if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
+
+      if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined && water.mode === 'rights') {
+        water.clearMarkerLayers();
         mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
           water.map.addLayer(interactive.layer);
           water.map.interaction.movetip();
           water.map.interaction.refresh();
         });
       }
-
+      else {
+          water.map.interaction.movetip();
+          water.map.interaction.refresh();
+      }
       water.zoomWayInButton();
     }
 
@@ -244,7 +248,7 @@ water.markersPanned = function() {
   console.log('zoomed in and panned');
   
   var zoom = water.map.zoom();
-  if(zoom >= water.map_defaults.close_up_zoom_level) {
+  if(zoom >= water.map_defaults.close_up_zoom_level && water.mode === 'rights') {
     console.log('sufficient zoom');
     
     var dragtime_old = water.map_interaction.dragtime;
@@ -267,6 +271,9 @@ water.markersPanned = function() {
       water.map_interaction.wait = null;
       water.map_interaction.dragtime_override = false;
     }
+  }
+  else {
+  
   }
 };
 
@@ -309,7 +316,7 @@ water.markersQuery = function(reloaded) {
 
  // This is where real-time water rights data would go.
  Core.query({query: { 
-     $and: [{'kind': 'right'}, {'properties.status': 'Active'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+     $and: [{'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
     }, options: {'limit': 0}}, water.drawRightsMarkersLayer);
 };
@@ -341,19 +348,29 @@ water.drawRightsMarkers = function(features, featureDetails) {
         var diversion = water.getDiversion(f);
         console.log(diversion);
 
-        if(diversion.amount >= 100 || diversion.amount_stored >= 100 || diversion.converted >= 100) {
+        if(diversion.face_amount >= 0) {
           featureDetails.icon = "/images/icons/water_right_icon_6.png";
         }
 
-        if(diversion.converted >= 10000 || diversion.amount_stored >= 10000 || diversion.converted >= 10000) {
+        if(diversion.face_amount >= 10000) {
             featureDetails.icon = "/images/icons/water_right_icon_10.png";
         }
   
-        if(diversion.amount >= 500000 || diversion.amount_stored >= 500000 || diversion.converted >= 500000) {
-            featureDetails.icon = "/images/icons/water_right_icon_20.png";
+        if(diversion.face_amount >= 500000) {
+          featureDetails.icon = "/images/icons/water_right_icon_20.png";
         }
-        
 
+        if(diversion.face_amount >= 100 && diversion.amount_stored >= 100) {
+            featureDetails.icon = "/images/icons/water_right_icon_storage_6.png";
+        }
+
+        if(diversion.face_amount >= 10000 && diversion.amount_stored >= 10000) {
+            featureDetails.icon = "/images/icons/water_right_icon_storage_10.png";
+        }
+  
+        if(diversion.face_amount >= 500000 && diversion.amount_stored >= 500000) {
+          featureDetails.icon = "/images/icons/water_right_icon_storage_20.png";
+        }
         
         // @TODO see which ones are storage and change the color      
         var marker = water.makeMarker(f, featureDetails);
@@ -364,18 +381,11 @@ water.drawRightsMarkers = function(features, featureDetails) {
 
       var diversion = water.getDiversion(feature);
 
-      
+      console.log(diversion);
       var o ='<span class="content">' 
             + '<span class="name">' + feature.properties.name+ '</span>';
-            if(diversion.converted === undefined){
-              o += '<span class="diversion"><span class="diversion-amount">' + diversion.amount + '</span>'
-                    + '<span class="diversion-unit"> ' + diversion.units + '</span><span class="diversion-amount">' + diversion.amount_stored + '</span>'
-                    + '<span class="diversion-unit"> ' + diversion.units_stored + '</span></span>';
-            }
-            else {
-              o += '<span class="diversion"><span class="diversion-amount">' + diversion.converted + '</span><span class="diversion-amount">' + diversion.amount_stored + '</span>'
-                    + '<span class="diversion-unit"> AFY</span></span>';            
-            }
+      o += '<span class="diversion"><span class="diversion-amount">' + diversion.face_amount + '</span>'
+                    + '<span class="diversion-unit"> ' + diversion.units_face_amount + '</span></span>';
             o += '<span class="load_id">' + feature.properties.id + '</span></span>';
 
       return o;
@@ -408,7 +418,7 @@ water.drawRightsMarkers = function(features, featureDetails) {
       list +='<table>';
       for(f in inextent){
         var diversion = water.getDiversion(inextent[f]);
-        list += '<tr><td><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td>' + diversion.amount + ' ' + diversion.units + ', ' + diversion.amount_stored + ' ' + diversion.units_stored + '</td></tr>';
+        list += '<tr><td><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td>' + diversion.face_amount + ' ' + diversion.units_face_amount + '</tr>';
       }
       list +='</table>';
       
@@ -421,9 +431,22 @@ water.drawRightsMarkers = function(features, featureDetails) {
     }
     
     $('.map-tooltip').close();
+  });
 
+
+  water.map.addCallback('zoomed', function() {
+    if(water.mode === 'rights') {
+      $('.marker-image').css('visibility','visible');
+    }
+    else if(water.mode === 'search') {
+      $('.marker-image').css('visibility','hidden');
+      $('.marker-image.search').css('visibility','visible');
+    }
+
+    water.map.interaction.refresh();  
 
   });
+
   
   water.map.interaction.refresh();  
 };
@@ -641,7 +664,7 @@ water.drawRightsMarkersLayer = function(features) {
   
   water.drawRightsMarkers(features, featureDetails);
   
-  $(".alert .content").html("Showing " + features.length + " of 49,000+ water rights.");  
+  $(".alert .content").html("Showing " + features.length + " of thousands of water rights.");  
 };
 
 water.drawSearchRightsMarkersLayer = function(features, query) {
@@ -653,8 +676,8 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
   var featureDetails = {
     name: "rights",
     class: "search",
-    icon: "/images/icons/search_icon.png",
-    layer: "markers_rights"
+    icon: "/images/icons/water_right_icon_search_6.png",
+    layer: "markers_search"
   };
   
   water.searchPager = 0;  
@@ -703,7 +726,9 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
       water.drawRightsMarkers(features, featureDetails);
     }
   });
-   
+  var extent = water.markers_rights.extent(); 
+  water.map.setExtent(extent);
+  water.map.interaction.refresh();
 };
 
 water.pagerActiveButtons = function(){
@@ -784,12 +809,9 @@ water.formatSensorTooltip = function(feature) {
                           '<li>Normal Mean: ' + feature.properties['normal_mean'] + '</li>' +
                           '<li>Normal Median: ' + feature.properties['normal_median'] + '</li>' +
                           '<li>Discharge: ' + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</li>' +
-
-
-                          
+   
                         '</ul>' +
                       '</div>' ;
-
 
                       output += '<div class="data-box">' +
                           '<h4>About this Data</h4>' +
@@ -803,8 +825,7 @@ water.formatSensorTooltip = function(feature) {
                   '</div>';
   
   return output;
-
-}
+};
 
 water.formatWaterRightTooltip = function(feature) {
   var output = '';
@@ -831,8 +852,6 @@ water.formatWaterRightTooltip = function(feature) {
                         + diversion.face_amount + '</span><span class="diversion-unit">' + diversion.units_face_amount + '</span></div></div>' +
                       
                         '<ul class="data-list">' +
-
-/*                           '<li>Pod Status: ' + status + '</li>' + */
                           '<li>Primary Owner: ' + primary_owner + '</li>' +
                           '<li>Primary Entity Type: ' + feature.properties.organization_type + '</li>' +
 
@@ -934,249 +953,12 @@ water.formatWaterRightTooltip = function(feature) {
                   '</div>';
   
   return output;
-
-
-
-/*
-
-{
-        "id" : "D031760R_01",
-        "kind" : "right",
-        "type" : "Feature",
-        "coordinates" : [
-                -123.06630000000001,
-                40.7684
-        ],
-        "geometry" : {
-                "type" : "Point",
-                "coordinates" : [
-                        -123.06630000000001,
-                        40.7684
-                ]
-        },
-        "properties" : {
-                "id" : "D031760R_01",
-                "kind" : "right",
-                "source" : "http://gispublic.waterboards.ca.gov/",
-                "name" : "Matthew  Menovske",
-                "pod_id" : "01",
-                "water_right_id" : "45445",
-                "pod_number" : "01",
-                "application_id" : "D031760R",
-                "direct_div_amount" : "300.0",
-                "diversion_storage_amount" : "0.0",
-                "diversion_acre_feet" : "0.3",
-                "place_id" : 736071,
-                "pod_status" : "Active",
-                "face_value_amount" : "0.3",
-                "diversion_type" : "Direct Diversion",
-                "diversion_code_type" : "Both diversion and rediversion point",
-                "water_right_type" : "Small Domestic Reg",
-                "water_right_status" : "Registered",
-                "storage_type" : "",
-                "pod_unit" : "Gallons per Day",
-                "first_name" : "Matthew",
-                "holder_name" : "Menovske",
-                "organization_type" : "Individual",
-                "application_pod" : "D031760R_01",
-                "township_number" : "34",
-                "range_direction" : "W",
-                "township_direction" : "N",
-                "range_number" : "11",
-                "section_number" : "25",
-                "section_classifier" : "",
-                "quarter" : "SW",
-                "quarter_quarter" : "SW",
-                "meridian" : "Mount Diablo",
-                "northing" : "2164989",
-                "easting" : "6266329",
-                "sp_zone" : "1",
-                "latitude" : 40.7684,
-                "longitude" : -123.06630000000001,
-                "trib_desc" : "Wheel Gulch",
-                "location_method" : "GIS_CLICK",
-                "source_name" : "Unnamed Spring",
-                "moveable" : "N",
-                "has_opod" : "N",
-                "watershed" : "TRINITY RIVER",
-                "county" : "Trinity",
-                "well_number" : null,
-                "quad_map_name" : "DEDRICK",
-                "quad_map_num" : null,
-                "quad_map_min_ser" : null,
-                "parcel_number" : "009-390-15-00",
-                "special_area" : null,
-                "last_update_user_id" : 438711,
-                "date_last_updated" : 1239196609000,
-                "status" : "Registered",
-                "ewrims_db_id" : "44993",
-                "source_alt" : "http://ciwqs.waterboards.ca.gov/",
-                "date_received" : "04/02/2009",
-                "date_accepted" : "04/02/2009",
-                "date_notice" : "",
-                "protest" : "",
-                "number_protests" : "0",
-                "agent_name" : "",
-                "agent_entity_type" : "",
-                "primary_owner" : "Matthew  Menovske",
-                "primary_owner_entity_type" : "Individual",
-                "face_value_units" : "Acre-feet per Year",
-                "max_dd_appl" : "300.0",
-                "max_dd_units" : "Gallons per Day",
-                "max_dd_ann" : "0.3",
-                "max_storage" : "0.0",
-                "max_use_appl" : "0.3",
-                "year_first_use" : "0.0",
-                "effective_from_date" : "04/02/2009",
-                "effective_to_date" : "",
-                "entity_type" : "Individual",
-                "city" : null,
-                "state" : null,
-                "zipcode" : null,
-                "phone" : null,
-                "use_code" : "Domestic",
-                "use_status_new" : "Requested when filed",
-                "use_population" : "2",
-                "use_net_acreage" : "0.0",
-                "use_gross_acreage" : "0.0",
-                "use_dd_annual" : "0.3",
-                "use_dd_rate" : "300.0",
-                "use_dd_rate_units" : "Gallons per Day",
-                "use_storage_amount" : "0.0",
-                "pod_max_dd" : "0.0",
-                "source_max_dd_unit" : "",
-                "pod_max_storage" : "0.0",
-                "source_max_storage_unit" : "",
-                "pod_gis_maintained_data" : null,
-                "appl_id" : "D031760R",
-                "podid" : "49471",
-                "permit_id" : null,
-                "water_right_description" : null,
-                "issue_date" : "2009-04-16",
-                "construction_completed_by" : null,
-                "planned_project_completion_date" : null,
-                "permit_terms" : null,
-                "term_id" : null,
-                "version_number" : null,
-                "reports" : {
-                        "2008" : {
-                                "usage" : [
-                                        "Irrigation",
-                                        "Stockwatering",
-                                        "Domestic",
-                                        "Other"
-                                ],
-                                "usage_quantity" : [
-                                        "18 Acres",
-                                        "NONE",
-                                        "NONE",
-                                        "NONE"
-                                ],
-                                "total_diverted" : NaN,
-                                "total_used" : 3,
-                                "diversion_unit" : "Acre-Feet",
-                                "diversion_total" : "",
-                                "used_total" : "",
-                                "amount_diverted" : [
-                                        {
-                                                "January" : ""
-                                        },
-                                        {
-                                                "February" : ""
-                                        },
-                                        {
-                                                "March" : ""
-                                        },
-                                        {
-                                                "April" : ""
-                                        },
-                                        {
-                                                "May" : ""
-                                        },
-                                        {
-                                                "June" : ""
-                                        },
-                                        {
-                                                "July" : ""
-                                        },
-                                        {
-                                                "August" : ""
-                                        },
-                                        {
-                                                "September" : ""
-                                        },
-                                        {
-                                                "October" : ""
-                                        },
-                                        {
-                                                "November" : ""
-                                        },
-                                        {
-                                                "December" : ""
-                                        },
-                                        {
-                                                "Total" : ""
-                                        }
-                                ],
-                                "amount_used" : [
-                                        {
-                                                "January" : "0"
-                                        },
-                                        {
-                                                "February" : "0"
-                                        },
-                                        {
-                                                "March" : "0"
-                                        },
-                                        {
-                                                "April" : "0"
-                                        },
-                                        {
-                                                "May" : "0.44"
-                                        },
-                                        {
-                                                "June" : "0.47"
-                                        },
-                                        {
-                                                "July" : "1.1"
-                                        },
-                                        {
-                                                "August" : "1.58"
-                                        },
-                                        {
-                                                "September" : "1.3"
-                                        },
-                                        {
-                                                "October" : "0.62"
-                                        },
-                                        {
-                                                "November" : "0"
-                                        },
-                                        {
-                                                "December" : "0"
-                                        },
-                                        {
-                                                "Total" : "5.51"
-                                        }
-                                ],
-                                "year" : "2008",
-                                "ewrims_db_id" : "44993",
-                                "ewrims_form_id" : "78649"
-                        }
-                }
-        },
-        "_id" : ObjectId("50f978a54fbf1a000000011a")
-}
-*/
-
-
-}
+};
 
 
 water.triggerMapMoveTimeout = function() {
   return setTimeout(water.markersQuery, 1000);
 };
-
 
 // override move tip
 wax.movetip = function() {
@@ -1561,15 +1343,12 @@ mapbox.interaction = function() {
         interaction.on(wax.movetip()
             .parent(interaction.map().parent)
             .events()).on(wax.location().events());
-            
-        // Add lower image (via css)    
-            
+                        
         return interaction.refresh();
     };
 
     return interaction;
 };
-
 
 water.loadDataPanel = function(id){
   console.log(id);
@@ -1599,7 +1378,6 @@ water.loadDataPanelData = function(results){
     }
   }
 };
-
 
 water.trim = function(str){
     str = str.replace(/^\s+/, '');

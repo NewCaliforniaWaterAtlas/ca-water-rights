@@ -265,6 +265,18 @@ section#footer {
   pointer-events: all;
   position:absolute;
 }
+.marker-image.search,
+.marker-image.sensor_usgs {
+  width:10px;
+  height:10px;
+  opacity: 1;
+  margin-left:-5px;
+  margin-top:-5px;
+  pointer-events: all;
+  position:absolute;
+}
+
+
 .marker-image.sensor_usgs{
 
   width:15px;
@@ -415,11 +427,11 @@ div.data-box h4 {
   height: auto;
 
   min-width:180px;
-  max-width:360px;
+  max-width:380px;
   min-height:200px;
   max-height:400px;
     width:220px\8; /*< IE 9*/
-  width: 360px;
+  width: 380px;
   overflow:auto;
   z-index: 6;
   cursor: pointer;
@@ -480,7 +492,7 @@ div.data-box h4 {
 #sensor-panel span.diversion,
 #rights-panel span.diversion,
 .map-tooltip span.diversion {
-  width: 28%;
+  width: 30%;
   display: inline-block;
 }
 
@@ -593,7 +605,7 @@ div.data-box h4 {
 #tile-switcher {
   position:absolute;
   top:280px;
-  height: 67px;
+  height: 80px;
   width: 100px;
   left:0px;
   z-index:999;

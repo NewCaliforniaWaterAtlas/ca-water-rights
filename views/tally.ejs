@@ -56,7 +56,7 @@
       </div>
 -->
 
-            <span class='large'>Total Diverted: <%=  watermapApp.addCommas(watermapApp.tally.diversion) %> AFY</span>
+            <span class='large'>Total Water: <%=  watermapApp.addCommas(watermapApp.tally.total_face_amount_active) %> AFY</span>
 
 
             <p>This is the amount that Californians say they will use in a given year. A <a href='http://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/docs/comments111312/tim_stroshane.pdf'>similar value</a> was submitted as a public comment for the Bay Delta plan in October 2012. Value differences are from minor data errors (duplicates, miscategorized entries, etc.)</p>
@@ -88,7 +88,6 @@
             <tr>
               <th id="holder" class="sortable">Water Right Holder</th>
               <th id="amount" class="sortable sortable-numeric reverseSort">Amount (AFY)</th>
-              <th id="type">Type</th>
             </tr>
             <%- table %>
           </table>

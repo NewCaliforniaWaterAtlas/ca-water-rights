@@ -1,5 +1,7 @@
 var water = {};
 
+water.mode = 'rights';
+
 window.onload = function() {
   water.loadModal();
   water.navigation();
@@ -88,22 +90,6 @@ water.search = function() {
       $('#search-panel .list-content').show();
       $('#search-panel .list-content').html('');
     });
-
-
-
-/*
-  disabled typeahead… it's not really necessary to do autocomplete.
-  $(".search-holders").typeahead({
-    minLength: 3,
-    source: function (query, process) {
-      return $.get('/search/holders?value=' + query, function (data) {
-        $('.alert').show();
-        $('#search-panel .list-content').show();
-        water.drawSearchRightsMarkersLayer(data, query);
-      });
-    }
-  });
-*/
 };
 
 water.displayPanel = function(panel){
@@ -144,7 +130,8 @@ water.navigation = function(){
     water.hideSearch();
     water.hideSensors();
     water.displayRights();
-    
+    water.mode = 'rights';
+
     },function(){
     water.navigationHidePanels();
     water.hidePanelContainer($('#data-panel'));
@@ -159,6 +146,8 @@ water.navigation = function(){
     water.hideRights();
     water.hideSearch();
     water.displaySensors();
+    water.mode = 'sensors';
+
   },function(){
     water.navigationHidePanels();
     water.hidePanelContainer($('#data-panel'));
@@ -173,6 +162,7 @@ water.navigation = function(){
     water.displaySearch();
     water.hideRights();
     water.hideSensors();
+    water.mode = 'search';
     
   },function(){
     water.navigationHidePanels();
