@@ -263,7 +263,7 @@ section#footer {
   height: 100%;
   margin: 0;
   min-height: 720px;
-  background: #e5e5f7;
+  background: rgba(209,231,231,.75);
 }
 
 #map-screen {
@@ -620,7 +620,7 @@ div.data-box h4 {
   width: 100px;
   left:0px;
   z-index:999;
-  background: rgba(215,215,233,.85);
+  background: rgba(209,231,231,.75);
   font-size: 0.8em;
   line-height: 1em;
   padding: 4px 4px 4px 30px;
@@ -650,7 +650,7 @@ div.data-box h4 {
   width: 100px;
   left:0px;
   z-index:999;
-  background: rgba(215,215,233,.85);
+  background: rgba(209,231,231,.75);
   font-size: 0.8em;
   line-height: 1em;
   padding: 4px;
