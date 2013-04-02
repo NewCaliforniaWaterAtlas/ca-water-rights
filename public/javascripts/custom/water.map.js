@@ -346,7 +346,6 @@ water.drawRightsMarkers = function(features, featureDetails) {
     // Generate marker layers.
     water[featureDetails.layer].features(features).factory(function(f) {
         var diversion = water.getDiversion(f);
-        console.log(diversion);
 
         if(diversion.face_amount >= 0) {
           featureDetails.icon = "/images/icons/water_right_icon_6.png";
@@ -415,14 +414,19 @@ water.drawRightsMarkers = function(features, featureDetails) {
     // display a list of markers.
     if(inextent.length > 0) {
       var list = '';
-      list +='<table>';
+      var total = 0;
+      list +='<table id="search-table">';
       for(f in inextent){
         var diversion = water.getDiversion(inextent[f]);
-        list += '<tr><td><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td>' + diversion.face_amount + ' ' + diversion.units_face_amount + '</tr>';
+        list += '<tr><td class="name"><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td class="amount"><span class="diversion-amount">' + water.addCommas(diversion.face_amount) + '</span></td><td class="unit">' + diversion.units_face_amount + '</td></tr>';
+
+        total += parseFloat(diversion.face_amount);
       }
       list +='</table>';
       
-      $('#search-panel .list-content').html(list);
+      var totalContent = '<div class="total">Total: ' + water.addCommas(total) + ' ' + ' acre-feet per year';
+      
+      $('#search-panel .list-content').html(totalContent + list);
       water.processHighlights();
 
     }
@@ -660,8 +664,6 @@ water.getDiversion = function(feature){
     diversion.face_amount = diversion.face_amount_add;
   }
 
-
-  console.log( diversion.face_amount);
   //diversion.amount = diversion.amount.toFixed(2);
 
   return diversion;
@@ -742,7 +744,7 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
       water.drawRightsMarkers(features, featureDetails);
     }
   });
-  var extent = water.markers_rights.extent(); 
+  var extent = water.markers_search.extent(); 
   water.map.setExtent(extent);
   water.map.interaction.refresh();
 };
@@ -1405,3 +1407,19 @@ water.trim = function(str){
     }
     return str;
 };
+
+water.addCommas = function(nStr) {
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	tail = x[1];
+	if(tail !== undefined){
+	 tail = tail.substring(0, 2);
+	}
+	x2 = x.length > 1 ? '.' + tail : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
+}
