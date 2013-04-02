@@ -585,22 +585,23 @@ water.processHighlights = function() {
 
 water.getDiversion = function(feature){
   var diversion = {};
-  diversion.face_amount = '0';
+  diversion.face_amount = 0;
+  diversion.face_amount_add = 0;
   diversion.units_face_amount = '';
 
-  diversion.amount = '0';
+  diversion.amount = 0;
   diversion.units = '';
 
-  diversion.amount_stored = '0';
+  diversion.amount_stored = 0;
   diversion.units_stored = "";
 
-  diversion.diverted = '0';
+  diversion.diverted = 0;
   diversion.units_diverted = "";
   
 
   // Face amount is the total value
   if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
-    diversion.face_amount = feature.properties.face_value_amount;
+    diversion.face_amount = parseFloat(feature.properties.face_value_amount);
 
     if(feature.properties.face_value_units !== undefined) {
       diversion.units_face_amount = feature.properties.face_value_units;
@@ -614,6 +615,11 @@ water.getDiversion = function(feature){
   if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
     diversion.amount = feature.properties.diversion_acre_feet;
     diversion.units = " acre-ft year";
+    
+    if(diversion.face_amount === 0 && diversion.amount > 0) {
+      diversion.face_amount_add += parseFloat(diversion.amount);
+      diversion.units_face_amount = " acre-feet per year";
+    }
   }
 
   //@TODO this needs to account for seasonal water flow… face value should include this.
@@ -641,11 +647,21 @@ water.getDiversion = function(feature){
   if((feature.properties.diversion_storage_amount !== undefined) && (feature.properties.diversion_storage_amount > 0)) {
     diversion.amount_stored = feature.properties.diversion_storage_amount;
     diversion.units_stored = " acre-ft year stored";
+
+    if(diversion.face_amount_add === diversion.amount && diversion.amount_stored > 0) {
+      diversion.face_amount_add += parseFloat(diversion.amount_stored);
+      diversion.units_face_amount = " acre-feet per year";
+    }
+
   }
   
   
-    
+  if(diversion.face_amount_add > 0 && diversion.face_amount === 0) {
+    diversion.face_amount = diversion.face_amount_add;
+  }
 
+
+  console.log( diversion.face_amount);
   //diversion.amount = diversion.amount.toFixed(2);
 
   return diversion;
@@ -908,7 +924,7 @@ water.formatWaterRightTooltip = function(feature) {
 
       var string = '';
         string += '<div class="data-box">' +
-                        '<h4>Reports</h4>';
+                        '<h4>Reports & Statements of Use</h4>';
 
       if(feature.properties.reports !== undefined) {
         console.log(feature.properties.reports);
@@ -934,7 +950,7 @@ water.formatWaterRightTooltip = function(feature) {
 
       }
       else {
-      string += "<p>No reports available. The reports were either not submitted, have not been digitized.</p>";
+      string += "<p>No statements of use are available right now. The reports were either not uploaded into our database, not submitted to the State Water Control Board, or have not been digitized.</p>";
       }
       string += "</div>";
 
