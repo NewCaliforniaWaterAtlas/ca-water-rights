@@ -97,10 +97,12 @@ water.setupMap = function() {
 */
 
   // Pan controls  // @TODO make mobile friendly (touchstart?)
+/*
   document.getElementById('left').onclick = function() { water.map.panLeft(); }
   document.getElementById('right').onclick = function() { water.map.panRight(); }
   document.getElementById('down').onclick = function() { water.map.panDown(); }
   document.getElementById('up').onclick = function() { water.map.panUp(); }
+*/
 
 
   // Toggle background layers of map.
@@ -323,132 +325,137 @@ water.markersQuery = function(reloaded) {
 
 water.loadSensorLayer = function(){
   // Load USGS stations    
-  Core.query({query: {$and: [{'kind': 'usgs_gage_data'}]},options: {'limit': 488, _id:1}}, water.drawStationUSGSMarkersLayer);
+  Core.query({query: {$and: [{'kind': 'usgs_gage_data'}]},options: {'limit': 488, 'sort': {_id:1}}}, water.drawStationUSGSMarkersLayer);
 };
 
 // Draw interactive markers.
 water.drawRightsMarkers = function(features, featureDetails) {
   var features = features;
-
-  // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
-  if(water[featureDetails.layer] === 0) {
-    water[featureDetails.layer] = mapbox.markers.layer();
-    // @TODO This doesn't work on the div, just the object, but it would be nice to name the layers.
-
-    water[featureDetails.layer].named(featureDetails.layer);
+  if(features.length > 0) {
+    // Allow layer to be reset and also to add a series of sets of features into the layer (for interaction purposes.)
+    if(water[featureDetails.layer] === 0) {
+      water[featureDetails.layer] = mapbox.markers.layer();
+      // @TODO This doesn't work on the div, just the object, but it would be nice to name the layers.
   
-    water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
-
-    water.map.addLayer(water[featureDetails.layer]);
-
-    $('#search-panel .searching').hide();
+      water[featureDetails.layer].named(featureDetails.layer);
     
-    // Generate marker layers.
-    water[featureDetails.layer].features(features).factory(function(f) {
-        var diversion = water.getDiversion(f);
-        console.log(diversion);
-
-        if(diversion.face_amount >= 0) {
-          featureDetails.icon = "/images/icons/water_right_icon_6.png";
-        }
-
-        if(diversion.face_amount >= 10000) {
-            featureDetails.icon = "/images/icons/water_right_icon_10.png";
-        }
+      water[featureDetails.layer + "_interaction"] = mapbox.markers.interaction(water[featureDetails.layer]);
   
-        if(diversion.face_amount >= 500000) {
-          featureDetails.icon = "/images/icons/water_right_icon_20.png";
-        }
-
-        if(diversion.face_amount >= 100 && diversion.amount_stored >= 100) {
-            featureDetails.icon = "/images/icons/water_right_icon_storage_6.png";
-        }
-
-        if(diversion.face_amount >= 10000 && diversion.amount_stored >= 10000) {
-            featureDetails.icon = "/images/icons/water_right_icon_storage_10.png";
-        }
+      water.map.addLayer(water[featureDetails.layer]);
   
-        if(diversion.face_amount >= 500000 && diversion.amount_stored >= 500000) {
-          featureDetails.icon = "/images/icons/water_right_icon_storage_20.png";
-        }
-        
-        // @TODO see which ones are storage and change the color      
-        var marker = water.makeMarker(f, featureDetails);
-        return marker;      
-    });
-
-    water[featureDetails.layer + "_interaction"].formatter(function(feature) {
-
-      var diversion = water.getDiversion(feature);
-
-      console.log(diversion);
-      var o ='<span class="content">' 
-            + '<span class="name">' + feature.properties.name+ '</span>';
-      o += '<span class="diversion"><span class="diversion-amount">' + diversion.face_amount + '</span>'
-                    + '<span class="diversion-unit"> ' + diversion.units_face_amount + '</span></span>';
-            o += '<span class="load_id">' + feature.properties.id + '</span></span>';
-
-      return o;
-    });
-
-  $('#map-screen').hide();
-  $('#map-screen #loading-markers').hide();
-
-  }
-  
-  water.map.addCallback('drawn', function() {
-    // .markers() gives a list of markers, along with their elements attached.
-    var markers = water[featureDetails.layer].markers(),
-        // construct an empty list to fill with onscreen markers
-        inextent = [],
-        // get the map extent - the top-left and bottom-right locations
-        extent = water.map.extent()
-
-    // for each marker, consider whether it is currently visible by comparing
-    // with the current map extent
-    for (var i = 0; i < markers.length; i++) {
-      if (extent.containsLocation(markers[i].location)) {
-        inextent.push(markers[i].data);
-      }
-    }
-
-    // display a list of markers.
-    if(inextent.length > 0) {
-      var list = '';
-      list +='<table>';
-      for(f in inextent){
-        var diversion = water.getDiversion(inextent[f]);
-        list += '<tr><td><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td>' + diversion.face_amount + ' ' + diversion.units_face_amount + '</tr>';
-      }
-      list +='</table>';
+      $('#search-panel .searching').hide();
       
-      $('#search-panel .list-content').html(list);
-      water.processHighlights();
-
-    }
-    else {
-      $('#search-panel .list-content').html('');
+      // Generate marker layers.
+      water[featureDetails.layer].features(features).factory(function(f) {
+          var diversion = water.getDiversion(f);
+  
+          if(diversion.face_amount >= 0) {
+            featureDetails.icon = "/images/icons/water_right_icon_6.png";
+          }
+  
+          if(diversion.face_amount >= 10000) {
+              featureDetails.icon = "/images/icons/water_right_icon_10.png";
+          }
+    
+          if(diversion.face_amount >= 500000) {
+            featureDetails.icon = "/images/icons/water_right_icon_20.png";
+          }
+  
+          if(diversion.face_amount >= 100 && diversion.amount_stored >= 100) {
+              featureDetails.icon = "/images/icons/water_right_icon_storage_6.png";
+          }
+  
+          if(diversion.face_amount >= 10000 && diversion.amount_stored >= 10000) {
+              featureDetails.icon = "/images/icons/water_right_icon_storage_10.png";
+          }
+    
+          if(diversion.face_amount >= 500000 && diversion.amount_stored >= 500000) {
+            featureDetails.icon = "/images/icons/water_right_icon_storage_20.png";
+          }
+          
+          // @TODO see which ones are storage and change the color      
+          var marker = water.makeMarker(f, featureDetails);
+          return marker;      
+      });
+  
+      water[featureDetails.layer + "_interaction"].formatter(function(feature) {
+  
+        var diversion = water.getDiversion(feature);
+  
+        console.log(diversion);
+        var o ='<span class="content">' 
+              + '<span class="name">' + feature.properties.name+ '</span>';
+        o += '<span class="diversion"><span class="diversion-amount">' + diversion.face_amount + '</span>'
+                      + '<span class="diversion-unit"> ' + diversion.units_face_amount + '</span></span>';
+              o += '<span class="load_id">' + feature.properties.id + '</span></span>';
+  
+        return o;
+      });
+  
+    $('#map-screen').hide();
+    $('#map-screen #loading-markers').hide();
+  
     }
     
-    $('.map-tooltip').close();
-  });
-
-
-  water.map.addCallback('zoomed', function() {
-    if(water.mode === 'rights') {
-      $('.marker-image').css('visibility','visible');
-    }
-    else if(water.mode === 'search') {
-      $('.marker-image').css('visibility','hidden');
-      $('.marker-image.search').css('visibility','visible');
-    }
-
-    water.map.interaction.refresh();  
-
-  });
-
+    water.map.addCallback('drawn', function() {
+      // .markers() gives a list of markers, along with their elements attached.
+      var markers = water[featureDetails.layer].markers(),
+          // construct an empty list to fill with onscreen markers
+          inextent = [],
+          // get the map extent - the top-left and bottom-right locations
+          extent = water.map.extent()
   
-  water.map.interaction.refresh();  
+      // for each marker, consider whether it is currently visible by comparing
+      // with the current map extent
+      for (var i = 0; i < markers.length; i++) {
+        if (extent.containsLocation(markers[i].location)) {
+          inextent.push(markers[i].data);
+        }
+      }
+  
+      // display a list of markers.
+      if(inextent.length > 0) {
+        var list = '';
+        var total = 0;
+        list +='<table id="search-table">';
+        for(f in inextent){
+          var diversion = water.getDiversion(inextent[f]);
+          list += '<tr><td class="name"><span class="highlight" target_id="' + inextent[f].properties.id + '">' + inextent[f].properties.name + '</span></td><td class="amount"><span class="diversion-amount">' + water.addCommas(diversion.face_amount) + '</span></td><td class="unit">' + diversion.units_face_amount + '</td></tr>';
+  
+          total += parseFloat(diversion.face_amount);
+        }
+        list +='</table>';
+        
+        var totalContent = '<div class="total">Total: ' + water.addCommas(total) + ' ' + ' acre-feet per year';
+        
+        $('#search-panel .list-content').html(totalContent + list);
+        water.processHighlights();
+  
+      }
+      else {
+        $('#search-panel .list-content').html('');
+      }
+      
+      $('.map-tooltip').close();
+    });
+  
+  
+    water.map.addCallback('zoomed', function() {
+      if(water.mode === 'rights') {
+        $('.marker-image').css('visibility','visible');
+      }
+      else if(water.mode === 'search') {
+        $('.marker-image').css('visibility','hidden');
+        $('.marker-image.search').css('visibility','visible');
+      }
+  
+      water.map.interaction.refresh();  
+  
+    });
+  
+    
+    water.map.interaction.refresh();
+  } 
 };
 
 water.setSensorColor = function(value,string) {
@@ -660,8 +667,6 @@ water.getDiversion = function(feature){
     diversion.face_amount = diversion.face_amount_add;
   }
 
-
-  console.log( diversion.face_amount);
   //diversion.amount = diversion.amount.toFixed(2);
 
   return diversion;
@@ -702,20 +707,24 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
 
   water.searchNumberPages = Math.ceil(featuresAll.length / water.pagerLimit);
   features = featuresAll.slice(water.searchPager, water.pagerLimit * water.searchPagerPage);
-    
+
   water.drawRightsMarkers(features, featureDetails);
+  
+  if(features.length > 0){
   
   var string = "Showing " + features.length + " of " + featuresAll.length + " water rights matching <em><strong>" + query + "</strong></em> <br />";
   
   if(water.searchNumberPages > 1){
     string += "<div class=\"pager\"><a class=\"back-button inactive\">Back</a> | <a class=\"next-button\">Next</a></div>";
   }
+  }
+  else {
+    string = "No results found.";
+  }
   
-
+  $('.search-alert .searching').hide();
   $(".search-alert .content").html(string);
   water.pagerActiveButtons();
-
-
 
   $(".pager .next-button").click(function(){
  
@@ -742,9 +751,21 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
       water.drawRightsMarkers(features, featureDetails);
     }
   });
-  var extent = water.markers_rights.extent(); 
-  water.map.setExtent(extent);
-  water.map.interaction.refresh();
+  if(water.markers_search !== 0){
+    var extent = water.markers_search.extent(); 
+    water.map.setExtent(extent);
+    water.map.interaction.refresh();
+  }
+/*
+  }
+  else {
+    $(".search-alert .searching").hide();
+    $(".search-alert .content").html("No results found.");
+
+  }
+*/
+  
+  
 };
 
 water.pagerActiveButtons = function(){
@@ -1405,3 +1426,19 @@ water.trim = function(str){
     }
     return str;
 };
+
+water.addCommas = function(nStr) {
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	tail = x[1];
+	if(tail !== undefined){
+	 tail = tail.substring(0, 2);
+	}
+	x2 = x.length > 1 ? '.' + tail : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
+}
