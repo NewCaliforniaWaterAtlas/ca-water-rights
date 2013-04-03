@@ -99,7 +99,7 @@ app.get('/search/watershed', function(req, res, options){
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
-  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.watershed': regex}]}]};
+  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.water_right_status': 'Active'},{'properties.water_right_status':'Permitted'},{'properties.water_right_status':'Licensed'},{'properties.water_right_status':'Adjudicated'}]}]};
 
   engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
     if(!results || error) {
@@ -117,7 +117,7 @@ app.get('/search/watershed', function(req, res, options){
  */
 app.get('/list/watersheds', function(req, res, options){
 
-  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {'coordinates': {$exists: true}}]};
+  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.water_right_status': 'Active'},{'properties.water_right_status':'Permitted'},{'properties.water_right_status':'Licensed'},{'properties.water_right_status':'Adjudicated'}]}, {'coordinates': {$exists: true}}]};
 
   engine.find_many_by({query: query, options: {'limit': 0/* , 'sort': {'properties.watershed':1 } */}},function(error, results) {
     if(!results || error) {
@@ -154,7 +154,7 @@ app.get('/search/holders', function(req, res, options){
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
-  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex},{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.watershed': regex}, {'properties.source_name': regex}/* {'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
+  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.water_right_status': 'Active'},{'properties.water_right_status':'Permitted'},{'properties.water_right_status':'Licensed'},{'properties.water_right_status':'Adjudicated'}]}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex}/* ,{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.watershed': regex}, {'properties.source_name': regex}{'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
 
 
 // index
@@ -274,16 +274,10 @@ watermapApp.tallyDiversions = function(feature){
 
       // Increment the diversion tally.
       if(faceAmount > 0){      
-        switch(feature.properties.status){
+        switch(feature.properties.water_right_status){
           case 'Permitted':
             watermapApp.tally.count_permitted++;
             watermapApp.tally.permitted += parseFloat(faceAmount);
-            watermapApp.tally.total_face_amount += parseFloat(faceAmount);
-            watermapApp.tally.count++;
-            break;
-          case 'Active':
-            watermapApp.tally.count_active++
-            watermapApp.tally.active += parseFloat(faceAmount);
             watermapApp.tally.total_face_amount += parseFloat(faceAmount);
             watermapApp.tally.count++;
             break;
@@ -366,7 +360,8 @@ watermapApp.tallyDiversions = function(feature){
         string += '<td><a href="#' + feature.properties.id + '" class="water-right"  data="' + feature.properties.id + '">' + feature.properties.name + '</a></td>';
 
         string += '<td>' + watermapApp.addCommas(faceAmount) + '</td>';
-        string += '<td>' + watermapApp.addCommas(feature.properties.status) + '</td>';
+        string += '<td>' + watermapApp.addCommas(feature.properties.water_right_status) + '</td>';
+        string += '<td>' + watermapApp.addCommas(feature.properties.water_right_type) + '</td>';
         string += '</tr>';
       }
       
@@ -392,7 +387,6 @@ app.get('/summary', function(req, res, options){
   watermapApp.tally.face_amount_extra = 0; 
   watermapApp.tally.total_face_amount_active = 0; 
   
-  watermapApp.tally.active = 0;
   watermapApp.tally.adjudicated = 0;
   watermapApp.tally.canceled = 0;
   watermapApp.tally.certified = 0;  
@@ -412,7 +406,7 @@ app.get('/summary', function(req, res, options){
   watermapApp.tally.temporary = 0;  
   watermapApp.tally.unknown = 0;  
 
-  watermapApp.tally.count_active = 0;
+
   watermapApp.tally.count_adjudicated = 0;
   watermapApp.tally.count_canceled = 0;
   watermapApp.tally.count_certified = 0;  
@@ -433,7 +427,7 @@ app.get('/summary', function(req, res, options){
   watermapApp.tally.count_unknown = 0;  
 
   var regex = {$regex: '.*._01$', $options: 'i'};
-  var lookup =  { $and: [{'kind': 'right'},{'id':regex} /* , {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},,{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} ]}*/    ]} ;
+  var lookup =  { $and: [{'kind': 'right'},{'id':regex} , {$or: [{'properties.water_right_status': 'Active'},{'properties.water_right_status':'Permitted'},{'properties.water_right_status':'Licensed'},{'properties.water_right_status':'Adjudicated'}]}    ]} ;
 
   engine.find_many_by({query: lookup, options: {'limit': 0}},function(error, results) {
     if(!results || error) {
@@ -1896,7 +1890,7 @@ watermapApp.formatEWRIMSforSaving = function(feature, results) {
     "watershed" : feature['EWRIMS.Points_of_Diversion.WATERSHED'],
     "county" : feature['EWRIMS.Points_of_Diversion.COUNTY'],
     "date_last_updated" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_DATE'],
-    "status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS']
+    "pod_status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS']
   };
   
   // If exists in the database, merge old fields with new.
