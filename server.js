@@ -253,9 +253,6 @@ watermapApp.addCommas = function(nStr) {
 watermapApp.tallyDiversions = function(feature){
   if(feature !== undefined){
     if(feature.properties !== undefined){
-      if(feature.properties.status == 'Active' || feature.properties.status == 'Permitted') {
-        watermapApp.tally.count_active++;
-      }
     
       var string = "";
       var faceAmount = 0;
@@ -264,118 +261,121 @@ watermapApp.tallyDiversions = function(feature){
       var totalFaceAmountActive = 0;
       var currentDiversionAmount = 0;
     
-
-      // There are a few fields that might contain the diversion amount, but from how it appears, the values are either equal to each other, or else they are null or zero. We believe that the diversion amount, face value amount and diversion amount in acre feet are all supposed to be the same thing.
-      
       // Set the current diversion amount
-
        if((feature.properties.face_value_amount !== undefined) && (feature.properties.face_value_amount > 0)) {
-        faceAmount = feature.properties.face_value_amount;
-
-/* {'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} */
-        
-        if(feature.properties.status == 'Active') {
-          faceAmountActive = feature.properties.face_value_amount;
-        }
-           
+        faceAmount = feature.properties.face_value_amount;    
       }
       if((feature.properties.diversion_acre_feet !== undefined) && (feature.properties.diversion_acre_feet > 0)) {
         currentDiversionAmount = feature.properties.diversion_acre_feet;
       }
       if((feature.properties.direct_div_amount !== undefined) && (feature.properties.direct_div_amount > 0)) {
         currentDiversionAmount = parseFloat(feature.properties.direct_div_amount);
-    
-/*
-        if(feature.properties.pod_unit === 'Cubic Feet per Second'){
-          currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 723.97; // Convert to CFS to AFY
-        }
-        if(feature.properties.pod_unit === 'Gallons per Day'){
-          currentDiversionAmount = parseFloat(feature.properties.direct_div_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
-
-        }   
-*/ 
       }
 
       // Increment the diversion tally.
-      if(faceAmount > 0){
-        watermapApp.tally.total_face_amount += parseFloat(faceAmount);
+      if(faceAmount > 0){      
+        switch(feature.properties.status){
+          case 'Permitted':
+            watermapApp.tally.count_permitted++;
+            watermapApp.tally.permitted += parseFloat(faceAmount);
+            watermapApp.tally.total_face_amount += parseFloat(faceAmount);
+            watermapApp.tally.count++;
+            break;
+          case 'Active':
+            watermapApp.tally.count_active++
+            watermapApp.tally.active += parseFloat(faceAmount);
+            watermapApp.tally.total_face_amount += parseFloat(faceAmount);
+            watermapApp.tally.count++;
+            break;
+          case 'Licensed':
+            watermapApp.tally.count_licensed++;
+            watermapApp.tally.licensed  += parseFloat(faceAmount);
+            watermapApp.tally.total_face_amount += parseFloat(faceAmount);
+            watermapApp.tally.count++;
+            break; 
+          case 'Adjudicated':
+            watermapApp.tally.count_adjudicated++;
+            watermapApp.tally.adjudicated += parseFloat(faceAmount);
+            watermapApp.tally.total_face_amount += parseFloat(faceAmount);
+            watermapApp.tally.count++;
+            break;
+          case 'Cancelled':
+          case 'Canceled':
+            watermapApp.tally.count_canceled++;
+            watermapApp.tally.canceled += parseFloat(faceAmount);
+            break;
+          case 'Certified':
+            watermapApp.tally.count_certified++;
+            watermapApp.tally.certified  += parseFloat(faceAmount);
+            break;
+          case 'Claimed':
+            watermapApp.tally.count_claimed++;
+            watermapApp.tally.claimed  += parseFloat(faceAmount);
+            break;
+          case 'Claimed - Local Oversight':
+            watermapApp.tally.count_claimed_local++;
+            watermapApp.tally.claimed_local  += parseFloat(faceAmount);
+            break;
+          case 'Closed':
+            watermapApp.tally.count_closed++;
+            watermapApp.tally.closed += parseFloat(faceAmount);
+            break;
+          case 'Inactive':
+            watermapApp.tally.count_inactive++;
+            watermapApp.tally.inactive  += parseFloat(faceAmount);
+            break;
+          case 'Non Jurisdictional':
+            watermapApp.tally.count_non_jurisdictional++;
+            watermapApp.tally.non_jurisdictional  += parseFloat(faceAmount);
+            break;
+          case 'Pending':
+            watermapApp.tally.count_pending++;
+            watermapApp.tally.pending  += parseFloat(faceAmount);
+            break;
+          case 'Registered':
+            watermapApp.tally.count_registered++;
+            watermapApp.tally.registered  += parseFloat(faceAmount);
+            break;
+          case 'Rejected':
+            watermapApp.tally.count_rejected++;
+            watermapApp.tally.rejected  += parseFloat(faceAmount);
+            break;
+          case 'Removed':
+            watermapApp.tally.count_removed++;
+            watermapApp.tally.removed  += parseFloat(faceAmount);
+            break;
+          case 'Revoked':
+            watermapApp.tally.count_revoked++;
+            watermapApp.tally.revoked  += parseFloat(faceAmount);
+            break;
+          case 'State Filing':
+            watermapApp.tally.count_state_filing++;
+            watermapApp.tally.state_filing  += parseFloat(faceAmount);
+            break;
+          case 'Temporary':
+            watermapApp.tally.count_temportary++;
+            watermapApp.tally.temportary += parseFloat(faceAmount);
+            break;
+          case '':
+            watermapApp.tally.count_unknown++;
+            watermapApp.tally.unknown  += parseFloat(faceAmount);
+            break;
+        }
 
-/* {'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} */
-        
-      if(feature.properties.status == 'Active' || feature.properties.status == 'Permitted') {
-        
-          watermapApp.tally.total_face_amount_active += parseFloat(faceAmount);
-      }
-      
-      
-      switch(feature.properties.status){
-        case 'Active':
-          watermapApp.tally.active += parseFloat(faceAmount);
-          break;
-        case 'Permitted':
-          watermapApp.tally.permitted += parseFloat(faceAmount);
-          break;
-        case 'Licensed':
-          watermapApp.tally.licensed  += parseFloat(faceAmount);
-          break;
-        case 'Adjudicated':
-          watermapApp.tally.adjudicated  += parseFloat(faceAmount);
-          break;
-        case 'Certified':
-          watermapApp.tally.certified  += parseFloat(faceAmount);
-          break;
-        case 'Pending':
-          watermapApp.tally.pending  += parseFloat(faceAmount);
-          break;
-        case 'Registered':
-          watermapApp.tally.registered  += parseFloat(faceAmount);
-          break;
-      }
-      
-      
-      
-      
-      
-      
-      
-/*         string += "tally total diverted: " + watermapApp.addCommas(watermapApp.tally.diversion) + " AFY<br />";   */
         string += '<tr>';
         string += '<td><a href="#' + feature.properties.id + '" class="water-right"  data="' + feature.properties.id + '">' + feature.properties.name + '</a></td>';
 
         string += '<td>' + watermapApp.addCommas(faceAmount) + '</td>';
-/*         string += '<td>AFY</td>'; */
-/*         string += '<td>' + watermapApp.addCommas(watermapApp.tally.diversion) + '</td>'; */
-/*         string += '<td></td>'; */
+        string += '<td>' + watermapApp.addCommas(feature.properties.status) + '</td>';
         string += '</tr>';
       }
       
-      if((feature.properties.diversion_storage_amount !== undefined) && (feature.properties.diversion_storage_amount > 0)) {
-        // @TODO check storage units.
-    
-/*
-        if(feature.properties.pod_unit === 'Cubic Feet per Second'){
-          currentStorageAmount = parseFloat(feature.properties.diversion_storage_amount) * 723.97; // Convert to CFS to AFY
-
-        }
-        if(feature.properties.pod_unit === 'Gallons per Day'){
-          currentStorageAmount = parseFloat(feature.properties.diversion_storage_amount) * 0.00112088568; // 1 US gallons per day = 0.00112088568 (acre feet) per year
-
-        }
-*/
-        
+      if((feature.properties.diversion_storage_amount !== undefined) && (feature.properties.diversion_storage_amount > 0)) {        
         currentStorageAmount = parseFloat(feature.properties.diversion_storage_amount);
             
         if(currentStorageAmount > 0) {
           watermapApp.tally.storage += currentStorageAmount;
         }    
-
-/*
-        string += '<tr>';
-        string += '<td><a href="#' + feature.properties.id + '" class="water-right" data="' + feature.properties.id + '">' + feature.properties.name + '</a></td>';
-        string += '<td>' + watermapApp.addCommas(currentStorageAmount) + '</td>';
-        string += '<td>Stored</td>';
-        string += '</tr>';   
-*/    
       }
   
       return string;
@@ -387,18 +387,53 @@ watermapApp.tallyDiversions = function(feature){
 app.get('/summary', function(req, res, options){
   watermapApp.tally.diversion = 0;
   watermapApp.tally.storage = 0;
+  watermapApp.tally.count = 0; 
   watermapApp.tally.total_face_amount = 0; 
+  watermapApp.tally.face_amount_extra = 0; 
   watermapApp.tally.total_face_amount_active = 0; 
   
   watermapApp.tally.active = 0;
-  watermapApp.tally.permitted = 0;
-  watermapApp.tally.licensed = 0;
   watermapApp.tally.adjudicated = 0;
-  watermapApp.tally.certified = 0;
+  watermapApp.tally.canceled = 0;
+  watermapApp.tally.certified = 0;  
+  watermapApp.tally.claimed = 0;  
+  watermapApp.tally.claimed_local = 0;  
+  watermapApp.tally.closed = 0;
+  watermapApp.tally.inactive = 0;
+  watermapApp.tally.licensed = 0;
+  watermapApp.tally.non_jurisdictional = 0;
   watermapApp.tally.pending = 0;
+  watermapApp.tally.permitted = 0;
   watermapApp.tally.registered = 0;
+  watermapApp.tally.rejected = 0;
+  watermapApp.tally.removed = 0;
+  watermapApp.tally.revoked = 0;
+  watermapApp.tally.state_filing = 0;
+  watermapApp.tally.temporary = 0;  
+  watermapApp.tally.unknown = 0;  
+
+  watermapApp.tally.count_active = 0;
+  watermapApp.tally.count_adjudicated = 0;
+  watermapApp.tally.count_canceled = 0;
+  watermapApp.tally.count_certified = 0;  
+  watermapApp.tally.count_claimed = 0;  
+  watermapApp.tally.count_claimed_local = 0;  
+  watermapApp.tally.count_closed = 0;
+  watermapApp.tally.count_inactive = 0;
+  watermapApp.tally.count_licensed = 0;
+  watermapApp.tally.count_non_jurisdictional = 0;
+  watermapApp.tally.count_pending = 0;
+  watermapApp.tally.count_permitted = 0;
+  watermapApp.tally.count_registered = 0;
+  watermapApp.tally.count_rejected = 0;
+  watermapApp.tally.count_removed = 0;
+  watermapApp.tally.count_revoked = 0;
+  watermapApp.tally.count_state_filing = 0;
+  watermapApp.tally.count_temporary = 0;  
+  watermapApp.tally.count_unknown = 0;  
+
   var regex = {$regex: '.*._01$', $options: 'i'};
-  var lookup =  { $and: [{'kind': 'right'},{'id':regex}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} ]}   ]} ;
+  var lookup =  { $and: [{'kind': 'right'},{'id':regex} /* , {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},,{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'} ]}*/    ]} ;
 
   engine.find_many_by({query: lookup, options: {'limit': 0}},function(error, results) {
     if(!results || error) {

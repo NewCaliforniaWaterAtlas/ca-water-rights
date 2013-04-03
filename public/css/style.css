@@ -873,12 +873,37 @@ span.disclaimer {
   
 }
 
-table#tally-summary {
+.page-tally table  {
   border: 1;
   padding: 5px;
+  font-size: 1.25em;
+}
+
+.page-tally table {
+  margin: 20px;
+}
+
+.page-tally table th {
+  text-align: left;
+  font-weight: bold;
+  font-family: 'Questrial', sans-serif;
+  font-size: 1em;
+}
+
+.page-tally h3 {
+  margin-top: 60px;
 }
 
 .block {
   padding: 10px;
 
+}
+
+.tally td.definition {
+  width: 25%;
+}
+
+.block p {
+  padding: 0;
+  margin: 10px 0;
 }
