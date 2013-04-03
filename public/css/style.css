@@ -113,6 +113,10 @@ a:hover {
   max-width: 880px;
 }
 
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
 .modal {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -178,7 +182,7 @@ button.close {
 section#footer,
 section#about {
   border-top: 2px solid #dcdcdc;
-  height: 350px;
+  height: 400px;
   /*background: #e8e8e8;*/
   background: #f3f3f3;
   padding: 90px 0;
@@ -238,6 +242,20 @@ p.primary {
 
 section#footer {
   padding: 40px;
+}
+
+.masthead {
+  height: 120px;
+  width: 100%;
+  background-color: #f4f1d3;
+}
+
+.title-block {
+  padding-top: 20px;
+}
+
+#myCarousel {
+  margin-top: 40px;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
@@ -316,9 +334,7 @@ section#footer {
   position:absolute;
 }
 
-
 .marker-image.sensor_usgs{
-
   width:15px;
   height:15px;
 }
@@ -874,5 +890,44 @@ ul.map-symbols li {
   padding: 0px 10px;
   list-style: square;
   list-style-position: inside;
+}
 
+span.disclaimer {
+  font-size: 0.7em;
+
+}
+
+.page-tally table  {
+  border: 1;
+  padding: 5px;
+  font-size: 1.25em;
+}
+
+.page-tally table {
+  margin: 20px;
+}
+
+.page-tally table th {
+  text-align: left;
+  font-weight: bold;
+  font-family: 'Questrial', sans-serif;
+  font-size: 1em;
+}
+
+.page-tally h3 {
+  margin-top: 60px;
+}
+
+.block {
+  padding: 10px;
+
+}
+
+.tally td.definition {
+  width: 25%;
+}
+
+.block p {
+  padding: 0;
+  margin: 10px 0;
 }

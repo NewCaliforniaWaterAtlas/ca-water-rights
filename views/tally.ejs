@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>California Water Rights: Tally</title>
+    <title>Summary of California Water Rights</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Providing citizens with better tools for understanding how water is being used in our state.">    
     <meta name="author" content="http://ca.statewater.org">    
@@ -20,24 +20,270 @@
     <link href="/libraries/FontAwesome/css/font-awesome.css" rel="stylesheet">
     <link href="/css/jquery.qtip.min.css" rel="stylesheet" type="text/css">
     <link href="/css/style.css" rel="stylesheet">
-    
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>    
     <script type="text/javascript" src="/javascripts/libraries/jquery.js"></script>
     <script type="text/javascript" src="/javascripts/libraries/jquery.qtip.min.js"></script>
   </head>
   
   <body>
 
+    <!-- Nav -->
+    <div class="navbar navbar-static-top" id="top">
+      <div class="navbar-inner">
+
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <a class="brand">Summary of California Water Rights</a>
+
+        <div class="nav-collapse">
+          <ul class="nav pull-right">
+            <li><a href="#tally" id="button-tally">Tally</a></li>
+<!--             <li><a href="#charts" id="button-tally">Charts</a></li> -->
+            <li><a href="#about" id="button-about">About</a></li>
+            <li><a href="#data" id="button-data">Data</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+   
+       <!-- Page Wrap -->
+    <div id="page-wrap">
+      <div class="page-tally container-fluid"> 
+        <div class="row-fluid">
+          <div class="span12">
+          <h3>Total Amount Water used in Current Appropriative Water Rights</h3>
+
+
+           <table id="tally" class="tally">
+            <tr>
+              <th class="status" style="width:25%">Water Right Status</th>
+              <th class="count" style="width:25%">Number of Water Rights</th>
+              <th class="tallied" style="width:25%">Tallied Face Value Amounts (AFY)</th>
+              <th class="definition" style="width:25%">Definition</th>
+            </tr>
+          
+            <tr>
+              <td>Active</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_active) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.active) %></td>
+              <td>Active water right</td>
+            </tr>
+
+            <tr>
+              <td>Licensed</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_licensed) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.licensed) %></td>
+              <td>Final confirmation of the water right and remains effective as long as its conditions are fulfilled and beneficial use continues - <a href="http://www.waterboards.ca.gov/waterrights/board_info/water_rights_process.shtml#process">(link)</td>
+            </tr>
+          
+            <tr>
+              <td>Permitted</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_permitted) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.permitted) %></td>
+              <td>Water right holder has been cleared for a project to use water. - <a href="http://www.waterboards.ca.gov/waterrights/board_info/water_rights_process.shtml#process">(link)</a></td>
+            </tr>
+
+            <tr>
+              <td>Adjudicated</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_adjudicated) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.adjudicated) %></td>
+              <td>Water right enforcable by law. There are also a handful of adjudicated rights on SWRCB website.</td>
+            </tr>
+  
+            <tr>
+              <td>Total</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.total_face_amount) %></td>
+              <td></td>
+            </tr>
+  
+          </table>
+
+            <ul>
+              <li>Presenting public data from State Water Resources Control Board.</li>
+              <li>Does not include: Riparian, Pre-1914, Adjudicated but not digitized, non-digitized water rights.</li>
+            </ul>
+
+<!--      // @TODO move into a tab -->
+          <h3>Non-Activated Water Rights</h3>
+          <table>
+            <tr>
+              <th class="status" style="width:25%">Water Right Status</th>
+              <th class="count" style="width:25%">Number of Water Rights</th>
+              <th class="tallied" style="width:25%">Tallied Face Value Amounts (AFY)</th>
+              <th class="definition" style="width:25%">Definition</th>
+            </tr>
+
+            <tr>
+              <td>Cancelled</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_canceled) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.canceled) %></td>
+              <td></td>
+            </tr>
+          
+            <tr>
+              <td>Certified</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_certified) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.certified) %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Claimed</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_claimed) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.claimed) %></td>
+              <td></td>
+            </tr> 
+
+            <tr>
+              <td>Claimed - Local Oversight</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_claimed_local) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.claimed_local) %></td>
+              <td></td>
+            </tr> 
+
+            <tr>
+              <td>Closed</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_closed) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.closed) %></td>
+              <td></td>
+            </tr>          
+
+            <tr>
+              <td>Inactive</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_inactive) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.inactive) %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Non Jurisdictional</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_non_jurisdictional) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.non_jurisdictional) %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Pending</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_pending) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.pending) %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Registered</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_registered) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.registered) %></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Rejected</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_rejected) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.rejected) %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Removed</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_removed) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.removed) %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Revoked</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_revoked) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.revoked) %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>State Filing</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_state_filing) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.state_filing) %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Temporary</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_temporary) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.temporary) %></td>
+              <td></td>
+            </tr>
+          
+            <tr>
+              <td>Unknown</td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.count_unknown) %></td>
+              <td><%= watermapApp.addCommas(watermapApp.tally.unknown) %></td>
+              <td></td>
+            </tr>
+          
+
+              
+          </table>
+       
+
+          </div>
+        </div>
+      </div>
+<!--
+      <div id="charts" class="container-fluid"> 
+        <div class="row-fluid">
+          <h3>Charts</h3>
+        </div>
+      </div>
+-->
+
+      <div id="about" class="container-fluid"> 
+        <div class="row-fluid">
+          <h3>About</h3>
+          
+          <div class='span6 block claim'>
+            <h3>Total Precipitation</h3>
+            <span class='large'>Total amount annual precipitation: 200,000,000 AFY</span>
+            <p>This is the amount precipitation that will fall on California as rain or snow in (2013).</p>
+            <p>60% precipitation is used for tress and evaporated: 129,000,000 AFY</p>
+            <p>40% precipitation is usable: 71,000,000 AFY</p>
+          </div>
+
+          
+        </div>
+      </div>
+
+      <div id="data" class="container-fluid"> 
+        <div class="row-fluid">
+          <h3>Data</h3>
+          <p>Presenting all current water rights.</p>
+
+          <table id="rights-data">
+            <tr>
+              <th id="holder" class="sortable">Water Right Holder</th>
+              <th id="amount" class="sortable sortable-numeric reverseSort">Amount (AFY)</th>
+            </tr>
+            <%- table %>
+          </table>
+
+        </div>
+      </div>
+
+
+
+
+
+    </div> 
+
     <div class="container-fluid">
       <div class="content row">      
         <div class='span12'>
-          <h2>Tally of Water Rights in California</h2>
+      
+
         
-          <div class='span3'>
-            <span class='large'>Total Number Active Water Rights: <%= count %></span>
-            <p>Does not include riparian or pre-1914 rights</p>
-          </div>
-        
-          <div class='span3'>
+          <div class='span6 block observation'>
 
     
 
@@ -56,34 +302,29 @@
       </div>
 -->
 
-            <span class='large'>Total Water: <%=  watermapApp.addCommas(watermapApp.tally.total_face_amount_active) %> AFY</span>
+ 
 
-
-            <p>This is the amount that Californians say they will use in a given year. A <a href='http://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/docs/comments111312/tim_stroshane.pdf'>similar value</a> was submitted as a public comment for the Bay Delta plan in October 2012. Value differences are from minor data errors (duplicates, miscategorized entries, etc.)</p>
+            <p>This is the amount that Californians are permitted to use in a given year. A <a href='http://www.waterboards.ca.gov/waterrights/water_issues/programs/bay_delta/docs/comments111312/tim_stroshane.pdf'>similar value</a> was submitted as a public comment for the Bay Delta plan in October 2012. Value differences are from minor data errors (duplicates, miscategorized entries, etc.)</p>
           </div>
               
-          <div class='span3'>
+          <div class='span3 block observation'>
             <span class='large'>Total Stored: <%=  watermapApp.addCommas(watermapApp.tally.storage) %>AFY</span>
             <p>This is the amount that Californians say they will store in a given year.</p>
           </div>    
 
           
-          <div class='span3'>
-            <span class='large'>Total amount precipitation: ~200,000,000 AFY</span>
-            <p>This is the amount precipitation that will fall on California as rain or snow in (2013).</p>
-          </div>
-          
-          <div class='span3'>
-            <span class='large'>Total amount precipitation dedicated for water supply: ~70,000,000 AFY</span>
-          </div>
+
         
-          <div class='span3'>
-            <span class='large'>Over Allocated water percentage: <%= overallocation %> </span>
+          <div class='span3 block observation'>
+            <span class='large'>Over-allocated water percentage: <%= overallocation %> </span>
+            <h3>What does this mean?</h3>
+            <p>This is a rough estimate of how much more water is allocated than comes into the natural water system.</p>
+            <p>Some water is reused downstream, some water is over-estimated, and some water is slated for future development.</p>
           </div>
         </div>
         
         
-        <div class="span12">
+        <div class="span12 block">
           <table id="tally">
             <tr>
               <th id="holder" class="sortable">Water Right Holder</th>
