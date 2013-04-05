@@ -80,13 +80,12 @@ ul.nav>li {
 /*   border-right: 2px solid #c8c8df; */
 }
 
-.navbar a.brand {
+.navbar a.brand, .title-block>h3 {
   margin-left: 5px;
   font-size: 1.5em;
   font-weight: bold;
   font-family: 'Muli', sans-serif;
-  text-transform: uppercase;
-  
+  text-transform: uppercase; 
 }
 
 
@@ -251,11 +250,67 @@ section#footer {
 }
 
 .title-block {
-  padding-top: 20px;
+  padding-top: 25px;
+  color: #2D2D28;
+}
+
+h2.title-block-title {
+  font-weight: 300;
+  font-family: 'Rosario', sans-serif;
+  line-height: 20px;
+  letter-spacing: -1px;
+}
+
+h4.title-block-title-sub {
+  font-weight: 500;
+  font-family: 'Questrial', sans-serif;
+  text-transform: none;
+}
+
+.carousel-caption {
+  margin-left: 15px;
+
+  background: -moz-linear-gradient(bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(0,0,0,0.85)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a8000000',GradientType=0 ); /* IE6-9 */
 }
 
 #myCarousel {
   margin-top: 40px;
+}
+
+#carousel-title,#carousel-title-sub {
+  color: #fff;
+  font-weight: 200;
+  text-transform: none;
+}
+
+h3#carousel-title {
+  font-family: 'Rosario', sans-serif;
+  line-height: 15px;
+}
+
+h4#carousel-title-sub {
+  font-family: 'Questrial', sans-serif;
+}
+
+.carousel-caption>a {
+  display: block;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.marketing {
+  margin: 30px 0;
+}
+
+#home-body>h4 {
+  padding-left: 30px;
+  padding-bottom: 20px;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
@@ -808,16 +863,6 @@ table#tally #holder {
   background: rgba(215,215,233,.85);
   z-index:7;
   visibility: hidden;
-}
-
-.carousel-caption {
-  background: -moz-linear-gradient(bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(0,0,0,0.85)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a8000000',GradientType=0 ); /* IE6-9 */
 }
 
 /*<!-- ============ Responsive Stuff / Media Queries ============ -->*/ 
