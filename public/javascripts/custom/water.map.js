@@ -66,6 +66,8 @@ water.setupMap = function() {
   water.disableTileLayers();
   water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
 
+  water.rightsLegend = $('div.rights-legend').html();
+
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
     water.map.addLayer(interactive.layer);
@@ -986,7 +988,7 @@ water.formatWaterRightTooltip = function(feature) {
                           '<li>Data Source: ' + feature.properties.source + ' <a href="' + feature.properties.source + '" target="_blank">Link</a></li>' +
                         
                       '</div>' +
-
+ water.rightsLegend + 
                   '</div>';
   
   return output;
@@ -1403,6 +1405,8 @@ water.loadDataPanelData = function(results){
         water.displayPanelContainer($('#data-panel'));
         water.displayPanel($('#rights-panel'));
         $('#rights-panel').html(content);
+
+        
       }
       else if(results[0]['kind'] === "usgs_gage_data") {
         var content = water.formatSensorTooltip(results[0]);

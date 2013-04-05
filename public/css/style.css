@@ -976,3 +976,8 @@ span.disclaimer {
   padding: 0;
   margin: 10px 0;
 }
+
+.modal {
+  top: 12%;
+  left: 45%;
+}
