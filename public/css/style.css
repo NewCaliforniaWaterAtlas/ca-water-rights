@@ -554,7 +554,7 @@ div.data-box h4 {
   display: block;
   color: #6d6d6d;
   border: 1px solid #cccccc;
-  height: 7em;
+  height: 8em;
 }
 
 .map-tooltip .content:before{
@@ -566,7 +566,7 @@ div.data-box h4 {
 
 
 .map-tooltip .content.sensor:before{
-  content: "STREAM GAGE";
+  content: "STREAM GAUGE";
   display: block;
   color: #a8a8a8;
   font-size: 0.8em;

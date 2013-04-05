@@ -155,8 +155,8 @@ app.get('/search/holders', function(req, res, options){
   var regex = {$regex: req.query.value, $options: 'i'};
 
   var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.water_right_status': 'Active'},{'properties.water_right_status':'Permitted'},{'properties.water_right_status':'Licensed'},{'properties.water_right_status':'Adjudicated'}]}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex}, {'properties.watershed': regex}, {'properties.source_name': regex}  /* ,{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
-
-
+console.log(regex);
+console.log(query);
 // index
 
 /*  {'kind':1, 'properties.holder_name':1, 'properties.name':1, 'properties.primary_owner':1, 'properties.application_pod':1, 'properties.use_code':1,  'properties.reports.2011.usage':1, 'properties.reports.2011.usage_quantity':1, 'properties.reports.2010.usage':1, 'properties.reports.2010.usage_quantity':1} */

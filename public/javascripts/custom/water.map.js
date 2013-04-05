@@ -857,7 +857,7 @@ water.formatSensorTooltip = function(feature) {
                           '<p>Data re-published from USGS.</p>' +
                         '<ul class="data-list">' +
                           '<li>Service: ' + feature.properties['service_cd'] + '</li>' +
-                          '<li>Data Source: ' + feature.properties.url + 'See more about this Stream Gage on the  <a href="' + feature.properties.url + '" target="_blank">USGS website</a></li>' +
+                          '<li>Data Source: ' + feature.properties.url + 'See more about this Stream Gauge on the  <a href="' + feature.properties.url + '" target="_blank">USGS website</a></li>' +
                         
                       '</div>' +
 
@@ -871,7 +871,7 @@ water.formatWaterRightTooltip = function(feature) {
   if(feature.properties.name) { var name = feature.properties.name } else{ name = '';}
   var diversion = water.getDiversion(feature);
   var id = feature.properties.application_pod;
-  var status = feature.properties.status;
+  var status = feature.properties.water_right_status;
   var primary_owner = '';
   if (feature.properties.first_name) {primary_owner += feature.properties.first_name + " ";}
   if(feature.properties.holder_name) {primary_owner += feature.properties.holder_name;}
@@ -897,10 +897,15 @@ water.formatWaterRightTooltip = function(feature) {
                           '<li>Water Right Status: ' + status + '</li>' +
                           '<li>Application ID: ' + id + '</li>' +
                           '<li>POD ID: ' + feature.properties.pod_id + '</li>' +
-                          '<li>Registration Status: ' + feature.properties.status + '</li>' +
-                          '<li>Date Water Right Application Received: ' + feature.properties.date_received + '</li>' +
-                          '<li>Date Water Right Issued: ' + feature.properties.issue_date + '</li>' +
-                        '</ul>' +
+                          '<li>Registration Status: ' + feature.properties.status + '</li>';
+                          
+                          if(feature.properties.date_received !== undefined){
+                            output += '<li>Date Water Right Application Received: ' + feature.properties.date_received + '</li>';
+                          }
+                          if(feature.properties.issue_date !== undefined) {
+                            output += '<li>Date Water Right Issued: ' + feature.properties.issue_date + '</li>';
+                          }
+                        output += '</ul>' +
                       '</div>' +
 
                       '<div class="data-box">' +
@@ -936,9 +941,11 @@ water.formatWaterRightTooltip = function(feature) {
 
                       '<div class="data-box">' +
                         '<h4>Usage</h4>' +
-                        '<ul class="data-list">' +
-                          '<li>Use Code: ' + feature.properties.use_code + '</li>' +
-                          '<li>Water Right Type: ' + feature.properties.water_right_type + '</li>' +
+                        '<ul class="data-list">';
+                        if(feature.properties.use_code !== undefined){
+                          output += '<li>Use Code: ' + feature.properties.use_code + '</li>';
+                        }
+                        output += '<li>Water Right Type: ' + feature.properties.water_right_type + '</li>' +
                         '</ul>' +
                       '</div>';
 
@@ -973,7 +980,7 @@ water.formatWaterRightTooltip = function(feature) {
 
       }
       else {
-      string += "<p>No statements of use are available right now. The reports were either not uploaded into our database, not submitted to the State Water Control Board, or have not been digitized.</p>";
+      string += "<p>Statements of diversion and use not available at this time.</p>";
       }
       string += "</div>";
 
