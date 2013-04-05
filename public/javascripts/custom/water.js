@@ -121,7 +121,11 @@ water.navigationHidePanels = function(){
 water.navigation = function(){
   water.navigationHidePanels();
   
-  
+    water.navigationHidePanels();
+    water.displayPanelContainer($('#data-panel'));
+    water.displayPanel($('#rights-panel'));
+
+
   $('#button-water-rights').toggle(function(){
     water.navigationHidePanels();
     water.displayPanelContainer($('#data-panel'));
