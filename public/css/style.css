@@ -249,6 +249,14 @@ section#footer {
   background-color: #f4f1d3;
 }
 
+.inline {
+  display: inline-block;
+}
+
+#state-logo>img {
+  height: 125px;
+}
+
 .title-block {
   padding-top: 25px;
   color: #2D2D28;
@@ -308,9 +316,22 @@ h4#carousel-title-sub {
   margin: 30px 0;
 }
 
-#home-body>h4 {
+h4.body-heading {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 2px;
   padding-left: 30px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.body>p {
+  font-family: 'Rosario', sans-serif;
+  font-size: 15px;
+  padding-bottom: 10px;
+}
+
+#body-heading-right {
+  padding-left: 0px;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
