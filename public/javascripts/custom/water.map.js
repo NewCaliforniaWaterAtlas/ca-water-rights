@@ -990,7 +990,7 @@ water.formatWaterRightTooltip = function(feature) {
 
                       output += '<div class="data-box">' +
                           '<h4>About this Data</h4>' +
-                          '<p>Data re-published from the Department of Water Resources eWRIMS and ARCGIS servers. If this information is erroneous, please check the eWRIMS database and if the error persists, please contact their department.</p>' +
+                          '<p>Data re-published from the State Water Resources Control Board eWRIMS and ARCGIS servers. If this information is erroneous, please check the eWRIMS database and if the error persists, please contact their department.</p>' +
                         '<ul class="data-list">' +
                           '<li>Data Source: ' + feature.properties.source + ' <a href="' + feature.properties.source + '" target="_blank">Link</a></li>' +
                         
