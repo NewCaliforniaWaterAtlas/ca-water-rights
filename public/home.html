@@ -73,9 +73,11 @@
           <div class="active item">
             <img src="images/rights_screenshot.jpg">
             <div class="carousel-caption">
-              <h3 id="carousel-title">Water Rights</h3>
-              <h4 id="carousel-title-sub">Who diverts water for use and storage?</h4>
-              <a href="">More ></a>
+              <div class="carousel-caption-inner">
+                <h3 id="carousel-title">Water Rights</h3>
+                <h4 id="carousel-title-sub">Who diverts water for use and storage?</h4>
+                <a href="">More ></a>
+              </div>
             </div>
           </div>
         </div>
@@ -93,47 +95,91 @@
         </div>
         
         <div class="span5">
-          <h4 id="body-heading-right" class="body-heading">Maps & Visualizations</h4>
+          <h4 id="body-heading-right"class="body-heading">Maps & Visualizations</h4>
+          
           <section>
-            <ul>
-              <li>WATERSCAPE</li>
-              <li>The Virgin Waterscape</li>
-              <li>The Plumbing of California</li>
+            <ul class="map-list">
+              <li class="menu-title">
+                <h5>WATERSCAPE</h5>
+              </li>
+              <li class="submenu hide">
+                <a>The Virgin Waterscape</a>
+                <a>The Plumbing of California</a>
+              </li>
             </ul>
           </section>
+          
           <section>
-            <ul>
-              <li> FLOW & STORAGE</li>
-              <li>Precipitation</li>
-              <li>Watersheds</li>
-              <li>Reservoirs & Storage</li>
-              <li>Streamflow</li>
-              <li>Runoff & Seepage</li>
-              <li>Groundwater</li>
-            </ul>
-          </section>
-
-          <section>
-            <ul>
-              <li>ATTRIBUTES</li>
-            </ul>
-          </section>
-
-          <section>
-            <ul>
-              <li>PLACES & FEATURES</li>
-            </ul>
-          </section>
-
-          <section>
-            <ul>
-              <li>USAGE & MANAGEMENT</li>
+            <ul class="map-list">
+              <li class="menu-title">
+                <h5 class="map-list-title">FLOW & STORAGE</h5>
+              </li>
+              <li class="submenu hide">
+                <a>Precipitation</a>
+                <a>Watersheds</a>
+                <a>Reservoirs & Storage</a>
+                <a>Streamflow</a>
+                <a>Runoff & Seepage</a>
+                <a>Groundwater</a>
+              </li>
             </ul>
           </section>
 
           <section>
-            <ul>
-              <li>CONFLICT</li>
+            <ul class="map-list">
+              <li class="menu-title">
+                <h5 class="map-list-title">ATTRIBUTES</h5>
+              </li>
+              <li class="submenu hide">
+                <a>Water Quality</a>
+                <a>Water Temperature</a>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <ul class="map-list">
+              <li class="menu-title">
+                <h5 class="map-list-title">PLACES & FEATURES</h5>
+              </li>
+              <li class="submenu hide">
+                <a>Federal Projects</a>
+                <a>Flood Control</a>
+                <a>Conservation Efforts</a>
+                <a>Dams & Water Banks</a>
+                <a>Development</a>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <ul class="map-list">
+              <li class="menu-title">
+                <h5 class="map-list-title">USAGE & MANAGEMENT</h5>
+              </li>
+              <li class="submenu hide">
+                <a>Water Rights</a>
+                <a>Water Pricing</a>
+                <a>Water Governance</a>
+                <a>Total Water Usage</a>
+                <a>Water Districts</a>
+                <a>Rights Seniority</a>
+                <a>Stakeholders</a>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <ul class="map-list">
+              <li class="menu-title">
+                <h5 class="map-list-title">CONFLICT</h5>
+              </li>
+              <li class="submenu hide">
+                <a>Drought</a>
+                <a>Equity</a>
+                <a>Litigation</a>
+                <a>Abuse</a>
+              </li>
             </ul>
           </section>
         </div>
@@ -147,6 +193,19 @@
       </div>
 
     </div> <!-- /container -->
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var title = $("li.menu-title");
+        $(title).on("click", function(e){
+          e.preventDefault();
+          var submenu = $(this).next();
+          
+          $(submenu).toggleClass("show");
+        });
+
+      }); 
+    </script>
 
     <script type="text/javascript">
       var _gaq = _gaq || [];

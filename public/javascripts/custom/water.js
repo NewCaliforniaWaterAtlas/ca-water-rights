@@ -73,9 +73,6 @@ water.setupFilters = function () {
       water.search();
     }
   });
-
-  
-
 };
 
 water.search = function() {
@@ -231,6 +228,3 @@ water.hideSensors = function(){
   water.map.removeLayer(water['markers_sensor_usgs']);
   water.map.interaction.refresh();
 };
-
-
-
