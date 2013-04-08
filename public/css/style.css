@@ -709,7 +709,7 @@ div.data-box h4 {
 }
 
 #tile-switcher {
-position: fixed;
+position: absolute;
 top: 97px;
 height: 68px;
 width: 137px;
