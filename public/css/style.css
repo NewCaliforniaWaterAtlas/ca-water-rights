@@ -709,17 +709,16 @@ div.data-box h4 {
 }
 
 #tile-switcher {
-  position:absolute;
-  top:220px;
-  height: 125px;
-  width: 100px;
-  left:0px;
-  z-index:999;
-  background: rgba(209,231,231,.9);
-  font-size: 0.8em;
-  line-height: 1em;
-  padding: 4px;
-}
+position: fixed;
+top: 97px;
+height: 68px;
+width: 137px;
+
+z-index: 999;
+background: rgba(209,231,231,.9);
+font-size: 0.8em;
+line-height: 1em;
+padding: 4px;}
 
 #tile-switcher ul li {
   list-style: none
