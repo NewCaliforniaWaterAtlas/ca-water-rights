@@ -67,6 +67,7 @@ water.setupMap = function() {
   water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
 
   water.rightsLegend = $('div.rights-legend').html();
+  water.sensorLegend = $('div.sensor-legend').html();
 
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
@@ -384,9 +385,8 @@ water.drawRightsMarkers = function(features, featureDetails) {
   
         var diversion = water.getDiversion(feature);
   
-        console.log(diversion);
         var o ='<span class="content">' 
-              + '<span class="name">' + feature.properties.name+ '</span>';
+              + '<span class="name">' + feature.properties.name + '</span>';
         o += '<span class="diversion"><span class="diversion-amount">' + diversion.face_amount + '</span>'
                       + '<span class="diversion-unit"> ' + diversion.units_face_amount + '</span></span>';
               o += '<span class="load_id">' + feature.properties.id + '</span></span>';
@@ -831,7 +831,8 @@ water.formatSensorTooltip = function(feature) {
     percentile = 'Not Ranked';
   }
     
-  output = '<div class="data-boxes">' +           
+  output = '<div class="data-boxes">'  +
+               water.sensorLegend +     
                       '<div class="data-box">' +
                       '<div class="data-title">' +
                       '<h4 class="title">' + name + '</h4>' +
@@ -859,7 +860,8 @@ water.formatSensorTooltip = function(feature) {
                           '<li>Service: ' + feature.properties['service_cd'] + '</li>' +
                           '<li>Data Source: ' + feature.properties.url + 'See more about this Stream Gauge on the  <a href="' + feature.properties.url + '" target="_blank">USGS website</a></li>' +
                         
-                      '</div>' +
+                      '</div>'
+                      
 
                   '</div>';
   
@@ -1422,6 +1424,21 @@ water.loadDataPanelData = function(results){
         water.displayPanelContainer($('#data-panel'));
         water.displayPanel($('#sensor-panel'));
         $('#sensor-panel').html(content);      
+
+        $('#button-water-rights-toggle').toggle(function(){
+      
+          water.displayRights();
+            $('#button-water-rights-toggle').html('Toggle Water Rights');
+            $('.alert').hide();
+            water.map.interaction.refresh(); 
+      
+          },function(){
+            water.hideRights();
+            $('#button-water-rights-toggle').html('Toggle Water Rights');
+            water.map.interaction.refresh(); 
+        });
+
+
       }
     }
   }
