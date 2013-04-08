@@ -219,6 +219,16 @@ water.navigation = function(){
     water.hidePanel($('#search-panel')); 
   });
 
+  $('#button-water-rights-toggle').toggle(function(){
+
+    water.displayRights();
+      $('#button-water-rights-toggle').html('Hide Water Rights');
+      $('.alert').hide();
+
+    },function(){
+      water.hideRights();
+      $('#button-water-rights-toggle').html('Show Water Rights');
+  });
 };
 
 water.displaySearch = function(){
