@@ -81,12 +81,57 @@ water.search = function() {
     $('.search-alert').show();
     $('.search-alert .content').html('Searching all records for <em><strong>' + query + '</strong></em>');
     $('.search-alert .searching').show();
+    
+    var splitQuery = query.split(':');
 
-   $.get('/search/holders?value=' + query, function (data) {
-      water.drawSearchRightsMarkersLayer(data, query);
-      $('#search-panel .list-content').show();
-      $('#search-panel .list-content').html('');
-    });
+
+
+    if(splitQuery[1] !== undefined) {
+
+      var filter = splitQuery[0].toLowerCase();
+      var value = water.trim(splitQuery[1].toLowerCase());
+      if (filter === 'county') {
+  
+         $.get('/search/county?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      }
+      else if (filter === 'name') {
+  
+         $.get('/search/name?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      }
+      else if (filter === 'waterbody') {
+  
+         $.get('/search/source_name?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      }  
+      else if (filter === 'watershed') {
+  
+         $.get('/search/watershed?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      }  
+    }  
+    else {
+       $.get('/search/all?value=' + query, function (data) {
+          water.drawSearchRightsMarkersLayer(data, query);
+          $('#search-panel .list-content').show();
+          $('#search-panel .list-content').html('');
+        }); 
+    }
+
+
 };
 
 water.displayPanel = function(panel){

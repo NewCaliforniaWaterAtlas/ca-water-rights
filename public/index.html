@@ -90,10 +90,9 @@
               <h4>Map Layers</h4>
               
               <ul>
-                <li class="tinted active"><span>Tinted</span></li>
+                <li><span class="tinted active">Tinted</span> | <span class="satellite">Full Color</span> </li>
                 <li class="water active"><span>Water</span></li>
-                <li class="satellite"><span>Satellite</span></li>
-                <li class="terrain"><span>Terrain</span></li>
+<!--                 <li class="terrain"><span>Terrain</span></li> -->
               </ul>
               
               
@@ -200,7 +199,14 @@
                   <input class="search-holders" type="text" data-provide="typeahead" placeholder="What do you want to find?">
                   <button id="search-button" type="submit"><i class="icon-search icon-2x icon-override"></i></button>
                 </div>
-                <span id="search-help" class="help-block">Find water rights records by name, application id, or with keywords related to usage. Example: <em> "East Bay Municipal Utility District", "grapes", "cattle." </em>
+                <span id="search-help" class="help-block">
+                <ul>
+                  <li>Keyword search: <em>irrigation</em></li>
+                  <li>Search by County:  <em> 'county:napa'</em></li>
+                  <li>Search by Watershed:  <em> 'watershed:yuba'</em></li>
+                  <li>Search by Name:  <em>'name:PACIFIC GAS AND ELECTRIC COMPANY'</em></li>
+                  <li>Search by Water Body:  <em>'waterbody:Russian River'</em></li>
+                </ul>
                 </span>
               </div>
 
@@ -243,6 +249,20 @@
           </blockquote>
 
           <p class="primary">The primary challenge with water in California is not its scarcity, but rather how we manage it.  Many experts have mutually concluded, that a major first step to improving our management of water is by reforming how we account for it.  Whether a lack of adequate statements of diversion for surface and subsurface waters, or the existence of a fine grained environmental monitoring network, it is clear that we could do better job recording and measuring.  New instruments and institutions are necessary to accomplish this. It is not a question of technology, but one of techniques.  The technology is available and affordable, but the institutions and practices of how we govern water resources are not.  We must get control of our understanding of what is in the system at any given point.  We owe it to ourselves, our economy,  and our ecosystem.  This effort benefits all stakeholders.</p>
+        </div>
+      </section>
+
+      <section id="content">
+        <div id="api" class="container-fluid container-narrow">
+        <h2>Data & API</h2>
+        We want to encourage other developers to build interfaces and visualizations with the water rights data.
+        JSON formatted water rights data is available through a simple RESTful interface for the following datasets.<br /> The entire current dataset can be found as a mongo database on <a href="https://github.com/nerdsfornature/watertransfers">Github</a>.
+        <h3>Watershed</h3>
+        http://ca.statewater.org/search/watershed?value=yuba<br />
+        <h3>County</h3>
+        http://ca.statewater.org/search/county?value=sonoma<br />
+        <h3>Water Right Holder Name</h3>
+        http://ca.statewater.org/search/name?value=pacific gas and electric<br />
         </div>
       </section>
 

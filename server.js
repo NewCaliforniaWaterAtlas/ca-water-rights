@@ -95,23 +95,6 @@ app.post('/data', function(req, res, options){
   },{}, limit);
 });
 
-app.get('/search/watershed', function(req, res, options){
-
-  var regex = {$regex: req.query.value, $options: 'i'};
-
-  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.water_right_status': 'Active'},{'properties.water_right_status':'Permitted'},{'properties.water_right_status':'Licensed'},{'properties.water_right_status':'Adjudicated'}]}]};
-
-  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
-    if(!results || error) {
-      console.log("agent query error");
-      res.send("[]");
-      return;
-    }
-    res.send(results);
-
-  },{});
-});
-
 /** 
  * Search function for typeahead
  */
@@ -150,11 +133,11 @@ app.get('/list/watersheds', function(req, res, options){
 /** 
  * Search function for typeahead
  */
-app.get('/search/holders', function(req, res, options){
+app.get('/search/all', function(req, res, options){
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
-  var query = { $and: [ {'kind': 'right'}, {$or: [{'properties.water_right_status': 'Active'},{'properties.water_right_status':'Permitted'},{'properties.water_right_status':'Licensed'},{'properties.water_right_status':'Adjudicated'}]}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex}, {'properties.watershed': regex}, {'properties.source_name': regex}  /* ,{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.reports.2009.usage': regex}, {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex} */ /*   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
+  var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex}, {'properties.watershed': regex}, {'properties.source_name': regex}, {'properties.county': regex}   ,{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.reports.2009.usage': regex},/*  {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex}   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
 console.log(regex);
 console.log(query);
 // index
@@ -172,6 +155,75 @@ console.log(query);
 
   },{});
 });
+
+app.get('/search/county', function(req, res, options){
+
+  var regex = {$regex: req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.county': regex}]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
+
+app.get('/search/watershed', function(req, res, options){
+
+  var regex = {$regex: req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.watershed': regex}]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
+
+app.get('/search/source_name', function(req, res, options){
+
+  var regex = {$regex: req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.source_name': regex}]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
+
+app.get('/search/name', function(req, res, options){
+
+  var regex = {$regex: req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {$or: [{'properties.name': regex},{'properties.holder_name': regex}]} ]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
+
 
 app.get('/list/usage', function(req, res, options){
 
