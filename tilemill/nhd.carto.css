@@ -1,0 +1,269 @@
+Map {
+  background-color: transparent;
+}
+
+#nhd [zoom >= 0] {
+  line-width:0;
+  line-opacity: 0.1;
+  line-color: #2b2721;
+
+  [LENGTHKM > 0.5] {line-width: 0.2;    line-opacity: 0.1;}
+  [LENGTHKM > 1] {line-width: 0.4;  line-opacity: 0.2;}
+  [LENGTHKM > 3] {line-width: 0.5;   line-opacity: 0.4;}
+
+ [FTYPE = "Pipeline"] {
+   line-color: #fff;
+   line-opacity: 1;
+   line-width:1;
+   line-color: #3983a8;
+ }
+ [FTYPE = "Pipeline"] [ LENGTHKM > 40] {
+    text-fill: #fff;
+    text-size:10;
+    text-min-padding: 0;
+    text-min-path-length: 0;
+
+    text-placement: interior;
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-wrap-width: 40;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 40%);
+    text-halo-radius: 2;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  }
+
+  [FTYPE = "StreamRiver"][ LENGTHKM > 3][GNIS_NAME != ''] {
+    line-color: #3983a8;
+  }
+  
+  [GNIS_NAME = ''] {
+  	line-opacity: 0.3;
+    line-color: #2b2721;
+  }
+
+}
+
+#nhd::glow  [zoom >= 9]{
+  [FTYPE = "StreamRiver"][GNIS_NAME != ''] {
+  	line-color: #3983a8;
+  }
+  [FTYPE = "StreamRiver"][ LENGTHKM > 10] {
+
+    text-fill: #fff;
+    text-size:9;
+    text-min-padding: 0;
+    text-min-path-length: 0;
+
+    text-placement: point;
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-wrap-width: 40;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 40%);
+    text-halo-radius: 2;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  }
+ [FTYPE = "CanalDitch"] {
+   line-color: #3983a8;
+   line-opacity: 0.4;
+  }
+ [FTYPE = "Pipeline"] {
+   line-color: #fff;
+   line-opacity: 1;
+   line-width:2;
+    line-color: #3983a8;
+    text-fill: #fff;
+    text-size:10;
+    text-min-padding: 0;
+    text-min-path-length: 0;
+
+    text-placement: interior;
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-wrap-width: 40;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 40%);
+    text-halo-radius: 2;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  }
+
+  [GNIS_NAME = ''] {
+  	line-opacity: 0.3;
+    line-color: #2b2721;
+  }
+ [FTYPE = "CanalDitch"] {
+   line-color: #3983a8;
+   line-opacity: 0.2;
+  }
+}
+
+#nhd::glow  [zoom >= 10]{
+ [FTYPE = "StreamRiver"][ LENGTHKM > 6][GNIS_NAME != ''] {
+    line-color: #3983a8;
+    
+    text-fill: #fff;
+    text-size:9;
+    text-min-padding: 0;
+    text-min-path-length: 0;
+
+    text-placement: point;
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-wrap-width: 40;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 40%);
+    text-halo-radius: 2;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  }
+  [GNIS_NAME = ''] {
+   line-opacity: 0.1;    
+  }
+  
+ [FTYPE = "Pipeline"] {
+   line-color: #ffffff;
+   line-opacity: 1;
+   line-width:2.5;
+   line-color: #3983a8;
+    text-fill: #fff;
+    text-size:10;
+    text-min-padding: 0;
+    text-min-path-length: 0;
+
+    text-placement: interior;
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-wrap-width: 40;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 40%);
+    text-halo-radius: 2;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  }
+
+
+
+ [FTYPE = "CanalDitch"] {
+   line-color: #3983a8;
+   line-opacity: 0.4;
+  }
+}
+
+
+/*
+#nhd [zoom >= 10] {
+  line-width:0.1;
+  [LENGTHKM > 10] {line-width: 0.5;}
+  [LENGTHKM > 20] {line-width: 2;}
+  [LENGTHKM > 100] {line-width: 4;}
+}
+
+#nhd [zoom >= 12] {
+  line-width:0.5;
+  [LENGTHKM > 2] {line-width: 1;}
+  [LENGTHKM > 10] {line-width: 3;}
+  [LENGTHKM > 20] {line-width: 6;}
+  [LENGTHKM > 100] {line-width: 8;}
+}*/
+
+#nhdwaterbody {
+  line-color:transparent;
+  line-width:0.2;
+  polygon-opacity:0.6;
+  polygon-fill: #000;
+  
+  line-color: #3983a8;
+  line-opacity: 1;
+
+  [FTYPE = 'Reservoir'] {
+    polygon-fill: #82a3bf;
+  }
+  [FTYPE = 'LakePond'] {
+  	polygon-fill: #3983a8;
+  }
+  [FTYPE = 'SwampMarsh'] {
+  	polygon-fill: #60a593;
+  }
+  [FTYPE = 'Playa'] {
+  	polygon-fill: #9bcec0;
+  }  
+ }
+
+#nhdwaterbody [zoom >= 6] {
+  [AREASQKM > 6] {
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-size:8;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 40%);
+    text-halo-radius: 2;
+    text-placement: interior;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  } 
+}
+#nhdwaterbody [zoom >= 8] {
+   [AREASQKM > 3] {
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-size:9;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 40%);
+    text-halo-radius: 2;
+    text-placement: interior;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  }  
+
+   [AREASQKM > 8] {
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-size:14;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 40%);
+    text-halo-radius: 2;
+    text-placement: interior;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  } 
+}
+#nhdwaterbody [zoom >= 10] {
+  [AREASQKM > 0] {
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-size:11;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 20%);
+    text-halo-radius: 2;
+    text-placement: interior;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  }  
+
+   [AREASQKM > 8] {
+    text-name: "[GNIS_NAME]";
+    text-face-name: 'Muli Regular';
+    text-fill: #fff;
+    text-size:14;
+    text-allow-overlap: false;
+    text-halo-fill: fadeout(#4b4f60, 20%);
+    text-halo-radius: 2;
+    text-placement: interior;
+    text-dy: 5;
+    text-max-char-angle-delta: 20;
+  } 
+}
+

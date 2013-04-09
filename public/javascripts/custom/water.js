@@ -190,7 +190,7 @@ water.navigation = function(){
     water.displayPanel($('#sensor-panel'));
 
     water.hideRights();
-    water.hideSearch();
+/*     water.hideSearch(); */
     water.displaySensors();
     water.mode = 'sensors';
 
@@ -216,6 +216,18 @@ water.navigation = function(){
     water.hidePanel($('#search-panel')); 
   });
 
+  $('#button-water-rights-toggle').toggle(function(){
+
+    water.displayRights();
+      $('#button-water-rights-toggle').html('Hide Water Rights');
+      $('.alert').hide();
+      water.map.interaction.refresh(); 
+
+    },function(){
+      water.hideRights();
+      $('#button-water-rights-toggle').html('Show Water Rights');
+      water.map.interaction.refresh(); 
+  });
 };
 
 water.displaySearch = function(){
