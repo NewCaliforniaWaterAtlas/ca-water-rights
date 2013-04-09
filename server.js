@@ -1965,6 +1965,11 @@ watermapApp.formatEWRIMSforSaving = function(feature, results) {
 };
 
 
+/** 
+ * Daily values from USGS's Water Watch, specifically percentile classes
+ */
+
+
 app.get('/usgs/load/today', function(req, res) {
 
   request.get({ 
@@ -2073,6 +2078,31 @@ app.get('/usgs/load/today', function(req, res) {
     });
 
 
+
+});
+
+/** 
+ * Daily values from USGS RESTful API
+ */
+
+app.get('/usgs/:station/:pcode', function(req, res) {
+  var station = req.params.station;
+  var pcode = req.params.pcode;
+  
+  request.get({ 
+    url: 'http://waterservices.usgs.gov/nwis/dv/?format=json', 
+    qs: {site: station, parameterCd: pcode}
+
+    }, function(err,res,body){
+
+      var obj = JSON.parse(body);
+      // obj.value.timeSeries.forEach(function (d) {
+
+      //   console.log(d.sourceInfo.siteName);
+      
+      // });
+
+  }).pipe(res);
 
 });
 

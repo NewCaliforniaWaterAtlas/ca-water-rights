@@ -830,7 +830,11 @@ water.formatSensorTooltip = function(feature) {
   else {
     percentile = 'Not Ranked';
   }
-    
+
+  // $.when( getUSGS()).done(function(response) {
+  //   return response;
+  // });  
+
   output = '<div class="data-boxes">' +           
                       '<div class="data-box">' +
                       '<div class="data-title">' +
@@ -848,6 +852,7 @@ water.formatSensorTooltip = function(feature) {
                           '<li>Normal Mean: ' + feature.properties['normal_mean'] + '</li>' +
                           '<li>Normal Median: ' + feature.properties['normal_median'] + '</li>' +
                           '<li>Discharge: ' + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</li>' +
+                          // '<li>Discharge: ' + flowValue + " " + flowUnitAbrv + '</li>' +
    
                         '</ul>' +
                       '</div>' ;
@@ -864,6 +869,7 @@ water.formatSensorTooltip = function(feature) {
                   '</div>';
   
   return output;
+  
 };
 
 water.formatWaterRightTooltip = function(feature) {
@@ -990,7 +996,7 @@ water.formatWaterRightTooltip = function(feature) {
 
                       output += '<div class="data-box">' +
                           '<h4>About this Data</h4>' +
-                          '<p>Data re-published from the State Water Resources Control Board eWRIMS and ARCGIS servers. If this information is erroneous, please check the eWRIMS database and if the error persists, please contact their department.</p>' +
+                          '<p>Data re-published from the ' + '<a href="http://www.waterboards.ca.gov/ewrims/">State Water Resources Control Board</a>' + '<p> eWRIMS and ARCGIS servers. If this information is erroneous, please check the eWRIMS database and if the error persists, please contact their department.</p>' +
                         '<ul class="data-list">' +
                           '<li>Data Source: ' + feature.properties.source + ' <a href="' + feature.properties.source + '" target="_blank">Link</a></li>' +
                         
@@ -1396,8 +1402,26 @@ mapbox.interaction = function() {
     return interaction;
 };
 
+var getUSGS;
+var flowUnitAbrv;
+var flowValue;
+
 water.loadDataPanel = function(id){
-  console.log(id);
+  // console.log(id);
+
+  // getUSGS = function(){
+  //   $.ajax({
+  //     type: "GET",
+  //     url: "/usgs/" + id + "/00060",
+  //     dataType: 'json',
+  //     success: function(data) {
+  //       //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
+  //       flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+  //       flowValue = data.value.timeSeries[0].values[0].value[0].value;
+  //     }     
+  //   });
+  // }
+
    Core.query({query: 
      {'id': water.trim(id) }, options: {'limit': 0}}
     , water.loadDataPanelData);
