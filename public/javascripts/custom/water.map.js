@@ -680,7 +680,7 @@ water.drawRightsMarkersLayer = function(features) {
 
   var featureDetails = {
     name: "rights",
-    class: "right",
+    style: "right",
     icon: "/images/icons/water_right_icon_6_transparent.png",
     layer: "markers_rights"
   };
@@ -698,7 +698,7 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
   // right now we aren't using layer, but maybe we would.
   var featureDetails = {
     name: "rights",
-    class: "search",
+    style: "search",
     icon: "/images/icons/water_right_icon_search_6.png",
     layer: "markers_search"
   };
@@ -785,7 +785,7 @@ water.drawStationUSGSMarkersLayer = function(features) {
 
   var featureDetails = {
     name: "station_usgs",
-    class: "sensor_usgs",
+    style: "sensor_usgs",
     icon: "/images/icons/sensor_white.png",
     layer: "markers_sensor_usgs"
   };
@@ -803,7 +803,7 @@ water.makeMarker = function(feature, featureDetails) {
     var data = feature.id;
   }
       
-  img.className = 'marker-image ' + featureDetails.class;
+  img.className = 'marker-image ' + featureDetails.style;
   img.setAttribute('src', featureDetails.icon);
 
   img.setAttribute('data', data);
