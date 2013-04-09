@@ -1017,3 +1017,7 @@ span.disclaimer {
   top: 12%;
   left: 45%;
 }
+
+#api.container-narrow {
+  padding-bottom: 40px;
+}
