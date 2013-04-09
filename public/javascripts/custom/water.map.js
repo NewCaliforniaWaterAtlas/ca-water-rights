@@ -833,9 +833,7 @@ water.formatSensorTooltip = function(feature) {
 
   // $.when( getUSGS()).done(function(response) {
   //   return response;
-  // });  
-
-  output = '<div class="data-boxes">' +           
+  // });            
     
   output = '<div class="data-boxes">'  +
                water.sensorLegend +     
