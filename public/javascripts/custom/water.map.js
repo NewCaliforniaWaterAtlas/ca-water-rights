@@ -1060,7 +1060,10 @@ wax.movetip = function() {
     function moveTooltip(e) {
 /*         if(e !== undefined){ */
        var eo = wax.u.eventoffset(e);
+       console.log(e);
        console.log(wax);
+       console.log(wax.u);
+              console.log(wax.util);
        console.log(eo);
        // faux-positioning
 
