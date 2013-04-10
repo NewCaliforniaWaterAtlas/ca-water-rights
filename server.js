@@ -139,8 +139,6 @@ var App = function() {
         };
 
 
-
-
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('home.html') );
@@ -152,6 +150,37 @@ var App = function() {
         };
         
         
+        
+
+
+
+    };
+
+
+    /**
+     *  Initialize the server (express) and create the routes and register
+     *  the handlers.
+     */
+    self.initializeServer = function() {
+        self.createRoutes();
+        self.app = module.exports = express.createServer();
+
+
+          self.app.configure(function(){
+            self.app.use(express.bodyParser());
+            self.app.use(express.cookieParser());
+            self.app.use(express.methodOverride());
+            self.app.use(self.app.router);
+            self.app.use(express.static(__dirname + '/public'));
+          });
+
+        //  Add handlers for the app (from the routes).
+        for (var r in self.routes) {
+            self.app.get(r, self.routes[r]);
+        }
+
+
+
 
 
 //////////////  get
@@ -160,8 +189,7 @@ var App = function() {
 /**
  * Search database by passing it a mongo search object.
  */
-        self.routes['/data'] = function(req, res) {
-/* self.app.post('/data', function(req, res, options){ */
+self.app.post('/data', function(req, res, options){
   var blob = req.body;
 
   if(!blob.options.limit){
@@ -179,13 +207,12 @@ var App = function() {
     }
     res.send(results);
   },{}, limit);
-};
+});
 
 /** 
- * Search functions
+ * Search function for typeahead
  */
-        self.routes['/search/all'] = function(req, res, options) { 
-/* self.app.get('/search/all', function(req, res, options){ */
+self.app.get('/search/all', function(req, res, options){
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
@@ -205,9 +232,9 @@ var App = function() {
     res.send(results);
 
   },{});
-};
-        self.routes['/search/id'] = function(req, res, options) { 
-/* self.app.get('/search/id', function(req, res, options){ */
+});
+
+self.app.get('/search/id', function(req, res, options){
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -222,10 +249,9 @@ var App = function() {
     res.send(results);
 
   },{});
-};
+});
 
-        self.routes['/search/county'] = function(req, res, options) { 
-/* self.app.get('/search/county', function(req, res, options){ */
+self.app.get('/search/county', function(req, res, options){
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -240,10 +266,9 @@ var App = function() {
     res.send(results);
 
   },{});
-};
+});
 
-        self.routes['/search/watershed'] = function(req, res, options) { 
-/* self.app.get('/search/watershed', function(req, res, options){ */
+self.app.get('/search/watershed', function(req, res, options){
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -258,10 +283,9 @@ var App = function() {
     res.send(results);
 
   },{});
-};
+});
 
-        self.routes['/search/source_name'] = function(req, res, options) { 
-/* self.app.get('/search/source_name', function(req, res, options){ */
+self.app.get('/search/source_name', function(req, res, options){
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -276,10 +300,9 @@ var App = function() {
     res.send(results);
 
   },{});
-};
+});
 
-        self.routes['/search/status'] = function(req, res, options) { 
-/* self.app.get('/search/status', function(req, res, options){ */
+self.app.get('/search/status', function(req, res, options){
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -294,10 +317,9 @@ var App = function() {
     res.send(results);
 
   },{});
-};
+});
 
-        self.routes['/search/use'] = function(req, res, options) { 
-/* self.app.get('/search/use', function(req, res, options){ */
+self.app.get('/search/use', function(req, res, options){
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -312,10 +334,9 @@ var App = function() {
     res.send(results);
 
   },{});
-};
+});
 
-        self.routes['/search/name'] = function(req, res, options) { 
-/* self.app.get('/search/name', function(req, res, options){ */
+self.app.get('/search/name', function(req, res, options){
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
@@ -330,10 +351,10 @@ var App = function() {
     res.send(results);
 
   },{});
-};
+});
 
-        self.routes['/list/usage'] = function(req, res, options) { 
-/* self.app.get('/list/usage', function(req, res, options){ */
+
+self.app.get('/list/usage', function(req, res, options){
 
   var lookup =  { $and: [{'properties.reports': { $exists: true}}, {'properties.reports': { $gt: {}}}, {'coordinates': {$exists: true} } ]} ;
 
@@ -386,19 +407,17 @@ var App = function() {
      res.send(string);
   } ,{}, {'limit': 55000});
   
-};
+});
 
-        self.routes['/water-rights/summary'] = function(req, res, options) { 
-/* self.app.get('/water-rights/summary', function(req, res, options){ */
+self.app.get('/water-rights/summary', function(req, res, options){
   res.render("tally_cached.ejs",{layout:false});  
-};
+});
 
 
 /** 
  * Daily values from USGS's Water Watch, specifically percentile classes
  */
-         self.routes['/usgs/load/today'] = function(req, res) { 
-/* self.app.get('/usgs/load/today', function(req, res) { */
+self.app.get('/usgs/load/today', function(req, res) {
   request.get({ 
     url: 'http://waterwatch.usgs.gov/download/?gt=map&mt=real&st=18&dt=site&ht=&fmt=rdb'
     }, function(err,res,body){
@@ -500,13 +519,12 @@ var App = function() {
          }
         });
     });
-};
+});
 
 /** 
  * Daily values from USGS RESTful API
  */
-         self.routes['/usgs/:station/:pcode'] = function(req, res) { 
-/* self.app.get('/usgs/:station/:pcode', function(req, res) { */
+self.app.get('/usgs/:station/:pcode', function(req, res) {
   var station = req.params.station;
   var pcode = req.params.pcode;
   
@@ -519,40 +537,10 @@ var App = function() {
       var obj = JSON.parse(body);
   }).pipe(res);
 
-};
+});
 
 
 //////////////   end get
-        
-
-
-
-    };
-
-
-    /**
-     *  Initialize the server (express) and create the routes and register
-     *  the handlers.
-     */
-    self.initializeServer = function() {
-        self.createRoutes();
-        self.app = express.createServer();
-
-
-          self.app.configure(function(){
-            self.app.use(express.bodyParser());
-            self.app.use(express.cookieParser());
-            self.app.use(express.methodOverride());
-/*             self.app.use(self.router); */
-            self.app.use(express.static(__dirname + '/public'));
-          });
-
-
-        //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
-
 
 
 
