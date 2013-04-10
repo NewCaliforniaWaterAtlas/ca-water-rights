@@ -386,6 +386,7 @@ section#audience p {
   height: 100%;
   margin: 0;
   min-height: 720px;
+  background: rgb(209,231,231);
   background: rgba(209,231,231,.75);
 }
 
@@ -393,6 +394,7 @@ section#audience p {
   width: 100%;
   height: 100%;
   min-height: 630px;
+  background: rgb(256,256,256);
   background: rgba(256,256,256,0.2);
   position: absolute;
   top: 0;
@@ -408,6 +410,7 @@ section#audience p {
   top: 35%;
   width: 260px;
   height: 25px;
+  background: rgb(215,215,233);
   background: rgba(215,215,233,1);
   color: #8a8a8c;
   padding: 10px 5px;
@@ -454,7 +457,7 @@ section#audience p {
   top:40px;
   right:0px;
   height: 682px;
-
+  background: rgb(209,231,231);
   background: rgba(209,231,231,.75);
   z-index:7;
   visibility: hidden;
@@ -511,6 +514,7 @@ i.icon-override {
   padding: 10px 10px 20px 10px;
   font-size: 1.2em;
   max-height: 350px;
+  background: rgb(256,256,256);
   background: rgba(256,256,256,0.5);
     
   margin: 20px 30px;
@@ -706,6 +710,7 @@ div.data-box h4 {
   width: 90px;
   left:20px;
   z-index:999;
+  background: rgb(209,231,231);
   background: rgba(209,231,231,.9);
   font-size: 0.8em;
   line-height: 1em;
@@ -732,6 +737,7 @@ div.data-box h4 {
   width: 100px;
   
   z-index: 999;
+  background: rgb(209,231,231);
   background: rgba(209,231,231,.9);
   font-size: 0.8em;
   line-height: 1em;
@@ -754,6 +760,7 @@ div.data-box h4 {
 
 .map-attribution {
   width: 100px;
+  background: rgb(209,231,231);
   background: rgba(209,231,231,.9);
 }
 
@@ -821,6 +828,7 @@ div.data-box h4 {
 .alert {
   margin: 10px 30px;
   padding: 10px;
+  background: rgb(256,256,256);
   background: rgba(256,256,256,0.3);
   text-shadow: none;
   border: none;
@@ -914,6 +922,7 @@ table#tally #holder {
   right:0px;
   height: 682px;
   width: 33%;
+  background: rgb(215,215,233);
   background: rgba(215,215,233,.85);
   z-index:7;
   visibility: hidden;
