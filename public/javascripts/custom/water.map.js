@@ -7,7 +7,7 @@ water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
 water.map_defaults.boxsize_lat = 0.08; //pretty small box
 water.map_defaults.boxsize_lon = 0.16;
-water.map_defaults.zoom = 8;
+water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.tinted_layer = 'chachasikes.map-j07fy3iy';
 water.map_defaults.terrain_layer = 'chachasikes.map-mdxztd9c';
@@ -17,8 +17,8 @@ water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water-rights';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 11;
-water.map_defaults.lowest_tilemill_marker_level = 11;
+water.map_defaults.close_up_zoom_level = 14;
+water.map_defaults.lowest_tilemill_marker_level = 13;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -98,7 +98,7 @@ water.setupMap = function() {
   //water.map.ui.hash.add();
   water.map.ui.zoombox.add();
   
-  water.map.setZoomRange(6, 12);  // 17 is the lowest level of satellite layer.
+  water.map.setZoomRange(6, 14);  // 17 is the lowest level of satellite layer.
 /*// @TODO see if we can change the increment of the zoomer.
   // This doesn't seem to work though. Maybe make new zoomer? Maybe override easey?
   // Needs more research.
@@ -181,7 +181,8 @@ water.setupMap = function() {
 // Utility function to recenter (and maybe also to reset / reload the map)
 water.centerMap = function() {
   // default values will not load here.
-  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8);
+  //water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8); //sacramento
+  water.map.centerzoom({ lat: 37.52, lon: -115.50 }, 6); //california
 };
 
 
