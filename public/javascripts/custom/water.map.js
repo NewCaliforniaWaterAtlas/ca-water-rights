@@ -836,13 +836,12 @@ water.makeMarker = function(feature, featureDetails) {
 
 
 water.formatSensorTooltip = function(feature) {
-
-
   var output = water.renderSensorTooltip(feature);
   
   if(output) {
     water.getUSGSDischarge(feature);
-    //water.getUSGSTemperature(feature);
+    water.getUSGSTemperature(feature);
+    // water.getUSGSSalinity(feature);
   }
   return output;
 };
@@ -850,27 +849,52 @@ water.formatSensorTooltip = function(feature) {
 
 water.getUSGSDischarge = function(feature) {
   $.ajax({
-       type: "GET",
-       url: "/usgs/" + feature.id + "/00060",
-       dataType: 'json',
-       success: function(data) {
-         //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
-
-         if (data) {
-
-         feature.properties.flowValue = data.value.timeSeries[0].values[0].value[0].value;
-         feature.properties.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-console.log(feature);
-
-         $('.discharge').html('Discharge: ' + feature.properties.flowValue + ' ' + feature.properties.flowUnitAbrv);
-         }
-       }   
-     });
+    type: "GET",
+    url: "/usgs/" + feature.id + "/00060",
+    dataType: 'json',
+      success: function(data) {
+        // 00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
+        if (data) {
+          feature.properties.flowValue = data.value.timeSeries[0].values[0].value[0].value;
+          feature.properties.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+          $('.discharge').html('Discharge: ' + feature.properties.flowValue + ' ' + feature.properties.flowUnitAbrv + " (Daily Mean)");
+        }
+      }   
+  });
 };
 
-//duplicate.
+water.getUSGSTemperature = function(feature) {
+  $.ajax({
+    type: "GET",
+    url: "/usgs/" + feature.id + "/00010",
+    dataType: 'json',
+      success: function(data) {
+        //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
+        if (data) {
+          feature.properties.tempValue = data.value.timeSeries[0].values[0].value[0].value;
+          feature.properties.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+          $('.temp').html('Temperature: ' + feature.properties.tempValue + ' ' + feature.properties.tempUnitAbrv);
+        }
+      }   
+  });
+};
 
-  // water.getUSGS(id,feature);
+// water.getUSGSSalinity = function(feature) {
+//   $.ajax({
+//     type: "GET",
+//     url: "/usgs/" + feature.id + "/00096",
+//     dataType: 'json',
+//       success: function(data) {
+//         //00096 Physical Salinity, water, unfiltered, milligrams per milliliter at 25 degrees Celsius
+//         if (data) {
+//           feature.properties.salValue = data.value.timeSeries[0].values[0].value[0].value;
+//           feature.properties.salUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+//           $('.sal').html('Salinity: ' + feature.properties.salValue + ' ' + feature.properties.salUnitAbrv);
+//         }
+//       }   
+//   });
+// };
+
 water.renderSensorTooltip = function(feature) {
   var output = '';
   if(feature.properties.name) { var name = feature.properties.name } else{ name = '';}
@@ -894,19 +918,21 @@ water.renderSensorTooltip = function(feature) {
                       '<h4 class="title">' + name + '</h4>' +
                         '<div class="diversion"><span class="diversion-amount" style="background-color:' + color + '">' 
                         + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</span></div></div>' +
-                      
                         '<ul class="data-list">' +
                           '<li>Station Name: ' + feature.properties['station_name'] + '</li>' +
                           '<li>Station ID: ' + feature.properties['station_id'] + '</li>' +
                           '<li>City: ' + feature.properties['city'] + '</li>' + 
                           '<li>Date: ' + feature.properties['date'] + '</li>' +
-                          
-                          '<li>Stage: ' + feature.properties['stage'] + '</li>' +
+                          '<br>' +
+                          '<li class="discharge">Discharge: Loading</li>' +
+                          '<li>Gauge Height/Stage: ' + feature.properties['stage'] + '</li>' +
+                          '<li class="temp">Temperature: Loading</li>' +
+                          // '<li class="sal">Salinity: Loading</li>' +
+                          '<br>' +
                           '<li>Normal Mean: ' + feature.properties['normal_mean'] + '</li>' +
                           '<li>Normal Median: ' + feature.properties['normal_median'] + '</li>' +
-                           '<li class="discharge">Discharge: Loading</li>' +
-                           '<li class="temperature">Temperature: Loading</li>' +
-                           '<li class="salinity">Salinity: Loading</li>' +   
+                          '<br>' +
+                          '<li><a href="http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7"><img src="http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7" alt="" /></a></li>' +
                         '</ul>' +
                       '</div>' ;
 
@@ -918,10 +944,7 @@ water.renderSensorTooltip = function(feature) {
                           '<li>Data Source: ' + feature.properties.url + 'See more about this Stream Gauge on the  <a href="' + feature.properties.url + '" target="_blank">USGS website</a></li>' +
                         
                       '</div>'
-                      
-
                   '</div>';
-  
   return output;
 
 };
