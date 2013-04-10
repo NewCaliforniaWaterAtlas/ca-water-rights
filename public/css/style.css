@@ -31,11 +31,9 @@ h1,h2,h3,h4,h5,h6, .nav li a, .sensors h4, .map-tooltip .name {
   -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0);
   -moz-box-shadow: 0 0px 0px rgba(0,0,0,0);
   box-shadow: 0 0px 0px rgba(0,0,0,0);
-/*   border-bottom: 2px solid #f4f1d3; */
 }
 
 .navbar-inner {
-  /*background: rgba(232,232,232,0.85);*/
   background: #f4f1d3;
   padding-right: 0px;
   padding-left: 0px;
@@ -48,20 +46,17 @@ h1,h2,h3,h4,h5,h6, .nav li a, .sensors h4, .map-tooltip .name {
   text-shadow: none;
 }
 
-ul.nav {
-  width: 33%;
-  /*background-color: rgba(215,215,233,.65);*/
-/*   background-color: #d4f4f4; */
-}
 
-ul.nav>li {
-  width: 25%;
-  text-align: center;
-  font-size: 1.25em;
-  font-weight: normal;
-  line-height: 10px;
-  padding: 5px 0 5px 0;
-}
+
+
+
+  ul.nav>li {
+    text-align: center;
+    font-size: 1.25em;
+    font-weight: normal;
+    line-height: 10px;
+    padding: 5px 0 5px 0;
+  }
 
 .navbar .nav > li > a {
   color: #8a8a8c;
@@ -451,11 +446,11 @@ ul.map-list>li {
   position:absolute;
   overflow-y: scroll;
   overflow-x: hidden; 
-
+  width: 33%;
   top:40px;
   right:0px;
   height: 682px;
-  width: 33%;
+
   background: rgba(209,231,231,.75);
   z-index:7;
   visibility: hidden;
@@ -513,14 +508,14 @@ i.icon-override {
   font-size: 1.2em;
   max-height: 350px;
   background: rgba(256,256,256,0.5);
+    
   margin: 20px 30px;
   display: none;
 }
 
 .panel {
   position: absolute;
-  display: inline-table;
-/*   padding: 30px; */
+  display: inline-block;
   width: 100%;
   float: left;
 }
@@ -1029,4 +1024,67 @@ span.disclaimer {
 
 .search-filters em {
   font-weight: bold;
+}
+
+/* Large desktop */
+@media (min-width: 1200px) { 
+  ul.nav,
+  #data-panel {
+    width: 33%;
+  }
+  
+  ul.nav>li {
+    width: 25%;
+  }
+
+  input[type="text"], input {
+    width: 280px;
+  }
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 1200px) {
+  ul.nav,
+  #data-panel {
+    width: 40%;
+  }
+  
+  ul.nav>li {
+    width: 25%;
+  }
+
+  input[type="text"], input {
+    width: 80%;
+  }
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {   
+  ul.nav,
+  #data-panel {
+    width: 50%;
+  }
+  
+  ul.nav>li {
+    width: 25%;
+  }
+
+  input[type="text"], input {
+    width: 80%;
+  }
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+  ul.nav,
+  #data-panel {
+    width: 50%;
+  }
+  
+  ul.nav>li {
+    width: 25%;
+  }
+  input[type="text"], input {
+    width: 80%;
+  }
 }
