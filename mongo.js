@@ -9,7 +9,7 @@ var ObjectID = require('mongodb').ObjectID;
 MongoDB = function(credentials) {
 
   var credentials = credentials;
-  
+  console.log(credentials);
   this.db= new Db(credentials.mongo_db, new Server(credentials.mongo_host, credentials.mongo_port, {auto_reconnect: true}, {}));
   
   console.log(credentials.mongo_db);
