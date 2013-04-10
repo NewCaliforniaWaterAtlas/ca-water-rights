@@ -1513,6 +1513,7 @@ water.loadDataPanelData = function(results){
 };
 
 water.trim = function(str){
+  if(str !== undefined){
     str = str.replace(/^\s+/, '');
     for (var i = str.length - 1; i >= 0; i--) {
         if (/\S/.test(str.charAt(i))) {
@@ -1520,7 +1521,8 @@ water.trim = function(str){
             break;
         }
     }
-    return str;
+  }
+  return str;
 };
 
 water.addCommas = function(nStr) {
