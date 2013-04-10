@@ -1122,6 +1122,7 @@ wax.movetip = function() {
         var content;
         if (popped) return;
         if ((o.e.type === 'mousemove' || !o.e.type)) {
+          console.log('movetip');
             content = o.formatter({ format: 'teaser' }, o.data);
             
             if (!content) return;
@@ -1161,6 +1162,10 @@ wax.movetip = function() {
               moveTooltip(o.e);
             }
 
+            $(tooltip).bind("click", function() {
+              water.loadDataPanel(id);
+            }); 
+
 
             bean.add(close, 'click touchend', function closeClick(e) {
                 e.stop();
@@ -1169,6 +1174,7 @@ wax.movetip = function() {
             });
         }
         if (tooltip) {
+        console.log('movetip2');
           _tooltipOffset = wax.u.offset(tooltip);
           _contextOffset = wax.u.offset(parent);
           if(o.e !== undefined && o !== undefined) {
