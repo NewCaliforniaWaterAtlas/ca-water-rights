@@ -939,9 +939,23 @@ water.renderSensorTooltip = function(feature) {
     percentile = 'Not Ranked';
   }
 
-  water.hydrograph = '';
-  water.hydrograph_url = 'http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7';
   
+  water.hydrograph_url = 'http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7';
+
+
+  water.hydrograph = '<a href="' + water.hydrograph_url + '" class="hydrograph"></a>'; //file exists
+
+  var img = $("<img />").attr('src', water.hydrograph_url)
+    .load(function() {
+        if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+            $(".hydrograph").remove();
+        } else {
+            $(".hydrograph").append(img);
+        }
+    });
+
+  
+/*
   $.ajax({
     url: water.hydrograph_url,
     type:'HEAD',
@@ -950,9 +964,10 @@ water.renderSensorTooltip = function(feature) {
 
     },
     success: function() {
-      water.hydrograph = '<a href="' + hydrograph_url + '"><img src="' + hydrograph_url + '" alt="USGS Hydrograph" /></a>'; //file exists
+
     }
   });
+*/
 
   
   output = '<div class="data-boxes">'  +
