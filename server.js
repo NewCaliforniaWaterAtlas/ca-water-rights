@@ -84,7 +84,7 @@ app.post('/data', function(req, res, options){
   else {
     var limit = blob.options.limit;
   }
-  console.log(limit);
+
   engine.find_many_by(blob,function(error, results) {
     if(!results || error) {
       console.log("agent query error");
@@ -192,7 +192,7 @@ app.get('/search/watershed', function(req, res, options){
 
 app.get('/search/source_name', function(req, res, options){
 
-  var regex = {$regex: req.query.value, $options: 'i'};
+  var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
   var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.source_name': regex}]};
 
