@@ -1079,6 +1079,8 @@ wax.movetip = function() {
 
        // faux-positioning
 
+      if(eo !== undefined){
+
        if ((_tooltipOffset.height + eo.y) >
            (_contextOffset.top + _contextOffset.height) &&
            (_contextOffset.height > _tooltipOffset.height)) {
@@ -1095,6 +1097,7 @@ wax.movetip = function() {
 
        tooltip.style.left = eo.x + 'px';
        tooltip.style.top = eo.y + 'px';
+       }
     }
 
     // Get the active tooltip for a layer or create a new one if no tooltip exists.
