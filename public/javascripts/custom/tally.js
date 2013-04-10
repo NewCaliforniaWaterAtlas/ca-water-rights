@@ -11,7 +11,7 @@ $('#data-panel').css('visibility','visible');
 $('.water-right').bind('click',function() {
 
   var id = $(this).attr('data');
-  console.log(id);
+  //console.log(id);
   loadDataPanel(id);
 });
 
@@ -22,7 +22,7 @@ $('.water-right').bind('click',function() {
 
 
 loadDataPanel = function(id){
-  console.log(id);
+  //console.log(id);
    Core.query({query: 
      {'id': trim(id) }, options: {'limit': 0}}
     , loadDataPanelData);
@@ -130,7 +130,7 @@ formatWaterRightTooltip = function(feature) {
                         '<h4>Reports</h4>';
 
       if(feature.properties.reports !== undefined) {
-        console.log(feature.properties.reports);
+        //console.log(feature.properties.reports);
                         
         var properties = feature.properties;
         for(var year in feature.properties.reports){

@@ -202,20 +202,20 @@ water.loadMarkers = function() {
     if(zoom >= water.map_defaults.close_up_zoom_level) {
       $('.zoom-level').html("Move map to load more information.");
     
-      console.log('zoomed in');
+      //console.log('zoomed in');
     
       water.map.addCallback('panned', water.markersPanned);
       // @TODO Add alert to pan to load more up to date info
       
       if(zoom >= water.map_defaults.close_up_zoom_level) {
-        console.log('dispatching');
+        //console.log('dispatching');
         //@TODO not working yet...
         water.triggerMarkers();
       }
       
       // Hide the marker tiles layer because they will not display properly.
       if(zoom >= water.map_defaults.lowest_tilemill_marker_level) {
-        console.log('marker last level');
+        //console.log('marker last level');
         water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
       }
       else {
@@ -231,7 +231,7 @@ water.loadMarkers = function() {
       
     }
     else {
-      console.log('zoomed out - removing pan');
+      //console.log('zoomed out - removing pan');
       water.map.removeCallback('panned', water.markersPanned);
 
       if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined && water.mode === 'rights') {
@@ -269,11 +269,11 @@ water.triggerMarkers = function () {
 };
 
 water.markersPanned = function() {
-  console.log('zoomed in and panned');
+  //console.log('zoomed in and panned');
   
   var zoom = water.map.zoom();
   if(zoom >= water.map_defaults.close_up_zoom_level && water.mode === 'rights') {
-    console.log('sufficient zoom');
+    //console.log('sufficient zoom');
     
     var dragtime_old = water.map_interaction.dragtime;
     var d = new Date();
@@ -281,7 +281,7 @@ water.markersPanned = function() {
     var dragtime_diff = water.map_interaction.dragtime - dragtime_old;
     
     if(dragtime_diff < 500 || water.map_interaction.dragtime_override === true) {
-      console.log('in if');
+      //console.log('in if');
       water.map_interaction.counter++;
       // console.log("moving " + water.map_interaction.counter + " " + dragtime_diff);
       if (water.map_interaction.wait === null) {
@@ -290,7 +290,7 @@ water.markersPanned = function() {
       water.map_interaction.dragtime_override = false;
     }
     else {
-      console.log('in else');
+      //console.log('in else');
       clearTimeout(water.map_interaction.wait);
       water.map_interaction.wait = null;
       water.map_interaction.dragtime_override = false;
@@ -583,7 +583,7 @@ water.alterMarker = function(marker){
 };
 
 water.processHighlights = function() {
-  console.log('processing');
+  //console.log('processing');
   $('#search-panel .list-content table tr').each(function() {
   
     $(this).find('td span.highlight').bind('click', function(){
@@ -599,7 +599,7 @@ water.processHighlights = function() {
       var markerPosition = $('.marker-image[data=' + id + ']').css("-webkit-transform");
 //      "matrix(1, 0, 0, 1, 543, 211)"
       var position = markerPosition.replace(')','').split(',');
-      console.log(position);
+      //console.log(position);
        var point = {
         x: position[4],
         y: position[5]
@@ -1040,7 +1040,7 @@ water.formatWaterRightTooltip = function(feature) {
                         '<h4>Reports & Statements of Use</h4>';
 
       if(feature.properties.reports !== undefined) {
-        console.log(feature.properties.reports);
+        //console.log(feature.properties.reports);
                         
         var properties = feature.properties;
         for(var year in feature.properties.reports){

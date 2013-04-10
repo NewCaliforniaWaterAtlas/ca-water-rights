@@ -25,7 +25,7 @@ water.loadJSON = function(vars) {
  */
 water.setData = function(data, statusText, jqxhr) {
   if (data.length === undefined) {
-    console.log("no results or undefined");
+    //console.log("no results or undefined");
     return false;
   } 
   water.jsonData[jqxhr.vars.dataName] = data;
