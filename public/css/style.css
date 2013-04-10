@@ -1053,6 +1053,11 @@ span.disclaimer {
   font-weight: bold;
 }
 
+
+.browser-warning {
+  font-size: 1.2em;
+}
+
 /* Large desktop */
 @media (min-width: 1200px) { 
   ul.nav,
@@ -1066,6 +1071,14 @@ span.disclaimer {
 
   input[type="text"], input {
     width: 280px;
+  }
+
+  .modal {
+    width: 600px;
+  }
+  
+  .modal-body {
+    max-height: 420px;
   }
 }
  
@@ -1083,6 +1096,12 @@ span.disclaimer {
   input[type="text"], input {
     width: 80%;
   }
+
+
+  .modal-body {
+    max-height: 480px;
+  }
+
 }
  
 /* Landscape phone to portrait tablet */
@@ -1115,3 +1134,5 @@ span.disclaimer {
     width: 80%;
   }
 }
+
+

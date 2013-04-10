@@ -18,6 +18,13 @@ window.onload = function() {
         water.centerMap();
     }
   });
+  
+  
+  if (($.browser.msie && $.browser.version.substr(0,1) <= '10')
+    || ($.browser.mozilla && $.browser.version.substr(0,1) != '3')) {
+        $('.browserWarning').show();
+  }
+  
 };
 
 water.loadModal = function() {
