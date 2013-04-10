@@ -13,7 +13,7 @@ Core.query = function(filter,callback, options) {
   var mycallback = callback;
   var myurl = "/data";
 
-  console.log(filter);
+  //console.log(filter);
 
   $.post(myurl, filter, function(results) { Core.query_callback(results,mycallback); });
 
@@ -36,7 +36,9 @@ Core.query2 = function(path,callback) {
     url: path,
     dataType: 'json',
     success: callback,
-    error: function(error) { console.log("Core::query error! " + error); return false; }
+    error: function(error) { 
+      //console.log("Core::query error! " + error); 
+      return false; }
   });
 }
 
@@ -44,7 +46,7 @@ Core.query2 = function(path,callback) {
 Core.query_callback = function(results,mycallback) {
 
   // any data?
-  console.log("kernel::query:: json call done " + results.length );
+  //console.log("kernel::query:: json call done " + results.length );
 
   if(!results) {
     //console.log("kernel::query BADNESS got nothing!");

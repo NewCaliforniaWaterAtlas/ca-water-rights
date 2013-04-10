@@ -7,7 +7,7 @@ water.map_defaults.lat = 38.52;
 water.map_defaults.lon = -121.50;
 water.map_defaults.boxsize_lat = 0.08; //pretty small box
 water.map_defaults.boxsize_lon = 0.16;
-water.map_defaults.zoom = 8;
+water.map_defaults.zoom = 6;
 water.map_defaults.satellite_layer = 'chachasikes.map-oguxg9bo';
 water.map_defaults.tinted_layer = 'chachasikes.map-j07fy3iy';
 water.map_defaults.terrain_layer = 'chachasikes.map-mdxztd9c';
@@ -17,8 +17,8 @@ water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water-rights';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 11;
-water.map_defaults.lowest_tilemill_marker_level = 11;
+water.map_defaults.close_up_zoom_level = 14;
+water.map_defaults.lowest_tilemill_marker_level = 13;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -68,7 +68,7 @@ water.setupMap = function() {
 
   water.rightsLegend = $('div.rights-legend').html();
   water.sensorLegend = $('div.sensor-legend').html();
-
+  water.sensorAlert = '<div class="sensor-alert"><a href="#" id="button-water-rights-toggle">Toggle Water Rights</a></div>';
 
 
 
@@ -98,7 +98,7 @@ water.setupMap = function() {
   //water.map.ui.hash.add();
   water.map.ui.zoombox.add();
   
-  water.map.setZoomRange(6, 12);  // 17 is the lowest level of satellite layer.
+  water.map.setZoomRange(6, 16);  // 17 is the lowest level of satellite layer.
 /*// @TODO see if we can change the increment of the zoomer.
   // This doesn't seem to work though. Maybe make new zoomer? Maybe override easey?
   // Needs more research.
@@ -181,7 +181,8 @@ water.setupMap = function() {
 // Utility function to recenter (and maybe also to reset / reload the map)
 water.centerMap = function() {
   // default values will not load here.
-  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8);
+  //water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8); //sacramento
+  water.map.centerzoom({ lat: 37.52, lon: -115.50 }, 6); //california
 };
 
 
@@ -201,20 +202,20 @@ water.loadMarkers = function() {
     if(zoom >= water.map_defaults.close_up_zoom_level) {
       $('.zoom-level').html("Move map to load more information.");
     
-      console.log('zoomed in');
+      //console.log('zoomed in');
     
       water.map.addCallback('panned', water.markersPanned);
       // @TODO Add alert to pan to load more up to date info
       
       if(zoom >= water.map_defaults.close_up_zoom_level) {
-        console.log('dispatching');
+        //console.log('dispatching');
         //@TODO not working yet...
         water.triggerMarkers();
       }
       
       // Hide the marker tiles layer because they will not display properly.
       if(zoom >= water.map_defaults.lowest_tilemill_marker_level) {
-        console.log('marker last level');
+        //console.log('marker last level');
         water.map.removeLayer(water.map_defaults.zoomed_out_marker_layer);
       }
       else {
@@ -230,7 +231,7 @@ water.loadMarkers = function() {
       
     }
     else {
-      console.log('zoomed out - removing pan');
+      //console.log('zoomed out - removing pan');
       water.map.removeCallback('panned', water.markersPanned);
 
       if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined && water.mode === 'rights') {
@@ -268,11 +269,11 @@ water.triggerMarkers = function () {
 };
 
 water.markersPanned = function() {
-  console.log('zoomed in and panned');
+  //console.log('zoomed in and panned');
   
   var zoom = water.map.zoom();
   if(zoom >= water.map_defaults.close_up_zoom_level && water.mode === 'rights') {
-    console.log('sufficient zoom');
+    //console.log('sufficient zoom');
     
     var dragtime_old = water.map_interaction.dragtime;
     var d = new Date();
@@ -280,7 +281,7 @@ water.markersPanned = function() {
     var dragtime_diff = water.map_interaction.dragtime - dragtime_old;
     
     if(dragtime_diff < 500 || water.map_interaction.dragtime_override === true) {
-      console.log('in if');
+      //console.log('in if');
       water.map_interaction.counter++;
       // console.log("moving " + water.map_interaction.counter + " " + dragtime_diff);
       if (water.map_interaction.wait === null) {
@@ -289,7 +290,7 @@ water.markersPanned = function() {
       water.map_interaction.dragtime_override = false;
     }
     else {
-      console.log('in else');
+      //console.log('in else');
       clearTimeout(water.map_interaction.wait);
       water.map_interaction.wait = null;
       water.map_interaction.dragtime_override = false;
@@ -486,36 +487,47 @@ water.setSensorColor = function(value,string) {
     value = parseFloat(value);
     
     var color = '';
+    var typecolor = '';
     if(value > 0){
       color = '#892e19'; // red
+      typecolor = '#000';
       name = "red";
     }
     if(value > 10){
       color = '#cbb031'; // yellow
+      typecolor = '#000';
       name = "yellow";
     }
     if(value > 24){
       color = '#6ba739'; // green
+      typecolor = '#000';
       name = "green";
     }
     if(value > 75){
       color = '#3b6ba5'; // blue
+      typecolor = '#000';
       name = "blue";
     }
     if(value > 90){
       color = '#990099'; // purple
+      typecolor = '#000';
       name = "purple";
     }
     if (value === undefined || value == NaN){
       color = '#FFFFFF'; // purple
+      typecolor = '#a8a8a8';
       name = "white";  
     }
   
+    var style = {
+      color: color,
+      typecolor: typecolor
+    };
     if(string){
       return name;
     }
     else {
-      return color;
+      return style;
     }
   }
   else {
@@ -548,20 +560,26 @@ water.drawSensorMarkers = function(features, featureDetails) {
    water[featureDetails.layer + "_interaction"].formatter(function(feature) {
       var color = '';
       var color_name = '';
+      var style = {};
     if(feature.properties['percentile'] !== undefined){
-      color = water.setSensorColor(feature.properties['percentile']);
-      color_name = water.setSensorColor(feature.properties['percentile'], true);
+      var style = water.setSensorColor(feature.properties['percentile']);
+      style_name = water.setSensorColor(feature.properties['percentile'], true);
     }
     else {
-      color = "#FFFFFF";
-      color_name = "white";
+      style.color = "#FFFFFF";
+      style_name = "white";
     }
 
-      var o ='<span class="content sensor" style="background-color:' + color + '">' 
+    feature.properties['discharge_value'] = '-';
+    feature.properties['discharge_unit'] = '-';
+    
+    water.getUSGSDischarge(feature);
+
+      var o ='<span class="content sensor" style="background-color:' + style.color + ';color:'+ style.typecolor +'">' 
              + '<span class="name">' + feature.properties.name + '</span>';
 
       if (feature.properties['discharge_value'] !== undefined) {
-        o += '<span class="diversion"><span class="diversion-amount">' + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</span></span>'
+        o += '<span class="diversion"><span class="diversion-amount discharge">' + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</span></span>'
            
       }
       o += '<span class="load_id">' + feature.properties.id + '</span>';
@@ -582,7 +600,7 @@ water.alterMarker = function(marker){
 };
 
 water.processHighlights = function() {
-  console.log('processing');
+  //console.log('processing');
   $('#search-panel .list-content table tr').each(function() {
   
     $(this).find('td span.highlight').bind('click', function(){
@@ -598,7 +616,7 @@ water.processHighlights = function() {
       var markerPosition = $('.marker-image[data=' + id + ']').css("-webkit-transform");
 //      "matrix(1, 0, 0, 1, 543, 211)"
       var position = markerPosition.replace(')','').split(',');
-      console.log(position);
+      //console.log(position);
        var point = {
         x: position[4],
         y: position[5]
@@ -813,9 +831,10 @@ water.drawStationUSGSMarkersLayer = function(features) {
 
 water.makeMarker = function(feature, featureDetails) {
   var img = document.createElement('img');
+  var style = {};
   if(feature.properties['percentile'] !== undefined){
-    var color = water.setSensorColor(feature.properties['percentile']);
-    var color_name = water.setSensorColor(feature.properties['percentile'], true);
+    var style = water.setSensorColor(feature.properties['percentile']);
+    var style_name = water.setSensorColor(feature.properties['percentile'], true);
   }
   if(feature.kind == 'right'){
     var data = feature.id;
@@ -826,8 +845,8 @@ water.makeMarker = function(feature, featureDetails) {
 
   img.setAttribute('data', data);
 
-  if(color_name !== undefined){
-    img.setAttribute('src', '/images/icons/sensor_' + color_name + '.png');
+  if(style_name !== undefined){
+    img.setAttribute('src', '/images/icons/sensor_' + style_name + '.png');
   }
   img.feature = feature;
   return img;
@@ -835,7 +854,11 @@ water.makeMarker = function(feature, featureDetails) {
 
 
 water.formatSensorTooltip = function(feature) {
+  feature.properties['discharge_value'] = '-';
+  feature.properties['discharge_unit'] = '-';  
+
   var output = water.renderSensorTooltip(feature);
+
   
   if(output) {
     water.getUSGSDischarge(feature);
@@ -854,9 +877,14 @@ water.getUSGSDischarge = function(feature) {
       success: function(data) {
         // 00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
         if (data) {
-          feature.properties.flowValue = data.value.timeSeries[0].values[0].value[0].value;
-          feature.properties.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-          $('.discharge').html('Discharge: ' + feature.properties.flowValue + ' ' + feature.properties.flowUnitAbrv + " (Daily Mean)");
+          if(data.value.timeSeries) {
+            if(data.value.timeSeries[0].values) {
+            feature.properties.flowValue = data.value.timeSeries[0].values[0].value[0].value;
+            feature.properties.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            $('.discharge').html(feature.properties.flowValue + ' ' + feature.properties.flowUnitAbrv);
+            $('.discharge-long').html(feature.properties.flowValue + ' ' + feature.properties.flowUnitAbrv + " (Daily Mean)");
+            }
+          }
         }
       }   
   });
@@ -870,9 +898,11 @@ water.getUSGSTemperature = function(feature) {
       success: function(data) {
         //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
         if (data) {
-          feature.properties.tempValue = data.value.timeSeries[0].values[0].value[0].value;
-          feature.properties.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-          $('.temp').html('Temperature: ' + feature.properties.tempValue + ' ' + feature.properties.tempUnitAbrv);
+            if (data.value.timeSeries) {
+            feature.properties.tempValue = data.value.timeSeries[0].values[0].value[0].value;
+            feature.properties.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            $('.temp').html('Temperature: ' + feature.properties.tempValue + ' ' + feature.properties.tempUnitAbrv);
+          }
         }
       }   
   });
@@ -899,23 +929,24 @@ water.renderSensorTooltip = function(feature) {
   if(feature.properties.name) { var name = feature.properties.name } else{ name = '';}
   var id = feature.properties.id;
   var status = feature.properties.status;
-
+  var style = {};
   if(feature.properties['percentile'] !== undefined){
-    var color = water.setSensorColor(feature.properties['percentile']);
-    var color_name = water.setSensorColor(feature.properties['percentile'], true);
+    style = water.setSensorColor(feature.properties['percentile']);
+    var style_name = water.setSensorColor(feature.properties['percentile'], true);
     percentile = feature.properties['percentile'];
   }
   else {
     percentile = 'Not Ranked';
   }
 
+  var hydrograph = '<a href="http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7"><img src="http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7" alt="USGS Hydrograph" /></a>';
+  
   output = '<div class="data-boxes">'  +
-               water.sensorLegend +     
 
                       '<div class="data-box">' +
                       '<div class="data-title">' +
                       '<h4 class="title">' + name + '</h4>' +
-                        '<div class="diversion"><span class="diversion-amount" style="background-color:' + color + '">' 
+                        '<div class="diversion"><span class="diversion-amount discharge" style="background-color:' + style.color + ';color:' + style.typecolor + '">' 
                         + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</span></div></div>' +
                         '<ul class="data-list">' +
                           '<li>Station Name: ' + feature.properties['station_name'] + '</li>' +
@@ -923,7 +954,7 @@ water.renderSensorTooltip = function(feature) {
                           '<li>City: ' + feature.properties['city'] + '</li>' + 
                           '<li>Date: ' + feature.properties['date'] + '</li>' +
                           '<br>' +
-                          '<li class="discharge">Discharge: Loading</li>' +
+                          '<li>Discharge: <span class="discharge-long">Loading</span></li>' +
                           '<li>Gauge Height/Stage: ' + feature.properties['stage'] + '</li>' +
                           '<li class="temp">Temperature: Loading</li>' +
                           // '<li class="sal">Salinity: Loading</li>' +
@@ -931,7 +962,7 @@ water.renderSensorTooltip = function(feature) {
                           '<li>Normal Mean: ' + feature.properties['normal_mean'] + '</li>' +
                           '<li>Normal Median: ' + feature.properties['normal_median'] + '</li>' +
                           '<br>' +
-                          '<li><a href="http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7"><img src="http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7" alt="" /></a></li>' +
+                          '<li>' + hydrograph + '</li>' +
                         '</ul>' +
                       '</div>' ;
 
@@ -942,8 +973,13 @@ water.renderSensorTooltip = function(feature) {
                           '<li>Service: ' + feature.properties['service_cd'] + '</li>' +
                           '<li>Data Source: ' + feature.properties.url + 'See more about this Stream Gauge on the  <a href="' + feature.properties.url + '" target="_blank">USGS website</a></li>' +
                         
-                      '</div>'
+                      '</div>' +
+                      water.sensorLegend +     
                   '</div>';
+              $('.alert').html(water.sensorAlert);
+              
+              
+              $('.alert').show();
   return output;
 
 };
@@ -959,8 +995,8 @@ water.formatWaterRightTooltip = function(feature) {
   if(feature.properties.holder_name) {primary_owner += feature.properties.holder_name;}
 
   if(feature.properties['percentile'] !== undefined){
-    var color = water.setSensorColor(parseFloat(feature.properties['% normal(mean)'].replace('%','')));
-    var color_name = water.setSensorColor(parseFloat(feature.properties['% normal(mean)'].replace('%','')), true);
+    var style = water.setSensorColor(parseFloat(feature.properties['% normal(mean)'].replace('%','')));
+    var style_name = water.setSensorColor(parseFloat(feature.properties['% normal(mean)'].replace('%','')), true);
   }
     
   output = '<div class="data-boxes">' +           
@@ -1039,7 +1075,7 @@ water.formatWaterRightTooltip = function(feature) {
                         '<h4>Reports & Statements of Use</h4>';
 
       if(feature.properties.reports !== undefined) {
-        console.log(feature.properties.reports);
+        //console.log(feature.properties.reports);
                         
         var properties = feature.properties;
         for(var year in feature.properties.reports){
@@ -1513,7 +1549,7 @@ water.loadDataPanelData = function(results){
       
           water.displayRights();
             $('#button-water-rights-toggle').html('Toggle Water Rights');
-            $('.alert').hide();
+            $('.alert').show();
             water.map.interaction.refresh(); 
       
           },function(){

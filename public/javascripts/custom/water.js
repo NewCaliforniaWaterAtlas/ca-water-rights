@@ -47,14 +47,16 @@ water.setupAddress = function () {
   });
 
   // Navigate to a tab when the history changes
-  window.addEventListener("popstate", function(e) {
-    var activeTab = $('[href=' + location.hash + ']');
-    if (activeTab.length) {
-      activeTab.tab('show');
-    } else {
-      $('.nav-tabs a:first').tab('show');
-    }
-  });
+  if(window.addEventListener) { 
+    window.addEventListener("popstate", function(e) {
+      var activeTab = $('[href=' + location.hash + ']');
+      if (activeTab.length) {
+        activeTab.tab('show');
+      } else {
+        $('.nav-tabs a:first').tab('show');
+      }
+    });
+  }
 };
 
 water.setupFilters = function () {
