@@ -855,9 +855,13 @@ water.getUSGSDischarge = function(feature) {
       success: function(data) {
         // 00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
         if (data) {
-          feature.properties.flowValue = data.value.timeSeries[0].values[0].value[0].value;
-          feature.properties.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-          $('.discharge').html('Discharge: ' + feature.properties.flowValue + ' ' + feature.properties.flowUnitAbrv + " (Daily Mean)");
+          if(data.value.timeSeries) {
+            if(data.value.timeSeries[0].values) {
+            feature.properties.flowValue = data.value.timeSeries[0].values[0].value[0].value;
+            feature.properties.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            $('.discharge').html('Discharge: ' + feature.properties.flowValue + ' ' + feature.properties.flowUnitAbrv + " (Daily Mean)");
+            }
+          }
         }
       }   
   });
@@ -871,9 +875,11 @@ water.getUSGSTemperature = function(feature) {
       success: function(data) {
         //00010 Physical Temperature, water, degrees Celsius, Temperature, water  deg C
         if (data) {
-          feature.properties.tempValue = data.value.timeSeries[0].values[0].value[0].value;
-          feature.properties.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-          $('.temp').html('Temperature: ' + feature.properties.tempValue + ' ' + feature.properties.tempUnitAbrv);
+            if (data.value.timeSeries) {
+            feature.properties.tempValue = data.value.timeSeries[0].values[0].value[0].value;
+            feature.properties.tempUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+            $('.temp').html('Temperature: ' + feature.properties.tempValue + ' ' + feature.properties.tempUnitAbrv);
+          }
         }
       }   
   });
