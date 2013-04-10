@@ -361,6 +361,16 @@ section#audience p {
   padding-right: 0px;
 }
 
+#state-logo-rights {
+  position: absolute;
+  margin-left: 100px;
+  margin-top: 60px;
+}
+
+img#state-img-rights {
+  height: 95px;
+}
+
 /*<!-- ============ Map Stuff ============ -->*/ 
 
 #map-outer-container {
