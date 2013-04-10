@@ -1135,7 +1135,7 @@ wax.movetip = function() {
               id = $(content).find('span.application_pod').html(); // Tilemill still has old markup
             }
             
-            $(tooltip).bind("click touchstart", function() {
+            $(tooltip).bind("click", function() {
               water.loadDataPanel(id);
             });                  
         } else {
