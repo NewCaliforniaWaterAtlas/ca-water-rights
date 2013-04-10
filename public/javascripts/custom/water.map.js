@@ -1179,6 +1179,10 @@ wax.movetip = function() {
           _contextOffset = wax.u.offset(parent);
           if(o.e !== undefined && o !== undefined) {
             moveTooltip(o.e);
+            
+                        $(tooltip).bind("click", function() {
+              water.loadDataPanel(id);
+            }); 
           }
         }
 
