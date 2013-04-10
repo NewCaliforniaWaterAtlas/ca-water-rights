@@ -884,7 +884,7 @@ water.renderSensorTooltip = function(feature) {
   else {
     percentile = 'Not Ranked';
   }
-  
+
   output = '<div class="data-boxes">'  +
                water.sensorLegend +     
 
@@ -903,7 +903,6 @@ water.renderSensorTooltip = function(feature) {
                           '<li>Stage: ' + feature.properties['stage'] + '</li>' +
                           '<li>Normal Mean: ' + feature.properties['normal_mean'] + '</li>' +
                           '<li>Normal Median: ' + feature.properties['normal_median'] + '</li>' +
-/*                           '<li>Discharge: ' + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</li>' + */
                            '<li class="discharge">Discharge: Loading</li>' +
                            '<li class="temperature">Temperature: Loading</li>' +
                            '<li class="salinity">Salinity: Loading</li>' +   
@@ -1454,20 +1453,14 @@ mapbox.interaction = function() {
     return interaction;
 };
 
-
-
-
 water.loadDataPanel = function(id){
   // console.log(id);
-
-   Core.query({query: 
-     {'id': water.trim(id) }, options: {'limit': 0}}
-    , water.loadDataPanelData);
+  Core.query({query: 
+   {'id': water.trim(id) }, options: {'limit': 0}}
+  , water.loadDataPanelData);
 };
 
-
 water.loadDataPanelData = function(results){
-
 
   if(results !== undefined){
     if(results[0] !== undefined){
