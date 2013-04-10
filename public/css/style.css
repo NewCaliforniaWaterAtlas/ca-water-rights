@@ -179,7 +179,7 @@ button.close {
 section#footer,
 section#about {
   border-top: 2px solid #dcdcdc;
-  height: 400px;
+  /*height: 400px;*/
   /*background: #e8e8e8;*/
   background: #f3f3f3;
   padding: 90px 0;
@@ -354,6 +354,18 @@ ul.map-list>li {
 
 .data-box>p:last-child {
   padding-bottom: 30px;
+}
+
+section#audience {
+  background-color: #f4f1d3;
+  border-color: #f1edc5;
+  border-style: solid;
+  border-width: 2px 0px 2px 0px;
+}
+
+section#audience p {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
