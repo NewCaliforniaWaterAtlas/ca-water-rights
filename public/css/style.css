@@ -243,7 +243,9 @@ section#footer {
 }
 
 #state-logo>img {
-  height: 125px;
+  height: 110px;
+  margin-top: -25px;
+  
 }
 
 .title-block {
