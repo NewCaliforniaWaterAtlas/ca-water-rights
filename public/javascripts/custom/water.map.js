@@ -939,7 +939,21 @@ water.renderSensorTooltip = function(feature) {
     percentile = 'Not Ranked';
   }
 
-  var hydrograph = '<a href="http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7"><img src="http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7" alt="USGS Hydrograph" /></a>';
+  water.hydrograph = '';
+  water.hydrograph_url = 'http://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no='+ id +'&parm_cd=00060&period=7';
+  
+  $.ajax({
+    url: water.hydrograph_url,
+    type:'HEAD',
+    error: function() {
+      water.hydrograph = 'USGS Hydrograph not available at this time.';
+
+    },
+    success: function() {
+      water.hydrograph = '<a href="' + hydrograph_url + '"><img src="' + hydrograph_url + '" alt="USGS Hydrograph" /></a>'; //file exists
+    }
+  });
+
   
   output = '<div class="data-boxes">'  +
 
@@ -962,7 +976,7 @@ water.renderSensorTooltip = function(feature) {
                           '<li>Normal Mean: ' + feature.properties['normal_mean'] + '</li>' +
                           '<li>Normal Median: ' + feature.properties['normal_median'] + '</li>' +
                           '<br>' +
-                          '<li>' + hydrograph + '</li>' +
+                          '<li>' + water.hydrograph + '</li>' +
                         '</ul>' +
                       '</div>' ;
 

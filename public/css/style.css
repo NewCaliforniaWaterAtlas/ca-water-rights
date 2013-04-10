@@ -700,12 +700,12 @@ div.data-box h4 {
   top:370px;
   height: 180px;
   width: 100px;
-  left:0px;
+  left:20px;
   z-index:999;
   background: rgba(209,231,231,.9);
   font-size: 0.8em;
   line-height: 1em;
-  padding: 4px 4px 4px 30px;
+  padding: 4px 4px 4px 10px;
   
 }
 
