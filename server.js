@@ -104,11 +104,6 @@ app.get('/list/watersheds', function(req, res, options){
 
   engine.find_many_by({query: query, options: {'limit': 0/* , 'sort': {'properties.watershed':1 } */}},function(error, results) {
     if(!results || error) {
-/*       console.log("agent query error"); */
-
-
-      
-
       res.send("[]");
       return;
     }
@@ -138,8 +133,7 @@ app.get('/search/all', function(req, res, options){
   var regex = {$regex: req.query.value, $options: 'i'};
 
   var query = { $and: [ {'kind': 'right'}, {'coordinates': {$exists: true}}, {$or: [{'properties.holder_name': regex},{'properties.name': regex},{'properties.primary_owner': regex},{'properties.application_pod': regex},{'properties.use_code': regex}, {'properties.reports.2011.usage': regex},{'properties.reports.2011.usage_quantity': regex}, {'properties.watershed': regex}, {'properties.source_name': regex}, {'properties.county': regex}   ,{'properties.reports.2010.usage': regex}, {'properties.reports.2010.usage_quantity': regex},{'properties.reports.2009.usage': regex},/*  {'properties.reports.2009.usage_quantity': regex},{'properties.reports.2008.usage': regex}, {'properties.reports.2008.usage_quantity': regex}   {'properties.reports': { $in:  {$or: [{'this.usage': regex},{'this.usage_quantity': regex}] }} } */     ]}]};
-console.log(regex);
-console.log(query);
+
 // index
 
 /*  {'kind':1, 'properties.holder_name':1, 'properties.name':1, 'properties.primary_owner':1, 'properties.application_pod':1, 'properties.use_code':1,  'properties.reports.2011.usage':1, 'properties.reports.2011.usage_quantity':1, 'properties.reports.2010.usage':1, 'properties.reports.2010.usage_quantity':1} */
@@ -156,9 +150,26 @@ console.log(query);
   },{});
 });
 
+app.get('/search/id', function(req, res, options){
+
+  var regex = {$regex: '^' + req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.id': regex}]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
+
 app.get('/search/county', function(req, res, options){
 
-  var regex = {$regex: req.query.value, $options: 'i'};
+  var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
   var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.county': regex}]};
 
@@ -175,7 +186,7 @@ app.get('/search/county', function(req, res, options){
 
 app.get('/search/watershed', function(req, res, options){
 
-  var regex = {$regex: req.query.value, $options: 'i'};
+  var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
   var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.watershed': regex}]};
 
@@ -195,6 +206,40 @@ app.get('/search/source_name', function(req, res, options){
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
   var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.source_name': regex}]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
+
+app.get('/search/status', function(req, res, options){
+
+  var regex = {$regex: '^' + req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.water_right_status': regex}]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
+
+app.get('/search/use', function(req, res, options){
+
+  var regex = {$regex: '^' + req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.use_code': regex}]};
 
   engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
     if(!results || error) {
@@ -1822,48 +1867,8 @@ watermapApp.formatXLSforSaving = function(feature) {
     "permit_terms": feature['Permit Terms'],
     "term_id": feature['Term ID'],
     "version_number": feature['Version Number']
-
-
-   // "diversion_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_TYPE'], 
-   // "diversion_code_type": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.DIVERSION_CODE_TYPE'], 
-   // "water_right_status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.WR_STATUS'],
-   // "storage_type": feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.STORAGE_TYPE'],
-   // "organization_type" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.ENTITY_TYPE'],
-   // "application_pod" : feature['EWRIMS.Points_of_Diversion.APPL_POD'],
-   // "township_number" : feature['EWRIMS.Points_of_Diversion.TOWNSHIP_NUMBER'],
-   // "range_direction" : feature['EWRIMS.Points_of_Diversion.RANGE_DIRECTION'],
-   // "township_direction" : feature['EWRIMS.Points_of_Diversion.TOWNSHIP_DIRECTION'],
-   // "range_number" : feature['EWRIMS.Points_of_Diversion.RANGE_NUMBER'],
-  //  "section_number" : feature['EWRIMS.Points_of_Diversion.SECTION_NUMBER'],
-  //  "latitude" : feature['EWRIMS.Points_of_Diversion.LATITUDE'],
-  //  "longitude" : feature['EWRIMS.Points_of_Diversion.LONGITUDE'],
-  //  "location_method" : feature['EWRIMS.Points_of_Diversion.LOCATION_METHOD'],
-  //  "moveable" : feature['EWRIMS.Points_of_Diversion.MOVEABLE'],
-  //  "well_number" : feature['EWRIMS.Points_of_Diversion.WELL_NUMBER'],
-  //  "quad_map_name" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_NAME'],
-  //  "quad_map_num" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_NUM'],
-  //  "quad_map_min_ser" : feature['EWRIMS.Points_of_Diversion.QUAD_MAP_MIN_SER'],
-  //  "special_area" : feature['EWRIMS.Points_of_Diversion.SPECIAL_AREA'],          
-  //  "last_update_user_id" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_USER_ID'],
-  //  "date_last_updated" : feature['EWRIMS.Points_of_Diversion.LAST_UPDATE_DATE'],
-  //  "status" : feature['GIS2EWRIMS.MV_GIS_POD_ATTRIBUTES.POD_STATUS']
   };
-  
-/*
-  
-  if(results.kind === 'right') {
-  
-    var resaveObj = results;
-    resaveObj.kind = "right";
-    resaveObj.coordinates = obj.coordinates;
-    resaveObj.geometry = obj.geometry;
-    resaveObj.properties = obj.properties;
-    obj = resaveObj;
-    console.log("resaving");
 
-  }
-*/
-/*     console.log(obj);   */
   return obj;
 };
 

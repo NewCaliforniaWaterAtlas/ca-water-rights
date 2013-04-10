@@ -122,6 +122,30 @@ water.search = function() {
             $('#search-panel .list-content').html('');
           });
       }  
+      else if (filter === 'status') {
+  
+         $.get('/search/status?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      }  
+      else if (filter === 'use') {
+  
+         $.get('/search/use?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      }  
+      else if (filter === 'id') {
+  
+         $.get('/search/id?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      } 
     }  
     else {
        $.get('/search/all?value=' + query, function (data) {
