@@ -4,8 +4,7 @@
 font-family: 'Questrial', sans-serif;
 font-family: 'Muli', sans-serif;
 font-family: 'Rosario', sans-serif;
-*/
-
+*/ 
 body, input{
   font-family: 'Rosario', sans-serif;
 }
@@ -83,7 +82,7 @@ ul.nav>li {
   margin-left: 5px;
   font-size: 1.5em;
   font-weight: bold;
-  font-family: 'Muli', sans-serif;
+  font-family: 'Questrial', sans-serif;
   text-transform: uppercase; 
 }
 
@@ -733,9 +732,9 @@ div.data-box h4 {
 
 #tile-switcher {
 position: absolute;
-top: 97px;
-height: 68px;
-width: 137px;
+top: 580px;
+height: 100px;
+width: 90px;
 
 z-index: 999;
 background: rgba(209,231,231,.9);
@@ -1026,4 +1025,8 @@ span.disclaimer {
 
 #api.container-narrow {
   padding-bottom: 40px;
+}
+
+.search-filters em {
+  font-weight: bold;
 }

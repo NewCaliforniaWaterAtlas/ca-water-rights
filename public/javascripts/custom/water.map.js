@@ -69,9 +69,26 @@ water.setupMap = function() {
   water.rightsLegend = $('div.rights-legend').html();
   water.sensorLegend = $('div.sensor-legend').html();
 
+
+
+
+
+
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
     water.map.addLayer(interactive.layer);
+
+
+/*
+    water.map.interaction.on(wax.tooltip().parent(water.map.parent).events()).on({
+        'on.block': function() {
+            // stop interacting with map through overlay
+            $('.wax-tooltip').on('click touchstart touchend touchmove mousemove dblclick', function(e) {
+                e.stopPropagation();
+            });
+        }
+    });
+*/
     water.map.interaction.movetip();
     water.map.interaction.refresh();
   });
@@ -158,7 +175,8 @@ water.setupMap = function() {
   
   $(".alert .content").html("Showing 20,000+ current water rights.");
   water.zoomWayInButton();
-};
+
+  };
 
 // Utility function to recenter (and maybe also to reset / reload the map)
 water.centerMap = function() {
@@ -1080,14 +1098,11 @@ wax.movetip = function() {
         parent;
 
     function moveTooltip(e) {
-/*         if(e !== undefined){ */
        var eo = wax.u.eventoffset(e);
-       console.log(e);
-       console.log(wax);
-       console.log(wax.u);
-              console.log(wax.util);
-       console.log(eo);
+
        // faux-positioning
+
+      if(eo !== undefined){
 
        if ((_tooltipOffset.height + eo.y) >
            (_contextOffset.top + _contextOffset.height) &&
@@ -1105,6 +1120,7 @@ wax.movetip = function() {
 
        tooltip.style.left = eo.x + 'px';
        tooltip.style.top = eo.y + 'px';
+       }
     }
 
     // Get the active tooltip for a layer or create a new one if no tooltip exists.
@@ -1164,7 +1180,9 @@ wax.movetip = function() {
 
             _tooltipOffset = wax.u.offset(tooltip);
             _contextOffset = wax.u.offset(parent);
-            moveTooltip(o.e);
+            if(o.e !== undefined && o !== undefined) {
+              moveTooltip(o.e);
+            }
 
             bean.add(close, 'click touchend', function closeClick(e) {
                 e.stop();
@@ -1175,11 +1193,22 @@ wax.movetip = function() {
         if (tooltip) {
           _tooltipOffset = wax.u.offset(tooltip);
           _contextOffset = wax.u.offset(parent);
-          moveTooltip(o.e);
+          if(o.e !== undefined && o !== undefined) {
+            moveTooltip(o.e);
+          }
         }
 
     }
-
+/*
+    water.map.interaction.on(wax.tooltip().parent(water.map.parent).events()).on({
+        'on.block': function() {
+            // stop interacting with map through overlay
+            $('.wax-tooltip').on('click touchstart touchend touchmove mousemove dblclick', function(e) {
+                e.stopPropagation();
+            });
+        }
+    });
+*/
     function off() {
         parent.style.cursor = 'default';
         if (!popped) hide();
@@ -1199,7 +1228,6 @@ wax.movetip = function() {
     };
 
     return t;
-/*     } */
 };
 
 // Override markers interaction
@@ -1501,6 +1529,7 @@ water.loadDataPanelData = function(results){
 };
 
 water.trim = function(str){
+  if(str !== undefined){
     str = str.replace(/^\s+/, '');
     for (var i = str.length - 1; i >= 0; i--) {
         if (/\S/.test(str.charAt(i))) {
@@ -1508,7 +1537,8 @@ water.trim = function(str){
             break;
         }
     }
-    return str;
+  }
+  return str;
 };
 
 water.addCommas = function(nStr) {
