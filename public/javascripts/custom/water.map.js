@@ -831,9 +831,9 @@ water.formatSensorTooltip = function(feature) {
     percentile = 'Not Ranked';
   }
 
-  // $.when( getUSGS()).done(function(response) {
-  //   return response;
-  // });            
+  $.when( getUSGS()).done(function(response) {
+    return response;
+  });            
     
   output = '<div class="data-boxes">'  +
                water.sensorLegend +     
@@ -854,7 +854,7 @@ water.formatSensorTooltip = function(feature) {
                           '<li>Normal Mean: ' + feature.properties['normal_mean'] + '</li>' +
                           '<li>Normal Median: ' + feature.properties['normal_median'] + '</li>' +
                           '<li>Discharge: ' + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</li>' +
-                          // '<li>Discharge: ' + flowValue + " " + flowUnitAbrv + '</li>' +
+                          '<li>Discharge: ' + flowValue + " " + flowUnitAbrv + '</li>' +
    
                         '</ul>' +
                       '</div>' ;
@@ -1412,18 +1412,18 @@ var flowValue;
 water.loadDataPanel = function(id){
   // console.log(id);
 
-  // getUSGS = function(){
-  //   $.ajax({
-  //     type: "GET",
-  //     url: "/usgs/" + id + "/00060",
-  //     dataType: 'json',
-  //     success: function(data) {
-  //       //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
-  //       flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-  //       flowValue = data.value.timeSeries[0].values[0].value[0].value;
-  //     }     
-  //   });
-  // }
+  getUSGS = function(){
+    $.ajax({
+      type: "GET",
+      url: "/usgs/" + id + "/00060",
+      dataType: 'json',
+      success: function(data) {
+        //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
+        flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+        flowValue = data.value.timeSeries[0].values[0].value[0].value;
+      }     
+    });
+  }
 
    Core.query({query: 
      {'id': water.trim(id) }, options: {'limit': 0}}
