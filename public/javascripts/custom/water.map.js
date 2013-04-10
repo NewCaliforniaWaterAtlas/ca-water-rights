@@ -1075,7 +1075,6 @@ wax.movetip = function() {
         parent;
 
     function moveTooltip(e) {
-      console.log(e.touches[0].pageX);
        var eo = wax.u.eventoffset(e);
 
        // faux-positioning
@@ -1155,8 +1154,9 @@ wax.movetip = function() {
 
             _tooltipOffset = wax.u.offset(tooltip);
             _contextOffset = wax.u.offset(parent);
-            moveTooltip(o.e);
-
+            if(o.e !== undefined && o !== undefined) {
+              moveTooltip(o.e);
+            }
 
 
             bean.add(close, 'click touchend', function closeClick(e) {
@@ -1168,7 +1168,9 @@ wax.movetip = function() {
         if (tooltip) {
           _tooltipOffset = wax.u.offset(tooltip);
           _contextOffset = wax.u.offset(parent);
-          moveTooltip(o.e);
+          if(o.e !== undefined && o !== undefined) {
+            moveTooltip(o.e);
+          }
         }
 
     }
