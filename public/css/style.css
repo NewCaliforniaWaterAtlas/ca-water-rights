@@ -46,17 +46,13 @@ h1,h2,h3,h4,h5,h6, .nav li a, .sensors h4, .map-tooltip .name {
   text-shadow: none;
 }
 
-
-
-
-
-  ul.nav>li {
-    text-align: center;
-    font-size: 1.25em;
-    font-weight: normal;
-    line-height: 10px;
-    padding: 5px 0 5px 0;
-  }
+ul.nav>li {
+  text-align: center;
+  font-size: 1.25em;
+  font-weight: normal;
+  line-height: 10px;
+  padding: 5px 0 5px 0;
+}
 
 .navbar .nav > li > a {
   color: #8a8a8c;
@@ -448,10 +444,6 @@ section#audience p {
   height:20px;
 }
 
-.map-attribution {
-  background:#F9F0DC;
-}
-
 /*<!-- ============ data panel ============ -->*/ 
 
 #data-panel {  
@@ -711,7 +703,7 @@ div.data-box h4 {
   position:absolute;
   top:370px;
   height: 180px;
-  width: 100px;
+  width: 90px;
   left:20px;
   z-index:999;
   background: rgba(209,231,231,.9);
@@ -723,38 +715,52 @@ div.data-box h4 {
 
 #legend dt {
   float: left;
-  width: 80px;
-}
-
-#legend dd {
-
+  width: 70px;
 }
 
 #tile-switcher h4 {
   font-size: 1.2em;
-  padding-left: 20px;
-  margin: 4px;
+  padding-left: 10px;
+  margin: 4px 0px 4px 0;
   line-height: 1em;
 }
 
 #tile-switcher {
-position: absolute;
-top: 580px;
-height: 100px;
-width: 90px;
+  position: absolute;
+  top: 580px;
+  height: 90px;
+  width: 100px;
+  
+  z-index: 999;
+  background: rgba(209,231,231,.9);
+  font-size: 0.8em;
+  line-height: 1em;
+  padding: 4px;
+}
 
-z-index: 999;
-background: rgba(209,231,231,.9);
-font-size: 0.8em;
-line-height: 1em;
-padding: 4px;}
+#tile-switcher>ul {
+  padding: 4 4 4 10px;
+  margin: 0 0 0 10px;
+}
 
 #tile-switcher ul li {
-  list-style: none
+  list-style: none;
+  padding: 0;
 }
 
 #tile-switcher ul li.active {
   color: #000;
+}
+
+.map-attribution {
+  width: 100px;
+  background: rgba(209,231,231,.9);
+}
+
+.map-attribution a {
+  color: #514E48;
+  font-family: 'Muli', sans-serif;
+  font-size: 0.9em;
 }
 
 #pan {
