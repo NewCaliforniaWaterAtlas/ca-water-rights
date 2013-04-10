@@ -16,7 +16,6 @@ h1,h2,h3,h4,h5,h6, .nav li a, .sensors h4, .map-tooltip .name {
   text-transform: uppercase;
 }
 
-
 .nav li a {
   font-size: 0.9em;
 }
@@ -348,6 +347,14 @@ ul.map-list>li {
 
 #body-heading-right {
   padding-left: 0px;
+}
+
+.data-box>p {
+  padding-bottom: 0px;
+}
+
+.data-box>p:last-child {
+  padding-bottom: 30px;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
@@ -822,7 +829,6 @@ padding: 4px;}
   margin-bottom: 30px;
 }
 
-
 .search-alert {
   display: none;
 }
@@ -856,6 +862,7 @@ padding: 4px;}
   display: inline-block;
   line-height: 1em;
 }
+
 .citation a,
 .citation {
   color: #bababa;
@@ -863,7 +870,6 @@ padding: 4px;}
   text-decoration: none;
   line-height: 1em;
 }
-
 
 table#tally {
   margin: 5px;
@@ -932,11 +938,12 @@ table#tally #holder {
 
 
 #search-table tr {
-
 }
+
 #search-table td.name {
   text-align: left;
 }
+
 #search-table td.amount {
   width: 20%;
   font-size: 0.9em;
@@ -967,6 +974,7 @@ h4.map-symbols {
 ul.map-symbols {
   padding: 0;
 }
+
 ul.map-symbols li {
   padding: 0px 10px;
   list-style: square;
@@ -975,7 +983,6 @@ ul.map-symbols li {
 
 span.disclaimer {
   font-size: 0.7em;
-
 }
 
 .page-tally table  {
@@ -1001,7 +1008,6 @@ span.disclaimer {
 
 .block {
   padding: 10px;
-
 }
 
 .tally td.definition {
