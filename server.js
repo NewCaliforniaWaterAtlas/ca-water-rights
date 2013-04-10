@@ -66,9 +66,6 @@ var App = function() {
         };
     };
 
-
-
-
     /**
      *  Populate the cache.
      */
@@ -142,42 +139,19 @@ var App = function() {
         };
 
 
+
+
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            res.send(app.cache_get('home.html') );
+            res.send(self.cache_get('home.html') );
         };
 
         self.routes['/water-rights'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            res.send(app.cache_get('index.html') );
+            res.send(self.cache_get('index.html') );
         };
-
-
-
-    };
-
-
-    /**
-     *  Initialize the server (express) and create the routes and register
-     *  the handlers.
-     */
-    self.initializeServer = function() {
-        self.createRoutes();
-        self.app = express.createServer();
-
-        //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
-
-
-          self.app.configure(function(){
-            self.app.use(express.bodyParser());
-            self.app.use(express.cookieParser());
-            self.app.use(express.methodOverride());
-            self.app.use(self.router);
-            self.app.use(express.static(__dirname + '/public'));
-          });
+        
+        
 
 
 //////////////  get
@@ -186,7 +160,8 @@ var App = function() {
 /**
  * Search database by passing it a mongo search object.
  */
-self.app.post('/data', function(req, res, options){
+        self.routes['/data'] = function(req, res) {
+/* self.app.post('/data', function(req, res, options){ */
   var blob = req.body;
 
   if(!blob.options.limit){
@@ -204,12 +179,13 @@ self.app.post('/data', function(req, res, options){
     }
     res.send(results);
   },{}, limit);
-});
+};
 
 /** 
- * Search function for typeahead
+ * Search functions
  */
-self.app.get('/search/all', function(req, res, options){
+        self.routes['/search/all'] = function(req, res, options) { 
+/* self.app.get('/search/all', function(req, res, options){ */
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
@@ -229,9 +205,9 @@ self.app.get('/search/all', function(req, res, options){
     res.send(results);
 
   },{});
-});
-
-self.app.get('/search/id', function(req, res, options){
+};
+        self.routes['/search/id'] = function(req, res, options) { 
+/* self.app.get('/search/id', function(req, res, options){ */
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -246,9 +222,10 @@ self.app.get('/search/id', function(req, res, options){
     res.send(results);
 
   },{});
-});
+};
 
-self.app.get('/search/county', function(req, res, options){
+        self.routes['/search/county'] = function(req, res, options) { 
+/* self.app.get('/search/county', function(req, res, options){ */
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -263,9 +240,10 @@ self.app.get('/search/county', function(req, res, options){
     res.send(results);
 
   },{});
-});
+};
 
-self.app.get('/search/watershed', function(req, res, options){
+        self.routes['/search/watershed'] = function(req, res, options) { 
+/* self.app.get('/search/watershed', function(req, res, options){ */
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -280,9 +258,10 @@ self.app.get('/search/watershed', function(req, res, options){
     res.send(results);
 
   },{});
-});
+};
 
-self.app.get('/search/source_name', function(req, res, options){
+        self.routes['/search/source_name'] = function(req, res, options) { 
+/* self.app.get('/search/source_name', function(req, res, options){ */
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -297,9 +276,10 @@ self.app.get('/search/source_name', function(req, res, options){
     res.send(results);
 
   },{});
-});
+};
 
-self.app.get('/search/status', function(req, res, options){
+        self.routes['/search/status'] = function(req, res, options) { 
+/* self.app.get('/search/status', function(req, res, options){ */
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -314,9 +294,10 @@ self.app.get('/search/status', function(req, res, options){
     res.send(results);
 
   },{});
-});
+};
 
-self.app.get('/search/use', function(req, res, options){
+        self.routes['/search/use'] = function(req, res, options) { 
+/* self.app.get('/search/use', function(req, res, options){ */
 
   var regex = {$regex: '^' + req.query.value, $options: 'i'};
 
@@ -331,9 +312,10 @@ self.app.get('/search/use', function(req, res, options){
     res.send(results);
 
   },{});
-});
+};
 
-self.app.get('/search/name', function(req, res, options){
+        self.routes['/search/name'] = function(req, res, options) { 
+/* self.app.get('/search/name', function(req, res, options){ */
 
   var regex = {$regex: req.query.value, $options: 'i'};
 
@@ -348,10 +330,10 @@ self.app.get('/search/name', function(req, res, options){
     res.send(results);
 
   },{});
-});
+};
 
-
-self.app.get('/list/usage', function(req, res, options){
+        self.routes['/list/usage'] = function(req, res, options) { 
+/* self.app.get('/list/usage', function(req, res, options){ */
 
   var lookup =  { $and: [{'properties.reports': { $exists: true}}, {'properties.reports': { $gt: {}}}, {'coordinates': {$exists: true} } ]} ;
 
@@ -404,17 +386,19 @@ self.app.get('/list/usage', function(req, res, options){
      res.send(string);
   } ,{}, {'limit': 55000});
   
-});
+};
 
-self.app.get('/water-rights/summary', function(req, res, options){
+        self.routes['/water-rights/summary'] = function(req, res, options) { 
+/* self.app.get('/water-rights/summary', function(req, res, options){ */
   res.render("tally_cached.ejs",{layout:false});  
-});
+};
 
 
 /** 
  * Daily values from USGS's Water Watch, specifically percentile classes
  */
-self.app.get('/usgs/load/today', function(req, res) {
+         self.routes['/usgs/load/today'] = function(req, res) { 
+/* self.app.get('/usgs/load/today', function(req, res) { */
   request.get({ 
     url: 'http://waterwatch.usgs.gov/download/?gt=map&mt=real&st=18&dt=site&ht=&fmt=rdb'
     }, function(err,res,body){
@@ -516,12 +500,13 @@ self.app.get('/usgs/load/today', function(req, res) {
          }
         });
     });
-});
+};
 
 /** 
  * Daily values from USGS RESTful API
  */
-self.app.get('/usgs/:station/:pcode', function(req, res) {
+         self.routes['/usgs/:station/:pcode'] = function(req, res) { 
+/* self.app.get('/usgs/:station/:pcode', function(req, res) { */
   var station = req.params.station;
   var pcode = req.params.pcode;
   
@@ -534,10 +519,40 @@ self.app.get('/usgs/:station/:pcode', function(req, res) {
       var obj = JSON.parse(body);
   }).pipe(res);
 
-});
+};
 
 
 //////////////   end get
+        
+
+
+
+    };
+
+
+    /**
+     *  Initialize the server (express) and create the routes and register
+     *  the handlers.
+     */
+    self.initializeServer = function() {
+        self.createRoutes();
+        self.app = express.createServer();
+
+
+          self.app.configure(function(){
+            self.app.use(express.bodyParser());
+            self.app.use(express.cookieParser());
+            self.app.use(express.methodOverride());
+/*             self.app.use(self.router); */
+            self.app.use(express.static(__dirname + '/public'));
+          });
+
+
+        //  Add handlers for the app (from the routes).
+        for (var r in self.routes) {
+            self.app.get(r, self.routes[r]);
+        }
+
 
 
 
