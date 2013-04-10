@@ -581,7 +581,7 @@ div.data-box h4 {
     width:220px\8; /*< IE 9*/
   width: 380px;
   overflow:auto;
-  z-index: 6;
+  z-index: 800;
   cursor: pointer;
 }
 
@@ -1016,4 +1016,8 @@ span.disclaimer {
 .modal {
   top: 12%;
   left: 45%;
+}
+
+#api.container-narrow {
+  padding-bottom: 40px;
 }

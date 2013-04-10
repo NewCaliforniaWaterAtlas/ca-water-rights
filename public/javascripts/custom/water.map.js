@@ -680,7 +680,7 @@ water.drawRightsMarkersLayer = function(features) {
 
   var featureDetails = {
     name: "rights",
-    class: "right",
+    style: "right",
     icon: "/images/icons/water_right_icon_6_transparent.png",
     layer: "markers_rights"
   };
@@ -698,7 +698,7 @@ water.drawSearchRightsMarkersLayer = function(features, query) {
   // right now we aren't using layer, but maybe we would.
   var featureDetails = {
     name: "rights",
-    class: "search",
+    style: "search",
     icon: "/images/icons/water_right_icon_search_6.png",
     layer: "markers_search"
   };
@@ -785,7 +785,7 @@ water.drawStationUSGSMarkersLayer = function(features) {
 
   var featureDetails = {
     name: "station_usgs",
-    class: "sensor_usgs",
+    style: "sensor_usgs",
     icon: "/images/icons/sensor_white.png",
     layer: "markers_sensor_usgs"
   };
@@ -803,7 +803,7 @@ water.makeMarker = function(feature, featureDetails) {
     var data = feature.id;
   }
       
-  img.className = 'marker-image ' + featureDetails.class;
+  img.className = 'marker-image ' + featureDetails.style;
   img.setAttribute('src', featureDetails.icon);
 
   img.setAttribute('data', data);
@@ -817,6 +817,42 @@ water.makeMarker = function(feature, featureDetails) {
 
 
 water.formatSensorTooltip = function(feature) {
+
+
+  var output = water.renderSensorTooltip(feature);
+  
+  if(output) {
+    water.getUSGSDischarge(feature);
+    //water.getUSGSTemperature(feature);
+  }
+  return output;
+};
+
+
+water.getUSGSDischarge = function(feature) {
+  $.ajax({
+       type: "GET",
+       url: "/usgs/" + feature.id + "/00060",
+       dataType: 'json',
+       success: function(data) {
+         //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
+
+         if (data) {
+
+         feature.properties.flowValue = data.value.timeSeries[0].values[0].value[0].value;
+         feature.properties.flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
+console.log(feature);
+
+         $('.discharge').html('Discharge: ' + feature.properties.flowValue + ' ' + feature.properties.flowUnitAbrv);
+         }
+       }   
+     });
+};
+
+//duplicate.
+
+  // water.getUSGS(id,feature);
+water.renderSensorTooltip = function(feature) {
   var output = '';
   if(feature.properties.name) { var name = feature.properties.name } else{ name = '';}
   var id = feature.properties.id;
@@ -831,10 +867,6 @@ water.formatSensorTooltip = function(feature) {
     percentile = 'Not Ranked';
   }
 
-  $.when( getUSGS()).done(function(response) {
-    return response;
-  });            
-    
   output = '<div class="data-boxes">'  +
                water.sensorLegend +     
 
@@ -853,9 +885,9 @@ water.formatSensorTooltip = function(feature) {
                           '<li>Stage: ' + feature.properties['stage'] + '</li>' +
                           '<li>Normal Mean: ' + feature.properties['normal_mean'] + '</li>' +
                           '<li>Normal Median: ' + feature.properties['normal_median'] + '</li>' +
-                          '<li>Discharge: ' + feature.properties['discharge_value'] + " " + feature.properties['discharge_unit'] + '</li>' +
-                          '<li>Discharge: ' + flowValue + " " + flowUnitAbrv + '</li>' +
-   
+                           '<li class="discharge">Discharge: Loading</li>' +
+                           '<li class="temperature">Temperature: Loading</li>' +
+                           '<li class="salinity">Salinity: Loading</li>' +   
                         '</ul>' +
                       '</div>' ;
 
@@ -872,7 +904,7 @@ water.formatSensorTooltip = function(feature) {
                   '</div>';
   
   return output;
-  
+
 };
 
 water.formatWaterRightTooltip = function(feature) {
@@ -1025,8 +1057,15 @@ wax.movetip = function() {
         parent;
 
     function moveTooltip(e) {
+/*         if(e !== undefined){ */
        var eo = wax.u.eventoffset(e);
+       console.log(e);
+       console.log(wax);
+       console.log(wax.u);
+              console.log(wax.util);
+       console.log(eo);
        // faux-positioning
+
        if ((_tooltipOffset.height + eo.y) >
            (_contextOffset.top + _contextOffset.height) &&
            (_contextOffset.height > _tooltipOffset.height)) {
@@ -1137,6 +1176,7 @@ wax.movetip = function() {
     };
 
     return t;
+/*     } */
 };
 
 // Override markers interaction
@@ -1219,22 +1259,6 @@ mapbox.markers.interaction = function(mmg) {
         on = false;
         return mi;
     };
-
-/*
-    // display a list of markers.
-    if(inextent.length > 0) {
-      $('#rights-panel .list-content').html('<h3>Water Rights</h3>' + inextent.join('<br />'));
-    }
-    else {
-      $('#rights-panel .list-content').html();
-    }
-    $('.map-tooltip').close();
-    
-  });
-  
-};
-*/
-
 
     mi.bindMarker = function(marker) {
         var delayed_close = function() {
@@ -1405,32 +1429,15 @@ mapbox.interaction = function() {
     return interaction;
 };
 
-var getUSGS;
-var flowUnitAbrv;
-var flowValue;
-
 water.loadDataPanel = function(id){
   // console.log(id);
-
-  getUSGS = function(){
-    $.ajax({
-      type: "GET",
-      url: "/usgs/" + id + "/00060",
-      dataType: 'json',
-      success: function(data) {
-        //00060 Physical Discharge, cubic feet per second, Stream flow, mean. daily cfs
-        flowUnitAbrv = data.value.timeSeries[0].variable.unit.unitAbbreviation;
-        flowValue = data.value.timeSeries[0].values[0].value[0].value;
-      }     
-    });
-  }
-
-   Core.query({query: 
-     {'id': water.trim(id) }, options: {'limit': 0}}
-    , water.loadDataPanelData);
+  Core.query({query: 
+   {'id': water.trim(id) }, options: {'limit': 0}}
+  , water.loadDataPanelData);
 };
 
 water.loadDataPanelData = function(results){
+
   if(results !== undefined){
     if(results[0] !== undefined){
       if(results[0]['kind'] === "right"){    
@@ -1443,6 +1450,7 @@ water.loadDataPanelData = function(results){
         
       }
       else if(results[0]['kind'] === "usgs_gage_data") {
+
         var content = water.formatSensorTooltip(results[0]);
         water.navigationHidePanels();
         
