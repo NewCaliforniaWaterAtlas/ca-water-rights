@@ -20,11 +20,6 @@ window.onload = function() {
   });
   
   
-  if (($.browser.msie && $.browser.version.substr(0,1) <= '10')
-    || ($.browser.mozilla && $.browser.version.substr(0,1) != '3')) {
-        $('.browserWarning').show();
-  }
-  
 };
 
 water.loadModal = function() {
@@ -307,7 +302,7 @@ water.displaySensors = function(){
   $('.alert').hide();
   water.loadSensorLayer();
   water.map.interaction.refresh(); 
-
+  $('#legend .sensors').css('left', '20');
   $('#legend').show();
   $('#legend .sensors').show();
 };
@@ -315,6 +310,8 @@ water.displaySensors = function(){
 water.hideSensors = function(){
   $('#legend .sensors').hide();
   $('#legend').hide();
+
+  $('#legend .sensors').css('left', '-1000');
   water.map.removeLayer(water['markers_sensor_usgs']);
   water.map.interaction.refresh();
 };
