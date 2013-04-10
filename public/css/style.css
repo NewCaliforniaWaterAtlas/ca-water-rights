@@ -606,7 +606,7 @@ div.data-box h4 {
 .map-tooltip .content.sensor:before{
   content: "STREAM GAUGE";
   display: block;
-  color: #a8a8a8;
+  color: #000;
   font-size: 0.8em;
 }
 
@@ -632,7 +632,7 @@ div.data-box h4 {
   text-transform: capitalize;
   display: inline-block;
   float: left;
-  width: 68%;
+  width: 60%;
   margin-right: 5px;
   height: auto;
   cursor: pointer;
@@ -641,7 +641,7 @@ div.data-box h4 {
 #sensor-panel span.diversion,
 #rights-panel span.diversion,
 .map-tooltip span.diversion {
-  width: 30%;
+  width: 35%;
   display: inline-block;
 }
 #search-table span.diversion-amount,
