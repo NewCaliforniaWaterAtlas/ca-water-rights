@@ -476,7 +476,8 @@ watermapApp.tallyDiversions = function(feature){
 };
 
 
-app.get('/summary', function(req, res, options){
+app.get('/water-rights/summary', function(req, res, options){
+/*
   watermapApp.tally.diversion = 0;
   watermapApp.tally.storage = 0;
   watermapApp.tally.count = 0; 
@@ -548,18 +549,9 @@ app.get('/summary', function(req, res, options){
     watermapApp.tally.total_face_amount_active = watermapApp.addCommas(watermapApp.tally.total_face_amount_active);
     var overallocation = Math.round((watermapApp.tally.total_face_amount) / 71000000 * 100) + "%";
 
-    res.render("tally.ejs", {
-      layout:false,
-      locals: { 
-        overallocation: overallocation,
-        table: table,
-        count: count,
-        watermapApp: watermapApp
-      }
-    });
-
-
-  } ,{}, {'limit': 55000});
+  } ,{}, {'limit': 55000}); */
+  
+    res.render("tally_cached.ejs",{layout:false});
   
 });
 
