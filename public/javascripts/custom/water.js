@@ -118,6 +118,14 @@ water.search = function() {
             $('#search-panel .list-content').html('');
           });
       }  
+      else if (filter === 'type') {
+  
+         $.get('/search/type?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      }  
       else if (filter === 'watershed') {
   
          $.get('/search/watershed?value=' + value, function (data) {

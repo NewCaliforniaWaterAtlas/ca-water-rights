@@ -77,18 +77,6 @@ water.setupMap = function() {
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
     water.map.addLayer(interactive.layer);
-
-
-/*
-    water.map.interaction.on(wax.tooltip().parent(water.map.parent).events()).on({
-        'on.block': function() {
-            // stop interacting with map through overlay
-            $('.wax-tooltip').on('click touchstart touchend touchmove mousemove dblclick', function(e) {
-                e.stopPropagation();
-            });
-        }
-    });
-*/
     water.map.interaction.movetip();
     water.map.interaction.refresh();
   });
@@ -173,7 +161,7 @@ water.setupMap = function() {
   // Load special data layers for more zoomed in levels.
   water.loadMarkers();
   
-  $(".alert .content").html("Showing 20,000+ current water rights.");
+  $(".alert .content").html("Showing 20K+ current water right records (of about 50K total.)");
   water.zoomWayInButton();
 
   };
@@ -1152,6 +1140,24 @@ water.formatWaterRightTooltip = function(feature) {
 water.triggerMapMoveTimeout = function() {
   return setTimeout(water.markersQuery, 1000);
 };
+
+
+/*
+http://support.mapbox.com/discussions/mapbox-for-ipad/113-eventstoppropagation-not-working-on-ios-device
+ self.interaction = wax.mm.interaction()
+        .map(self.map)
+        .tilejson(self.mapSettings)
+        .on(wax.tooltip().parent(self.map.parent).events())
+        .on({
+            'on.block': function() {
+                // stop interacting with map through overlay
+                $('.wax-tooltip').on('click touchstart touchend touchmove mousemove dblclick', function(e) {
+                    e.stopPropagation();
+                });
+            }
+        });
+*/
+
 
 // override move tip
 wax.movetip = function() {
