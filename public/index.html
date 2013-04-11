@@ -268,12 +268,12 @@
             <small><cite title="Peter Drucker">Peter Drucker</cite></small>
           </blockquote>
 
-          <p class="primary">The primary challenge with water in California is not its scarcity, but rather how we manage it.  Many experts have mutually concluded, that a major first step to improving our management of water is by reforming how we account for it.  Whether a lack of adequate statements of diversion for surface and subsurface waters, or the existence of a fine grained environmental monitoring network, it is clear that we could do a better job of recording and measuring.  New instruments and institutions are necessary to accomplish this. It is not a question of technology, but one of techniques.  The technology is available and affordable, but the institutions and practices of how we measure and document our water resources are not fully optimized.  We must get control of our understanding of what is in the system at any given point.  We owe it to ourselves, our economy,  and our ecosystem.  This effort benefits all stakeholders.</p>
+          <p class="primary">The primary challenge with water in California is not its scarcity, but rather how we manage it.  Many experts have mutually concluded, that a major first step to improving our management of water is by reforming how we account for it.  Whether a lack of adequate statements of diversion for surface and subsurface waters, or the existence of a fine grained environmental monitoring network, it is clear that we could do a better job of recording and measuring.  New instruments and institutions are necessary to accomplish this. It is not a question of technology, but one of techniques.  The technology is available and affordable, but the institutions and practices of how we measure and document our water resources are not fully mature.  We must get control of our understanding of what is in the system at any given point.  We owe it to ourselves, our economy,  and our ecosystem.  This effort benefits all stakeholders.</p>
         </div>
       </section>
 
       <section id="audience">
-        <div id="info" class="container-fluid container-narrow">
+        <div id="info" class="container-fluid container-narrow-less">
           <div class="row-fluid">
             <div class="span4">
               <h4>Citizens of California</h4>
@@ -285,7 +285,7 @@
            </div>
             <div class="span4">
               <h4>Information Age Tools</h4>
-              <p>Data on water rights in California is difficult to navigate, impossible to query, and is not provided in a machine-readable format.  This modest prototype demonstrates that we can do better. This is a first in a series of interactive maps that will consolidate data from disparate agencies, and bring clarity to how water is managed, governed, and distributed in the state of California. <a href="http://ca.statewater.org/">ca.statewater.org</a></p>
+              <p>Data on water rights in California is difficult to navigate, impossible to query, and is not provided in a machine-readable format.  This modest prototype demonstrates that we can do better. This is a first in a series of interactive maps that will consolidate data from disparate agencies, and bring clarity to how water is managed, governed, and distributed in the state. <a href="http://ca.statewater.org/">ca.statewater.org</a></p>
             </div>
           </div>
         </div>
@@ -293,44 +293,49 @@
 
       <section id="content">
         <div id="api" class="container-fluid container-narrow">
-          <h2>Data & API</h2>
-          We want to encourage other developers to build interfaces and visualizations with the water rights data.
-          JSON formatted water rights data is available through a simple RESTful interface for the following datasets.<br /> The entire current dataset can be found as a mongo database on <a href="https://github.com/nerdsfornature/watertransfers">Github</a>.
-          <h3>Watershed</h3>
-          http://ca.statewater.org/search/watershed?value=yuba<br />
-          <h3>County</h3>
-          http://ca.statewater.org/search/county?value=sonoma<br />
-          <h3>Water Right Holder Name</h3>
-          http://ca.statewater.org/search/name?value=pacific gas and electric<br />
+          <h2><i class="icon-cogs icon-large"></i>Data & API</h2>
+          <p class="primary">We want to encourage other developers to build interfaces and visualizations with the water rights data. JSON formatted water rights data is available through a simple RESTful interface for the following datasets.</p>
+          <p class="primary">The entire current dataset can be found as a mongo database on <a href="https://github.com/nerdsfornature/watertransfers">Github</a>.</p>
+
+          <div class="row-fluid">
+            <div class="span4">
+              <h3>Watershed</h3>
+              <pre>http://ca.statewater.org/search/watershed?value=yuba</pre>
+            </div>
+            <div class="span4">
+              <h3>County</h3>
+              <pre>http://ca.statewater.org/search/county?value=sonoma</pre>
+            </div>
+            <div class="span4">
+              <h3>Holder Name</h3>
+              <pre>http://ca.statewater.org/search/name?value=westlands</pre>
+            </div>
+          </div>
         </div>
       </section>
 
       <section id="footer" class="sponsors">
         <div class="support span12">
-        <h4>Supported by</h4>
-        <ul>
-          <li><a href="http://rri.org" alt="RRI"><img src="/images/rri-logo-top.png" /></a></li>
-<!--           <li><a href="http://patagonia.com" alt="Patagonia"><img src="/images/patagonia_logo_small.png" /></a></li> -->
-        </ul>
+          <h4>Supported by</h4>
+          <ul>
+            <li><a href="http://rri.org" alt="RRI"><img src="/images/rri-logo-top.png" /></a></li>
+            <!-- <li><a href="http://patagonia.com" alt="Patagonia"><img src="/images/patagonia_logo_small.png" /></a></li> -->
+          </ul>
         </div>
+        
         <div class="project span8">
-        <ul>
-          <li>Project developed by <a href="http://sparkleforce.com">Sparkleforce</a><br />
-          <a href="http://twitter.com/videmsky">Laci Videmsky</a> (Project Director & Research) <br />
-          <a href="http://twitter.com/chachasikes">Chach Sikes</a> (Design & Lead Engineer).<br />
-          Launched April 2013.<br />
-          <a href="https://github.com/nerdsfornature/watertransfers">Code and Data</a> on Github.<br/ ></li>
-
-
-          <li>Please direct questions and feedback to info (at) sparkleforce.com</li>
-          <li><span class="disclaimer">Disclaimer:Sparkleforce does not make representations as to the accuracy or completeness of any information on this site or found by following any link on this site. Sparkleforce will not be liable for any errors or omissions in this information nor for the availability of this information. Sparkleforce will not be liable for any losses, injuries, or damages from the display or use of this information. This policy is subject to change at any time.<br /></span></li>
-
-        </ul>
-      </div>
+          <ul>
+            <li>Project developed by <a href="http://sparkleforce.com">Sparkleforce</a><br />
+            <a href="http://twitter.com/videmsky">Laci Videmsky</a> (Project Director & Research) <br />
+            <a href="http://twitter.com/chachasikes">Chach Sikes</a> (Design & Lead Engineer).<br />
+            Launched April 2013.<br />
+            <a href="https://github.com/nerdsfornature/watertransfers">Code and Data</a> on Github.<br/ ></li>
+            <li>Please direct questions and feedback to info (at) sparkleforce.com</li>
+            <li><span class="disclaimer">Disclaimer:Sparkleforce does not make representations as to the accuracy or completeness of any information on this site or found by following any link on this site. Sparkleforce will not be liable for any errors or omissions in this information nor for the availability of this information. Sparkleforce will not be liable for any losses, injuries, or damages from the display or use of this information. This policy is subject to change at any time.<br /></span></li>
+          </ul>
+        </div>
       </section>
 
-  
-    
     </div><!-- #page-wrap -->
   
     <script type="text/javascript" src="/javascripts/libraries/json2.js"></script>

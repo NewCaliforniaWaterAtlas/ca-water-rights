@@ -80,6 +80,14 @@ ul.nav>li {
 
 /*<!-- ============ Global / Content ============ -->*/ 
 
+#page-wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin-bottom: -400px;
+}
+
 body {
   /*background: #e5e5f7;*/
   background-color: #fff;
@@ -94,6 +102,11 @@ a {
 a:hover {
   color: #005580;
   text-decoration: none;
+}
+
+.container-narrow-less {
+  margin: 0 auto;
+  max-width: 940px;
 }
 
 .container-narrow {
@@ -167,6 +180,13 @@ button.close {
   box-shadow: none;
 }
 
+#statement,
+#info,
+#api {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
 section#footer,
 section#about {
   border-top: 2px solid #dcdcdc;
@@ -200,11 +220,6 @@ span#kern1 {
   color: #5eaeb2;
 }
 
-#info {
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-
 blockquote p {
   padding: 0;
 }
@@ -230,6 +245,7 @@ p.primary {
 
 section#footer {
   padding: 40px;
+  height: 400px;
 }
 
 .masthead {
@@ -359,6 +375,7 @@ section#audience {
 section#audience p {
   padding-left: 0px;
   padding-right: 0px;
+  padding-bottom: 0px;
 }
 
 #state-logo-rights {
@@ -369,6 +386,10 @@ section#audience p {
 
 img#state-img-rights {
   height: 95px;
+}
+
+i.icon-cogs {
+  padding-right: 10px;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
