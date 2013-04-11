@@ -1,4 +1,4 @@
-/*<!-- ============ Navbar ============ -->*/ 
+/*<!-- ============ Navbar ============ -->*/
 /*
 
 font-family: 'Questrial', sans-serif;
@@ -1079,6 +1079,7 @@ span.disclaimer {
 }
 
 #api.container-narrow {
+  padding-top: 40px;
   padding-bottom: 40px;
 }
 

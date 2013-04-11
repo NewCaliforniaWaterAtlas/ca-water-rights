@@ -353,6 +353,22 @@ self.app.get('/search/name', function(req, res, options){
   },{});
 });
 
+self.app.get('/search/type', function(req, res, options){
+
+  var regex = {$regex: req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {$or: [{'properties.water_right_type': regex}]} ]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
 
 self.app.get('/list/usage', function(req, res, options){
 
