@@ -115,7 +115,7 @@ water.setupMap = function() {
 
   // Toggle background layers of map.
   $('#tile-switcher .tinted').click(function(){
-    console.log("tinted");
+    //console.log("tinted");
     water.disableTileLayers();
     $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
@@ -123,7 +123,7 @@ water.setupMap = function() {
   });
 
   $('#tile-switcher .water').click(function(){
-    console.log("water");
+    //console.log("water");
     water.disableTileLayers();
     $(this).addClass('active');
 
@@ -136,7 +136,7 @@ water.setupMap = function() {
   });
 
   $('#tile-switcher .satellite').click(function(){
-    console.log("satellite");
+    //console.log("satellite");
     water.disableTileLayers();
     $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
@@ -144,7 +144,7 @@ water.setupMap = function() {
   });
 
   $('#tile-switcher .terrain').click(function(){
-    console.log("terrain");
+    //console.log("terrain");
     water.disableTileLayers();
     $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
