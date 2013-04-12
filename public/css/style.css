@@ -331,7 +331,7 @@ h4.body-heading {
   text-transform: none;
   letter-spacing: 2px;
   padding-left: 30px;
-  padding-bottom: 10px;
+  /*padding-bottom: 10px;*/
 }
 
 ul.map-list>li.submenu>a {
@@ -390,6 +390,11 @@ img#state-img-rights {
 
 i.icon-cogs {
   padding-right: 10px;
+}
+
+.divider-h {
+  height: 4px;
+  background-color: #F4F1D3;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
