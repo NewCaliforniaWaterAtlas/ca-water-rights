@@ -12,6 +12,8 @@ window.onload = function() {
   water.setupFilters();
  
   var isMobile = water.isMobile();
+  console.log(isMobile);
+
   if(isMobile) {
     $('.ipad').html("Mobile devices not yet fully supported.");
   }
