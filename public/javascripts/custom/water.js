@@ -11,6 +11,10 @@ window.onload = function() {
   water.setupAddress();
   water.setupFilters();
  
+  var isMobile = water.isMobile();
+  if(isMobile) {
+    $('.ipad').html("Mobile devices not yet fully supported.");
+  }
 
   $('a[data-toggle="tab"]').on('shown', function (e) {
     if ($(e.target).attr('href') == '#map') {
@@ -20,6 +24,17 @@ window.onload = function() {
   });
   
   
+};
+
+water.isMobile = function(){
+  return (
+      //Detect iPhone
+      (navigator.platform.indexOf("iPhone") != -1) ||
+      //Detect iPod
+      (navigator.platform.indexOf("iPod") != -1) ||
+      // Detect Android
+      (navigator.platform.indexOf("android") != -1)
+  );
 };
 
 water.loadModal = function() {

@@ -173,9 +173,6 @@ water.centerMap = function() {
   water.map.centerzoom({ lat: 37.52, lon: -115.50 }, 6); //california
 };
 
-
-
-
 water.loadMarkers = function() {
   
   var zoom = water.map.zoom();
