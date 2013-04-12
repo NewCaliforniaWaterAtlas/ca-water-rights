@@ -336,7 +336,14 @@ h4.body-heading {
 
 ul.map-list>li.submenu>a {
   display: block;
+  color: #ccc;
 }
+
+ul.map-list>li.submenu>a.live {
+  display: block;
+  color: #8ac5ff;
+}
+
 
 li.menu-title {
   font-weight: 400;
