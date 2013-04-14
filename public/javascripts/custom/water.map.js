@@ -18,7 +18,7 @@ water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_2';
 water.map_defaults.div_container = 'map-container';
 water.map_defaults.database_zoom_level = 12;
-water.map_defaults.close_up_zoom_level = 10;
+water.map_defaults.close_up_zoom_level = 8;
 water.map_defaults.lowest_tilemill_marker_level = 12;
 
 // Establish empty container for loaded marker features data.
@@ -160,7 +160,7 @@ water.setupMap = function() {
 water.centerMap = function() {
   // default values will not load here.
   //water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8); //sacramento
-  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 5); //california
+  water.map.centerzoom({ lat: 37.52, lon: -119.50 }, 6); //california
 };
 
 water.loadMarkers = function() {
