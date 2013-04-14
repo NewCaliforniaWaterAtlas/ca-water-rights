@@ -17,8 +17,9 @@ water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_2';
 water.map_defaults.div_container = 'map-container';
-water.map_defaults.close_up_zoom_level = 14;
-water.map_defaults.lowest_tilemill_marker_level = 13;
+water.map_defaults.database_zoom_level = 12;
+water.map_defaults.close_up_zoom_level = 10;
+water.map_defaults.lowest_tilemill_marker_level = 12;
 
 // Establish empty container for loaded marker features data.
 water.markerLayer = 0;
@@ -70,10 +71,6 @@ water.setupMap = function() {
   water.sensorLegend = $('div.sensor-legend').html();
   water.sensorAlert = '<div class="sensor-alert"><a href="#" id="button-water-rights-toggle">Toggle Water Rights</a></div>';
 
-
-
-
-
   // Load interactive water rights mapbox layer (has transparent background. Rendered in Tilemill with 45K+ datapoints)        
   mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
     water.map.addLayer(interactive.layer);
@@ -103,15 +100,6 @@ water.setupMap = function() {
             map.zoom(12, true);
         };
 */
-
-  // Pan controls  // @TODO make mobile friendly (touchstart?)
-/*
-  document.getElementById('left').onclick = function() { water.map.panLeft(); }
-  document.getElementById('right').onclick = function() { water.map.panRight(); }
-  document.getElementById('down').onclick = function() { water.map.panDown(); }
-  document.getElementById('up').onclick = function() { water.map.panUp(); }
-*/
-
 
   // Toggle background layers of map.
   $('#tile-switcher .tinted').click(function(){
@@ -143,6 +131,7 @@ water.setupMap = function() {
     water.map.interaction.refresh();
   });
 
+/*
   $('#tile-switcher .terrain').click(function(){
     //console.log("terrain");
     water.disableTileLayers();
@@ -150,6 +139,7 @@ water.setupMap = function() {
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.terrain_layer).name);
     water.map.interaction.refresh();
   });
+*/
 
   // Attribute map.
   water.map.ui.attribution.add()
@@ -161,7 +151,7 @@ water.setupMap = function() {
   // Load special data layers for more zoomed in levels.
   water.loadMarkers();
   
-  $(".alert .content").html("Showing about 50K active and inactive water rights.");
+  $(".alert .content").html("Showing about 50K water rights.");
   water.zoomWayInButton();
 
   };
@@ -170,21 +160,21 @@ water.setupMap = function() {
 water.centerMap = function() {
   // default values will not load here.
   //water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8); //sacramento
-  water.map.centerzoom({ lat: 37.52, lon: -115.50 }, 6); //california
+  water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 5); //california
 };
 
 water.loadMarkers = function() {
   
   var zoom = water.map.zoom();
   
-  if(zoom >= water.map_defaults.close_up_zoom_level) {
+  if(zoom >= water.map_defaults.database_zoom_level) {
     water.markersQuery(false);
   }
   
   water.map.addCallback('zoomed', function(m) {
     var zoom = water.map.zoom();
     
-    if(zoom >= water.map_defaults.close_up_zoom_level) {
+    if(zoom >= water.map_defaults.database_zoom_level) {
       $('.zoom-level').html("Move map to load more information.");
     
       //console.log('zoomed in');
@@ -192,7 +182,7 @@ water.loadMarkers = function() {
       water.map.addCallback('panned', water.markersPanned);
       // @TODO Add alert to pan to load more up to date info
       
-      if(zoom >= water.map_defaults.close_up_zoom_level) {
+      if(zoom >= water.map_defaults.database_zoom_level) {
         //console.log('dispatching');
         //@TODO not working yet...
         water.triggerMarkers();
@@ -239,6 +229,7 @@ water.loadMarkers = function() {
 
 water.zoomWayInButton = function () {
   $('.zoom-level').html("<span class=\"zoom-way-in\">Zoom</span> in for more detailed information.");
+
   $('.zoom-way-in').click(function(){
     water.map.zoom(water.map_defaults.close_up_zoom_level);
   });
@@ -325,7 +316,7 @@ water.markersQuery = function(reloaded) {
 
  // This is where real-time water rights data would go.
  Core.query({query: { 
-     $and: [{'kind': 'right'}, {$or: [{'properties.status': 'Active'},{'properties.status':'Permitted'},{'properties.status':'Licensed'},{'properties.status':'Adjudicated'},{'properties.status':'Certified'},{'properties.status':'Pending'},{'properties.status':'Registered'}]}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
+     $and: [{'kind': 'right'}, {$where: "this.properties.latitude < " + (lat + boxsize_lat)},{$where: "this.properties.latitude > " + (lat - boxsize_lat)},{$where: "this.properties.longitude < " + (lon + boxsize_lon)},{$where: "this.properties.longitude > " + (lon - boxsize_lon)}
   ] 
     }, options: {'limit': 0}}, water.drawRightsMarkersLayer);
 };
@@ -367,7 +358,7 @@ water.drawRightsMarkers = function(features, featureDetails) {
           if(diversion.face_amount >= 500000) {
             featureDetails.icon = "/images/icons/water_right_icon_20.png";
           }
-  
+          /*
           if(diversion.face_amount >= 100 && diversion.amount_stored >= 100) {
               featureDetails.icon = "/images/icons/water_right_icon_storage_6.png";
           }
@@ -379,7 +370,7 @@ water.drawRightsMarkers = function(features, featureDetails) {
           if(diversion.face_amount >= 500000 && diversion.amount_stored >= 500000) {
             featureDetails.icon = "/images/icons/water_right_icon_storage_20.png";
           }
-          
+          */
           // @TODO see which ones are storage and change the color      
           var marker = water.makeMarker(f, featureDetails);
           return marker;      
@@ -709,6 +700,9 @@ water.drawRightsMarkersLayer = function(features) {
   water.drawRightsMarkers(features, featureDetails);
   
   $(".alert .content").html("Showing " + features.length + " of thousands of water rights.");  
+
+  $('#map-screen').hide();
+  $('#map-screen #loading-markers').hide();
 };
 
 water.drawSearchRightsMarkersLayer = function(features, query) {
