@@ -176,6 +176,15 @@ water.search = function() {
             $('#search-panel .list-content').html('');
           });
       } 
+
+      else if (filter === 'year') {
+  
+         $.get('/search/year?value=' + value, function (data) {
+            water.drawSearchRightsMarkersLayer(data, value);
+            $('#search-panel .list-content').show();
+            $('#search-panel .list-content').html('');
+          });
+      } 
     }  
     else {
        $.get('/search/all?value=' + query, function (data) {

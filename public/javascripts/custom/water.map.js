@@ -15,7 +15,7 @@ water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
 water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 
 
-water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water-rights';
+water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_2';
 water.map_defaults.div_container = 'map-container';
 water.map_defaults.close_up_zoom_level = 14;
 water.map_defaults.lowest_tilemill_marker_level = 13;
@@ -161,7 +161,7 @@ water.setupMap = function() {
   // Load special data layers for more zoomed in levels.
   water.loadMarkers();
   
-  $(".alert .content").html("Showing 20K+ current water right records (of about 50K total.)");
+  $(".alert .content").html("Showing about 50K active and inactive water rights.");
   water.zoomWayInButton();
 
   };
@@ -1000,13 +1000,19 @@ water.renderSensorTooltip = function(feature) {
 
 water.formatWaterRightTooltip = function(feature) {
   var output = '';
-  if(feature.properties.name) { var name = feature.properties.name } else{ name = '';}
+  if(feature.properties.name) { var name = feature.properties.name } else{ name = 'Unknown';}
   var diversion = water.getDiversion(feature);
   var id = feature.properties.application_pod;
   var status = feature.properties.water_right_status;
   var primary_owner = '';
+  
+  var eWRIMSLink = '<a href="http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=' + id + '&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=" target="_blank" class="external-link">' + id + "</a>";
+  
   if (feature.properties.first_name) {primary_owner += feature.properties.first_name + " ";}
-  if(feature.properties.holder_name) {primary_owner += feature.properties.holder_name;}
+  if (feature.properties.holder_name) {primary_owner += feature.properties.holder_name;}
+  if (primary_owner === '') {
+    primary_owner = "Unknown";
+  }
 
   if(feature.properties['percentile'] !== undefined){
     var style = water.setSensorColor(parseFloat(feature.properties['% normal(mean)'].replace('%','')));
@@ -1018,24 +1024,34 @@ water.formatWaterRightTooltip = function(feature) {
                       '<div class="data-title">' +
                       '<h4 class="title">' + name + '</h4>';
                       
-
                output += '<div class="diversion"><span class="diversion-amount">' 
                         + diversion.face_amount + '</span><span class="diversion-unit">' + diversion.units_face_amount + '</span></div></div>' +
-                      
                         '<ul class="data-list">' +
                           '<li>Primary Owner: ' + primary_owner + '</li>' +
                           '<li>Primary Entity Type: ' + feature.properties.organization_type + '</li>' +
-
-                          '<li>Water Right Status: ' + status + '</li>' +
-                          '<li>Application ID: ' + id + '</li>' +
-                          '<li>POD ID: ' + feature.properties.pod_id + '</li>' +
-                          '<li>Registration Status: ' + feature.properties.status + '</li>';
+                          '<li>Water Right Status: <strong>' + status + '</strong></li>' +
+/*                           '<li>Registration Status: ' + feature.properties.pod_status + '</li>' +  */
+                          '<li>Application ID: ' + eWRIMSLink + '</li>' +
+                          '<li>POD ID: ' + feature.properties.pod_id + '</li>';
                           
-                          if(feature.properties.date_received !== undefined){
+                          if(feature.properties.date_received !== undefined && feature.properties.date_received !== ''){
                             output += '<li>Date Water Right Application Received: ' + feature.properties.date_received + '</li>';
                           }
-                          if(feature.properties.issue_date !== undefined) {
-                            output += '<li>Date Water Right Issued: ' + feature.properties.issue_date + '</li>';
+                          else {
+                            output += '<li>Date Water Right Application Received: No data</li>';                          
+                          }
+                          if(feature.properties.issue_date !== undefined && feature.properties.issue_date !== '') {
+                            output += '<li>Date Water Right Issued: <strong>' + feature.properties.issue_date + '</strong></li>';
+                          }
+                          else {
+                            output += '<li>Date Water Right Issued: No data</li>';
+                          }
+                          if(feature.properties.year_first_use !== undefined && feature.properties.year_first_use !== '') {
+                            var year = feature.properties.year_first_use.split('.')[0];
+                            output += '<li>Year First Use: <strong>' + year + '</strong></li>';
+                          }
+                          else {
+                            output += '<li>Year First Use: No data</li>';
                           }
                         output += '</ul>' +
                       '</div>' +
@@ -1061,7 +1077,6 @@ water.formatWaterRightTooltip = function(feature) {
                           '<li>Direct Diversion: ' + diversion.diverted + ' ' + diversion.units_diverted + '</li>' +
                           
                           '<li>Direct Diversion Amount: ' + diversion.amount + ' ' + diversion.units + '</li>' +
-
                           
                           '<li>Storage: ' + diversion.amount_stored + ' ' + diversion.units_stored + '</li>' +
 /*
@@ -1086,7 +1101,7 @@ water.formatWaterRightTooltip = function(feature) {
 
       var string = '';
         string += '<div class="data-box">' +
-                        '<h4>Reports & Statements of Use</h4>';
+                    '<h4>Reports & Statements of Use</h4>';
 
       if(feature.properties.reports !== undefined) {
         //console.log(feature.properties.reports);
@@ -1106,13 +1121,14 @@ water.formatWaterRightTooltip = function(feature) {
                 string +=  "<p>Year: " + year + '<br />' + "Usage:" + report['usage'] + '<br />' + '  Details: ' + report['usage_quantity'] + '<br />';
                 string += "</p>";
              }
+              string += '<p><a href="http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/listReportsForWaterRight.do?waterRightId=' + feature.properties.water_right_id + '"  target="_blank" class="external-link">Look up all yearly statements of diversion.</a></p>';
             } 
           }
         }
 
       }
       else {
-      string += "<p>Statements of diversion and use not available at this time.</p>";
+      string += '<p>Look up yearly Statements of Diversion: <a href="http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/listReportsForWaterRight.do?waterRightId=' + feature.properties.water_right_id + '"  target="_blank" class="external-link">Reports</a></p>';
       }
       string += "</div>";
 
@@ -1122,7 +1138,8 @@ water.formatWaterRightTooltip = function(feature) {
 
                       output += '<div class="data-box">' +
                           '<h4>About this Data</h4>' +
-                          '<p>Data re-published from the ' + '<a href="http://www.waterboards.ca.gov/ewrims/">State Water Resources Control Board</a>' + '<p> eWRIMS and ARCGIS servers. If this information is erroneous, please check the eWRIMS database and if the error persists, please contact their department.</p>' +
+                          '<p>Original Full Record:' + eWRIMSLink + '</p>' +
+                          '<p>Data re-published from the ' + '<a href="http://www.waterboards.ca.gov/ewrims/">State Water Resources Control Board</a>' + ' eWRIMS and ARCGIS servers for public convenience purposes & research. If this water right information is erroneous, please check the <a href="http://www.waterboards.ca.gov/waterrights/water_issues/programs/ewrims/#general">eWRIMS database</a> If you have questions about what you are seeing, or expecting to see, please check out our <a href="#faq" data-toggle="modal">FAQ</a>.</p>' +
                         '<ul class="data-list">' +
                           '<li>Data Source: ' + feature.properties.source + ' <a href="' + feature.properties.source + '" target="_blank">Link</a></li>' +
                         

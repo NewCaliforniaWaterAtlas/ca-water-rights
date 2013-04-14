@@ -245,7 +245,7 @@ p.primary {
 
 section#footer {
   padding: 40px;
-  height: 400px;
+  height: 600px;
 }
 
 .masthead {
@@ -645,7 +645,7 @@ div.data-box h4 {
   display: block;
   color: #6d6d6d;
   border: 1px solid #cccccc;
-  height: 8em;
+  height: 10em;
 }
 
 .map-tooltip .content:before{
@@ -730,6 +730,29 @@ div.data-box h4 {
 .map-tooltip span.load_id {
 /*   display: none; */
   font-size: 0.1em;
+}
+
+.map-tooltip span.year:before {
+
+}
+
+.map-tooltip span.use_code:before {
+
+}
+
+.map-tooltip span.status:before {
+
+}
+
+.map-tooltip span.year, 
+.map-tooltip span.use_code,
+.map-tooltip span.status {
+ font-size: 0.8em;
+ color: #6d6d6d;
+ text-align: center;
+ padding: 0;
+ display: block;
+ line-height: 1em
 }
 
 .modal {

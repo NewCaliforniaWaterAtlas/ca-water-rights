@@ -370,6 +370,23 @@ self.app.get('/search/type', function(req, res, options){
   },{});
 });
 
+self.app.get('/search/year', function(req, res, options){
+
+  var regex = {$regex: '^' + req.query.value, $options: 'i'};
+
+  var query = { $and: [ {'kind': 'right'},{'coordinates': {$exists: true}}, {'properties.year_first_use': regex}]};
+
+  engine.find_many_by({query: query, options: {'limit': 0}},function(error, results) {
+    if(!results || error) {
+
+      res.send("[]");
+      return;
+    }
+    res.send(results);
+
+  },{});
+});
+
 self.app.get('/list/usage', function(req, res, options){
 
   var lookup =  { $and: [{'properties.reports': { $exists: true}}, {'properties.reports': { $gt: {}}}, {'coordinates': {$exists: true} } ]} ;
