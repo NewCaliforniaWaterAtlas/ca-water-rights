@@ -187,6 +187,32 @@ button.close {
   margin-bottom: 60px;
 }
 
+section#howto {
+  background-color: #f7f5e1;
+  border-color: #f1edc5;
+  border-style: solid;
+  border-width: 2px 0px 0px 0px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+#instruct {
+  margin-top: 30px;
+}
+
+section#audience {
+  background-color: #f4f1d3;
+  border-color: #f1edc5;
+  border-style: solid;
+  border-width: 1px 0px 2px 0px;
+}
+
+section#audience p {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+
 section#footer,
 section#about {
   border-top: 2px solid #dcdcdc;
@@ -194,6 +220,11 @@ section#about {
   /*background: #e8e8e8;*/
   background: #f3f3f3;
   padding: 90px 0;
+}
+
+section#footer {
+  padding: 40px;
+  height: 600px;
 }
 
 #logo-text h1 {
@@ -241,11 +272,6 @@ p.primary {
 
 #explanation{
   margin-top: 40px;
-}
-
-section#footer {
-  padding: 40px;
-  height: 600px;
 }
 
 .masthead {
@@ -372,19 +398,6 @@ ul.map-list>li {
   padding-bottom: 30px;
 }
 
-section#audience {
-  background-color: #f4f1d3;
-  border-color: #f1edc5;
-  border-style: solid;
-  border-width: 2px 0px 2px 0px;
-}
-
-section#audience p {
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-bottom: 0px;
-}
-
 #state-logo-rights {
   position: absolute;
   margin-left: 100px;
@@ -395,7 +408,7 @@ img#state-img-rights {
   height: 95px;
 }
 
-i.icon-cogs {
+i.icon-cogs, i.icon-cog {
   padding-right: 10px;
 }
 
@@ -411,6 +424,10 @@ i.icon-cogs {
 .inset {
   padding: 15px;
   background-color: #f1edc5;
+}
+
+.pull-center {
+  text-align: center;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
