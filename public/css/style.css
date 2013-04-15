@@ -404,6 +404,15 @@ i.icon-cogs {
   background-color: #F4F1D3;
 }
 
+#deliveries {
+  padding: 0 30px;
+}
+
+.inset {
+  padding: 15px;
+  background-color: #f1edc5;
+}
+
 /*<!-- ============ Map Stuff ============ -->*/ 
 
 #map-outer-container {
@@ -492,11 +501,6 @@ i.icon-cogs {
   height:20px;
 }
 
-#test {
-  padding: 0 30px;
-  /*margin: 0 30px;
-*/}
-
 /*<!-- ============ data panel ============ -->*/ 
 
 #data-panel {  
@@ -513,8 +517,8 @@ i.icon-cogs {
   visibility: hidden;
 }
 
-#search-panel input.search-holders {
-  /*margin: 0 0px 0 30px;*/
+input.search-holders {
+  width: 84%;
 }
 
 .filters {
@@ -523,7 +527,7 @@ i.icon-cogs {
 }
 
 input[type="text"], input {
-  width: 280px;
+  /*width: 280px;*/
   border: 1px solid #e0e0e0;
   font-size: 20px;
   padding: 10px 6px 10px 6px;
@@ -547,7 +551,7 @@ i.icon-override {
 #search-button {
   background-color: #5eaeb2;
   border: none;
-/*   float: right; */
+  width: 12%;
 }
 
 #search-button:hover {
@@ -1144,7 +1148,7 @@ span.disclaimer {
   }
 
   input[type="text"], input {
-    width: 280px;
+    /*width: 280px;*/
   }
 
   .modal {
