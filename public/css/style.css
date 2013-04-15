@@ -260,7 +260,7 @@ section#footer {
 
 #state-logo>img {
   height: 110px;
-  margin-top: -25px;
+  margin-top: -30px;
   
 }
 
@@ -491,6 +491,11 @@ i.icon-cogs {
   width:20px;
   height:20px;
 }
+
+#test {
+  padding: 0 30px;
+  /*margin: 0 30px;
+*/}
 
 /*<!-- ============ data panel ============ -->*/ 
 
