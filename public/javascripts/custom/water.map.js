@@ -157,7 +157,7 @@ water.setupMap = function() {
   };
 
 // Utility function to recenter (and maybe also to reset / reload the map)
-water.centerMap = function() {
+water.centerMap = function() { 
   // default values will not load here.
   //water.map.centerzoom({ lat: 38.52, lon: -121.50 }, 8); //sacramento
   water.map.centerzoom({ lat: 37.52, lon: -119.50 }, 6); //california
