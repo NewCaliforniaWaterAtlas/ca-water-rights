@@ -362,7 +362,7 @@ h4.body-heading {
 
 ul.map-list>li.submenu>a {
   display: block;
-  color: #ccc;
+  /*color: #ccc;*/
 }
 
 ul.map-list>li.submenu>a.live {
