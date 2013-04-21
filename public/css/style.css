@@ -187,6 +187,32 @@ button.close {
   margin-bottom: 60px;
 }
 
+section#howto {
+  background-color: #f7f5e1;
+  border-color: #f1edc5;
+  border-style: solid;
+  border-width: 2px 0px 0px 0px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+#instruct {
+  margin-top: 30px;
+}
+
+section#audience {
+  background-color: #f4f1d3;
+  border-color: #f1edc5;
+  border-style: solid;
+  border-width: 1px 0px 2px 0px;
+}
+
+section#audience p {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+
 section#footer,
 section#about {
   border-top: 2px solid #dcdcdc;
@@ -194,6 +220,11 @@ section#about {
   /*background: #e8e8e8;*/
   background: #f3f3f3;
   padding: 90px 0;
+}
+
+section#footer {
+  padding: 40px;
+  /*height: 600px;*/
 }
 
 #logo-text h1 {
@@ -243,11 +274,6 @@ p.primary {
   margin-top: 40px;
 }
 
-section#footer {
-  padding: 40px;
-  height: 600px;
-}
-
 .masthead {
   height: 120px;
   width: 100%;
@@ -260,7 +286,7 @@ section#footer {
 
 #state-logo>img {
   height: 110px;
-  margin-top: -25px;
+  margin-top: -30px;
   
 }
 
@@ -336,7 +362,7 @@ h4.body-heading {
 
 ul.map-list>li.submenu>a {
   display: block;
-  color: #ccc;
+  /*color: #ccc;*/
 }
 
 ul.map-list>li.submenu>a.live {
@@ -372,19 +398,6 @@ ul.map-list>li {
   padding-bottom: 30px;
 }
 
-section#audience {
-  background-color: #f4f1d3;
-  border-color: #f1edc5;
-  border-style: solid;
-  border-width: 2px 0px 2px 0px;
-}
-
-section#audience p {
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-bottom: 0px;
-}
-
 #state-logo-rights {
   position: absolute;
   margin-left: 100px;
@@ -395,13 +408,26 @@ img#state-img-rights {
   height: 95px;
 }
 
-i.icon-cogs {
+i.icon-cogs, i.icon-cog {
   padding-right: 10px;
 }
 
 .divider-h {
   height: 4px;
   background-color: #F4F1D3;
+}
+
+#deliveries {
+  padding: 0 30px;
+}
+
+.inset {
+  padding: 15px;
+  background-color: #f1edc5;
+}
+
+.pull-center {
+  text-align: center;
 }
 
 /*<!-- ============ Map Stuff ============ -->*/ 
@@ -508,8 +534,8 @@ i.icon-cogs {
   visibility: hidden;
 }
 
-#search-panel input.search-holders {
-  /*margin: 0 0px 0 30px;*/
+input.search-holders {
+  width: 84%;
 }
 
 .filters {
@@ -518,7 +544,7 @@ i.icon-cogs {
 }
 
 input[type="text"], input {
-  width: 280px;
+  /*width: 280px;*/
   border: 1px solid #e0e0e0;
   font-size: 20px;
   padding: 10px 6px 10px 6px;
@@ -542,7 +568,7 @@ i.icon-override {
 #search-button {
   background-color: #5eaeb2;
   border: none;
-/*   float: right; */
+  width: 12%;
 }
 
 #search-button:hover {
@@ -1139,7 +1165,7 @@ span.disclaimer {
   }
 
   input[type="text"], input {
-    width: 280px;
+    /*width: 280px;*/
   }
 
   .modal {
