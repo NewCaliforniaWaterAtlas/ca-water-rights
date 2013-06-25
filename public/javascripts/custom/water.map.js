@@ -382,7 +382,29 @@ water.drawRightsMarkers = function(features, featureDetails) {
             featureDetails.icon = "/images/icons/water_right_icon_storage_20.png";
           }
           */
-          // @TODO see which ones are storage and change the color      
+          // @TODO see which ones are storage and change the color
+
+
+/*
+  ['use_code' = "Irrigation"] {   marker-fill:#459013;}
+  ['use_code' = "Stockwatering"] {   marker-fill:#f6e677;}
+  ['use_code' = "Fish and Wildlife Protection and/or Enhancement"] {   marker-fill:#21582f;}  
+  ['use_code' = "Domestic"] {   marker-fill:#7ec5cf; marker-opacity: 0.6}  
+  ['use_code' = "Recreational"] {   marker-fill:#91c7ca;}  
+  ['use_code' = "Fire Protection"] {   marker-fill:#c43d0e;}  
+  ['use_code' = "Power"] {   marker-fill:#3c87e8;}  
+  ['use_code' = "Municipal"] {   marker-fill:#7ec5cf;}  
+  ['use_code' = "Other"] {   marker-fill:#88c5ce;}  
+  ['use_code' = "Dust Control"] {   marker-fill:#afa272;}  
+  ['use_code' = "Frost Protection"] {   marker-fill:#88c5ce;}  
+  ['use_code' = "Industrial"] {   marker-fill:#cccccc;}  
+  ['use_code' = "Fish Culture"] {   marker-fill:#147a10;}  
+  ['use_code' = "Mining"] {   marker-fill:#ccc9c3;} 
+*/
+
+
+
+          
           var marker = water.makeMarker(f, featureDetails);
           return marker;      
       });
@@ -1011,7 +1033,7 @@ water.formatWaterRightTooltip = function(feature) {
   var status = feature.properties.water_right_status;
   var primary_owner = '';
   
-  var eWRIMSLink = '<a href="http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=' + id + '&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=" target="_blank" class="external-link">' + id + "</a>";
+  var eWRIMSLink = '<a href="http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/EWServlet?Page_From=EWWaterRightPublicSearch.jsp&Redirect_Page=EWWaterRightPublicSearchResults.jsp&Object_Expected=EwrimsSearchResult&Object_Created=EwrimsSearch&Object_Criteria=&Purpose=&appNumber=' + feature.properties.application_id + '&permitNumber=&licenseNumber=&watershed=&waterHolderName=&source=" target="_blank" class="external-link">' + feature.properties.application_id + "</a>";
   
   if (feature.properties.first_name) {primary_owner += feature.properties.first_name + " ";}
   if (feature.properties.holder_name) {primary_owner += feature.properties.holder_name;}
@@ -1126,6 +1148,7 @@ water.formatWaterRightTooltip = function(feature) {
                 string +=  "<p>Year: " + year + '<br />' + "Usage:" + report['usage'] + '<br />' + '  Details: ' + report['usage_quantity'] + '<br />';
                 string += "</p>";
              }
+             console.log(feature.properties);
               string += '<p><a href="http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/listReportsForWaterRight.do?waterRightId=' + feature.properties.water_right_id + '"  target="_blank" class="external-link">Look up all yearly statements of diversion.</a></p>';
             } 
           }
@@ -1133,6 +1156,7 @@ water.formatWaterRightTooltip = function(feature) {
 
       }
       else {
+      console.log(feature.properties);
       string += '<p>Look up yearly Statements of Diversion: <a href="http://ciwqs.waterboards.ca.gov/ciwqs/ewrims/listReportsForWaterRight.do?waterRightId=' + feature.properties.water_right_id + '"  target="_blank" class="external-link">Reports</a></p>';
       }
       string += "</div>";

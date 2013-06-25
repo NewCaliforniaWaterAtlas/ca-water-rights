@@ -220,9 +220,9 @@ water.navigationHidePanels = function(){
   water.hidePanel($('.alert'));
   water.hidePanel($('#search-panel'));
   water.hidePanel($('#sensor-panel'));
-/*   $('#legend').hide(); */
+  $('#legend').hide();
   $('#legend .sensors-legend').hide();
-  $('#legend .water-rights-legend').show();
+/*   $('#legend .water-rights-legend').show(); */
 };
 
 water.navigation = function(){
@@ -316,10 +316,10 @@ water.displayRights = function(){
   water.updateNavState();
   $('#button-water-rights').addClass('active');
   $('.alert').show();
-  $('#legend').show();
+  $('#legend').hide();
 /*   water.loadMarkers(); */
   $('#legend .sensors-legend').hide();
-  $('#legend .water-rights-legend').show();  
+/*   $('#legend .water-rights-legend').show();   */
   if(water.map.getLayer(water.map_defaults.zoomed_out_marker_layer) === undefined) {
     mapbox.load(water.map_defaults.zoomed_out_marker_layer, function(interactive){
       water.map.addLayer(interactive.layer);
@@ -343,7 +343,7 @@ water.displaySensors = function(){
   $('#legend .sensors-legend').css('left', '20');
   $('#legend').show();
   $('#legend .sensors-legend').show();
-  $('#legend .water-rights-legend').hide();  
+/*   $('#legend .water-rights-legend').hide();   */
 };
 
 water.hideSensors = function(){
