@@ -14,6 +14,8 @@ water.map_defaults.terrain_layer = 'chachasikes.map-mdxztd9c';
 water.map_defaults.water_layer = 'chachasikes.map-nndnsacl';
 water.map_defaults.water_layer_fine_lines = 'chachasikes.nhdplus';
 
+water.map_defaults.crops = 'chachasikes.cropscape-v1';
+
 
 water.map_defaults.zoomed_out_marker_layer = 'chachasikes.water_rights_2';
 water.map_defaults.div_container = 'map-container';
@@ -42,6 +44,7 @@ water.disableTileLayers = function(){
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.tinted_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines).name);
+  water.map.disableLayer(mapbox.layer().id(water.map_defaults.crops).name);
   //water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_course).name);
   //water.map.disableLayer(mapbox.layer().id(water.map_defaults.water_layer_polys).name);
   water.map.disableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
@@ -58,6 +61,7 @@ water.setupMap = function() {
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.tinted_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_fine_lines));
+  water.map.addTileLayer(mapbox.layer().id(water.map_defaults.crops));
   //water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_course));
   //water.map.addTileLayer(mapbox.layer().id(water.map_defaults.water_layer_polys));
   water.map.addTileLayer(mapbox.layer().id(water.map_defaults.satellite_layer));
@@ -128,6 +132,13 @@ water.setupMap = function() {
     water.disableTileLayers();
     $(this).addClass('active');
     water.map.enableLayer(mapbox.layer().id(water.map_defaults.satellite_layer).name);
+    water.map.interaction.refresh();
+  });
+
+  $('#tile-switcher .crops').click(function(){
+    water.disableTileLayers();
+    $(this).addClass('active');
+    water.map.enableLayer(mapbox.layer().id(water.map_defaults.crops).name);
     water.map.interaction.refresh();
   });
 
