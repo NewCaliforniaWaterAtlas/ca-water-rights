@@ -99,6 +99,7 @@
               
               <ul>
                 <li><span class="tinted active">Tinted</span></li>
+                <li><span class="crops">Crops</span></li>
                 <li><span class="satellite">Full Color</span></li>
                 <li class="water active"><span>Water</span></li>
 <!--                 <li class="terrain"><span>Terrain</span></li> -->
@@ -108,8 +109,8 @@
             </div>
 
             <div id='legend'>
-              <div class="sensors">
-                <h4>Stream Gauge Percentiles</h4>
+              <div class="sensors-legend">
+                <h4>Stream Gauge %</h4>
                 <dl>
                   <dt>Very Low</dt><dd><span class="icon"><img src="/images/icons/sensor_red.png" ></span></dd>
                   <dt>Low</dt><dd><span class="icon"><img src="/images/icons/sensor_yellow.png" ></span></dd>
@@ -119,6 +120,20 @@
                   <dt>Not Ranked</dt><dd><span class="icon"><img src="/images/icons/sensor_white.png" ></span></dd>
                 </dl>
               </div>
+
+<!--
+              <div class="water-rights-legend">
+                <h4>Water Use</h4>
+                <dl>
+                  <dt>Irrigation</dt><dd><span class="icon"><img src="/images/icons/sensor_green.png" ></span></dd>
+                  <dt>Stockwatering</dt><dd><span class="icon"><img src="/images/icons/sensor_yellow.png" ></span></dd>
+                  <dt>Fire Protection</dt><dd><span class="icon"><img src="/images/icons/sensor_red.png" ></span></dd>
+                  <dt>Hydroelectric</dt><dd><dd><span class="icon"><img src="/images/icons/sensor_blue.png" ></span></dd>
+                  <dt>Other</dt><dd><span class="icon"><img src="/images/icons/sensor_white.png" ></span></dd>
+                </dl>
+              </div>
+-->
+
             </div>
 
             <div id="map-screen"><div id="loading-markers"><img src='/images/searching.gif' alt="Loading" width="20" height="20"/> Loading Water Rights</div></div>
@@ -160,6 +175,80 @@
                         <td>500,000+ AFY Diverted</td>
                       </tr>
 
+                    </table>
+  
+                    <table class="map-symbols">
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #2c9314" alt="water right"/></td>
+                        <td>Irrigation</td>
+                      </tr>
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #c4a95f" alt="water right"/></td>
+                        <td>Stockwatering</td>
+                      </tr>
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #3c87e8" alt="water right"/></td>
+                        <td>Power</td>
+                      </tr>
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #aab9ba" alt="water right"/></td>
+                        <td>Municipal</td>
+                      </tr>
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #c43d0e" alt="water right"/></td>
+                        <td>Fire Protection</td>
+                      </tr>
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #7bc9c9" alt="water right"/></td>
+                        <td>Fish and Wildlife Protection and/or Enhancement</td>
+                      </tr>
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #cc9e7f" alt="water right"/></td>
+                        <td>Domestic</td>
+                      </tr>
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #6b88b2" alt="water right"/></td>
+                        <td>Recreational</td>
+                      </tr>
+                      
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #cccccc" alt="water right"/></td>
+                        <td>Industrial</td>
+                      </tr>
+                      
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #afa272" alt="water right"/></td>
+                        <td>Dust Control</td>
+                      </tr>
+                      
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #42ba7d" alt="water right"/></td>
+                        <td>Frost Protection</td>
+                      </tr>
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #42ba7d" alt="water right"/></td>
+                        <td>Fish Culture</td>
+                      </tr>                      
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #cccccc" alt="water right"/></td>
+                        <td>Mining</td>
+                      </tr> 
+
+                      <tr>
+                        <td><img src="images/icons/water_right_icon_transparent.png" style="background-color: #a1b1b2" alt="water right"/></td>
+                        <td>Other</td>
+                      </tr>                       
+                      
+                                           
                     </table>
   
                     <ul class="map-symbols">
